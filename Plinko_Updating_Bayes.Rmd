@@ -1,0 +1,94 @@
+---
+title: "Bayesian Observers Performing the Plinko task"
+output: html_document
+author: P.G.L Porta Mana & A.L.S Filipowicz
+---
+
+## 0) Motivations
+
+The following data was used in "Filipowicz et al., 2016 Rejecting outliers: Surprising Changes Do Not Always Improve Belief Updating, *Decision*"
+
+Participants performed a Plinko experiment in which they were exposed to ball drops sampled from one distribution (either a wide or a narrow distribution) for 100 trials, then switch to 100 ball drops from a second distribution that either changed in mean, holding variance constant, or changing in variance while holding mean constant.
+
+The main results from this experiment were that participants first exposed to a wide gaussian distribution then switched to a narrow distribution with the same mean had difficulty adapting their estimates to reflect the smaller variance. Conversely, participants first exposed to a narrow distribution, then switched to a wide distribution also showed some difficulty updating, treating highly surprising events as outliers.
+
+Missing from this experiment is a sense of how a baysian observer would treat these types of switches given the evidence the participants observed. Does a bayesian observer behave in a similar way to our participants? Or do these participant responses reflect some psychological bias?
+
+There are at least two first order interesting analyses that can be performed on this data.
+
+* 1) How would a bayesian oberver treat these different switches?
+* 2) If we start with the participant priors (those provided by each individual participant), how would this influence the bayesian optimal observer?
+
+There are likely more questions, buit these seem like a good start.
+
+## 1) Load data
+
+The code below imports the data from all of subjects that participated in the experiment above and coverts it into a data frame. The columns are as follows:
+
+1) Participant: Participant identifier
+2) Condition: Numerical identifier for the switch condition (1 = Wide-Wide mean shift, 2 = Wide-Narrow variance shift, 3 = Narrow-Narrow mean shift, 4 = Narrow-Wide variance shift)
+3) Trial: Trial number
+4) Distribution.Number: Order in which the current distribution has appeared (1st, 2nd, 3rd 4th)
+5) Ball.Position: slot in which the ball fell on the current trial
+6) Slot.Number: Slot identifier
+7) Participant.Slot.Estimate: Normalized bar height for each slot (normalized participant histograms)
+8) Comp.Ball.Drop: Identifier for the slot in which the ball fell on that trial
+9) Participant.Mean: Mean of the participant's distribution (i.e., calculated as the expected value)
+10) Participant.SD: Standard deviation of the participant's distribution
+11) Bar.RT: Time taken (in seconds) to adjust bars on each trial (from the time the ball finished droping from the previous trial, until the participant initiated the next ball drop on the current trial)
+
+Note that in total, participants were exposed to 400 trials each, but many subjects did not complete all 400 trials (each was exposed to one mean switch and one variance switch). For the paper above, I only used the first 200 trials of data as these were consistent accross subjects (although you're welcome to use all of the data if you wish)
+
+```{r}
+dpath = "./data/"
+fs = dir(path = dpath,pattern = "barData")
+d <- read.csv(paste0(dpath,fs[1]))
+for (f in fs[2:40]) {
+dprime <- read.csv(paste0(dpath, f))
+d <- rbind(d,dprime)
+rm(dprime)
+}
+d <- d[,1:(ncol(d)-2)]
+```
+
+Below I;m adding some identifiers to make things a little clearer:
+
+SwitchType: More intuitive label for all of the different switch conditions (again, only considering the first 200 trials)
+Distribution: Which distribution participants were exposed to (W1 is a wide distribution, N1 is a narrow distribution with the same mean as W1, W2 is a wide distribution with the same variance but different mean than W1, and N2 is a narrow distribution with the same variance but different mean from N1)
+
+```{r}
+# Add labels for each distribution
+d$SwitchType[d$Condition == 1] = 'W-W' #Wide to wide switch
+d$SwitchType[d$Condition == 2] = 'W-N' #Wide to wide switch
+d$SwitchType[d$Condition == 3] = 'N-N' #Wide to wide switch
+d$SwitchType[d$Condition == 4] = 'N-W' #Wide to wide switch
+
+# Add identifiers for each distribution
+d$Distribution[(d$Condition == 1 & d$Distribution.Number == 1)] = "W1"
+d$Distribution[d$Condition == 2 & d$Distribution.Number == 1] = "W1"
+d$Distribution[d$Condition == 4 & d$Distribution.Number == 2] = "W1"
+
+d$Distribution[(d$Condition == 2 & d$Distribution.Number == 2)] = "N1"
+d$Distribution[d$Condition == 3 & d$Distribution.Number == 1] = "N1"
+d$Distribution[d$Condition == 4 & d$Distribution.Number == 1] = "N1"
+
+d$Distribution[(d$Condition == 1 & d$Distribution.Number == 2)] = "W2"
+d$Distribution[d$Condition == 3 & d$Distribution.Number == 2] = "N2"
+```
+
+Here's a plot of the ball drops for the different conditions (y axis are the slots, and x axis are the trials). The dashed vertical line indicates the moments when the distribution switched.
+```{r}
+library(plyr)
+library(ggplot2)
+bds = ddply(d, .(SwitchType,Trial),summarize,BP = mean(Ball.Position))
+
+ds = ddply(d, .(Distribution.Number,Trial),summarize, BP = mean(Ball.Position))
+
+
+ggplot(subset(bds,Trial < 201),aes(Trial,BP))+
+  geom_point()+
+  geom_vline(xintercept = 101,size=1, linetype = 'dashed',alpha=.5)+
+  facet_wrap(~SwitchType)
+```
+
+
