@@ -1,7 +1,7 @@
 \pdfoutput=1
 %% Author: PGL  Porta Mana, ALS Filipowicz
 %% Created: 2018-04-08T16:54:19+0200
-%% Last-Updated: 2018-04-14T14:26:37+0200
+%% Last-Updated: 2018-04-14T16:54:24+0200
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Report-no: ***
 \newif\ifarxiv
@@ -811,13 +811,77 @@ Infinite exchangeability determines this form of the probability above:
 \begin{equation}
   \label{eq:exchangeability_form}
   \p(D_1 , D_2 , \dotsc , D_m \| M) =
-  \int_\simpl   \Biggl( \prod_{i=1}^m \yqq_{d_i} \Biggr)\, \pf(\yq \| M)\,\di\yq.
+  \int_\simpl   \Biggl( \prod_{i=1}^m \yqq_{d_i} \Biggr)\, \pf(\yq \| M)\,\di\yq,
 \end{equation}
+where $\yq$ is a normalized $N$-tuple of positive numbers:
+$\simpl \defd \set{\yq \in \RR^N \suchthat \yqq_i\ge0,
+  \sum_{i=1}^N\yqq_i=1}$. This $N$-tuple can be thought of the relative,
+long-run frequencies of the possible outcomes\footnote{\enquote{But this
+    \emph{long run} is a misleading guide to current affairs. \emph{In the
+      long run} we are all dead.} \citep[\sect~3.I,
+  p.~65]{keynes1923_r2013}}, and $\pf(\yq \| M)\,\di\yq$ as their
+probability density. From this point of view it is as if the robot first
+assumes to know the long-run frequencies of the different outcomes and, not
+knowing their particular order in the observation, 
+assigns to the occurrence of each a probability proportional to its
+frequency: this is the term $\prod_{i=1}^m \yqq_{d_i}$ in the integral.
+Then, not being sure about the long-run frequencies, the robot assign to
+them the density $\pf(\yq \| M)\,\di\yq$ -- which is determined by
+additional assumptions besides exchangeability.
+
+As an explicit example, say with $N=40$,
+\begin{equation}
+  \label{eq:exchangeability_form_example}
+  \p(d_1=37 , d_2=6 , d_3 =25, d_4=37 \| M) =
+  \int_\simpl \yqq_{6}\, \yqq_{25} \, {\yqq_{37}}^2\;  \pf(\yq \| M)\,\di\yq.
+\end{equation}
+In the following we omit the integration domain $\simpl$.
+
+From Bayes's theorem we obtain the expression for the predictive
+probability~\eqref{eq:general_prediction} of an infinite exchangeable model:
+\begin{subequations}\label{eq:prediction_exchangeability}
+  \begin{gather}
+    \p(D_{m+1}\| D_1, \dotsc , D_m , M)
+    = \int \yqq_{d_{m+1}} \pf(\yq \| D_1, \dotsc, D_m, M)\,\di\yq,
+    \\
+    \pf(\yq \| D_1, \dotsc, D_m, M)
+    = \frac{ \bigl( \prod_{i=1}^m \yqq_{d_i} \bigr)\, \pf(\yq \| M)
+      }{
+      \int  \bigl( \prod_{i=1}^m \yqq_{d_i}' \bigr)\, \pf(\yq' \| M)\,\di\yq'
+      }.
+\label{eq:exchang_updated_prior}
+  \end{gather}
+\end{subequations}
+Continuing our numeric example~\eqref{eq:exchangeability_form_example} this
+could be
+\begin{subequations}\label{eq:prediction_exchangeability_example}
+  \begin{gather}
+    \begin{multlined}[][0.95\linewidth]
+    \p(d_5=6 \| d_1=37 , d_2=6 , d_3 =25, d_4=3, M)
+    ={}\\ \int \yqq_{6}\; \pf(\yq \|  d_1=37 , d_2=6 , d_3 =25, d_4=3, M)\,\di\yq,
+  \end{multlined}
+    \\
+    \pf(\yq \|  d_1=37 , d_2=6 , d_3 =25, d_4=3, M)
+    = \frac{ \yqq_{6}\, \yqq_{25} \, {\yqq_{37}}^2\; \pf(\yq \| M)
+      }{
+      \int \yqq_{6}\, \yqq_{25} \, {\yqq_{37}}^2\; \pf(\yq' \| M)\,\di\yq'
+      }.
+  \end{gather}
+\end{subequations}
 
 
-
+Formula~\eqref{eq:prediction_exchangeability} tell us how our robot would
+update its predictive probabilities at each new observation of a Plinko outcome.
 \textcolor{white}{If you find this you can claim a postcard from me.}
 %
+
+
+\section{Initial prior}
+\label{sec:initial_prior}
+
+
+
+
 
 \setlength{\intextsep}{0.5ex}% with wrapfigure
 %\begin{figure}[p!]%{r}{0.4\linewidth} % with wrapfigure
