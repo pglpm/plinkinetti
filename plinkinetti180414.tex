@@ -1,7 +1,7 @@
 \pdfoutput=1
 %% Author: PGL  Porta Mana, ALS Filipowicz
 %% Created: 2018-04-08T16:54:19+0200
-%% Last-Updated: 2018-04-14T18:10:17+0200
+%% Last-Updated: 2018-04-15T01:31:43+0200
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Report-no: ***
 \newif\ifarxiv
@@ -921,13 +921,20 @@ the initial predictive probabilities of the participants,
 but not their prior $\pf(\yq \| M)\,\di\yq$.
 
 As a first exploration we consider a \emph{Johnson-Dirichlet} prior,
-proportional to $\prod_i{\yq_i}^{\yN_i}$ for some values of $\yN_i>0$. This
-prior is determined by the additional assumption -- call it $\yMJ$ -- that
-that the frequencies of other outcomes are irrelevant for predicting a
+proportional to $\prod_i{\yq_i}^{\yN_i}$ for some values of $\yN_i$:
+\begin{equation}
+  \label{eq:JD_prior}
+  \pf(\yq \| \yMJ) =
+  \frac{\Gamma\bigl(\sum_i\yN_i\bigr)}{\prod_i \Gamma(\yN_i)}\,
+  \prod_{i=1}^N{\yq_i}^{\yN_i-1}, \qquad \yN_i>0
+\end{equation}
+
+This prior is determined by the additional assumption -- call it $\yMJ$ --
+that that the frequencies of other outcomes are irrelevant for predicting a
 particular one:
 \begin{equation}
   \label{eq:sufficientness}
-  \pf(d_{m+1} = k \| \yf, \yMJ) = \pf(d_{m+1} = k \| \yff_{k}, \yMJ)
+  \p(d_{m+1} = k \| \yf, \yMJ) = \p(d_{m+1} = k \| \yff_{k}, \yMJ)
   \qquad k\in\set{1,\dotsc, N},
 \end{equation}
 where $\yf$ is the $N$-tuple of observed frequencies. This assumption is
@@ -943,8 +950,30 @@ corresponding predictive distribution can be calculated analytically using
 the formula
 \begin{equation}
   \label{eq:Dirichlet_formula}
-  \int_{\simpl} \prod_{i=1}^N {\yqq_{i}}^{\yN_i}\,\di\yq = \frac{\prod_i \Gamma(\yN_i)}{\Gamma\bigl(\sum_i\yN_i\bigr)}.
+  \int_{\simpl} \prod_{i=1}^N {\yqq_{i}}^{\yN_i-1}\,\di\yq = \frac{\prod_i \Gamma(\yN_i)}{\Gamma\bigl(\sum_i\yN_i\bigr)}.
 \end{equation}
+
+We obtain for the initial distribution:
+\begin{gather}
+  \label{eq:initial_predictive_JD}
+  \p(d_1= k \| \yMJ) = \int \yqq_{k}\; \pf(\yq \| \yMJ)\,\di\yq
+  = \frac{\yN_k}{\sum_i\yN_i},
+  \\
+  \shortintertext{and for the updated density:}
+  \pf(\yq \| D_1, \dotsc, D_m, \yMJ)
+  = 
+  \frac{\Gamma\bigl(\sum_i\yN_i'\bigr)}{\prod_i \Gamma(\yN_i')}\,
+  \prod_{i=1}^N{\yq_i}^{\yN_i'-1} \quad\text{with } \yN_i' =\yN_i+ \yff_i.
+  \label{eq:update_prior_JD}
+\end{gather}
+
+Formula~\eqref{eq:initial_predictive_JD} says that the Johnson-Dirichlet
+prior can produce any initial probabilities assigned by the participants,
+just by making the parameters $\yN_i$ proportional to such probabilities.
+The proportionality factor is left arbitrary. The larger the
+proportionality factor, the more
+peaked the prior, and therefore the more reluctant the robot will be
+in revising its guesses in the light of new observations.
 
 
 %\setlength{\intextsep}{0.5ex}% with wrapfigure
