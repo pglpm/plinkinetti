@@ -1,7 +1,7 @@
 \pdfoutput=1
 %% Author: PGL  Porta Mana, ALS Filipowicz
 %% Created: 2018-04-08T16:54:19+0200
-%% Last-Updated: 2018-04-15T01:31:43+0200
+%% Last-Updated: 2018-04-15T01:45:20+0200
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Report-no: ***
 \newif\ifarxiv
@@ -970,10 +970,18 @@ We obtain for the initial distribution:
 Formula~\eqref{eq:initial_predictive_JD} says that the Johnson-Dirichlet
 prior can produce any initial probabilities assigned by the participants,
 just by making the parameters $\yN_i$ proportional to such probabilities.
-The proportionality factor is left arbitrary. The larger the
-proportionality factor, the more
-peaked the prior, and therefore the more reluctant the robot will be
-in revising its guesses in the light of new observations.
+The proportionality factor $\yN \defd \sum_i\yN_i$ is left arbitrary. The
+larger $\yN$, the more peaked the prior, and therefore the more
+reluctant the robot will be in revising its guesses in the light of new
+observations.
+
+What happens is this. Suppose that after some observation the predictive
+distribution is $\yN_i/\yN$, and that the next outcome is $k$. Then the
+probability for slot $k$ is updated to $\frac{\yN_k+1}{\yN+1}$, and that
+for all other slots $j$ to $\frac{\yN_j}{\yN+1}$. This update corresponds
+to a participant's raising the bar assignment under slot $k$, leaving the
+others untouched, and/or lowering the bar assignments for \emph{all} other
+slots by the same proportion.
 
 
 %\setlength{\intextsep}{0.5ex}% with wrapfigure
