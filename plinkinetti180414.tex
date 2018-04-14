@@ -1,7 +1,7 @@
 \pdfoutput=1
 %% Author: PGL  Porta Mana, ALS Filipowicz
 %% Created: 2018-04-08T16:54:19+0200
-%% Last-Updated: 2018-04-14T17:02:45+0200
+%% Last-Updated: 2018-04-14T17:50:44+0200
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Report-no: ***
 \newif\ifarxiv
@@ -726,6 +726,9 @@ P.G.L. Porta\,Mana\\%
 \newcommand*{\simpl}{\varDelta}
 \newcommand*{\yqq}{q}
 \newcommand*{\yq}{\bm{\yqq}}
+\newcommand*{\yff}{f}
+\newcommand*{\yf}{\bm{\yff}}
+\newcommand*{\yMJ}{M_{\text{J}}}
 
 %@@@@@@@@@@ new macros end @@@@@@@@@@
 
@@ -776,11 +779,12 @@ P.G.L. Porta\,Mana\\%
 \section{The Bayesian robot}
 \label{sec:bayes_robot}
 
-In the context of these notes we call \enquote{model} any set of
-assumptions that allows us to assign a probability to a new observation,
-given a number of observations of a similar kind. Denote such assumptions
-by a proposition $M$ -- surely a proposition very difficult to express in
-writing -- and the $i$th observation by
+In the context of these notes and of the Plinko experiments
+\citep{filipowiczetal2014,filipowiczetal2016} we call \enquote{model} any
+set of assumptions that allows us to assign a probability to a new
+observation, given a number of observations of a similar kind. Denote such
+assumptions by a proposition $M$ -- surely a proposition very difficult to
+express in writing -- and the $i$th observation by
 \(D_i \defd \text{\enquote{The $i$th observation is $d_i$}}\), with
 $d_i \in \set{1,\dotsc N}$. Then $M$ allows us to give a numeric value to
 \begin{equation}
@@ -876,12 +880,64 @@ update its predictive probabilities at each new observation of a Plinko outcome.
 %
 
 
+\section{General remarks on the robot's behaviour}
+\label{sec:remarks}
+
+The exchangeable-model formula~\eqref{eq:prediction_exchangeability} leads
+to some characteristic features of the robot's beliefs and of their
+evolution:
+\begin{itemize}
+\item As data accumulate, the robot's probabilities for the next outcome
+  approach the observed frequencies. Such approach happens independently of
+  the form of the prior $\pf(\yq \| M)\,\di\yq$ -- unless the latter is
+  zero in peculiar regions of the integration domain -- but the prior
+  determines the celerity of the approach. A prior heavily peaked on a
+  frequency $\yq'$ will require a lot of data to move the predictions to
+  a very different frequency $\yq$.
+\item As data $D$ accumulate, the updated density
+  $\pf(\yq \| D, M)\,\di\yq$ will become more and more peaked at the
+  $N$-tuple of observed frequencies.
+\item Suppose that we first have a long sequence of observations
+  concentrating around frequencies $\yq$ -- say, a very long sequence of
+  $1$s in a row -- and then a shift to other frequencies $\yq'$ -- say,
+  suddenly $2$s only appear. After the shift, the predictive probabilities
+  will eventually become peaked around the new frequencies, but the shift
+  in the peaks will take a larger number of observations around the new
+  frequencies than the number around the old frequencies.
+\end{itemize}
+
+
 \section{Initial prior}
 \label{sec:initial_prior}
 
+The shape of the initial prior heavily determines the predictions in the
+first observations, so it must be chosen with care. The Plinko data tell us
+the initial predictive probabilities of the participants,
+\begin{equation}
+  \label{eq:initial_predictive}
+  \pf(d_1= k \| M) \equiv \int \yqq_{k}\; \pf(\yq \| M)\,\di\yq,
+\end{equation}
+but not their prior $\pf(\yq \| M)\,\di\yq$.
 
-
-
+As a first exploration we consider a \emph{Johnson-Dirichlet} prior,
+proportional to $\yq^L$ for some value of $L>0$. This prior is determined
+by the additional assumption -- call it $\yMJ$ -- that that the frequencies of
+other outcomes are irrelevant for predicting a particular one:
+\begin{equation}
+  \label{eq:sufficientness}
+  \pf(d_{m+1} = k \| \yf, \yMJ) = \pf(d_{m+1} = k \| \yff_{k}, \yMJ)
+  \qquad k\in\set{1,\dotsc, N},
+\end{equation}
+where $\yf$ is the $N$-tuple of observed frequencies. This assumption is
+called \enquote{sufficientness}
+\citep{johnson1924,johnson1932c}[\chap~4]{good1965}{zabell1982,jaynes1986d_r1996}.
+% Asymptotically it leads \citep{jaynes1986d_r1996,portamana2009} to a
+% predictive distribution of a maximum-entropy with Burg's \citey{burg1975} entropy
+% $\tsum\ln\yx$.
+This is a conjugate prior
+\cites[\chap~9]{degroot1970_r2004}{diaconisetal1979b} and it has two convenient
+properties: it updates to a density of the same mathematical form, and its
+corresponding predictive distribution can be calculated analytically.
 
 \setlength{\intextsep}{0.5ex}% with wrapfigure
 %\begin{figure}[p!]%{r}{0.4\linewidth} % with wrapfigure
