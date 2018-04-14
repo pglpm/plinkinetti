@@ -13,6 +13,7 @@
 *~
 _region_.*
 prv_*
+data/
 _region_.prv/
 .auctex-auto/
 auto/

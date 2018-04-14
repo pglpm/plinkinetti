@@ -51,7 +51,7 @@ rm(dprime)
 d <- d[,1:(ncol(d)-2)]
 ```
 
-Below I;m adding some identifiers to make things a little clearer:
+Below I'm adding some identifiers to make things a little clearer:
 
 SwitchType: More intuitive label for all of the different switch conditions (again, only considering the first 200 trials)
 Distribution: Which distribution participants were exposed to (W1 is a wide distribution, N1 is a narrow distribution with the same mean as W1, W2 is a wide distribution with the same variance but different mean than W1, and N2 is a narrow distribution with the same variance but different mean from N1)
