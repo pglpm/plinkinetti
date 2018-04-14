@@ -1,7 +1,7 @@
 \pdfoutput=1
 %% Author: PGL  Porta Mana, ALS Filipowicz
 %% Created: 2018-04-08T16:54:19+0200
-%% Last-Updated: 2018-04-14T17:50:44+0200
+%% Last-Updated: 2018-04-14T18:10:17+0200
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Report-no: ***
 \newif\ifarxiv
@@ -232,7 +232,7 @@ british%
 % %
 % \DeclareMathSymbol{\Alpha}{\mathalpha}{egreekr}{"41}
 % \DeclareMathSymbol{\Beta}{\mathalpha}{egreekr}{"42}
-% \DeclareMathSymbol{\Gamma}{\mathalpha}{egreekr}{"00}
+ \DeclareMathSymbol{\Gamma}{\mathalpha}{egreekr}{"00}
 % \DeclareMathSymbol{\Delta}{\mathalpha}{egreekr}{"01}
 % \DeclareMathSymbol{\Epsilon}{\mathalpha}{egreekr}{"45}
 % \DeclareMathSymbol{\Zeta}{\mathalpha}{egreekr}{"5A}
@@ -729,6 +729,7 @@ P.G.L. Porta\,Mana\\%
 \newcommand*{\yff}{f}
 \newcommand*{\yf}{\bm{\yff}}
 \newcommand*{\yMJ}{M_{\text{J}}}
+\newcommand*{\yN}{L}
 
 %@@@@@@@@@@ new macros end @@@@@@@@@@
 
@@ -920,9 +921,10 @@ the initial predictive probabilities of the participants,
 but not their prior $\pf(\yq \| M)\,\di\yq$.
 
 As a first exploration we consider a \emph{Johnson-Dirichlet} prior,
-proportional to $\yq^L$ for some value of $L>0$. This prior is determined
-by the additional assumption -- call it $\yMJ$ -- that that the frequencies of
-other outcomes are irrelevant for predicting a particular one:
+proportional to $\prod_i{\yq_i}^{\yN_i}$ for some values of $\yN_i>0$. This
+prior is determined by the additional assumption -- call it $\yMJ$ -- that
+that the frequencies of other outcomes are irrelevant for predicting a
+particular one:
 \begin{equation}
   \label{eq:sufficientness}
   \pf(d_{m+1} = k \| \yf, \yMJ) = \pf(d_{m+1} = k \| \yff_{k}, \yMJ)
@@ -937,9 +939,15 @@ called \enquote{sufficientness}
 This is a conjugate prior
 \cites[\chap~9]{degroot1970_r2004}{diaconisetal1979b} and it has two convenient
 properties: it updates to a density of the same mathematical form, and its
-corresponding predictive distribution can be calculated analytically.
+corresponding predictive distribution can be calculated analytically using
+the formula
+\begin{equation}
+  \label{eq:Dirichlet_formula}
+  \int_{\simpl} \prod_{i=1}^N {\yqq_{i}}^{\yN_i}\,\di\yq = \frac{\prod_i \Gamma(\yN_i)}{\Gamma\bigl(\sum_i\yN_i\bigr)}.
+\end{equation}
 
-\setlength{\intextsep}{0.5ex}% with wrapfigure
+
+%\setlength{\intextsep}{0.5ex}% with wrapfigure
 %\begin{figure}[p!]%{r}{0.4\linewidth} % with wrapfigure
 %  \centering\includegraphics[trim={12ex 0 18ex 0},clip,width=\linewidth]{maxent_saddle.png}\\
 %\caption{***}\label{fig:comparison_a5}
