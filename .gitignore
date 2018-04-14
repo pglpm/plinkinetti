@@ -10,6 +10,7 @@
 *.pyc
 *.dvi
 *.out.ps
+*.Rhistory
 *~
 _region_.*
 prv_*
