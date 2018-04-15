@@ -1,7 +1,7 @@
 \pdfoutput=1
 %% Author: PGL  Porta Mana, ALS Filipowicz
 %% Created: 2018-04-08T16:54:19+0200
-%% Last-Updated: 2018-04-15T01:48:26+0200
+%% Last-Updated: 2018-04-15T10:04:58+0200
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Report-no: ***
 \newif\ifarxiv
@@ -215,7 +215,7 @@ british%
 % \DeclareMathSymbol{\varTheta}{\mathalpha}{egreeki}{"02}
  \DeclareMathSymbol{\varIota}{\mathalpha}{egreeki}{"49}
 % \DeclareMathSymbol{\varKappa}{\mathalpha}{egreeki}{"4B}
-% \DeclareMathSymbol{\varLambda}{\mathalpha}{egreeki}{"03}
+ \DeclareMathSymbol{\varLambda}{\mathalpha}{egreeki}{"03}
 % \DeclareMathSymbol{\varMu}{\mathalpha}{egreeki}{"4D}
 % \DeclareMathSymbol{\varNu}{\mathalpha}{egreeki}{"4E}
 % \DeclareMathSymbol{\varXi}{\mathalpha}{egreeki}{"04}
@@ -716,10 +716,10 @@ P.G.L. Porta\,Mana\\%
 %\newcommand*{\qem}{\leavevmode\unskip\penalty9999 \hbox{}\nobreak\hfill
 %\quad\hbox{\QEM}}
 
-%\definecolor{notecolour}{RGB}{68,170,153}
+\definecolor{notecolour}{RGB}{68,170,153}
 %\newcommand*{\puzzle}{{\fontencoding{U}\fontfamily{fontawesometwo}\selectfont\symbol{225}}}
-%\newcommand*{\puzzle}{\maltese}
-%\newcommand{\mynote}[1]{ {\color{notecolour}\puzzle\ #1}}
+\newcommand*{\puzzle}{\maltese}
+\newcommand{\mynote}[1]{ {\color{notecolour}\puzzle\ #1}}
 %\newcommand*{\widebar}[1]{{\mkern1.5mu\skew{2}\overline{\mkern-1.5mu#1\mkern-1.5mu}\mkern 1.5mu}}
 
 %\DeclareMathOperator*{\argsup}{arg\,sup}
@@ -729,7 +729,9 @@ P.G.L. Porta\,Mana\\%
 \newcommand*{\yff}{f}
 \newcommand*{\yf}{\bm{\yff}}
 \newcommand*{\yMJ}{M_{\text{J}}}
-\newcommand*{\yN}{L}
+\newcommand*{\yN}{\varLambda}
+\newcommand*{\ynn}{\nu}
+\newcommand*{\yn}{\bm{\nu}}
 
 %@@@@@@@@@@ new macros end @@@@@@@@@@
 
@@ -784,23 +786,21 @@ In the context of these notes and of the Plinko experiments
 \citep{filipowiczetal2014,filipowiczetal2016} we call \enquote{model} any
 set of assumptions that allows us to assign a probability to a new
 observation, given a number of observations of a similar kind. Denote such
-assumptions by a proposition $M$ -- surely a proposition very difficult to
-express in writing -- and the $i$th observation by
-\(D_i \defd \text{\enquote{The $i$th observation is $d_i$}}\), with
-$d_i \in \set{1,\dotsc N}$. Then $M$ allows us to give a numeric value to
+assumptions by a proposition $M$ -- a proposition surely very difficult to
+express in writing. Denote the proposition \enquote{The outcome of the
+  $i$th observation is $d$} by $D_{d}^i$, with $d \in \set{1,\dotsc N}$.
+Then $M$ allows us to give a numeric value to
 \begin{equation}
   \label{eq:general_prediction}
-  \p(D_{m+1} \| D_1 \land D_2 \land \dotsb \land D_m \land M),
+  \p(D^{m+1}_{d_{m+1}} \| D^1_{d_1} \land D^2_{d_2} \land \dotsb \land D^m_{d_m} \land M),
 \end{equation}
-with
 
-The proposition $D_i$
-In the following we abbreviate logical conjunction \enquote{$\land$} with a
-comma, for simplicity. Our statistical terminology and notation follow ISO
-standards \citep{iso1993_r2009,iso2006} otherwise.
+We will abbreviate logical conjunction \enquote{$\land$} with a comma, for
+simplicity. Our statistical terminology and notation follow ISO standards
+\citep{iso1993_r2009,iso2006} otherwise.
 
 We shall consider a robot who uses an \emph{infinitely exchangeable} model.
-This model, introduced by de~Finetti
+This kind of models, introduced by de~Finetti
 \parentext{\cite*{definetti1930,definetti1937}; \cite{heathetal1976}} and
 described in detail in \textcite[\sect~4.2]{bernardoetal1994_r2000}, is
 determined by the following assumption of \emph{infinite exchangeability}:
@@ -815,7 +815,7 @@ mathematical form of this model.
 Infinite exchangeability determines this form of the probability above:
 \begin{equation}
   \label{eq:exchangeability_form}
-  \p(D_1 , D_2 , \dotsc , D_m \| M) =
+  \p(D^1_{d_1} , D^2_{d_2} , \dotsc , D^m_{d_m} \| M) =
   \int_\simpl   \Biggl( \prod_{i=1}^m \yqq_{d_i} \Biggr)\, \pf(\yq \| M)\,\di\yq,
 \end{equation}
 where $\yq$ is a normalized $N$-tuple of positive numbers:
@@ -837,7 +837,7 @@ additional assumptions besides exchangeability.
 As an explicit example, say with $N=40$,
 \begin{equation}
   \label{eq:exchangeability_form_example}
-  \p(d_1=37 , d_2=6 , d_3 =25, d_4=37 \| M) =
+  \p(D^1_{37} , D^2_{6} , D^3_{25}, D^4_{37} \| M) =
   \int_\simpl \yqq_{6}\, \yqq_{25} \, {\yqq_{37}}^2\;  \pf(\yq \| M)\,\di\yq.
 \end{equation}
 In the following we omit the integration domain $\simpl$.
@@ -846,10 +846,10 @@ From Bayes's theorem we obtain the expression for the predictive
 probability~\eqref{eq:general_prediction} of an infinite exchangeable model:
 \begin{subequations}\label{eq:prediction_exchangeability}
   \begin{gather}
-    \p(D_{m+1}\| D_1, \dotsc , D_m , M)
-    = \int \yqq_{d_{m+1}} \pf(\yq \| D_1, \dotsc, D_m, M)\,\di\yq,
+    \p(D^{m+1}_{d_{m+1}}\| D^1_{d_1}, \dotsc , D^m_{d_m} , M)
+    = \int \yqq_{d_{m+1}} \pf(\yq \| D^1_{d_1}, \dotsc, D^m_{d_m}, M)\,\di\yq,
     \\
-    \pf(\yq \| D_1, \dotsc, D_m, M)
+    \pf(\yq \| D^1_{d_1}, \dotsc, D^m_{d_m}, M)
     = \frac{ \bigl( \prod_{i=1}^m \yqq_{d_i} \bigr)\, \pf(\yq \| M)
       }{
       \int  \bigl( \prod_{i=1}^m \yqq_{d_i}' \bigr)\, \pf(\yq' \| M)\,\di\yq'
@@ -862,11 +862,11 @@ could be
 \begin{subequations}\label{eq:prediction_exchangeability_example}
   \begin{gather}
     \begin{multlined}[][0.95\linewidth]
-    \p(d_5=6 \| d_1=37 , d_2=6 , d_3 =25, d_4=3, M)
-    ={}\\ \int \yqq_{6}\; \pf(\yq \|  d_1=37 , d_2=6 , d_3 =25, d_4=3, M)\,\di\yq,
+    \p(D^5_{6} \| D^1_{37} , D^2_{6} , D^3_{25}, D^4_{3}, M)
+    ={}\\ \int \yqq_{6}\; \pf(\yq \|  D^1_{37} , D^2_{6} , D^3_{25}, D^4_{3}, M)\,\di\yq,
   \end{multlined}
     \\
-    \pf(\yq \|  d_1=37 , d_2=6 , d_3 =25, d_4=3, M)
+    \pf(\yq \|  D^1_{37} , D^2_{6} , D^3_{25}, D^4_{3}, M)
     = \frac{ \yqq_{6}\, \yqq_{25} \, {\yqq_{37}}^2\; \pf(\yq \| M)
       }{
       \int \yqq_{6}\, \yqq_{25} \, {\yqq_{37}}^2\; \pf(\yq' \| M)\,\di\yq'
@@ -916,17 +916,17 @@ first observations, so it must be chosen with care. The Plinko data tell us
 the initial predictive probabilities of the participants,
 \begin{equation}
   \label{eq:initial_predictive}
-  \pf(d_1= k \| M) \equiv \int \yqq_{k}\; \pf(\yq \| M)\,\di\yq,
+  \pf(D^1_{k} \| M) \equiv \int \yqq_{k}\; \pf(\yq \| M)\,\di\yq,
 \end{equation}
 but not their prior $\pf(\yq \| M)\,\di\yq$.
 
 As a first exploration we consider a \emph{Johnson-Dirichlet} prior,
-proportional to $\prod_i{\yq_i}^{\yN_i}$ for some values of $\yN_i$:
+proportional to a monomial $\prod_i{\yq_i}^{x_i}$ for some values of $x_i$:
 \begin{equation}
   \label{eq:JD_prior}
   \pf(\yq \| \yMJ) =
-  \frac{\Gamma\bigl(\sum_i\yN_i\bigr)}{\prod_i \Gamma(\yN_i)}\,
-  \prod_{i=1}^N{\yq_i}^{\yN_i-1}, \qquad \yN_i>0
+  \frac{\Gamma(\yN)}{\prod_i \Gamma(\yN\ynn_i)}\,
+  \prod_{i=1}^N{\yq_i}^{\yN\ynn_i-1}, \qquad \yN>0, \ynn \in \simpl.
 \end{equation}
 
 This prior is determined by the additional assumption -- call it $\yMJ$ --
@@ -934,11 +934,11 @@ that that the frequencies of other outcomes are irrelevant for predicting a
 particular one:
 \begin{equation}
   \label{eq:sufficientness}
-  \p(d_{m+1} = k \| \yf, \yMJ) = \p(d_{m+1} = k \| \yff_{k}, \yMJ)
+  \p(D^{m+1}_k \| N\yf, \yMJ) = \p(D^{m+1}_k \| N\yff_{k}, \yMJ)
   \qquad k\in\set{1,\dotsc, N},
 \end{equation}
-where $\yf$ is the $N$-tuple of observed frequencies. This assumption is
-called \enquote{sufficientness}
+where $\yf$ is the $N$-tuple of observed relative frequencies. This
+assumption is called \enquote{sufficientness}
 \citep{johnson1924,johnson1932c}[\chap~4]{good1965}{zabell1982,jaynes1986d_r1996}.
 % Asymptotically it leads \citep{jaynes1986d_r1996,portamana2009} to a
 % predictive distribution of a maximum-entropy with Burg's \citey{burg1975} entropy
@@ -950,42 +950,73 @@ corresponding predictive distribution can be calculated analytically using
 the formula
 \begin{equation}
   \label{eq:Dirichlet_formula}
-  \int_{\simpl} \prod_{i=1}^N {\yqq_{i}}^{\yN_i-1}\,\di\yq = \frac{\prod_i \Gamma(\yN_i)}{\Gamma\bigl(\sum_i\yN_i\bigr)}.
+  \int_{\simpl} \prod_{i=1}^N {\yqq_{i}}^{x_i-1}\,\di\yq = \frac{\prod_i \Gamma(x_i)}{\Gamma\bigl(\sum_i x_i\bigr)}.
 \end{equation}
 
 We obtain for the initial distribution:
-\begin{gather}
+\begin{equation}
   \label{eq:initial_predictive_JD}
-  \p(d_1= k \| \yMJ) = \int \yqq_{k}\; \pf(\yq \| \yMJ)\,\di\yq
-  = \frac{\yN_k}{\sum_i\yN_i},
-  \\
-  \shortintertext{and for the updated density:}
-  \pf(\yq \| D_1, \dotsc, D_m, \yMJ)
-  = 
-  \frac{\Gamma\bigl(\sum_i\yN_i'\bigr)}{\prod_i \Gamma(\yN_i')}\,
-  \prod_{i=1}^N{\yq_i}^{\yN_i'-1} \quad\text{with } \yN_i' =\yN_i+ \yff_i.
+  \p(D^1_{k} \| \yMJ) = \int \yqq_{k}\; \pf(\yq \| \yMJ)\,\di\yq
+  = \ynn_k,
+\end{equation}
+and for the updated density:
+\begin{multline}
   \label{eq:update_prior_JD}
-\end{gather}
+  \pf(\yq \| D^1_{d_1}, \dotsc, D^m_{d_m}, \yMJ)
+  = 
+  \frac{\Gamma(\yN')}{\prod_i \Gamma(\yN'\ynn_i')}\,
+  \prod_{i=1}^N{\yq_i}^{\yN'\ynn_i'-1}
+  \\\
+  \text{with}\quad \yN' =\yN+N,\quad
+  \yn'=\frac{\yN\yn+N\yf}{\yN+N}.
+\end{multline}
 
 Formula~\eqref{eq:initial_predictive_JD} says that the Johnson-Dirichlet
 prior can produce any initial probabilities assigned by the participants,
-just by making the parameters $\yN_i$ proportional to such probabilities.
-The proportionality factor $\yN \defd \sum_i\yN_i$ is left arbitrary. The
-larger $\yN$, the more peaked the prior, and therefore the more
-reluctant the robot will be in revising its guesses in the light of new
-observations.
+just by equalling the parameters $\yn$ to them. The parameter $\yN$ is left
+arbitrary. 
 
-What happens is this. Suppose that after some observation the predictive
-distribution is $\yN_i/\yN$, and that the next outcome is $k$. Then the
-probability for slot $k$ is updated to $\frac{\yN_k+1}{\yN+1}$, and that
-for all other slots $j$ to $\frac{\yN_j}{\yN+1}$. This update corresponds
-to a participant's raising the bar assignment under slot $k$, leaving the
-others untouched, and/or lowering the bar assignments for \emph{all} other
-slots by the same proportion.
+What happens during the sequence of observations is this. Suppose that
+after some observations the predictive distribution is $\yn$, and that the
+next outcome is $k$. Then the probability for slot $k$ is updated to
+$\frac{\yN\ynn_k+1}{\yN+1}$, and that for all other slots $j$ to
+$\frac{\yN\ynn_j}{\yN+1}$. This update corresponds to a participant's
+raising the bar assignment under slot $k$, leaving the others untouched,
+and/or lowering the bar assignments for \emph{all} other slots by the same
+proportion. The parameter $\yN$ is increased by $1$. The larger $\yN$, the
+more reluctant the robot is in revising its guesses in the light of new
+observations. The update formula~\eqref{eq:update_prior_JD} says that the
+robot behaves as if it had already made $\yN$ observations with outcome
+frequencies $\yn$.
 
-A participant who, after observing outcome $k$, raises the bar under that
+Some conclusions drawn from the formulae of this specific model:
+\begin{itemize}
+\item Participants who have great inertia against updating their
+  predictions in view of the observations are \emph{not} necessarily
+  behaving at variance with the probability calculus. The latter says that
+  they can be as stubborn as they please: larger $\yN$. If we judge such
+  inertia as irrational, then we must find the irrationality somewhere
+  else.
+
+\item A participant who, after observing outcome $k$, raises the bar under that
 slot \emph{and nearby bars} is therefore not acting according to a
 Johnson-Dirichlet exchangeable model.
+
+\item The slots have a specific physical order, and from the way the ball
+  falls into them it seems reasonable to assume that updates to the
+  probability for one slot should affect those for nearby slots. The
+  Johnson-Dirichlet model does not take this into account. 
+\end{itemize}
+
+
+
+\mynote{L: to be continued}
+
+\section{Methodological remarks}
+\label{sec:method_remarks}
+
+
+
 
 
 %\setlength{\intextsep}{0.5ex}% with wrapfigure
