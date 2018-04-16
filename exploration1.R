@@ -77,6 +77,14 @@ for(i in 1:n){
     overlap[1+i] <- ldistr[1+i,] %*% distr[1+i,]
 }
 
+## sequence of means and stds
+meanperson <- distr %*% (1:N) 
+stdperson <- sqrt(distr %*% (1:N)^2 - meanperson^2)
+meanrobot <- ldistr %*% (1:N) 
+stdrobot <- sqrt(ldistr %*% (1:N)^2 - meanrobot^2)
+
+
+
 ## plot the overlap
 df <- data.frame(x=1:(n+1), y=overlap)
 g <- ggplot() + theme_classic() 
@@ -105,9 +113,71 @@ save_plot(pdfname, g, base_width = 148, base_height = 148*0.5, units='mm', dpi =
 dev.off()
 ##ggsave(pdfname, width = 148, height = 148*0.5, units='mm', dpi = 300)
 
+## plot sequence of means
+df <- data.frame(x=1:(n+1), y1=meanperson, y2=meanrobot)
+    maxy <- max(df$y1, df$y2)
+    miny <- min(df$y1, df$y2)
+    iconheight <- (maxy-miny)/10
+    robotwidth <- (n+1)/20/300*271
+    personwidth <- (n+1)/20/300*223
+g <- ggplot() + theme_classic() 
+g <- g + annotation_raster(person, xmax = n+1, xmin = n+1-robotwidth, 
+                               ymax = maxy, ymin=maxy-iconheight, interpolate = T) +
+        annotation_raster(robot, xmax = n+1, xmin = n+1-robotwidth, 
+                          ymax = maxy*0.99-iconheight, ymin=maxy*0.99-2*iconheight, interpolate = T) 
+g <- g + geom_point(data=df, aes(x,y1), colour=myred, alpha=0.33) +
+    geom_line(data=df, aes(x,y1), colour=myred, alpha=0.33) +
+    geom_point(data=df, aes(x,y2), colour=myblue, alpha=0.33) +
+    geom_line(data=df, aes(x,y2), colour=myblue, alpha=0.33) +
+    xlim(1,n+1) + ylim(miny,maxy) +
+    theme(aspect.ratio=0.5) +
+    labs(x='trial',y='mean',
+         title=paste0('participant ', x))
+g <- g + geom_rect(aes(xmax=n+1-robotwidth,xmin=n+1-2*robotwidth,
+                          ymax=maxy,ymin = maxy-iconheight),
+                          color=NA, fill=myred, alpha=0.5, stat='identity', position='identity') +
+        geom_rect(aes(xmax=n+1-robotwidth,xmin=n+1-2*robotwidth,
+                          ymax=maxy*0.99-iconheight,ymin = maxy*0.99-2*iconheight),
+                          color=NA, fill=myblue, alpha=0.5)
+pdfname <- paste0('means_',x,'.pdf')
+save_plot(pdfname, g, base_width = 148, base_height = 148*0.5, units='mm', dpi = 300)
+dev.off()
+##ggsave(pdfname, width = 148, height = 148*0.5, units='mm', dpi = 300)
+
+## plot sequence of stds
+df <- data.frame(x=1:(n+1), y1=stdperson, y2=stdrobot)
+    maxy <- max(df$y1, df$y2)
+    miny <- min(df$y1, df$y2)
+    iconheight <- (maxy-miny)/10
+    robotwidth <- (n+1)/20/300*271
+    personwidth <- (n+1)/20/300*223
+g <- ggplot() + theme_classic() 
+g <- g + annotation_raster(person, xmax = n+1, xmin = n+1-robotwidth, 
+                               ymax = maxy, ymin=maxy-iconheight, interpolate = T) +
+        annotation_raster(robot, xmax = n+1, xmin = n+1-robotwidth, 
+                          ymax = maxy*0.99-iconheight, ymin=maxy*0.99-2*iconheight, interpolate = T) 
+g <- g + geom_point(data=df, aes(x,y1), colour=myred, alpha=0.33) +
+    geom_line(data=df, aes(x,y1), colour=myred, alpha=0.33) +
+    geom_point(data=df, aes(x,y2), colour=myblue, alpha=0.33) +
+    geom_line(data=df, aes(x,y2), colour=myblue, alpha=0.33) +
+    xlim(1,n+1) + ylim(miny,maxy) +
+    theme(aspect.ratio=0.5) +
+    labs(x='trial',y='std',
+         title=paste0('participant ', x))
+g <- g + geom_rect(aes(xmax=n+1-robotwidth,xmin=n+1-2*robotwidth,
+                          ymax=maxy,ymin = maxy-iconheight),
+                          color=NA, fill=myred, alpha=0.5, stat='identity', position='identity') +
+        geom_rect(aes(xmax=n+1-robotwidth,xmin=n+1-2*robotwidth,
+                          ymax=maxy*0.99-iconheight,ymin = maxy*0.99-2*iconheight),
+                          color=NA, fill=myblue, alpha=0.5)
+pdfname <- paste0('stds_',x,'.pdf')
+save_plot(pdfname, g, base_width = 148, base_height = 148*0.5, units='mm', dpi = 300)
+dev.off()
+##ggsave(pdfname, width = 148, height = 148*0.5, units='mm', dpi = 300)
+
 
 ## plot histograms for a range of trials
-rangehist <- 190:200
+rangehist <- c(1:10,95:105,190:200)
 plots <- list()
 maxhist <- max(c(distr,ldistr))
 pdfname <- paste0('histogram_',rangehist[1],'-',rangehist[length(rangehist)],'_',x,'.pdf')
@@ -118,9 +188,10 @@ for(j in 1:length(rangehist)){
                      who=rep(c('person','robot'), each=N),
                      y=c(distr[i,], ldistr[i,]))
     maxy <- max(df$y)
-    iconheight <- maxy/10
-    robotwidth <- iconheight/maxy*N*0.5/300*271
-    personwidth <- iconheight/maxy*N*0.5/300*223
+    miny <- 0
+    iconheight <- (maxy-miny)/10
+    robotwidth <- N/20/300*271
+    personwidth <- N/20/300*223
     g <- ggplot() + theme_classic() 
 g <- g + annotation_raster(person, xmax = N, xmin = N-robotwidth, 
                                ymax = maxy, ymin=maxy-iconheight, interpolate = T) +
@@ -129,7 +200,7 @@ g <- g + annotation_raster(person, xmax = N, xmin = N-robotwidth,
     g <- g + geom_bar(data=df, aes(x=x,y=y,fill=who), alpha=0.5,stat='identity', position='identity') +
          scale_fill_manual(values=c(myred,myblue)) +
         scale_x_continuous(breaks=c(1,seq(5,N,length.out=8))) + 
-        #xlim(1,N) + #ylim(0,maxhist) +
+        ylim(miny,maxy) +
         theme(aspect.ratio=0.5,
               legend.title=element_blank(),
               legend.background=element_blank(),
