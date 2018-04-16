@@ -80,7 +80,7 @@ Here's a plot of the ball drops for the different conditions (y axis are the slo
 ```{r}
 library(plyr)
 library(ggplot2)
-bds = ddply(d, .(SwitchType,Trial),summarize,BP = mean(Ball.Position))
+bds = ddply(d, .(Condition,Trial),summarize,BP = mean(Ball.Position))
 
 ds = ddply(d, .(Distribution.Number,Trial),summarize, BP = mean(Ball.Position))
 
@@ -88,7 +88,7 @@ ds = ddply(d, .(Distribution.Number,Trial),summarize, BP = mean(Ball.Position))
 ggplot(subset(bds,Trial < 201),aes(Trial,BP))+
   geom_point()+
   geom_vline(xintercept = 101,size=1, linetype = 'dashed',alpha=.5)+
-  facet_wrap(~SwitchType)
+  facet_wrap(~Condition)
 ```
 
 
