@@ -32,6 +32,7 @@ robot <- readPNG('robot1.png')
 ## number of slots and sequence of zeros for later use
 N <- 40
 slots <- integer(N)
+maxstd <- sqrt((1+N^2)*0.5-(N+1)*0.5)
 
 ## Define a function that plots:
 ## - sequences of overlap, relative entropies, means, stds
@@ -85,12 +86,26 @@ stdperson <- sqrt(distr %*% (1:N)^2 - meanperson^2)
 meanrobot <- ldistr %*% (1:N) 
 stdrobot <- sqrt(ldistr %*% (1:N)^2 - meanrobot^2)
 
-
+## ## plot obzervations
+## df <- data.frame(x=2:(n+1), y1=obs)
+##     maxy <- N
+##     miny <- 1
+## g <- ggplot() + theme_classic() 
+## g <- g + geom_point(data=df, aes(x,y1), colour='black') +
+##     geom_line(data=df, aes(x,y1), colour='black') +
+##     xlim(1,n+1) + ylim(miny,maxy) +
+##     theme(aspect.ratio=0.5) +
+##     labs(x='trial',y='observations',
+##          title=paste0('participant ', participant))
+## pdfname <- paste0(plotsdir,'observ_',participant,'.pdf')
+## save_plot(pdfname, g, base_width = 148, base_height = 148*0.5, units='mm', dpi = 300)
+## dev.off()
+## ##ggsave(pdfname, width = 148, height = 148*0.5, units='mm', dpi = 300)
 
 ## plot the overlap
 df <- data.frame(x=1:(n+1), y=overlap)
 g <- ggplot() + theme_classic() 
-g <- g + geom_point(data=df, aes(x,y), colour=mygreen) +
+g <- g + #geom_point(data=df, aes(x,y), colour=mygreen) +
     geom_line(data=df, aes(x,y), colour=mygreen) +
     xlim(1,n+1) + # ylim(0,1) +
     theme_classic() +
@@ -104,7 +119,7 @@ dev.off()
 ## plot the relative entropy
 df <- data.frame(x=1:(n+1), y=rentropy)
 g <- ggplot() + theme_classic() 
-g <- g + geom_point(data=df, aes(x,y), colour=myyellow) +
+g <- g + #geom_point(data=df, aes(x,y), colour=myyellow) +
     geom_line(data=df, aes(x,y), colour=myyellow) +
     xlim(1,n+1) +
     theme(aspect.ratio=0.5) +
@@ -116,9 +131,9 @@ dev.off()
 ##ggsave(pdfname, width = 148, height = 148*0.5, units='mm', dpi = 300)
 
 ## plot sequence of means
-df <- data.frame(x=1:(n+1), y1=meanperson, y2=meanrobot)
-    maxy <- max(df$y1, df$y2)
-    miny <- min(df$y1, df$y2)
+df <- data.frame(x=1:(n+1), y1=meanperson, y2=meanrobot, y3=c(NA,obs))
+    maxy <- N #max(df$y1, df$y2)
+    miny <- 1 #min(df$y1, df$y2)
     iconheight <- (maxy-miny)/10
     robotwidth <- (n+1)/20/300*271
     personwidth <- (n+1)/20/300*223
@@ -127,10 +142,11 @@ g <- g + annotation_raster(person, xmax = n+1, xmin = n+1-robotwidth,
                                ymax = maxy, ymin=maxy-iconheight, interpolate = T) +
         annotation_raster(robot, xmax = n+1, xmin = n+1-robotwidth, 
                           ymax = maxy*0.99-iconheight, ymin=maxy*0.99-2*iconheight, interpolate = T) 
-g <- g + geom_point(data=df, aes(x,y1), colour=myred, alpha=0.33) +
-    geom_line(data=df, aes(x,y1), colour=myred, alpha=0.33) +
-    geom_point(data=df, aes(x,y2), colour=myblue, alpha=0.33) +
-    geom_line(data=df, aes(x,y2), colour=myblue, alpha=0.33) +
+g <- g + geom_line(data=df, aes(x,y3), colour='black', alpha=0.33)
+    g <- g + #geom_point(data=df, aes(x,y1), colour=myred, alpha=0.33) +
+    geom_line(data=df, aes(x,y1), colour=myred, alpha=0.75) +
+    #geom_point(data=df, aes(x,y2), colour=myblue, alpha=0.33) +
+    geom_line(data=df, aes(x,y2), colour=myblue, alpha=0.75) +
     xlim(1,n+1) + ylim(miny,maxy) +
     theme(aspect.ratio=0.5) +
     labs(x='trial',y='mean',
@@ -148,8 +164,8 @@ dev.off()
 
 ## plot sequence of stds
 df <- data.frame(x=1:(n+1), y1=stdperson, y2=stdrobot)
-    maxy <- max(df$y1, df$y2)
-    miny <- min(df$y1, df$y2)
+    maxy <- maxstd #max(df$y1, df$y2)
+    miny <- 0 #min(df$y1, df$y2)
     iconheight <- (maxy-miny)/10
     robotwidth <- (n+1)/20/300*271
     personwidth <- (n+1)/20/300*223
@@ -158,10 +174,10 @@ g <- g + annotation_raster(person, xmax = n+1, xmin = n+1-robotwidth,
                                ymax = maxy, ymin=maxy-iconheight, interpolate = T) +
         annotation_raster(robot, xmax = n+1, xmin = n+1-robotwidth, 
                           ymax = maxy*0.99-iconheight, ymin=maxy*0.99-2*iconheight, interpolate = T) 
-g <- g + geom_point(data=df, aes(x,y1), colour=myred, alpha=0.33) +
-    geom_line(data=df, aes(x,y1), colour=myred, alpha=0.33) +
-    geom_point(data=df, aes(x,y2), colour=myblue, alpha=0.33) +
-    geom_line(data=df, aes(x,y2), colour=myblue, alpha=0.33) +
+g <- g + #geom_point(data=df, aes(x,y1), colour=myred, alpha=0.33) +
+    geom_line(data=df, aes(x,y1), colour=myred, alpha=0.75) +
+    #geom_point(data=df, aes(x,y2), colour=myblue, alpha=0.33) +
+    geom_line(data=df, aes(x,y2), colour=myblue, alpha=0.75) +
     xlim(1,n+1) + ylim(miny,maxy) +
     theme(aspect.ratio=0.5) +
     labs(x='trial',y='std',
