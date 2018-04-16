@@ -195,7 +195,7 @@ dev.off()
 
 
 ## plot histograms for a range of trials
-rangehist <- trialstoshow
+if(!is.null(trialstoshow)){rangehist <- trialstoshow
 maxhist <- max(c(distr,ldistr))
 pdfname <- paste0(plotsdir,'histogram_',rangehist[1],'-',rangehist[length(rangehist)],'_',participant,'-stub_',stubbornness,'.pdf')
 pdf(pdfname,width = 148*mmtoin, height = 148*0.6*mmtoin)
@@ -234,7 +234,7 @@ g <- g + geom_rect(aes(xmax=N-robotwidth,xmin=N-2*robotwidth,
                           color=NA, fill=myblue, alpha=0.5)
 print(g)
 }
-dev.off()
+dev.off()}
 
     return(list(distr=distr,robotdistr=ldistr,rentropy=rentropy,overlap=overlap,meanperson=meanperson,meanrobot=meanrobot,stdperson=stdperson,stdrobot=stdrobot))
 }
