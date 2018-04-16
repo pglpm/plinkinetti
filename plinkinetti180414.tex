@@ -1,7 +1,7 @@
 \pdfoutput=1
 %% Author: PGL  Porta Mana, ALS Filipowicz
 %% Created: 2018-04-08T16:54:19+0200
-%% Last-Updated: 2018-04-16T22:22:51+0200
+%% Last-Updated: 2018-04-17T00:13:59+0200
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Report-no: ***
 \newif\ifarxiv
@@ -772,10 +772,14 @@ P.G.L. Porta\,Mana\\%
 %\epigraphsourceposition{flushright}
 \epigraphfontsize{\footnotesize}
 \setlength{\epigraphrule}{0pt}
-%\setlength{\beforeepigraphskip}{0pt}
-%\setlength{\afterepigraphskip}{0pt}
+\setlength{\beforeepigraphskip}{0pt}
+\setlength{\afterepigraphskip}{0pt}
 \epigraph{We are human, after all\\
   Much in common, after all}{\citep{daftpunk2005b}}
+\vspace{-1em}
+\epigraph{If people always felt obliged to back their opinions when
+  challenged, we would be spared a few of the ``certain'' predictions that
+  are so freely made.}{\citep{good1950}}
 
 
 % \noindent\emph{\footnotesize Note: Dear Peer, this manuscript is
@@ -944,7 +948,7 @@ particular one:
 \end{equation}
 where $\yf$ is the $N$-tuple of observed relative frequencies. This
 assumption is called \enquote{sufficientness}
-\citep{johnson1924,johnson1932c}[\chap~4]{good1965}{zabell1982,jaynes1986d_r1996}.
+\cites{johnson1924,johnson1932c}[\chap~4]{good1965}{zabell1982,jaynes1986d_r1996}.
 % Asymptotically it leads \citep{jaynes1986d_r1996,portamana2009} to a
 % predictive distribution of a maximum-entropy with Burg's \citey{burg1975} entropy
 % $\tsum\ln\yx$.
@@ -993,25 +997,6 @@ observations. The update formula~\eqref{eq:update_prior_JD} says that the
 robot behaves as if it had already made $\yN$ observations with outcome
 frequencies $\yn$.
 
-Some conclusions drawn from the formulae of this specific model:
-\begin{itemize}[para]
-\item Participants who have great inertia against updating their
-  predictions in view of the observations are \emph{not} necessarily
-  behaving at variance with the probability calculus. The latter says that
-  they can be as stubborn as they please: larger $\yN$. If we judge such
-  inertia as irrational, our judgement cannot be based on such a simple
-  model; possibly it's based on a hierarchic model where $\yN$ is given a
-  probability that depends on past experiences.
-
-\item The slots have a specific physical order, and from the way the ball
-  falls into them it seems reasonable to assume that updates to the
-  probability for one slot should affect those for nearby slots. The
-  Johnson-Dirichlet model does not take this into account. 
-
-\item A participant who, after observing outcome $k$, raises the bar under
-  that slot \emph{and nearby bars} is therefore not acting according to a
-  Johnson-Dirichlet exchangeable model.
-\end{itemize}
 
 \section{Examples}
 \label{sec:examples}
@@ -1097,6 +1082,30 @@ memory and be capable of believing that the underlying \enquote{mechanism}
 has changed.
 
 
+Some conclusions can be drawn from the properties of our model and from the
+examples:
+\begin{itemize}[para]
+\item Participants who have great inertia against updating their
+  predictions in view of the observations are \emph{not} necessarily
+  behaving at variance with the probability calculus. The latter says that
+  they can be as stubborn as they please: larger $\yN$. If we judge such
+  inertia as irrational, our judgement cannot be based on such a simple
+  model; possibly it's based on a hierarchic model where $\yN$ is given a
+  probability that depends on past experiences.
+
+\item The slots have a specific physical order, and from the way the ball
+  falls into them it seems reasonable to assume that updates to the
+  probability for one slot should affect those for nearby slots. The
+  Johnson-Dirichlet model does not take this into account. 
+
+\item A participant who, after observing outcome $k$, raises the bar under
+  that slot \emph{and nearby bars} is therefore not acting according to a
+  Johnson-Dirichlet exchangeable model.
+\item Infinitely exchangeable priors are incapable of quickly adapting to
+  changes in the empirical statistics of the outcomes.
+\end{itemize}
+
+
 \section{General remarks}
 \label{sec:method_remarks}
 
@@ -1125,16 +1134,18 @@ this, the participant could, say, suddenly move all probability to a slot
 at the edge and check if this seems to influence the next outcome (\cf\
 participant~31).
 
-\medskip
-\textbullet\ De~Finetti introduced the notion of exchangeability and proved
-the connected theorem in order to avoid thinking in terms of
+\medskip \textbullet\ De~Finetti introduced the notion of exchangeability
+and proved the connected theorem in order to avoid thinking in terms of
 \enquote{mechanisms} or of \enquote{true unknown distributions}. He
-characterized a statistical model in terms of properties of the predictive
-distribution -- for example, that it be invariant under exchanges of the
-outcomes. This point of view was taken up by many other statisticians and
-has been used to characterize many other statistical models, like Markov
-ones for example
+characterized a statistical model in terms of \emph{features of the
+  predictive distribution} -- for example, that it be invariant under
+exchanges of the outcomes. This point of view was taken up by many other
+statisticians and has been used to characterize many other statistical
+models, like Markov ones for example
 \citep{freedman1962,diaconisetal1980c,zaman1984,fortinietal2002,fortinietal2014}.
+This point of view can be very useful in statistics and inference, but
+maybe not to understand the psychology behind prediction
+\citep[\cf][\chap~3]{good1965}.
 
 
 
