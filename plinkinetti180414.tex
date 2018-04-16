@@ -1,7 +1,7 @@
 \pdfoutput=1
 %% Author: PGL  Porta Mana, ALS Filipowicz
 %% Created: 2018-04-08T16:54:19+0200
-%% Last-Updated: 2018-04-16T04:10:33+0200
+%% Last-Updated: 2018-04-16T18:29:10+0200
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Report-no: ***
 \newif\ifarxiv
@@ -979,12 +979,11 @@ and for the updated density:
 Formula~\eqref{eq:initial_predictive_JD} says that the Johnson-Dirichlet
 prior can produce any initial probabilities assigned by the participants,
 just by equalling the parameters $\yn$ to them. The parameter $\yN$ is left
-arbitrary. 
+arbitrary. We can call it the \emph{stubbornness} of the robot, Here's the reason.
 
-What happens during the sequence of observations is this. Suppose that
-after some observations the predictive distribution is $\yn$, and that the
-next outcome is $k$. Then the probability for slot $k$ is updated to
-$\frac{\yN\ynn_k+1}{\yN+1}$, and that for all other slots $j$ to
+Suppose that after some observations the predictive distribution is $\yn$,
+and that the next outcome is $k$. Then the probability for slot $k$ is
+updated to $\frac{\yN\ynn_k+1}{\yN+1}$, and that for all other slots $j$ to
 $\frac{\yN\ynn_j}{\yN+1}$. This update corresponds to a participant's
 raising the bar assignment under slot $k$, leaving the others untouched,
 and/or lowering the bar assignments for \emph{all} other slots by the same
@@ -1004,22 +1003,97 @@ Some conclusions drawn from the formulae of this specific model:
   model; possibly it's based on a hierarchic model where $\yN$ is given a
   probability that depends on past experiences.
 
-\item A participant who, after observing outcome $k$, raises the bar under that
-slot \emph{and nearby bars} is therefore not acting according to a
-Johnson-Dirichlet exchangeable model.
-
 \item The slots have a specific physical order, and from the way the ball
   falls into them it seems reasonable to assume that updates to the
   probability for one slot should affect those for nearby slots. The
   Johnson-Dirichlet model does not take this into account. 
+
+\item A participant who, after observing outcome $k$, raises the bar under
+  that slot \emph{and nearby bars} is therefore not acting according to a
+  Johnson-Dirichlet exchangeable model.
 \end{itemize}
 
+\section{Examples}
+\label{sec:examples}
+
+Let's choose a participant, and use
+formula~\eqref{eq:initial_predictive_JD} to choose the $\yn$ parameters of
+the robot's prior, equating it to the initial predictive distribution of
+the participant. Let's set a value for the robot's stubbornness $\yN$, and
+check how the robot updates its predictive distribution, using
+formula~\eqref{eq:update_prior_JD}, while observing the same outcomes as
+the participant.
 
 
-\mynote{L: to be continued}
+\begin{figure}[p!]
+\centering\includegraphics[width=\linewidth]{{comparisons1/means_12-stub_0.1}.pdf}
+\includegraphics[width=\linewidth]{{comparisons1/stds_12-stub_0.1}.pdf}
+\caption{Comparison of the means and standard deviations of the predictive
+  distributions of participant~12 and of a robot with stubborness
+  $\yN=0.1$}\label{fig:comparison_12_01}
+\end{figure}% done with exploration1.R
+Figure~\ref{fig:comparison_12_01} shows the means and standard deviations
+of the sequence such predictive distributions, for participant~12 and a
+robot with stubbornness $\yN=0.1$. This low value makes the robot give
+great consideration to the first outcomes, as the initial variability in
+the figure shows. The program generating the outcomes had a change in
+standard deviation, shifting to a narrower distribution at trial~101. The
+robot adapted to this change very slowly.
+
+
+\begin{figure}[p!]
+\centering\includegraphics[width=\linewidth]{{comparisons1/means_12-stub_50}.pdf}
+\includegraphics[width=\linewidth]{{comparisons1/stds_12-stub_50}.pdf}
+\caption{Comparison of the means and standard deviations of the predictive
+  distributions of participant~12 and of a robot with stubborness
+  $\yN=50$}\label{fig:comparison_12_50}
+\end{figure}% done with exploration1.R
+Figure~\ref{fig:comparison_12_50} is analogous to
+\fig~\ref{fig:comparison_12_01} but for a robot with stubbornness
+$\yN=50$. This robot is even more slow to adapt to the narrowing in the
+standard deviation of the generated outcomes.
+
+
+\begin{figure}[p!]
+\centering\includegraphics[width=\linewidth]{{comparisons1/means_30-stub_0.1}.pdf}
+\includegraphics[width=\linewidth]{{comparisons1/stds_30-stub_0.1}.pdf}
+\caption{Comparison of the means and standard deviations of the predictive
+  distributions of participant~30 and of a robot with stubborness
+  $\yN=0.1$}\label{fig:comparison_30_01}
+\end{figure}% done with exploration1.R
+\begin{figure}[p!]
+\centering\includegraphics[width=\linewidth]{{comparisons1/means_30-stub_50}.pdf}
+\includegraphics[width=\linewidth]{{comparisons1/stds_30-stub_50}.pdf}
+\caption{Comparison of the means and standard deviations of the predictive
+  distributions of participant~30 and of a robot with stubborness
+  $\yN=50$}\label{fig:comparison_30_50}
+\end{figure}% done with exploration1.R
+Figures~\ref{fig:comparison_30_01} and~\ref{fig:comparison_30_50} show
+the same for participant~30. The change in standard deviation was from
+narrow to large in this case.
+
+The robot with low stubbornness seems to adapt to the widening of the
+outcome outputs faster than it had for the narrowing of the previous case:
+the change in the slope of the robot's standard-deviation curve seems
+steeper in \fig~\ref{fig:comparison_30_01} than
+in~\ref{fig:comparison_12_01}.
+
+
+If we look at the sequence of outcomes of \figs~\ref{fig:comparison_12_01}
+or~\ref{fig:comparison_30_01}, we perceive that something changed around
+trial~100. If we could plot these outcomes while they are generated, we
+would likely notice the change by around trial~25. An exchangeable model,
+however, does not have a short \enquote{evidence memory}: the basic
+assumption behind it is that there's \enquote{something} constant in all
+trials; loosely speaking, a \enquote{constant mechanism}. Only a hierarchic
+model can exhibit a short evidence memory, or the possibility that the
+underlying \enquote{mechanism} has changed.
+
 
 \section{General remarks}
 \label{sec:method_remarks}
+
+
 
 The experimental setup is open to a huge number of analyses from the
 participants' side, and it's fascinating how analyses at two very different

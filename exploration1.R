@@ -38,7 +38,7 @@ maxstd <- sqrt((1+N^2)*0.5-(N+1)*0.5)
 ## - sequences of overlap, relative entropies, means, stds
 ## - histograms for a selected set of trials
 ## and that outputs the final distributions, rel-entropies, overlaps, means, stds
-comparison <- function(participant,maxtrials=200,trialstoshow=c(1:10, 95:105, 190:200),stubborness=0.1){
+comparison <- function(participant,maxtrials=200,trialstoshow=c(1:10, 95:105, 190:200),stubbornness=0.1){
 ## number of trials to consider
 n <- maxtrials
     
@@ -54,7 +54,7 @@ mini <- min(c(distr[distr>0]))
 
 ## Johnson-Dirichlet model:
 ## parameter Lambda and ensuing sequence
-L <- stubborness + (0:(n+1))
+L <- stubbornness + (0:(n+1))
 
 ## sequence of frequency parameters of the model
 ## we set the first equal to the participant's initial distribution
@@ -98,9 +98,9 @@ stdrobot <- sqrt(ldistr %*% (1:N)^2 - meanrobot^2)
 ##     labs(x='trial',y='observations',
 ##          title=paste0('participant ', participant))
 ## pdfname <- paste0(plotsdir,'observ_',participant,'.pdf')
-## save_plot(pdfname, g, base_width = 148, base_height = 148*0.5, units='mm', dpi = 300)
+## save_plot(pdfname, g, base_width = 148, base_height = 148*0.6, units='mm', dpi = 300)
 ## dev.off()
-## ##ggsave(pdfname, width = 148, height = 148*0.5, units='mm', dpi = 300)
+## ##ggsave(pdfname, width = 148, height = 148*0.6, units='mm', dpi = 300)
 
 ## plot the overlap
 df <- data.frame(x=1:(n+1), y=overlap)
@@ -111,9 +111,9 @@ g <- g + #geom_point(data=df, aes(x,y), colour=mygreen) +
     theme_classic() +
     theme(aspect.ratio=0.5) +
     labs(x='trial',y='overlap',
-         title=paste0('participant ', participant,', stub ',stubborness))
-pdfname <- paste0(plotsdir,'overlap_',participant,'-stub_',stubborness,'.pdf')
-save_plot(pdfname, g, base_width = 148, base_height = 148*0.5, units='mm', dpi = 300)
+         title=paste0('participant ', participant,', stub ',stubbornness))
+pdfname <- paste0(plotsdir,'overlap_',participant,'-stub_',stubbornness,'.pdf')
+save_plot(pdfname, g, base_width = 148, base_height = 148*0.6, units='mm', dpi = 300)
 dev.off()
 
 ## plot the relative entropy
@@ -124,11 +124,11 @@ g <- g + #geom_point(data=df, aes(x,y), colour=myyellow) +
     xlim(1,n+1) +
     theme(aspect.ratio=0.5) +
     labs(x='trial',y='relative entropy',
-         title=paste0('participant ', participant,', stub ',stubborness))
-pdfname <- paste0(plotsdir,'rentropy_',participant,'-stub_',stubborness,'.pdf')
-save_plot(pdfname, g, base_width = 148, base_height = 148*0.5, units='mm', dpi = 300)
+         title=paste0('participant ', participant,', stub ',stubbornness))
+pdfname <- paste0(plotsdir,'rentropy_',participant,'-stub_',stubbornness,'.pdf')
+save_plot(pdfname, g, base_width = 148, base_height = 148*0.6, units='mm', dpi = 300)
 dev.off()
-##ggsave(pdfname, width = 148, height = 148*0.5, units='mm', dpi = 300)
+##ggsave(pdfname, width = 148, height = 148*0.6, units='mm', dpi = 300)
 
 ## plot sequence of means
 df <- data.frame(x=1:(n+1), y1=meanperson, y2=meanrobot, y3=c(NA,obs))
@@ -150,17 +150,17 @@ g <- g + geom_line(data=df, aes(x,y3), colour='black', alpha=0.33)
     xlim(1,n+1) + ylim(miny,maxy) +
     theme(aspect.ratio=0.5) +
     labs(x='trial',y='mean',
-         title=paste0('participant ', participant,', stub ',stubborness))
+         title=paste0('participant ', participant,', stub ',stubbornness))
 g <- g + geom_rect(aes(xmax=n+1-robotwidth,xmin=n+1-2*robotwidth,
                           ymax=maxy,ymin = maxy-iconheight),
                           color=NA, fill=myred, alpha=0.5, stat='identity', position='identity') +
         geom_rect(aes(xmax=n+1-robotwidth,xmin=n+1-2*robotwidth,
                           ymax=maxy*0.99-iconheight,ymin = maxy*0.99-2*iconheight),
                           color=NA, fill=myblue, alpha=0.5)
-pdfname <- paste0(plotsdir,'means_',participant,'-stub_',stubborness,'.pdf')
-save_plot(pdfname, g, base_width = 148, base_height = 148*0.5, units='mm', dpi = 300)
+pdfname <- paste0(plotsdir,'means_',participant,'-stub_',stubbornness,'.pdf')
+save_plot(pdfname, g, base_width = 148, base_height=148*0.6, units='mm', dpi = 300)
+#ggsave(pdfname, width = 148, height = 148*0.2, units='mm', dpi = 300)
 dev.off()
-##ggsave(pdfname, width = 148, height = 148*0.5, units='mm', dpi = 300)
 
 ## plot sequence of stds
 df <- data.frame(x=1:(n+1), y1=stdperson, y2=stdrobot)
@@ -181,24 +181,24 @@ g <- g + #geom_point(data=df, aes(x,y1), colour=myred, alpha=0.33) +
     xlim(1,n+1) + ylim(miny,maxy) +
     theme(aspect.ratio=0.5) +
     labs(x='trial',y='std',
-         title=paste0('participant ', participant,', stub ',stubborness))
+         title=paste0('participant ', participant,', stub ',stubbornness))
 g <- g + geom_rect(aes(xmax=n+1-robotwidth,xmin=n+1-2*robotwidth,
                           ymax=maxy,ymin = maxy-iconheight),
                           color=NA, fill=myred, alpha=0.5, stat='identity', position='identity') +
         geom_rect(aes(xmax=n+1-robotwidth,xmin=n+1-2*robotwidth,
                           ymax=maxy*0.99-iconheight,ymin = maxy*0.99-2*iconheight),
                           color=NA, fill=myblue, alpha=0.5)
-pdfname <- paste0(plotsdir,'stds_',participant,'-stub_',stubborness,'.pdf')
-save_plot(pdfname, g, base_width = 148, base_height = 148*0.5, units='mm', dpi = 300)
+pdfname <- paste0(plotsdir,'stds_',participant,'-stub_',stubbornness,'.pdf')
+save_plot(pdfname, g, base_width = 148, base_height = 148*0.6, units='mm', dpi = 300)
 dev.off()
-##ggsave(pdfname, width = 148, height = 148*0.5, units='mm', dpi = 300)
+##ggsave(pdfname, width = 148, height = 148*0.6, units='mm', dpi = 300)
 
 
 ## plot histograms for a range of trials
 rangehist <- trialstoshow
 maxhist <- max(c(distr,ldistr))
-pdfname <- paste0(plotsdir,'histogram_',rangehist[1],'-',rangehist[length(rangehist)],'_',participant,'-stub_',stubborness,'.pdf')
-pdf(pdfname,width = 148*mmtoin, height = 148*0.5*mmtoin)
+pdfname <- paste0(plotsdir,'histogram_',rangehist[1],'-',rangehist[length(rangehist)],'_',participant,'-stub_',stubbornness,'.pdf')
+pdf(pdfname,width = 148*mmtoin, height = 148*0.6*mmtoin)
 for(j in 1:length(rangehist)){
     i <- rangehist[j]
     df <- data.frame(x=rep(1:N, 2),
@@ -225,7 +225,7 @@ g <- g + annotation_raster(person, xmax = N, xmin = N-robotwidth,
               legend.position='none',
               ) +
         labs(x='slot',y='probability',
-             title=paste0('participant ', participant,', stub ',stubborness,', trial ',i,', overlap ',signif(overlap[i],2),', relentr. ',signif(rentropy[i],2)))
+             title=paste0('participant ', participant,', stub ',stubbornness,', trial ',i,', overlap ',signif(overlap[i],2),', relentr. ',signif(rentropy[i],2)))
 g <- g + geom_rect(aes(xmax=N-robotwidth,xmin=N-2*robotwidth,
                           ymax=maxy,ymin = maxy-iconheight),
                           color=NA, fill=myred, alpha=0.5, stat='identity', position='identity') +
