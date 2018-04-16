@@ -14,6 +14,7 @@ mycolours <- c(myblue, myred, mygreen, myyellow, myredpurple, mypurpleblue, mygr
 palette(mycolours)
 dev.off()
 mmtoin <- 0.0393701
+plotsdir <- './comparisons1/'
 
 ## load all data
 dpath = "./data/"
@@ -95,7 +96,7 @@ g <- g + geom_point(data=df, aes(x,y), colour=mygreen) +
     theme(aspect.ratio=0.5) +
     labs(x='trial',y='overlap',
          title=paste0('participant ', x))
-pdfname <- paste0('overlap_',x,'.pdf')
+pdfname <- paste0(plotsdir,'overlap_',x,'.pdf')
 save_plot(pdfname, g, base_width = 148, base_height = 148*0.5, units='mm', dpi = 300)
 dev.off()
 
@@ -108,7 +109,7 @@ g <- g + geom_point(data=df, aes(x,y), colour=myyellow) +
     theme(aspect.ratio=0.5) +
     labs(x='trial',y='relative entropy',
          title=paste0('participant ', x))
-pdfname <- paste0('rentropy_',x,'.pdf')
+pdfname <- paste0(plotsdir,'rentropy_',x,'.pdf')
 save_plot(pdfname, g, base_width = 148, base_height = 148*0.5, units='mm', dpi = 300)
 dev.off()
 ##ggsave(pdfname, width = 148, height = 148*0.5, units='mm', dpi = 300)
@@ -139,7 +140,7 @@ g <- g + geom_rect(aes(xmax=n+1-robotwidth,xmin=n+1-2*robotwidth,
         geom_rect(aes(xmax=n+1-robotwidth,xmin=n+1-2*robotwidth,
                           ymax=maxy*0.99-iconheight,ymin = maxy*0.99-2*iconheight),
                           color=NA, fill=myblue, alpha=0.5)
-pdfname <- paste0('means_',x,'.pdf')
+pdfname <- paste0(plotsdir,'means_',x,'.pdf')
 save_plot(pdfname, g, base_width = 148, base_height = 148*0.5, units='mm', dpi = 300)
 dev.off()
 ##ggsave(pdfname, width = 148, height = 148*0.5, units='mm', dpi = 300)
@@ -170,17 +171,16 @@ g <- g + geom_rect(aes(xmax=n+1-robotwidth,xmin=n+1-2*robotwidth,
         geom_rect(aes(xmax=n+1-robotwidth,xmin=n+1-2*robotwidth,
                           ymax=maxy*0.99-iconheight,ymin = maxy*0.99-2*iconheight),
                           color=NA, fill=myblue, alpha=0.5)
-pdfname <- paste0('stds_',x,'.pdf')
+pdfname <- paste0(plotsdir,'stds_',x,'.pdf')
 save_plot(pdfname, g, base_width = 148, base_height = 148*0.5, units='mm', dpi = 300)
 dev.off()
 ##ggsave(pdfname, width = 148, height = 148*0.5, units='mm', dpi = 300)
 
 
 ## plot histograms for a range of trials
-rangehist <- c(1:10,95:105,190:200)
-plots <- list()
+rangehist <- c(1:10, 95:105, 190:200)
 maxhist <- max(c(distr,ldistr))
-pdfname <- paste0('histogram_',rangehist[1],'-',rangehist[length(rangehist)],'_',x,'.pdf')
+pdfname <- paste0(plotsdir,'histogram_',rangehist[1],'-',rangehist[length(rangehist)],'_',x,'.pdf')
 pdf(pdfname,width = 148*mmtoin, height = 148*0.5*mmtoin)
 for(j in 1:length(rangehist)){
     i <- rangehist[j]
