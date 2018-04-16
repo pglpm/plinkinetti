@@ -1,7 +1,7 @@
 \pdfoutput=1
 %% Author: PGL  Porta Mana, ALS Filipowicz
 %% Created: 2018-04-08T16:54:19+0200
-%% Last-Updated: 2018-04-16T18:29:10+0200
+%% Last-Updated: 2018-04-16T18:49:23+0200
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Report-no: ***
 \newif\ifarxiv
@@ -1085,9 +1085,16 @@ trial~100. If we could plot these outcomes while they are generated, we
 would likely notice the change by around trial~25. An exchangeable model,
 however, does not have a short \enquote{evidence memory}: the basic
 assumption behind it is that there's \enquote{something} constant in all
-trials; loosely speaking, a \enquote{constant mechanism}. Only a hierarchic
-model can exhibit a short evidence memory, or the possibility that the
-underlying \enquote{mechanism} has changed.
+trials; loosely speaking, a \enquote{constant mechanism}. An alternative
+and maybe preferable point of view is this: an exchangeable model has
+memory of past observations, but not of their order; for the robot, past
+observations are shuffled, and any outcomes from narrow or wide generating
+processes are mingled.
+
+
+Only non-exchangeable or hierarchic models can exhibit a short evidence
+memory and be capable of believing that the underlying \enquote{mechanism}
+has changed.
 
 
 \section{General remarks}
