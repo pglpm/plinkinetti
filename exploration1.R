@@ -36,7 +36,7 @@ slots <- integer(N)
 n <- 200
 
 ## choose a participant
-x <- 8
+x <- 12
 
 
 ## sequence of observations for that participant
@@ -107,7 +107,7 @@ dev.off()
 
 
 ## plot histograms for a range of trials
-rangehist <- 1:10
+rangehist <- 190:200
 plots <- list()
 maxhist <- max(c(distr,ldistr))
 pdfname <- paste0('histogram_',rangehist[1],'-',rangehist[length(rangehist)],'_',x,'.pdf')
