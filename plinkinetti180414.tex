@@ -1,7 +1,7 @@
 \pdfoutput=1
 %% Author: PGL  Porta Mana, ALS Filipowicz
 %% Created: 2018-04-08T16:54:19+0200
-%% Last-Updated: 2018-04-17T15:50:01+0200
+%% Last-Updated: 2018-04-17T16:01:52+0200
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Report-no: ***
 \newif\ifarxiv
@@ -843,14 +843,20 @@ standard deviation will then usually be very different from our parameter
 choices. It is even worse if we ask the participant to choose not among
 normal distributions but among all possible distributions. There will
 always be a distribution under which the data are be more likely than under
-our normal.
+our normal. On top of this, the likelihood of the data is not the only
+criterion to make a sound judgement. If the empirical mean of the data
+were $17.0362$, for example, it'd be a good bet that the one chosen by the
+human operator was $17$.
 
-After all, the computer program is generating the data deterministically.
-Shouldn't we assess the participant according to the prediction of the
-\emph{exact} outcome sequence, then?
+And, given that the computer program is generating the data
+deterministically, shouldn't we assess the participant according to the
+prediction of the \emph{exact} outcome sequence then?
 
-To avoid this paradox we can find other assessment measures. For example,
-we can set up several inference robots, constructed according to different
+This kind of paradoxes always appear when we try to judge a probability
+assignment based on some fictitious distribution \enquote{out there}. It'd
+be best to judge it by checking its consistency with the assumptions that
+went into it. We can thus find other assessment measures. For example, we
+can set up several inference robots, constructed according to different
 assumptions, and compare a participant's response to the robots'.
 
 
