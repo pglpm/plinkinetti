@@ -1,7 +1,7 @@
 \pdfoutput=1
 %% Author: PGL  Porta Mana, ALS Filipowicz
 %% Created: 2018-04-08T16:54:19+0200
-%% Last-Updated: 2018-04-17T16:01:52+0200
+%% Last-Updated: 2018-04-17T21:07:27+0200
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Report-no: ***
 \newif\ifarxiv
@@ -1088,8 +1088,8 @@ robot behaves as if it had already made $\yN$ observations with outcome
 frequencies $\yn$.
 
 
-\section{Examples}
-\label{sec:examples}
+\section{Examples: participant vs robot}
+\label{sec:examples_partic_robot}
 
 Let's choose a participant, and use
 formula~\eqref{eq:initial_predictive_JD} to choose the $\yn$ parameters of
@@ -1191,7 +1191,38 @@ examples:
 \end{itemize}
 
 
+\section{Examples: robot's surprise}
+\label{sec:examples_robot_surprise}
 
+A robot with low stubbornness quickly adapts its predictions to the
+observed outcomes, but as the outcomes accumulate its stubbornness
+increases. If there is a late change in the generation of the outcomes, at
+trial 101 for example, the robot will adapt its predictions more slowly.
+
+It is interesting to ask: is this prediction adaptation the same for a
+change from a narrow to a wide distribution, as for a change from a wide to
+a narrow one? or is there a difference in the adaptation speed?
+
+The answer depends on how we measure such speed. One way could be this:
+starting from the trial in which the change occurs, we let a second robot
+with low stubbornness observe the new outcomes and make predictions,
+starting from frequency parameters equal to those reached by the first
+robot. The second robot will quickly adapt to the new observed outcomes,
+and we can use it as a touchstone for the first robot's adaptation speed.
+The predictions of the second robot can also be interpreted as if we had
+reset the stubbornness of the first robot to a low value.
+
+\begin{figure}[b!]
+\centering\includegraphics[width=\linewidth]{{comparisons1/compare_robots_wide2narrow-stub_0.1}.pdf}
+\includegraphics[width=\linewidth]{{comparisons1/compare_robots_narrow2wide-stub_0.1}.pdf}
+\caption{Adaptation speed of a robot after a change in the generation of
+  the outcomes, compared with that of a robot that starts learning after
+  the change}\label{fig:comparison_robots_stds}
+\end{figure}% done with exploration1.R
+The results of this comparison are shown in
+\fig~\ref{fig:comparison_robots_stds}. Even though slightly, it seems that
+a robot adapts more slowly in going from a wide to a narrow distribution
+than vice versa.
 
 
 

@@ -28,6 +28,7 @@ rm(dprime)
 d <- d[,1:(ncol(d)-2)]
 person <- readPNG('face3.png')
 robot <- readPNG('robot1.png')
+robot2 <- readPNG('robot2.png')
 
 ## number of slots and sequence of zeros for later use
 N <- 40
@@ -63,7 +64,6 @@ ldistr}
 ## sequences of means and stds
 allmeans <- function(distrib){distrib %*% (1:N)}
 allstds <- function(distrib){sqrt(distrib %*% (1:N)^2 - allmeans(distrib)^2)}
-
 
 
 ## Define a function that plots:
@@ -249,4 +249,40 @@ print(g)
 dev.off()}
 
     return(list(distr=distr,robotdistr=ldistr,rentropy=rentropy,overlap=overlap,meanperson=meanperson,meanrobot=meanrobot,stdperson=stdperson,stdrobot=stdrobot))
+}
+
+
+comparerobots <- function(index,obs,changepoint,priorfrequencies=rep(1/N,N),stubbornness=0.1){
+    n <- length(obs)
+    distr1 <- robotdistribution(priorfrequencies,stubbornness,obs)
+    distr2 <- robotdistribution(distr1[changepoint-1,],stubbornness,obs[changepoint:n])
+    pdfname <- paste0(plotsdir,'compare_robots_',index,'-stub_',stubbornness,'.pdf')
+    df0 <- data.frame(x=2:(n+1),y=obs)
+    df1 <- data.frame(x=1:(n+1),y=allstds(distr1))
+    df2 <- data.frame(x=changepoint:(n+1),y=allstds(distr2))
+    ##
+    maxy <- 15#maxstd #max(df$y1, df$y2)
+    miny <- 0 #min(df$y1, df$y2)
+    iconheight <- (maxy-miny)/10
+    robotwidth <- (n+1)/20/300*271
+    g <- ggplot() + theme_bw()
+    g <- g + annotation_raster(robot, xmax = n+1, xmin = n+1-robotwidth, 
+                               ymax = maxy, ymin=maxy-iconheight, interpolate = T) +
+        annotation_raster(robot2, xmax = n+1, xmin = n+1-robotwidth, 
+                          ymax = maxy*0.99-iconheight, ymin=maxy*0.99-2*iconheight, interpolate = T) 
+#    g <- g + geom_line(data=df0, aes(x,y), colour='black', alpha=0.33)
+    g <- g + geom_line(data=df1, aes(x,y), colour=myblue, alpha=0.75)
+    g <- g + geom_line(data=df2, aes(x,y), colour=myredpurple, alpha=0.75)
+    g <- g + xlim(1,n+1) + ylim(miny,maxy) +
+        theme(aspect.ratio=0.5) +
+        labs(x='trial', y='std', title=index)
+    g <- g + geom_rect(aes(xmax=n+1-robotwidth,xmin=n+1-2*robotwidth,
+                          ymax=maxy,ymin = maxy-iconheight),
+                          color=NA, fill=myblue, alpha=0.5, stat='identity', position='identity') +
+        geom_rect(aes(xmax=n+1-robotwidth,xmin=n+1-2*robotwidth,
+                          ymax=maxy*0.99-iconheight,ymin = maxy*0.99-2*iconheight),
+                          color=NA, fill=myredpurple, alpha=0.5)
+    save_plot(pdfname, g, base_width = 148, base_height=148*0.6, units='mm', dpi = 300)
+#ggsave(pdfname, width = 148, height = 148*0.2, units='mm', dpi = 300)
+dev.off()
 }
