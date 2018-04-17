@@ -1,7 +1,7 @@
 \pdfoutput=1
 %% Author: PGL  Porta Mana, ALS Filipowicz
 %% Created: 2018-04-08T16:54:19+0200
-%% Last-Updated: 2018-04-17T15:33:45+0200
+%% Last-Updated: 2018-04-17T15:44:37+0200
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Report-no: ***
 \newif\ifarxiv
@@ -820,51 +820,49 @@ uniform distribution.
 \medskip \mynote{L's opinion} Should a participant's \enquote{performance}
 be assessed against a probability distribution that supposedly lies behind
 a computer program? This is a tricky question. Let's assume an operational
-point of view for a moment. We have a computer program in which we specify
-two parameters: \enquote{mean} and \enquote{standard deviation}. The
-program then generates a sequence of, say, 100 numbers between $1$ and $N$.
-Finally we ask the participant to guess a distribution that supposedly lies
-behind these 100 outcomes; suppose we also ask him to choose a normal
+point of view. We have a computer program in which we specify two
+parameters: \enquote{mean} and \enquote{standard deviation}. The program
+then generates a sequence of, say, 100 numbers between $1$ and $N$. Finally
+we ask the participant to guess a distribution that supposedly lies behind
+these 100 outcomes; suppose we also ask him to choose a normal
 distribution. This is equivalent to ask him to guess the two parameters we
 gave to the computer program. But here's the catch: there are two parameter
-values under which the data are more likely than under the two we chose:
-the empirical mean and standard deviation. From this point of view it's
-unfair to assess the participant's performance against the two values we
+values under which the data are more likely than under the values we chose:
+the \emph{empirical} mean and standard deviation. From this point of view
+it's unfair to assess the participant's performance against the values we
 chose, given that there are other values under which the data are more
-likely. It's as if we made a carpenter -- who turns out to be a good cook --
-prepare a delicious dish, then asked a person to guess who prepared it, and
-then assessed their answer, \enquote{a chef}, as bad because they didn't
-guess that it was a carpenter\mynote{L: alright, I must find a better
-  example}.
+likely. It's as if we made a carpenter -- who turns out to be a good cook
+-- prepare a delicious dish, then asked a person to guess who prepared it,
+and then assessed their answer, \enquote{a chef}, as bad because they
+didn't guess that it was a carpenter\mynote{L: alright, I must find a
+  better example}.
 
-The assessment problem just described is worse if the data are few with
-respect to the number of possible outcomes, because the empirical mean and
+The assessment problem just described is worse if the data are few compared
+with the number of possible outcomes, because the empirical mean and
 standard deviation will then usually be very different from our parameter
 choices. It is even worse if we ask the participant to choose not among
 normal distributions but among all possible distributions. There will
-always be a distribution under which the data are be more likely than
-under our normal.
+always be a distribution under which the data are be more likely than under
+our normal.
 
 After all, the computer program is generating the data deterministically.
 Shouldn't we assess the participant according to the prediction of the
 \emph{exact} outcome sequence, then?
 
-
-
+To avoid this paradox we can find other assessment measures. For example,
+we can set up several inference robots, constructed according to different
+assumptions, and compare a participant's response to the robots'.
 
 
 \medskip De~Finetti introduced the notion of exchangeability, to be
 presented in the next section, in order to avoid thinking in terms of
-\enquote{mechanisms} or of \enquote{true unknown distributions}. He
-characterized a statistical model in terms of \emph{features of the
-  predictive distribution} -- for example, that it be invariant under
-exchanges of the outcomes. This point of view was taken up by many other
-statisticians and has been used to characterize many other statistical
-models, like Markov ones for example
+\enquote{mechanisms} or of \enquote{true unknown distributions}
+\citep[\cf][\chap~3]{good1965}. He characterized a statistical model in
+terms of \emph{features of the predictive distribution} -- for example,
+that it be invariant under exchanges of the outcomes. This point of view
+was taken up by many other statisticians and has been used to characterize
+many other statistical models, like Markov ones for example
 \citep{freedman1962,diaconisetal1980c,zaman1984,fortinietal2002,fortinietal2014}.
-This point of view can be very useful in statistics and inference, but
-maybe not to understand the psychology behind prediction
-\citep[\cf][\chap~3]{good1965}.
 
 
 
