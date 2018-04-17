@@ -1,7 +1,7 @@
 \pdfoutput=1
 %% Author: PGL  Porta Mana, ALS Filipowicz
 %% Created: 2018-04-08T16:54:19+0200
-%% Last-Updated: 2018-04-18T00:21:36+0200
+%% Last-Updated: 2018-04-18T01:15:08+0200
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Report-no: ***
 \newif\ifarxiv
@@ -1220,7 +1220,7 @@ reset the stubbornness of the first robot to a low value.
   the change. The final relative entropy for the first robot relative to
   the second is $1.01$ in the wide-to-narrow case, vs $0.260$ in the
   narrow-to-wide; exchanging the distributions: $0.283$ vs $0.211$. The
-  final overlap is $0.106$ for wide-to-narrow vs $0.0512$ for
+  final normalized overlap is $0.949$ for wide-to-narrow vs $0.823$ for
   narrow-to-wide}\label{fig:comparison_robots_stds}
 \end{figure}% done with exploration1.R
 % wide2narrow: relentr=0.2825763, overlap=0.1059542
@@ -1234,7 +1234,18 @@ $1.01$ wide-to-narrow vs $0.260$ narrow-to-wide; same if we exchange the
 distributions: $0.283$ vs $0.211$. The overlap seems to say the
 opposite: $0.106$ wide-to-narrow vs $0.0512$ narrow-to-wide; but the
 overlap is heavily influenced by the narrowness of the overlapping
-distributions, so it may not be a reliable measure in this case.
+distributions, so it may not be a reliable measure in this case. If we use
+the normalized overlap (corresponding to the cosine of the angle between
+the distribution vectors) we find $0.949$ vs $0.823$, which agree with the
+first three measures
+
+\begin{figure}[b!]
+\centering\includegraphics[width=\linewidth]{{comparisons1/compare_robots_wide2wide-stub_0.1}.pdf}
+\includegraphics[width=\linewidth]{{comparisons1/compare_robots_narrow2narrow-stub_0.1}.pdf}
+\caption{Adaptation speed of a robot after a change in the generation of
+  the outcomes, compared with that of a robot that starts learning after
+  the change.}\label{fig:comparison_robots_stds_2}
+\end{figure}% done with exploration1.R
 
 
 

@@ -293,6 +293,8 @@ comparerobots <- function(index,obs,changepoint,priorfrequencies=rep(1/N,N),stub
     temp <-  distr1t * log(distr1t/distr2)
     temp[is.nan(temp)] <- 0
     rentropy2 <- apply(temp,1,sum)
-    overlap <- diag(distr2 %*% t(distr1t))
-return(c(rentropy[length(rentropy)],rentropy2[length(rentropy2)], overlap[length(overlap)]))
+    overlap <- diag(distr2 %*% t(distr1t))/sqrt(diag(distr2 %*% t(distr2)) * diag(distr1t %*% t(distr1t)))
+    return(list(rentropy,
+             rentropy2,
+             overlap))
 }
