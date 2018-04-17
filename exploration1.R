@@ -284,5 +284,15 @@ comparerobots <- function(index,obs,changepoint,priorfrequencies=rep(1/N,N),stub
                           color=NA, fill=myredpurple, alpha=0.5)
     save_plot(pdfname, g, base_width = 148, base_height=148*0.6, units='mm', dpi = 300)
 #ggsave(pdfname, width = 148, height = 148*0.2, units='mm', dpi = 300)
-dev.off()
+    dev.off()
+    ## relative entropy and overlap
+    distr1t <- distr1[changepoint:(n+1),]
+    temp <-  distr2 * log(distr2/distr1t)
+    temp[is.nan(temp)] <- 0
+    rentropy <- apply(temp,1,sum)
+    temp <-  distr1t * log(distr1t/distr2)
+    temp[is.nan(temp)] <- 0
+    rentropy2 <- apply(temp,1,sum)
+    overlap <- diag(distr2 %*% t(distr1t))
+return(c(rentropy[length(rentropy)],rentropy2[length(rentropy2)], overlap[length(overlap)]))
 }
