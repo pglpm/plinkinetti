@@ -34,57 +34,69 @@ N <- 40
 slots <- integer(N)
 maxstd <- sqrt((1+N^2)*0.5-(N+1)*0.5)
 
+## Definitions of various functions
+
+## sequence of observations for a participant
+observations <- function(participant, maxtrials=200){c(d[d$Participant==participant & d$Slot.Number==1,'Ball.Position'])[1:maxtrials]}
+
+## sequence of distributions for a participant
+## (consistency checked by for-loop)
+## and find minimal non-zero value
+distribution <- function(participant, maxtrials=200){matrix(d[d$Participant == participant & d$Trial <= maxtrials+1, c('Participant.Slot.Estimate')], maxtrials+1, N, byrow=T)}
+
+## sequence of robot distributions
+robotdistribution <- function(priorfrequencies,stubbornness,obs){
+    n <- length(obs)
+    ## Johnson-Dirichlet model:
+    ## stubbornness parameter and ensuing sequence
+    L <- stubbornness + (0:(n+1))
+    ## initialize
+    ldistr <- matrix(NA, n+1, N)
+    ldistr[1,] <- priorfrequencies
+    ## Update the frequency parameters of the model from the observations
+    ## as explained in plinkinetti180414
+    for(i in 1:n){
+        ldistr[1+i,] <- (L[i] * ldistr[i,] + replace(slots, obs[i], 1))/L[i+1]
+    }
+ldistr}
+
+## sequences of means and stds
+allmeans <- function(distrib){distrib %*% (1:N)}
+allstds <- function(distrib){sqrt(distrib %*% (1:N)^2 - allmeans(distrib)^2)}
+
+
+
 ## Define a function that plots:
 ## - sequences of overlap, relative entropies, means, stds
 ## - histograms for a selected set of trials
 ## and that outputs the final distributions, rel-entropies, overlaps, means, stds
 comparison <- function(participant,maxtrials=200,trialstoshow=c(1:10, 95:105, 190:200),stubbornness=0.1){
 ## number of trials to consider
-n <- maxtrials
+    n <- maxtrials
     
-## sequence of observations for that participant
-obs <- c(d[d$Participant==participant & d$Slot.Number==1,'Ball.Position'])[1:n]
+    obs <- observations(participant,n)
 
-## sequence of distributions for that participant
-## (consistency checked by for-loop)
-## and find minimal non-zero value
-distr <- matrix(d[d$Participant == participant & d$Trial <= n+1, c('Participant.Slot.Estimate')], n+1, N, byrow=T)
-mini <- min(c(distr[distr>0]))
-##
+    distr <- distribution(participant,n)
 
-## Johnson-Dirichlet model:
-## parameter Lambda and ensuing sequence
-L <- stubbornness + (0:(n+1))
+    ## sequence of frequency parameters of the JD model
+    ## we set the first equal to the participant's initial distribution
+    ## plus a value equal to 1/10 of the minimum nonzero value ever assigned
+    mini <- min(c(distr[distr>0]))
+    temp <- distr[1,] + mini/10
+    temp <- temp/sum(temp)
+    ldistr <- robotdistribution(temp,stubbornness,obs)
 
-## sequence of frequency parameters of the model
-## we set the first equal to the participant's initial distribution
-## plus a value equal to 1/10 of the minimum nonzero value ever assigned
-ldistr <- matrix(NA, n+1, N)
-temp <- distr[1,] + mini/10
-ldistr[1,] <- temp/sum(temp)
-
-##initialize relative entropy and overlap
-rentropy <- rep(NA,n+1)
-rentropy[1] <- 0
-overlap <- rep(NA,n+1)
-overlap[1] <- ldistr[1,] %*% distr[1,]
-
-## Update the frequency parameters of the model from the observations
-## as explained in plinkinetti180414
-## and calculate the overlap and relative entropy of the participant's distr. 
-for(i in 1:n){
-    ldistr[1+i,] <- (L[i] * ldistr[i,] + replace(slots, obs[i], 1))/L[i+1]
-    temp <-  distr[1+i,] * log(distr[i+1,]/ldistr[i+1,])
+    ## calculate the overlap and relative entropy of the participant's distr.
+    temp <-  distr * log(distr/ldistr)
     temp[is.nan(temp)] <- 0
-    rentropy[1+i] <- sum(temp)
-    overlap[1+i] <- ldistr[1+i,] %*% distr[1+i,]
-}
+    rentropy <- apply(temp,1,sum)
+    overlap <- diag(ldistr %*% t(distr))
 
-## sequence of means and stds
-meanperson <- distr %*% (1:N) 
-stdperson <- sqrt(distr %*% (1:N)^2 - meanperson^2)
-meanrobot <- ldistr %*% (1:N) 
-stdrobot <- sqrt(ldistr %*% (1:N)^2 - meanrobot^2)
+    ## sequence of means and stds
+    meanperson <- allmeans(distr)
+    stdperson <- allstds(distr)
+    meanrobot <- allmeans(ldistr)
+    stdrobot <- allstds(ldistr)
 
 ## ## plot obzervations
 ## df <- data.frame(x=2:(n+1), y1=obs)

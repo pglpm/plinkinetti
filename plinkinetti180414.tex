@@ -1,7 +1,7 @@
 \pdfoutput=1
 %% Author: PGL  Porta Mana, ALS Filipowicz
 %% Created: 2018-04-08T16:54:19+0200
-%% Last-Updated: 2018-04-17T00:13:59+0200
+%% Last-Updated: 2018-04-17T15:33:45+0200
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Report-no: ***
 \newif\ifarxiv
@@ -788,6 +788,87 @@ P.G.L. Porta\,Mana\\%
 %   may have.}
 
 
+\section{Introductory remarks on the methods}
+\label{sec:method_remarks}
+
+The experimental setup is open to a huge number of analyses and
+interpretations on the participants' part, inspired by past experience. As
+a participant, we can surmise that there's a connection between different
+trials, some sort of \enquote{constant mechanism} at some level. Or we can
+surmise that there's no such connection, hence observation of past trials
+doesn't say anything about the next one. Or we can surmise that the next
+trial is influenced by the participant's own bar-height assignments. And
+many other hypotheses. We can also entertain all these hypotheses at the
+same time, and shift from one to another during the experiment. For
+example, if we suddenly wondered whether the computer program is actually
+using our bar distribution, we could suddenly move all probability to a
+slot at the edge and check if this seems to influence the next outcome
+(\cf\ participant~31).
+
+\medskip
+The same goes for the choice of initial distribution. As a participant, we
+can say \enquote{alright, there are 40 slots}, and just give a uniform
+distributions to the 40 possibilities. Or we can consider the pyramidal
+mechanism of the game, which leads to a binomial distribution. Or we can
+consider that this is a computerized version of the game. The computer
+could simulate the physics of the actual game; but the image of the
+mechanism could also be just for show, the computer being programmed to
+distribute the outcomes according to a predetermined, completely arbitrary
+distribution. From this point of view we could again decide to assign a
+uniform distribution.
+
+\medskip \mynote{L's opinion} Should a participant's \enquote{performance}
+be assessed against a probability distribution that supposedly lies behind
+a computer program? This is a tricky question. Let's assume an operational
+point of view for a moment. We have a computer program in which we specify
+two parameters: \enquote{mean} and \enquote{standard deviation}. The
+program then generates a sequence of, say, 100 numbers between $1$ and $N$.
+Finally we ask the participant to guess a distribution that supposedly lies
+behind these 100 outcomes; suppose we also ask him to choose a normal
+distribution. This is equivalent to ask him to guess the two parameters we
+gave to the computer program. But here's the catch: there are two parameter
+values under which the data are more likely than under the two we chose:
+the empirical mean and standard deviation. From this point of view it's
+unfair to assess the participant's performance against the two values we
+chose, given that there are other values under which the data are more
+likely. It's as if we made a carpenter -- who turns out to be a good cook --
+prepare a delicious dish, then asked a person to guess who prepared it, and
+then assessed their answer, \enquote{a chef}, as bad because they didn't
+guess that it was a carpenter\mynote{L: alright, I must find a better
+  example}.
+
+The assessment problem just described is worse if the data are few with
+respect to the number of possible outcomes, because the empirical mean and
+standard deviation will then usually be very different from our parameter
+choices. It is even worse if we ask the participant to choose not among
+normal distributions but among all possible distributions. There will
+always be a distribution under which the data are be more likely than
+under our normal.
+
+After all, the computer program is generating the data deterministically.
+Shouldn't we assess the participant according to the prediction of the
+\emph{exact} outcome sequence, then?
+
+
+
+
+
+\medskip De~Finetti introduced the notion of exchangeability, to be
+presented in the next section, in order to avoid thinking in terms of
+\enquote{mechanisms} or of \enquote{true unknown distributions}. He
+characterized a statistical model in terms of \emph{features of the
+  predictive distribution} -- for example, that it be invariant under
+exchanges of the outcomes. This point of view was taken up by many other
+statisticians and has been used to characterize many other statistical
+models, like Markov ones for example
+\citep{freedman1962,diaconisetal1980c,zaman1984,fortinietal2002,fortinietal2014}.
+This point of view can be very useful in statistics and inference, but
+maybe not to understand the psychology behind prediction
+\citep[\cf][\chap~3]{good1965}.
+
+
+
+
 \section{The Bayesian robot}
 \label{sec:bayes_robot}
 
@@ -897,6 +978,11 @@ The exchangeable-model formula~\eqref{eq:prediction_exchangeability} leads
 to some characteristic features of the robot's beliefs and of their
 evolution:
 \begin{itemize}
+\item The robot's predictions can be interpreted in several ways. One is
+  this: the robot believes that there's \enquote{something} constant in all
+  trials; loosely speaking, a \enquote{constant mechanism}. Another, maybe
+  preferable, is this: the robot has memory of past observations, but not
+  of their order; any trends are therefore invisible to it.
 \item As data accumulate, the robot's probabilities for the next outcome
   approach the observed frequencies. Such approach happens independently of
   the form of the prior $\pf(\yq \| M)\,\di\yq$ -- unless the latter is
@@ -1067,15 +1153,10 @@ in~\ref{fig:comparison_12_01}.
 If we look at the sequence of outcomes of \figs~\ref{fig:comparison_12_01}
 or~\ref{fig:comparison_30_01}, we perceive that something changed around
 trial~100. If we could plot these outcomes while they are generated, we
-would likely notice the change by around trial~25. An exchangeable model,
-however, does not have a short \enquote{evidence memory}: the basic
-assumption behind it is that there's \enquote{something} constant in all
-trials; loosely speaking, a \enquote{constant mechanism}. An alternative
-and maybe preferable point of view is this: an exchangeable model has
-memory of past observations, but not of their order; for the robot, past
-observations are shuffled, and any outcomes from narrow or wide generating
-processes are mingled.
-
+would likely notice the change by around trial~25. Our robot, however,
+can't detect this change for the reasons explained in
+\sect~\ref{sec:remarks}; any outcomes from narrow or wide generating
+processes are mingled in the robot's memory.
 
 Only non-exchangeable or hierarchic models can exhibit a short evidence
 memory and be capable of believing that the underlying \enquote{mechanism}
@@ -1105,47 +1186,6 @@ examples:
   changes in the empirical statistics of the outcomes.
 \end{itemize}
 
-
-\section{General remarks}
-\label{sec:method_remarks}
-
-\textbullet\ The experimental setup is open to a huge number of analyses from the
-participants' side, and it's fascinating how analyses at two very different
-depths can lead to the same predictions. Consider these cases:
-\begin{enumerate}
-\item We can say \enquote{alright, there are 40 slots}, and just
-  give a uniform distributions to the 40 possibilities.
-\item We can consider the pyramidal mechanism of the game, which leads
-  to a binomial distribution.
-\item We can consider that this is a computerized version of the game. The
-  computer could simulate the physics of the actual game. But the image of
-  the mechanism could also be just for show, the computer being programmed
-  to distribute the outcomes according to a predetermined, completely
-  arbitrary distribution. From this point of view we could again decide to assign
-  a uniform distribution.
-\end{enumerate}
-
-\medskip
-\textbullet\ The wild variety of hypotheses that a participant can explore
-during the task, inspired by past experiences, is also very fascinating. A
-participant could suddenly wonder whether the computer program is actually
-using the participant's own distribution during the trials. Motivated by
-this, the participant could, say, suddenly move all probability to a slot
-at the edge and check if this seems to influence the next outcome (\cf\
-participant~31).
-
-\medskip \textbullet\ De~Finetti introduced the notion of exchangeability
-and proved the connected theorem in order to avoid thinking in terms of
-\enquote{mechanisms} or of \enquote{true unknown distributions}. He
-characterized a statistical model in terms of \emph{features of the
-  predictive distribution} -- for example, that it be invariant under
-exchanges of the outcomes. This point of view was taken up by many other
-statisticians and has been used to characterize many other statistical
-models, like Markov ones for example
-\citep{freedman1962,diaconisetal1980c,zaman1984,fortinietal2002,fortinietal2014}.
-This point of view can be very useful in statistics and inference, but
-maybe not to understand the psychology behind prediction
-\citep[\cf][\chap~3]{good1965}.
 
 
 
