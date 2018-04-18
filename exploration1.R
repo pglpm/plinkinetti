@@ -251,7 +251,7 @@ dev.off()}
     return(list(distr=distr,robotdistr=ldistr,rentropy=rentropy,overlap=overlap,meanperson=meanperson,meanrobot=meanrobot,stdperson=stdperson,stdrobot=stdrobot))
 }
 
-
+## function to assess speed of robot re-learning
 comparerobots <- function(index,obs,changepoint,priorfrequencies=rep(1/N,N),stubbornness=0.1){
     n <- length(obs)
     distr1 <- robotdistribution(priorfrequencies,stubbornness,obs)
@@ -297,4 +297,83 @@ comparerobots <- function(index,obs,changepoint,priorfrequencies=rep(1/N,N),stub
     return(list(rentropy,
              rentropy2,
              overlap))
+}
+
+
+## as previous function, but without plots
+comparerobotssimple <- function(obs,changepoint,priorfrequencies=rep(1/N,N),stubbornness=0.1){
+    n <- length(obs)
+    distr1 <- robotdistribution(priorfrequencies,stubbornness,obs)
+    distr2 <- robotdistribution(distr1[changepoint-1,],stubbornness,obs[changepoint:n])
+    ## std, relative entropy, and overlap
+    std1 <- allstds(distr1)
+    std2 <- allstds(distr2)
+    distr1t <- distr1[changepoint:(n+1),]
+    temp <-  distr2 * log(distr2/distr1t)
+    temp[is.nan(temp)] <- 0
+    rentropy <- apply(temp,1,sum)
+    temp <-  distr1t * log(distr1t/distr2)
+    temp[is.nan(temp)] <- 0
+    rentropy2 <- apply(temp,1,sum)
+    overlap <- diag(distr2 %*% t(distr1t))/sqrt(diag(distr2 %*% t(distr2)) * diag(distr1t %*% t(distr1t)))
+    return(list(std1,std2,rentropy,
+             rentropy2,
+             overlap))
+}
+
+## average results of previous function over many experiments
+averagecomparerobots <- function(index,numexperiments,meanstd1,meanstd2,numobs,changepoint,priorfrequencies=rep(1/N,N),stubbornness=0.1,seed=666){
+    set.seed(seed)
+    obs1 <- matrix(round(rnorm(numexperiments*(changepoint-1),meanstd1[1],meanstd1[2])),numexperiments,changepoint-1)
+    obs1[obs1<1] <- 1
+    obs1[obs1>N] <- N
+    obs2 <- matrix(round(rnorm(numexperiments*(numobs-changepoint+1),meanstd2[1],meanstd2[2])),numexperiments,numobs-changepoint+1)
+    obs2[obs2<1] <- 1
+    obs2[obs2>N] <- N
+    obsall <- cbind(obs1,obs2)
+    ##initialize matrices
+    mstd1 <- matrix(NA,numexperiments,numobs+1)
+    mstd2 <- matrix(NA,numexperiments,numobs+1-changepoint+1)
+    mrentropy <- mstd2
+    mrentropy2 <- mstd2
+    moverlap <- mstd2
+    for(i in 1:numexperiments){
+        temp <- comparerobotssimple(obsall[i,],changepoint)
+        mstd1[i,] <- temp[[1]]
+        mstd2[i,] <- temp[[2]]
+        mrentropy[i,] <- temp[[3]]
+        mrentropy2[i,] <- temp[[4]]
+        moverlap[i,] <- temp[[5]]
+    }
+    ##plots
+    n <- numobs
+    pdfname <- paste0(plotsdir,'avg_compare_robots_',index,'-stub_',stubbornness,'.pdf')
+    df1 <- data.frame(x=1:(n+1),y=apply(mstd1,2,mean))
+    df2 <- data.frame(x=changepoint:(n+1),y=apply(mstd2,2,mean))
+    ##
+    maxy <- 15#maxstd #max(df$y1, df$y2)
+    miny <- 0 #min(df$y1, df$y2)
+    iconheight <- (maxy-miny)/10
+    robotwidth <- (n+1)/20/300*271
+    g <- ggplot() + theme_bw()
+    g <- g + annotation_raster(robot, xmax = n+1, xmin = n+1-robotwidth, 
+                               ymax = maxy, ymin=maxy-iconheight, interpolate = T) +
+        annotation_raster(robot2, xmax = n+1, xmin = n+1-robotwidth, 
+                          ymax = maxy*0.99-iconheight, ymin=maxy*0.99-2*iconheight, interpolate = T) 
+#    g <- g + geom_line(data=df0, aes(x,y), colour='black', alpha=0.33)
+    g <- g + geom_line(data=df1, aes(x,y), colour=myblue, alpha=0.75)
+    g <- g + geom_line(data=df2, aes(x,y), colour=myredpurple, alpha=0.75)
+    g <- g + xlim(1,n+1) + ylim(miny,maxy) +
+        theme(aspect.ratio=0.5) +
+        labs(x='trial', y='std', title=index)
+    g <- g + geom_rect(aes(xmax=n+1-robotwidth,xmin=n+1-2*robotwidth,
+                          ymax=maxy,ymin = maxy-iconheight),
+                          color=NA, fill=myblue, alpha=0.5, stat='identity', position='identity') +
+        geom_rect(aes(xmax=n+1-robotwidth,xmin=n+1-2*robotwidth,
+                          ymax=maxy*0.99-iconheight,ymin = maxy*0.99-2*iconheight),
+                          color=NA, fill=myredpurple, alpha=0.5)
+    save_plot(pdfname, g, base_width = 148, base_height=148*0.6, units='mm', dpi = 300)
+#ggsave(pdfname, width = 148, height = 148*0.2, units='mm', dpi = 300)
+    dev.off()
+    return(list(mstd1,mstd2,mrentropy,mrentropy2,moverlap))
 }
