@@ -1,7 +1,7 @@
 \pdfoutput=1
 %% Author: PGL  Porta Mana, ALS Filipowicz
 %% Created: 2018-04-08T16:54:19+0200
-%% Last-Updated: 2018-04-18T10:18:50+0200
+%% Last-Updated: 2018-04-18T10:24:58+0200
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Report-no: ***
 \newif\ifarxiv
@@ -1240,17 +1240,18 @@ the distribution vectors) we find $0.949$ vs $0.823$, which agree with the
 first three measures.
 
 \begin{figure}[t!]
-\centering\includegraphics[width=\linewidth]{{comparisons1/avg_compare_robots_wide2narrow-stub_0.1}.pdf}
-\includegraphics[width=\linewidth]{{comparisons1/avg_compare_robots_narrow2wide2-stub_0.1}.pdf}
+\centering\includegraphics[width=\linewidth]{{comparisons1/avg_compare_robots_wide2narrow3-stub_0.1}.pdf}
+\includegraphics[width=\linewidth]{{comparisons1/avg_compare_robots_narrow2wide3-stub_0.1}.pdf}
 \caption{Adaptation speed of the standard deviation for a robot after a
   change in the generation of the outcomes, compared with that of a robot
-  that starts learning after the change, averaged over 100
-  experiments}\label{fig:avg_comparison_robots_stds}
+  that starts learning after the change, averaged over 100 experiments. The
+  normals have same mean $17$ and standard deviations $6$ and
+  $1.9$.}\label{fig:avg_comparison_robots_stds}
 \end{figure}% done with exploration1.R
 Figure~\ref{fig:avg_comparison_robots_stds} shows that this phenomenon is
 even more striking if we average the sequences of standard deviations over
-100 repetitions of such experiments, keeping the same means and standard
-deviations of the generated normal.\mynote{L: so good?! must recheck the script.}
+100 repetitions of such experiments.\mynote{L: so good?! must recheck the
+  script.}
 
 \begin{figure}[b!]
 \centering\includegraphics[width=\linewidth]{{comparisons1/compare_robots_wide2wide-stub_0.1}.pdf}
