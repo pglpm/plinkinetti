@@ -1,7 +1,7 @@
 \pdfoutput=1
 %% Author: PGL  Porta Mana, ALS Filipowicz
 %% Created: 2018-04-08T16:54:19+0200
-%% Last-Updated: 2018-04-18T10:24:58+0200
+%% Last-Updated: 2018-04-28T02:12:11+0200
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Report-no: ***
 \newif\ifarxiv
@@ -348,7 +348,7 @@ citestyle=authoryear-comp,bibstyle=pglpm-authoryear,autopunct=false,sorting=ny,s
 \DeclareDelimFormat{postnotedelim}{\space}
 \ifarxiv\else\addbibresource{portamanabib.bib}\fi
 \renewcommand{\bibfont}{\footnotesize}
-\appto{\citesetup}{\footnotesize}% smaller font for citations
+%\appto{\citesetup}{\footnotesize}% smaller font for citations
 \defbibheading{bibliography}[\bibname]{\section*{#1}\addcontentsline{toc}{section}{#1}%\markboth{#1}{#1}
 }
 \newcommand*{\citep}{\parencites}
@@ -893,18 +893,23 @@ We will abbreviate logical conjunction \enquote{$\land$} with a comma, for
 simplicity. Our statistical terminology and notation follow ISO standards
 \citep{iso1993_r2009,iso2006} otherwise.
 
-We shall consider a robot who uses an \emph{infinitely exchangeable} model.
-This kind of models, introduced by de~Finetti
-\parentext{\cite*{definetti1930,definetti1937}; \cite{heathetal1976}} and
-described in detail in \textcite[\sect~4.2]{bernardoetal1994_r2000}, is
-determined by the following assumption of \emph{infinite exchangeability}:
-the joint distribution for any number of observations is symmetric with
+We shall consider a robot who uses either of these two equivalent
+assumptions:
+\begin{itemize}
+\item the joint distribution for any number of observations is symmetric with
 respect to their order; that is, the order of the observations is
-irrelevant for inferential purposes. Distributions for different number of
-observations must of course be consistent with one another through
-marginalization. Infinite exchangeability may in turn be motivated by other
-specific assumptions, but the details of these are irrelevant for the
-mathematical form of this model.
+irrelevant for inferential purposes;
+\item for inferential purposes, only the relative frequencies of past observations
+  are relevant. Any additional data about past observation is irrelevant
+  and can be discarded.
+\end{itemize}
+Distributions for different number of observations must of course be
+consistent with one another through marginalization.
+
+The two equivalent assumptions are technically called \emph{infinite
+  exchangeability}. This notion was introduced by de~Finetti
+\parentext{\cite*{definetti1930,definetti1937}; \cite{heathetal1976}}; it
+is described in detail in \textcite[\sect~4.2]{bernardoetal1994_r2000}.
 
 Infinite exchangeability determines this form of the probability above:
 \begin{equation}
