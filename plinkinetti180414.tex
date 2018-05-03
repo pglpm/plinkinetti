@@ -1,7 +1,7 @@
 \pdfoutput=1
 %% Author: PGL  Porta Mana, ALS Filipowicz
 %% Created: 2018-04-08T16:54:19+0200
-%% Last-Updated: 2018-05-03T14:45:01+0200
+%% Last-Updated: 2018-05-03T14:56:03+0200
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Report-no: ***
 \newif\ifarxiv
@@ -1425,7 +1425,7 @@ Learning takes place this way:
       \Bigr]\,
       \pf(\ymu \| d_1, \yh,\yI)
     \\
-    \shortintertext{with}
+    \intertext{with}
       \begin{split}%[t][0.5\linewidth]
     \pf(\yth \| d_1, \ymu,\yh,\yI)
     &=\frac{
@@ -1447,10 +1447,10 @@ Learning takes place this way:
       }.\label{eq:update_h2}
   \end{align}
 \end{subequations}
-Note that the denominator or the update
-formula~\eqref{eq:update_h1} for $\yth$ is the updated
-probability~\eqref{eq:update_h2} for $\ymu$. Note also that the space of
-independent models $\set{\yth}$ can be different for different $\ymu$. 
+Note that the denominator of the update formula~\eqref{eq:update_h1} for
+$\yth$ is the updated probability~\eqref{eq:update_h2} for $\ymu$. Note
+also that the space of independent models $\set{\yth}$ can be different for
+different $\ymu$.
 
 With a hierarchic model, it is as if we were considering different
 \enquote{super-inferences} about ways of doing inferences, and inferring
