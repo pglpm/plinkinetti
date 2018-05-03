@@ -1,7 +1,7 @@
 \pdfoutput=1
 %% Author: PGL  Porta Mana, ALS Filipowicz
 %% Created: 2018-04-08T16:54:19+0200
-%% Last-Updated: 2018-05-03T18:48:36+0200
+%% Last-Updated: 2018-05-04T01:13:58+0200
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Report-no: ***
 \newif\ifarxiv
@@ -1471,7 +1471,8 @@ we've done so far.
 The subdivision of learning into two or more levels of different coarseness
 can be very convenient, but mathematically it's always equivalent to one single
 subdivision at the finest level. In other words, any hierarchic model can
-always be rewritten as a parametric one. Let's see how.
+always be rewritten as a parametric one. Let's see how, in the case of a
+hierarchic model like~\eqref{eq:hier_model}.
 
 We said that each parametric model $\ymu$ has a set
 $\set{\yth} = \set{\yth}_{\ymu}$ of underlying independent models. For
@@ -1489,8 +1490,44 @@ these sets, denoting a member of this union by $\yTh$:
   \label{eq:union_indip_models}
   \set{\yTh} \defd \bigcup_{\ymu}\set{\yth}_{\ymu}.
 \end{equation}
+Now consider the predictive probability~\eqref{eq:hier_model} for the
+hierarchic model:
+\begin{equation}
+  \label{eq:hier_model_simple}
+  \pf(d \| \yh, \yI) =
+\sum_\ymu\biggl[ \sum_{\yth}
+\pf(d \|\yth,\ymu,\yh,\yI)\,
+     \pf(\yth \| \ymu,\yh, \yI)\biggr]\,
+     \pf(\ymu \| \yh,\yI).
+\end{equation}
+If we decree that $\pf(\yTh \| \ymu,\yh,\yI) = 0$ if $\yTh \notin
+\set{\yth}_{\ymu}$, we can extend the sum over $\yth$ (for fixed $\ymu$)
+over all $\yTh$. Moreover, since $\yTh$ contains information about $\ymu$,
+the latter becomes irrelevant in the conditional of the probability $\pf(d
+\|\yth,\ymu,\yh,\yI)$. The predictive probability above then becomes
+\begin{equation}
+  \label{eq:hier_model_Theta}
+  \begin{split}
+  \pf(d \| \yh, \yI) &=
+\sum_{\yTh}
+\pf(d \|\yTh,\yh,\yI)\, \sum_\ymu 
+     \pf(\yTh \| \ymu,\yh, \yI)\,
+     \pf(\ymu \| \yh,\yI),
+\\ &= \sum_{\yTh}
+\pf(d \|\yTh,\yh,\yI)\,
+     \pf(\yTh \| \yh, \yI),
+   \end{split}
+\end{equation}
+where the last equality follows from the law of total probability. What's
+important in the last formula is that the probability
+$\pf(d \|\yTh,\yh,\yI)$ factorizes over conjunctions of data; that is, it
+is an independent model. The model above is therefore just a parametric
+model.
 
-
+The last step consists in joining together into a single value all those
+values of $\yTh$ which lead to identical predictive distributions
+$\pf(d \|\yTh,\yh,\yI)$. The probability $\pf(\yTh \| \yh, \yI)$  for such
+a value will be the sum of the probability for the various equivalent values.
 
 \mynote{to be cont'd}
 
