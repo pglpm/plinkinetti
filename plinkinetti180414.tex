@@ -1,7 +1,7 @@
 \pdfoutput=1
 %% Author: PGL  Porta Mana, ALS Filipowicz
 %% Created: 2018-04-08T16:54:19+0200
-%% Last-Updated: 2018-04-28T02:12:11+0200
+%% Last-Updated: 2018-05-03T14:45:01+0200
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Report-no: ***
 \newif\ifarxiv
@@ -180,11 +180,11 @@ british%
  \DeclareMathSymbol{\epsilon}{\mathalpha}{egreeki}{"0F}
 % \DeclareMathSymbol{\zeta}{\mathalpha}{egreeki}{"10}
 % \DeclareMathSymbol{\eta}{\mathalpha}{egreeki}{"11}
-% \DeclareMathSymbol{\theta}{\mathalpha}{egreeki}{"12}
+ \DeclareMathSymbol{\theta}{\mathalpha}{egreeki}{"12}
 % \DeclareMathSymbol{\iota}{\mathalpha}{egreeki}{"13}
  \DeclareMathSymbol{\kappa}{\mathalpha}{egreeki}{"14}
  \DeclareMathSymbol{\lambda}{\mathalpha}{egreeki}{"15}
-% \DeclareMathSymbol{\mu}{\mathalpha}{egreeki}{"16}
+ \DeclareMathSymbol{\mu}{\mathalpha}{egreeki}{"16}
  \DeclareMathSymbol{\nu}{\mathalpha}{egreeki}{"17}
 % \DeclareMathSymbol{\xi}{\mathalpha}{egreeki}{"18}
 % \DeclareMathSymbol{\omicron}{\mathalpha}{egreeki}{"6F}
@@ -194,7 +194,7 @@ british%
 % \DeclareMathSymbol{\tau}{\mathalpha}{egreeki}{"1C}
 % \DeclareMathSymbol{\upsilon}{\mathalpha}{egreeki}{"1D}
 % \DeclareMathSymbol{\phi}{\mathalpha}{egreeki}{"1E}
-% \DeclareMathSymbol{\chi}{\mathalpha}{egreeki}{"1F}
+ \DeclareMathSymbol{\chi}{\mathalpha}{egreeki}{"1F}
 % \DeclareMathSymbol{\psi}{\mathalpha}{egreeki}{"20}
 % \DeclareMathSymbol{\omega}{\mathalpha}{egreeki}{"21}
 % \DeclareMathSymbol{\varepsilon}{\mathalpha}{egreeki}{"22}
@@ -732,7 +732,10 @@ P.G.L. Porta\,Mana\\%
 \newcommand*{\yN}{\varLambda}
 \newcommand*{\ynn}{\nu}
 \newcommand*{\yn}{\bm{\nu}}
-
+\newcommand*{\yth}{\theta}
+\newcommand*{\ymu}{\mu}
+\newcommand*{\yh}{\chi}
+\newcommand*{\yI}{I}
 %@@@@@@@@@@ new macros end @@@@@@@@@@
 
 \firmlists
@@ -776,10 +779,10 @@ P.G.L. Porta\,Mana\\%
 \setlength{\afterepigraphskip}{0pt}
 \epigraph{We are human, after all\\
   Much in common, after all}{\citep{daftpunk2005b}}
-\vspace{-1em}
-\epigraph{If people always felt obliged to back their opinions when
-  challenged, we would be spared a few of the ``certain'' predictions that
-  are so freely made.}{\citep{good1950}}
+%\vspace{-1em}
+% \epigraph{If people always felt obliged to back their opinions when
+%   challenged, we would be spared a few of the ``certain'' predictions that
+%   are so freely made.}{\citep{good1950}}
 
 
 % \noindent\emph{\footnotesize Note: Dear Peer, this manuscript is
@@ -1265,6 +1268,196 @@ even more striking if we average the sequences of standard deviations over
   the outcomes, compared with that of a robot that starts learning after
   the change.}\label{fig:comparison_robots_stds_2}
 \end{figure}% done with exploration1.R
+
+\clearpage
+
+\section{How hierarchic models get updated}
+\label{sec:hierarchic_models}
+
+The probability calculus allows for inferences that learn from data in
+various degrees. We call \enquote{model} a particular way of doing
+inference; each model is characterized by a particular capability of
+learning from data. These capabilities arise from a hierarchy of groups
+within groups of models.
+
+At the bottom we have models that do not learn at all; we call them
+\emph{independent}, because they assign independent probabilities to
+different data. For example, denoting a particular independent model by
+$\yth$ -- which could be the value of a parameter identifying the model --
+and by $\yI$ all other knowledge or assumptions besides this model, we have
+\begin{equation}
+  \label{eq:indep_model}
+  \pf(d_1,d_2 \| \yth, \yI) = \pf(d_1 \|\yth,\yI) \, \pf(d_2 \|\yth,\yI)
+\end{equation}
+for any two data $d_1$, $d_2$. This model does not learn because
+\begin{equation}
+  \label{eq:indep_model_nolearn}
+  \pf(d_2\| d_1, \yth, \yI) = \pf(d_2 \|\yth,\yI),
+\end{equation}
+that is, under this model one set of data is always irrelevant for the
+prediction of another set. The probability of an independent model given
+data $d$ is
+\begin{equation}
+  \label{eq:prob_indep_model}
+  \pf(\yth \| d, \yI)
+  = \frac{
+    \pf(d \|\yth,\yI) \, \pf(\yth \| \yI)
+  }{
+    \sum_{\yth}\pf(d \|\yth,\yI) \, \pf(\yth \| \yI)
+  },
+  % \equiv \frac{
+  %   \pf(d \|\yth,\yI) \, \pf(\yth \| \yI)
+  % }{
+  %   \pf(d \|\yI)
+  % },
+\end{equation}
+where $\pf(\yth \|\yI)$ is the probability over a range of such models
+based only on knowledge $\yI$, and $\pf(d \|\yth,\yI)$ is the
+\emph{likelihood} of the independent model given the data.
+
+\medskip
+
+We can introduce the capability of learning from data by considering a
+collection $\set{\yth}$ of independent models, each having a probability,
+and letting the data influence the probabilities of these models, rather
+than the model themselves.
+
+This particular model, based on a collection of independent models, is
+usually called a \emph{parametric} model. Let us denote a particular
+parametric model by $\ymu$. It is not independent because
+\begin{equation}
+  \label{eq:param_model}
+  \begin{aligned}
+  \pf(d_1,d_2 \| \ymu, \yI) &=
+\sum_{\yth}
+\pf(d_1,d_2 \|\yth,\ymu,\yI) \, \pf(\yth \| \ymu,\yI)
+\\&\equiv
+\sum_{\yth}
+\pf(d_1 \|\yth,\ymu,\yI) \, \pf(d_2 \|\yth,\ymu,\yI)
+ \, \pf(\yth \| \ymu,\yI),
+  \end{aligned}
+\end{equation}
+which doesn't factorize unless $\pf(\yth \| \ymu,\yI)$ is a delta. The
+first equality comes from the law of total probability. Such a model learns
+because
+\begin{subequations}
+    \label{eq:param_model_learn}
+  \begin{align}
+    \pf(d_2 \| d_1, \ymu, \yI) &=
+    \sum_{\yth}
+    \pf(d_2 \|\yth,\ymu,\yI) \, \pf(\yth \| d_1, \ymu,\yI)
+    \\
+    \shortintertext{with}
+    \pf(\yth \| d_1, \ymu,\yI)
+    &= \frac{
+      \pf(d_1 \|\yth,\ymu,\yI) \, \pf(\yth \| \ymu,\yI)
+      }{
+      \sum_{\yth} \pf(d_1 \|\yth,\ymu,\yI) \, \pf(\yth \| \ymu,\yI)
+      },
+  \end{align}
+\end{subequations}
+where we see that data $d_1$ affect not the probability of $d_2$ directly,
+but the probability distribution for the various independent models. The
+probability of a parametric model given data $d$ is
+\begin{subequations}
+  \label{eq:prob_indep_model}
+  \begin{align}
+    \pf(\ymu \| d, \yI)
+    &= \frac{
+      \pf(d \|\yth,\yI) \, \pf(\ymu \| \yI)
+      }{
+      \sum_{\ymu}\pf(d \|\ymu,\yI) \, \pf(\ymu \| \yI)
+      }
+    \\
+    \shortintertext{with}
+    \label{eq:param_model_likelihood}
+    \pf(d \|\ymu,\yI)
+    & =  
+      \sum_{\yth}
+      \pf(d \|\yth,\ymu,\yI) \, \pf(\yth \| \ymu,\yI).
+  \end{align}
+\end{subequations}
+where $\pf(\ymu \|\yI)$ is the probability over a range of parametric
+models based only on knowledge $\yI$. The last
+expression~\eqref{eq:param_model_likelihood} is the \emph{likelihood} of
+the model given the data, and we see that it's given by a mixture of
+independent models.
+
+\medskip
+
+Equations~\eqref{eq:prob_indep_model} and~\eqref{eq:param_model} show that
+a parametric model is constructed as an uncertainty over independent
+models, and \eqn~\eqref{eq:param_model_learn} shows that data affect this
+latter uncertainty. It is as if we were considering different ways of doing
+inference, and inferring which of such inferences is most probable. Each
+bottom inference is incapable to learn from data, but our inferences about
+these inferences can learn from data.
+
+
+We can proceed analogously and consider a collection $\set{\ymu}$ of
+parametric models, each having a probability, and letting the data
+influence this probability as well. The model constructed this way is
+usually called a one-level hierarchic model -- even though we've seen that
+a parametric model can also be considered as hierarchic. Let us denote such
+a model by $\yh$. The probability of the data is
+\begin{equation}
+  \label{eq:hier_model}
+  \begin{aligned}
+  \pf(d_1,d_2 \| \yh, \yI) &=
+\sum_{\ymu}
+\pf(d_1,d_2 \|\ymu,\yh,\yI) \, \pf(\ymu \| \yh,\yI)
+\\&\equiv
+    \!\!\begin{multlined}[t][0.5\linewidth]
+\sum_\ymu\biggl\{ \sum_{\yth}
+\Bigl[ \prod_i\pf(d_i \|\yth,\ymu,\yh,\yI)\Bigr]\,
+     \pf(\yth \| \ymu,\yh, \yI)\biggr\}\times{}\\
+     \pf(\ymu \| \yh,\yI).
+   \end{multlined}
+  \end{aligned}
+\end{equation}
+Learning takes place this way:
+\begin{subequations}
+    \label{eq:hier_model_learn}
+  \begin{align}
+    \pf(d_2 \| d_1, \yh, \yI)
+    &= \sum_{\ymu} \Bigl[\sum_{\yth}
+      \pf(d_2 \|\yth,\ymu,\yh,\yI) \, \pf(\yth \| d_1, \ymu,\yh,\yI)
+      \Bigr]\,
+      \pf(\ymu \| d_1, \yh,\yI)
+    \\
+    \shortintertext{with}
+      \begin{split}%[t][0.5\linewidth]
+    \pf(\yth \| d_1, \ymu,\yh,\yI)
+    &=\frac{
+      \pf(d_1 \|\yth,\ymu,\yh,\yI) \, \pf(\yth \| \ymu,\yh,\yI)
+      }{
+      \sum_{\yth} \pf(d_1 \|\yth,\ymu,\yh,\yI) \, \pf(\yth \| \ymu,\yh,\yI)
+    }
+        \\[2\jot]
+    &=\frac{
+      \pf(d_1 \|\yth,\ymu,\yh,\yI) \, \pf(\yth \| \ymu,\yh,\yI)
+      }{\pf(d_1 \| \ymu,\yh,\yI) },
+    \end{split}\label{eq:update_h1}
+      \\[3\jot]
+    \pf(\ymu \| d_1, \yh,\yI)
+    &= \frac{
+      \pf(d_1 \|\ymu,\yh,\yI) \, \pf(\ymu \| \yh,\yI)
+      }{
+      \sum_{\ymu} \pf(d_1 \|\ymu,\yh,\yI) \, \pf(\ymu \| \yh,\yI)
+      }.\label{eq:update_h2}
+  \end{align}
+\end{subequations}
+Note that the denominator or the update
+formula~\eqref{eq:update_h1} for $\yth$ is the updated
+probability~\eqref{eq:update_h2} for $\ymu$. Note also that the space of
+independent models $\set{\yth}$ can be different for different $\ymu$. 
+
+With a hierarchic model, it is as if we were considering different
+\enquote{super-inferences} about ways of doing inferences, and inferring
+which of such super-inferences is the most probable.
+
+
+
 
 
 
