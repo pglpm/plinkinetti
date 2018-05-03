@@ -1,7 +1,7 @@
 \pdfoutput=1
 %% Author: PGL  Porta Mana, ALS Filipowicz
 %% Created: 2018-04-08T16:54:19+0200
-%% Last-Updated: 2018-05-03T18:23:54+0200
+%% Last-Updated: 2018-05-03T18:48:36+0200
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Report-no: ***
 \newif\ifarxiv
@@ -212,7 +212,7 @@ british%
  \DeclareMathSymbol{\varEpsilon}{\mathalpha}{egreeki}{"45}
 % \DeclareMathSymbol{\varZeta}{\mathalpha}{egreeki}{"5A}
 % \DeclareMathSymbol{\varEta}{\mathalpha}{egreeki}{"48}
-% \DeclareMathSymbol{\varTheta}{\mathalpha}{egreeki}{"02}
+ \DeclareMathSymbol{\varTheta}{\mathalpha}{egreeki}{"02}
  \DeclareMathSymbol{\varIota}{\mathalpha}{egreeki}{"49}
 % \DeclareMathSymbol{\varKappa}{\mathalpha}{egreeki}{"4B}
  \DeclareMathSymbol{\varLambda}{\mathalpha}{egreeki}{"03}
@@ -733,6 +733,7 @@ P.G.L. Porta\,Mana\\%
 \newcommand*{\ynn}{\nu}
 \newcommand*{\yn}{\bm{\nu}}
 \newcommand*{\yth}{\theta}
+\newcommand*{\yTh}{\varTheta}
 \newcommand*{\ymu}{\mu}
 \newcommand*{\yh}{\chi}
 \newcommand*{\yI}{I}
@@ -1470,7 +1471,28 @@ we've done so far.
 The subdivision of learning into two or more levels of different coarseness
 can be very convenient, but mathematically it's always equivalent to one single
 subdivision at the finest level. In other words, any hierarchic model can
-always be rewritten as a parametric one. Let's see how.\mynote{to be cont'd}
+always be rewritten as a parametric one. Let's see how.
+
+We said that each parametric model $\ymu$ has a set
+$\set{\yth} = \set{\yth}_{\ymu}$ of underlying independent models. For
+example, in the case of real-valued data, one set could contain normal
+distributions with the same variance and different means; another set could
+contain uniform distributions with different supports; yet another set
+could contain Cauchy distributions with the same location parameter and
+different scale parameters. These sets can be pairwise disjoint,
+overlapping, or even identical for different $\ymu$.
+
+First of all let's consider each such set $\set{\yth}_{\ymu}$ as formally
+distinct from all others for different $\ymu$. We consider the union of all
+these sets, denoting a member of this union by $\yTh$:
+\begin{equation}
+  \label{eq:union_indip_models}
+  \set{\yTh} \defd \bigcup_{\ymu}\set{\yth}_{\ymu}.
+\end{equation}
+
+
+
+\mynote{to be cont'd}
 
 
 
