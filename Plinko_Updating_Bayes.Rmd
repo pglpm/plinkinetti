@@ -1,7 +1,6 @@
 ---
 title: "Bayesian Observers Performing the Plinko task"
-output: html_document
-author: P.G.L Porta Mana & A.L.S Filipowicz
+author: "P.G.L Porta Mana & A.L.S Filipowicz"
 ---
 
 ## 0) Motivations
@@ -40,7 +39,8 @@ The code below imports the data from all of subjects that participated in the ex
 Note that in total, participants were exposed to 400 trials each, but many subjects did not complete all 400 trials (each was exposed to one mean switch and one variance switch). For the paper above, I only used the first 200 trials of data as these were consistent accross subjects (although you're welcome to use all of the data if you wish)
 
 ```{r}
-dpath = "./data/"
+setwd('/Users/alsfilip/Dropbox/UW/Luca/PlinkoUpdatingData/')
+dpath = "./Plinko_Updating_data/"
 fs = dir(path = dpath,pattern = "barData")
 d <- read.csv(paste0(dpath,fs[1]))
 for (f in fs[2:40]) {
@@ -51,7 +51,7 @@ rm(dprime)
 d <- d[,1:(ncol(d)-2)]
 ```
 
-Below I'm adding some identifiers to make things a little clearer:
+Below I;m adding some identifiers to make things a little clearer:
 
 SwitchType: More intuitive label for all of the different switch conditions (again, only considering the first 200 trials)
 Distribution: Which distribution participants were exposed to (W1 is a wide distribution, N1 is a narrow distribution with the same mean as W1, W2 is a wide distribution with the same variance but different mean than W1, and N2 is a narrow distribution with the same variance but different mean from N1)
@@ -80,7 +80,7 @@ Here's a plot of the ball drops for the different conditions (y axis are the slo
 ```{r}
 library(plyr)
 library(ggplot2)
-bds = ddply(d, .(Condition,Trial),summarize,BP = mean(Ball.Position))
+bds = ddply(d, .(SwitchType,Trial),summarize,BP = mean(Ball.Position))
 
 ds = ddply(d, .(Distribution.Number,Trial),summarize, BP = mean(Ball.Position))
 
@@ -88,7 +88,157 @@ ds = ddply(d, .(Distribution.Number,Trial),summarize, BP = mean(Ball.Position))
 ggplot(subset(bds,Trial < 201),aes(Trial,BP))+
   geom_point()+
   geom_vline(xintercept = 101,size=1, linetype = 'dashed',alpha=.5)+
-  facet_wrap(~Condition)
+  facet_wrap(~SwitchType)
 ```
+
+## 2) Two distribution switching regimes
+
+In the plinkinetti pdf behavior from two robots are presented: one which makes continuous estimates from the start of the task to the end of the task, and one robot that get re-initialized at the start of the second distribution using the posterior belief of the first robot. The main finding is that the second robot adapts much more quickly to the the change in distribution, whereas the first robot has a sort of belief "stickiness", taking much longer to update.
+
+There is data from the plinko task that almost simulates these scenarios. In the experiment, participants were exposed to four different distributions of 100 ball drops. The distributions were a wide gaussian, a narrow gaussian with a diffrent mean, and bimodal distribution (mix of two gaussians with different means), and a positively skewed distribution. 
+
+Participants were exposed to these distributions in two regimes: 1) A continuous condition where, like in the experiment above, participants were switched from distribution to distribution without any explicit indications that the environment had switched, and 2) Break condition, where at the end of each distribution they were shown an accuracy score, then asked to give a new "prior" before starting the next distribution. Note that in neither case were participants told anything about the nature of the distributions they were attempting to estimate, or that any part of the environment would switch.
+
+Here are plots of the empirical ball distributions participants observed
+```{r,echo=FALSE,error=FALSE,warning=FALSE}
+#Load data from break condition
+dpath1 = "./Plinko_Norm_data/pn1/" 
+fs1 = dir(path = dpath1,pattern = "barData")
+d1 <- read.csv(paste0(dpath1,fs1[1]))
+d1 <- d1[,1:(ncol(d1)-2)]
+pid = 1
+d1$SubID = rep(paste0('P',as.character(pid)),length(d1$Participant))
+for (f in fs1[2:length(fs1)]) {
+dprime1 <- read.csv(paste0(dpath1, f))
+if(ncol(dprime1)==(ncol(d1)+1)){
+  dprime1 <- dprime1[,1:(ncol(dprime1)-2)]
+}
+else if(ncol(dprime1)==(ncol(d1))){
+  dprime1 <- dprime1[,c(1:7,9:12)]
+}
+dprime1$SubID = rep(paste0('P',as.character(pid)),length(dprime1$Participant))
+d1 <- rbind(d1,dprime1)
+rm(dprime1)
+pid = pid+1
+}
+
+d1$Condition[d1$Condition ==2] = 'Break'
+
+#Load data from continuous condition
+dpath2 = "./Plinko_Norm_data/pn2/" 
+fs2 = dir(path = dpath2,pattern = "barData")
+d2 <- read.csv(paste0(dpath2,fs2[1]))
+d2 <- d2[,1:(ncol(d2)-2)]
+d2$SubID = rep(paste0('P',as.character(pid)),length(d2$Participant))
+for (f in fs2[2:length(fs2)]) {
+dprime2 <- read.csv(paste0(dpath2, f))
+if(ncol(dprime2)==(ncol(d2)+1)){
+  dprime2 <- dprime2[,1:(ncol(dprime2)-2)]
+}
+else if(ncol(dprime2)==(ncol(d2))){
+  dprime2 <- dprime2[,c(1:7,9:12)]
+}
+dprime2$SubID = rep(paste0('P',as.character(pid)),length(dprime2$Participant))
+d2 <- rbind(d2,dprime2)
+rm(dprime2)
+pid = pid+1
+}
+d2$Condition[d2$Condition ==2] = 'Continuous'
+
+dists = ddply(d1,.(Distribution.Number,Trial),summarize,bp=mean(Ball.Position))
+wide = dists$bp[dists$Distribution.Number == 1]
+narrow = dists$bp[dists$Distribution.Number == 2]
+bimodal = dists$bp[dists$Distribution.Number == 3]
+skewed = dists$bp[dists$Distribution.Number == 4]
+```
+```{r}
+ggplot(dists,aes(Trial,bp))+
+  geom_point()+
+  geom_vline(xintercept=c(100,200,300),linetype=2)+
+  ylab('Ball Position')
+```
+```{r}
+# Get probability mass functions
+wide_d = sapply(1:40,function(x) sum(wide==x)/length(wide))
+narrow_d = sapply(1:40,function(x) sum(narrow==x)/length(narrow))
+bimodal_d = sapply(1:40,function(x) sum(bimodal==x)/length(bimodal))
+skewed_d = sapply(1:40,function(x) sum(skewed==x)/length(skewed))
+
+dense_df = data.frame(Slot = rep(1:40,4),
+                      Distribution=c(rep("Wide Gauss",40),rep("Narrow Gauss",40),rep("Bimodal",40),rep("Skewed",40)),
+                      Probability = c(wide_d,narrow_d,bimodal_d,skewed_d))
+
+ggplot(dense_df,aes(Slot,Probability))+
+  geom_bar(stat='identity')+
+  ylab('Ball Drop Probability')+
+  facet_wrap(~factor(Distribution,levels=c("Wide Gauss","Narrow Gauss","Bimodal","Skewed")))
+```
+
+Here is participant accuracy in each of the separate conditions (break and continuous). Accuracy here is defined as the difference in cosine angle between a participant's distribution on each trial vs the full empirical distribution that they are estimating (this is probably unfair, given that on early trials they have not observed all ball drops of the empirical distribution, but we'll use this for now).
+
+You can see that participants in the break condition are updating much better to the new distributions. While maybe unsurprising, this is clearly an example where participants are down-weighting previous evidence and restarting their inference processes. This is similar to the second robot in the plinkinetti notes. By contrast, participants in the continuous condition are treating the environment as one continuous inference, similar to the first robot (as can be seen in the second plot, participant estimates in the continuous condition are heavily influenced by previous distributions).
+
+```{r,fig.height=6,fig.width=15}
+#Now plot participant accuracy as a function of the current environment distribution - I'll use cosine angle here
+acc = function(bd,pd){
+  return(sum(bd*pd)/(sqrt(sum(bd*bd))*sqrt(sum(pd*pd))))
+}
+
+for(s in 1:40){
+  d1$DistProb[d1$Slot.Number == s & d1$Distribution.Number == 1] = wide_d[s]
+  d1$DistProb[d1$Slot.Number == s & d1$Distribution.Number == 2] = narrow_d[s]
+  d1$DistProb[d1$Slot.Number == s & d1$Distribution.Number == 3] = bimodal_d[s]
+  d1$DistProb[d1$Slot.Number == s & d1$Distribution.Number == 4] = skewed_d[s]
+
+  d2$DistProb[d2$Slot.Number == s & d2$Distribution.Number == 1] = wide_d[s]
+  d2$DistProb[d2$Slot.Number == s & d2$Distribution.Number == 2] = narrow_d[s]
+  d2$DistProb[d2$Slot.Number == s & d2$Distribution.Number == 3] = bimodal_d[s]
+  d2$DistProb[d2$Slot.Number == s & d2$Distribution.Number == 4] = skewed_d[s]
+}
+
+pacc1 = ddply(d1,.(SubID,Condition,Trial),summarize,Acc = acc(DistProb,Participant.Slot.Estimate),BP = mean(Ball.Position))
+pacc2 = ddply(d2,.(SubID,Condition,Trial),summarize,Acc = acc(DistProb,Participant.Slot.Estimate),BP = mean(Ball.Position))
+pacc = rbind(pacc1,pacc2)
+
+pacc.m = ddply(pacc,.(Condition,Trial),summarize,acc = mean(Acc),mse = mean_se(Acc)[[2]],pse = mean_se(Acc)[[3]])
+
+ggplot(pacc.m,aes(Trial,acc,group=Condition))+
+  geom_ribbon(aes(x=Trial,ymin=mse,ymax=pse,fill=Condition),alpha=.3)+
+  geom_line(aes(color=Condition),size=1)+
+  geom_vline(xintercept=c(100,200,300),linetype=2)+
+  ylab('Accuracy (Cosine Angle)')+
+  ylim(c(0,1))
+```
+
+
+
+```{r,fig.height=5,fig.width=15}
+d_all = rbind(d1,d2)
+d_all.m = ddply(d_all,.(Condition,Trial,Slot.Number),summarize,Participant.Estimate=mean(Participant.Slot.Estimate))
+d_all.m$Participant.Estimate[d_all.m$Participant.Estimate > .15] = .15
+  
+jet.colours <- colorRampPalette(c("#00007F", "blue", "#007FFF", "cyan", "#7FFF7F", "yellow", "#FF7F00", "red", "#7F0000"))
+
+ggplot()+
+  geom_tile(data=d_all.m,aes(Trial,Slot.Number,fill=Participant.Estimate))+
+  scale_fill_gradientn(colours=jet.colours(7))+
+  geom_vline(xintercept=c(100,200,300),size=1,color='white',linetype='longdash')+
+  scale_y_continuous(expand=c(0,0))+
+  scale_x_continuous(expand=c(0,0))+
+  geom_point(data=pacc,aes(Trial,BP),color='white',size=1.1)+
+  geom_point(data=pacc,aes(Trial,BP),color='black',size=.7)+
+  facet_wrap(~Condition)+
+  theme(
+      axis.ticks.y = element_blank(),
+      axis.ticks.x = element_blank(),
+      axis.line = element_blank(),
+      panel.grid.major = element_blank(),
+      panel.grid.minor = element_blank(),
+      panel.background = element_blank()
+      )
+```
+
+
+
 
 
