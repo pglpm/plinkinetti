@@ -240,12 +240,15 @@ ggplot()+
 
 ----
 
-Luca - Questions & wonderings:
+## To-do & to-discuss
 
-* *Accuracy measurement* (for later): What should a participant's distribution be compared with? There are several possibilities, and they probably give similar results. But it's an important methodological question (Alex: could you point me to literature that discusses it?). The empirical distribution is one choice; it is equivalent to comparing against the inference of a Bayesian robot with an improper prior. But there are other choices.
+* LM: *Accuracy measurement*: What should a participant's distribution be compared with? There are several possibilities, and they probably give similar results. But it's an important methodological question (Alex: could you point me to literature that discusses it?). The empirical distribution is one choice; it is equivalent to comparing against the inference of a Bayesian robot with an improper prior. But there are other choices.
 
-* *Online accuracy?*: How about comparing a participant's distribution against the empirical distribution *observed so far*? This can lead to two consequences: 1. we could discover that the participant is not *improving* his predictions, but is already making good predictions. 2. We could observe a non-monotonic behaviour between break- and continuous-participants.
+* LM: *Online accuracy?*: How about comparing a participant's distribution against the empirical distribution *observed so far*? This can lead to two consequences: 1. we could discover that the participant is not improving his predictions, but is already making good predictions. 2. We could observe a non-monotonic behaviour between break- and continuous-participants.
 
+* LM: we need to organize data & paths so that every repo member can run the scripts.
+
+* LM: I'd like to have what the purpose/points of the work are, written somewhere. The purposes can change as we explore, but it's good to have a pivot always in sight...
 
 
 
