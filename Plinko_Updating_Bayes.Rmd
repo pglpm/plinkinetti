@@ -1,6 +1,6 @@
 ---
 title: "Bayesian Observers Performing the Plinko task"
-author: "P.G.L Porta Mana & A.L.S Filipowicz"
+author: "P.G.L. Porta Mana & A.L.S Filipowicz"
 ---
 
 ## 0) Motivations
@@ -238,6 +238,13 @@ ggplot()+
       )
 ```
 
+----
+
+Luca - Questions & wonderings:
+
+* *Accuracy measurement* (for later): What should a participant's distribution be compared with? There are several possibilities, and they probably give similar results. But it's an important methodological question (Alex: could you point me to literature that discusses it?). The empirical distribution is one choice; it is equivalent to comparing against the inference of a Bayesian robot with an improper prior. But there are other choices.
+
+* *Online accuracy?*: How about comparing a participant's distribution against the empirical distribution *observed so far*? This can lead to two consequences: 1. we could discover that the participant is not *improving* his predictions, but is already making good predictions. 2. We could observe a non-monotonic behaviour between break- and continuous-participants.
 
 
 
