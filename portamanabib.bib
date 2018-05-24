@@ -6,7 +6,7 @@
 %% Home page: http://magnaspesmeretrix.org/
 %% Email (remove ZZ): pglpm0ZZ[at]gmail.com
 %% Created: 2000-08-23T16:53:30+0200
-%% Last-Updated: 2018-05-11T10:51:47+0200
+%% Last-Updated: 2018-05-24T14:58:54+0200
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %
 % NB: This database contains also items whose content's validity I
@@ -185,6 +185,7 @@
 @String{asens = {\langfrench{Annales scientifiques de l'{\'E}cole Normale Sup{\'e}rieure}}}
 @String{asmfum = {Atti Sem.\ Mat.\ Fis.\ Univ.\ Modena}}
 @String{asnspcs = {\langitalian{Annali della Scuola Norm.\ Sup.\ Pisa -- Classe di Scienze}}}
+@String{ast = {Appl.\ Statist.}}
 @String{astrophy = {Astrophysics}}
 @String{atmcp = {Atmos.\ Chem.\ Phys.}}
 @String{atmoc = {Atmosphere-Ocean}}
@@ -303,7 +304,7 @@
 @String{csrsgr = {\langlatin{Commentationes Societatis Regiae Scientiarum Gottingensis recentiores}}}
 @String{cssc = {Comm.\ Stat.\ Simulat.\ Comput.}}
 @String{cst = {Compos.\ Sci.\ Tech.}}
-@String{cstm = {Commun.\ Statist.\ -- Theor.\ Meth.}}
+@String{cstm = {Commun.\ Statist.\ -- Theory Meth.}}
 @String{cuz = {Chemie in unserer Zeit}}
 @String{czjp = {Czech.\ J. Phys.}}
 @String{czmj = {Czech.\ Math.\ J.}}
@@ -474,6 +475,7 @@
 @String{jamm = {J. Appl.\ Math.\ Mech.}}
 @String{jamsa = {J. Austral.\ Math.\ Soc.\ A}}
 @String{jap = {J. Appl.\ Phys.}}
+@String{japr = {J. Appl.\ Prob.}}
 @String{jas = {J. Atmos.\ Sci.}}
 @String{jasa = {J. Am.\ Stat.\ Assoc.}}
 @String{jasis = {J. Am.\ Soc.\ Inf.\ Sci.}}
@@ -583,6 +585,7 @@
 @String{jram = {\langgerman{Journal f{\"u}r die reine und angewandte Mathematik}}}
 @String{jrlr = {J. Russ.\ Laser Res.}}
 @String{jrma = {J. Rational Mech.\ Anal.}}
+@String{jrsi = {J. R. Soc.\ Interface}}
 @String{jrss = {J. Roy.\ Stat.\ Soc.}}
 @String{jrssa = {J. Roy.\ Stat.\ Soc. A}}
 @String{jrssb = {J. Roy.\ Stat.\ Soc. B}}
@@ -766,6 +769,7 @@
 @String{pi = {Psychol.\ Inq.}}
 @String{piascs = {Proc.\ Indian Acad.\ Sci.\ (Chem.\ Sci.)}}
 @String{picm = {Proc.\ Int.\ Congress Mathematicians}}
+@String{picml = {Proc.\ ICML}}
 @String{pieec = {Proc.\ IEE C}}
 @String{pieee = {Proc.\ IEEE}}
 @String{pier = {Progr.\ Electromagnetics Research (PIER)}}
@@ -1454,17 +1458,14 @@ number =       {6683},
 pages =	       {349--352}
 }
 
-@InProceedings{adamsetal2009,
+@Article{adamsetal2009,
 author =       {Adams, Ryan Prescott and Murray, Iain and MacKay, David J. C.},
 title =	       {Tractable Nonparametric {Bayesian} Inference in {Poisson} Processes with {Gaussian} Process Intensities},
-booktitle =    {Proceedings of the 26th Annual International Conference on Machine Learning},
+journal =      picml,
 year =	       {2009},
-editor =       {L{\'e}on Bottou and Michael Littman},
-series =       {ICML},
+volume =       {26},
 pages =	       {9--16},
-address =      {Montr{\'e}al},
-publisher =    {Omnipress},
-note =	       {\url{http://homepages.inf.ed.ac.uk/imurray2/pub/09poisson/}, \url{http://faculty.chicagobooth.edu/workshops/econometrics/past/pdf/Adams2.pdf}}
+keywords =     {probability theory}
 }
 
 @Book{addisonetal1965,
@@ -5710,6 +5711,30 @@ pages =	       {271--275},
 year =	       {1993}
 }
 
+@Article{bahadur1954,
+author =       {R. R. Bahadur},
+title =	       {Sufficiency and Statistical Decision Functions},
+journal =      ams,
+year =	       {1954},
+volume =       {25},
+number =       {3},
+pages =	       {423--462},
+note =	       {See also \citebi{bahaduretal1955}},
+keywords =     {sufficient statistics, exchangeability, exponential family, Bayesian probability theory, extremal family}
+}
+
+@Article{bahaduretal1955,
+author =       {R. R. Bahadur and E. L. Lehmann},
+title =	       {Two Comments on ``{Sufficiency} and Statistical Decision Functions''},
+journal =      ams,
+year =	       {1955},
+volume =       {26},
+number =       {1},
+pages =	       {139--142},
+note =	       {See \citebi{bahadur1954}},
+keywords =     {sufficient statistics, exchangeability, exponential family, Bayesian probability theory, extremal family}
+}
+
 @Misc{baieretal2005,
 author =       {T. Baier and K. M. Hangos and A. Magyar and D. Petz},
 title =	       {Comparison of some methods of quantum state estimation},
@@ -7165,16 +7190,6 @@ keywords =     {cross-validation, model selection},
 note =	       {See \citebi{stone1974}}
 }
 
-@InCollection{barnardetal1985,
-author =       {G. A. Barnard and Edwin Thompson Jaynes and T. Seidenfeld and W. Polasek and Imre Csisz{\'a}r},
-title =	       {Discussion {[An extended maximum entropy principle and a {Bayesian} justification]} \textnormal{and} {Reply}},
-booktitle =    {\citein{bernardoetal1985}},
-year =	       {1985},
-pages =	       {93--98},
-keywords =     {minimum-discrimination-information, minimum-relative-entropy, Bayesian probability theory, exponential family},
-note =	       {See \citebi{csiszar1985}}
-}
-
 @Article{barnardetal2000,
 author =       {John Barnard and Robert McCulloch and Meng, Xiao-Li},
 title =	       {Modeling covariance matrices in terms of standard deviations and correlations, with application to shrinkage},
@@ -7197,6 +7212,17 @@ edition =      {reprint},
 keywords =     {exchangeability, sufficiency, probability theory},
 origdate =     {1978},
 note =	       {First publ.\ 1978}
+}
+
+@Article{barndorffnielsen1984,
+author =       {Barndorff-Nielsen, O. E.},
+title =	       {Statistical Theory: The Prequential Approach {[}invited discussion{]}},
+journal =      jrssa,
+year =	       {1984},
+volume =       {147},
+number =       {2},
+pages =	       {290--292},
+note =	       {See \citebi{dawid1984}}
 }
 
 @Book{barndorffnielsenetal1974,
@@ -7408,7 +7434,7 @@ keywords =     {phase transitions, critical points, thermodynamics, statistical 
 author =       {Andrea K. Barreiro and Julijana Gjorgjieva and Fred M. Rieke and Shea-Brown, Eric T.},
 title =	       {When are microcircuits well-modeled by maximum entropy methods?},
 keywords =     {maximum-entropy, computational neuroscience},
-note =	       {\arxiveprint{1011.2797}. See also \citebi{barreiroetal2010b}},
+note =	       {\arxiveprint{1011.2797}},
 year = 	       {2010}
 }
 
@@ -7420,8 +7446,7 @@ year =	       {2010},
 volume =       {11},
 number =       {Suppl.~1},
 pages =	       {P65},
-keywords =     {maximum-entropy, computational neuroscience},
-note =	       {See \citebi{barreiroetal2010}}
+keywords =     {maximum-entropy, computational neuroscience}
 }
 
 @Article{barrett2007,
@@ -8278,7 +8303,7 @@ pages =	       {1--16}
 }
 
 @Article{battistinetal2015,
-author =       {C. Battistin and John Hertz and Joanna Tyrcha and Yasser Roudi},
+author =       {Claudia Battistin and John Hertz and Joanna Tyrcha and Yasser Roudi},
 title =	       {Belief propagation and replicas for inference and learning in a kinetic {Ising} model with hidden spins},
 journal =      jsm,
 year =	       {2015},
@@ -10341,7 +10366,8 @@ editor =       {Jos{\'e}-Miguel Bernardo and M. H. DeGroot and Dennis V. Lindley
 title =	       {Bayesian Statistics~2\subtitleproc{: Proceedings of the Second Valencia International Meeting}},
 publisher =    {Elsevier and Valencia University Press},
 year =	       {1985},
-address =      {Amsterdam and Valencia}
+address =      {Amsterdam and Valencia},
+note = 	       {\url{https://www.uv.es/~bernardo/valenciam.html}}
 }
 
 @Book{bernardoetal1988,
@@ -18989,6 +19015,17 @@ pages =	       {851--860},
 keywords =     {integral equations}
 }
 
+@Article{carlinetal1992,
+author =       {Bradley P. Carlin and Robert E. Kass and F. Javier Lerch and Brian R. Huguenard},
+title =	       {Predicting Working Memory Failure: A Subjective {Bayesian} Approach to Model Selection},
+journal =      jasa,
+year =	       {1992},
+volume =       {87},
+number =       {418},
+pages =	       {319--327},
+keywords =     {probability elicitation, model comparison, Bayes factors}
+}
+
 @Article{carlinietal2003,
 author =       {A. Carlini and M. Sasaki},
 title =	       {Geometrical conditions for completely positive trace-preserving maps and their application to a quantum repeater and a state-dependent quantum cloning machine},
@@ -25374,10 +25411,10 @@ pages =	       {768--793}
 author =       {Imre Csisz{\'a}r},
 title =	       {An extended maximum entropy principle and a {Bayesian} justification},
 booktitle =    {\citein{bernardoetal1985}},
-pages =	       {83--93},
+pages =	       {83--98},
 year =	       {1985},
 keywords =     {minimum-discrimination-information, minimum-relative-entropy, Bayesian probability theory, exponential family},
-note =	       {With discussion and reply \citebi{barnardetal1985}}
+note =	       {With discussion by G. A. Barnard, E. T. Jaynes, T. Seidenfeld, W. Polasekand, and reply}
 }
 
 @Article{csiszar1991,
@@ -27073,6 +27110,18 @@ pages =	       {605--610},
 keywords =     {probability theory}
 }
 
+@Article{dawid1984,
+author =       {A. Philip Dawid},
+title =	       {Statistical Theory: The Prequential Approach},
+journal =      jrssa,
+year =	       {1984},
+volume =       {147},
+number =       {2},
+pages =	       {278--290},
+keywords =     {Bayes factor},
+note = 	       {See also discussion \citebi{barndorffnielsen1984}}
+}
+
 @Article{dawid1985,
 author =       {A. Philip Dawid},
 title =	       {Probability, Symmetry and Frequency},
@@ -27169,6 +27218,17 @@ number =       {172},
 address =      {London},
 keywords =     {marginalization, improper priors},
 note =	       {\url{http://www.ucl.ac.uk/statistics/research/reports}. See \citebi{dawidetal1973,bartholomewetal1973} and \citebi[\chap~15]{jaynes1994_r2003}}
+}
+
+@Article{dawidetal1999,
+author =       {A. Philip Dawid and Vladimir G. Vovk},
+title =	       {Prequential Probability: Principles and Properties},
+journal =      bern,
+year =	       {1999},
+volume =       {5},
+number =       {1},
+pages =	       {125--162},
+keywords =     {Bayes factors}
 }
 
 @Book{dawkins1976_r2006,
@@ -27572,6 +27632,20 @@ series =       {Lecture notes in physics: M},
 address =      {Berlin},
 keywords =     {several questions in classical and relativistic mechanics and thermodynamics, entropy, second law},
 note =	       {\langfrench{Et. {\'e}tablie d'apr{\`e}s un manuscrit in{\'e}d. de Louis de Broglie, {\'e}d. et pr{\'e}f. par Georges Lochak, Michel Karatchentzeff et Daniel Fargue}}
+}
+
+@Book{debruijn1958_r1961,
+author =       {De Bruijn, N. G.},
+title =	       {Asymptotic Methods in Analysis},
+publisher =    {North-Holland},
+year =	       {1961},
+volume =       {IV},
+series =       {Bibliotheca mathematica},
+address =      {Amsterdam},
+edition =      {2},
+note =	       {First publ.\ 1958},
+keywords =     {Laplace approximation},
+origdate =     {1958}
 }
 
 @Article{debsetal1996,
@@ -29015,7 +29089,7 @@ volume =       {1},
 number =       {5},
 pages =	       {877--922},
 keywords =     {deep learning, Bayesian probability theory},
-mynote =       {\enquote{We emphasize that rule extraction is a rather slippery concept, since it is possible to change a network's extraction score (without changing the network) simply by changing one's mind about what rule was ``supposed'' to be extracted}, \sect~12, p.~898}
+mynote =       {\enquote{We emphasize that rule extraction is a rather slippery concept, since it is possible to change a network's extraction score (without changing the network) simply by changing one's mind about what rule was ``supposed'' to be extracted}, \sect~12, p.~898. \enquote{Automatic learning will never replace programming -- it will \emph{supplement} it. One should pre-program the network with all available information about the structure of the problem, especially information about the symmetry and topology of the data}, \sect~20, p.~918}
 }
 
 @Article{denkeretal1990,
@@ -32000,7 +32074,7 @@ year =	       {2017},
 volume =       {50},
 number =       {12},
 pages =	       {124002},
-keywords =     {maximum-calibre, maximum-entropy, statistical mechanics, Boltzmann learning}
+keywords =     {maximum-calibre, maximum-entropy, statistical mechanics, Boltzmann learning, hidden units}
 }
 
 @Article{dunningdavies1983,
@@ -33317,7 +33391,7 @@ year =	       {1963},
 volume =       {70},
 number =       {3},
 pages =	       {193--242},
-keywords =     {model comparison, evidence, Bayes factor}
+keywords =     {model comparison, evidence, Bayes factor, hypothesis testing}
 }
 
 @Article{edwardsetal1975,
@@ -35717,6 +35791,18 @@ publisher =    {Springer}
 
 @Article{ericson1969,
 author =       {William Arnold Ericson},
+title =	       {Subjective {Bayesian} Models in Sampling Finite Populations},
+journal =      jrssb,
+year =	       {1969},
+volume =       {31},
+number =       {2},
+pages =	       {195--224},
+note = 	       {\url{http://www.stat.cmu.edu/~brian/905-2008/papers/Ericson-JRSSB-1969.pdf}. See also discussion \citebi{sampfordetal1969}},
+keywords =     {probability theory, sufficiency, exchangeability, survey sampling}
+}
+
+@Article{ericson1969b,
+author =       {William Arnold Ericson},
 title =	       {A Note on the Posterior Mean of a Population Mean},
 journal =      jrssb,
 year =	       {1969},
@@ -35724,17 +35810,6 @@ volume =       {31},
 number =       {2},
 pages =	       {332--334},
 keywords =     {Bayesian probability theory, finite exchangeability, survey sampling}
-}
-
-@Article{ericson1969b,
-author =       {William Arnold Ericson},
-title =	       {Subjective {Bayesian} Models in Sampling Finite Populations},
-journal =      jrssb,
-year =	       {1969},
-volume =       {31},
-number =       {2},
-pages =	       {195--233},
-keywords =     {probability theory, sufficiency, exchangeability, survey sampling}
 }
 
 @Article{ericson1970,
@@ -35757,18 +35832,6 @@ year =	       {1976},
 address =      {Ann Arbor, USA},
 keywords =     {partial exchangeability, de Finetti},
 note =	       {\url{http://hdl.handle.net/2027.42/4819}}
-}
-
-@Article{ericsonetal1969,
-author =       {William Arnold Ericson},
-title =	       {Subjective {Bayesian} Models in Sampling Finite Populations},
-journal =      jrssb,
-year =	       {1969},
-volume =       {31},
-number =       {2},
-pages =	       {195--233},
-keywords =     {Bayesian probability theory, finite exchangeability, survey sampling},
-note =	       {With discussion by M. R. Sampford, A. Scott, M. Stone, Dennis V. Lindley, T. M. F. Smith, D. F. Kerridge, V. P. Godambe, L. Kish, and author's reply. \url{http://www.stat.cmu.edu/~brian/905-2008/papers/Ericson-JRSSB-1969.pdf}}
 }
 
 @PhdThesis{ericsson2002,
@@ -38724,13 +38787,25 @@ pages =	       {1--8},
 keywords =     {Bayesian probability theory}
 }
 
+@Article{fisher1961,
+author =       {Michael E. Fisher},
+title =	       {Statistical Mechanics of Dimers on a Plane Lattice},
+journal =      pr,
+year =	       {1961},
+volume =       {124},
+number =       {6},
+pages =	       {1664--},
+keywords =     {Ising spin, statistical mechanics}
+}
+
 @Article{fisher1964,
 author =       {Michael E. Fisher},
 title =	       {The free energy of a macroscopic system},
 journal =      arma,
 year =	       {1964},
 volume =       {17},
-pages =	       {377--410}
+pages =	       {377--410},
+keywords =     {thermodynamic limit}
 }
 
 @Article{fisher1967,
@@ -40290,6 +40365,18 @@ keywords =     {Bayesian probability theory},
 note =	       {See also \citebi{freedman1963}}
 }
 
+@Book{freedmanetal1978_r2007,
+author =       {David Freedman and Robert Pisani and Roger Purves},
+title =	       {Statistics},
+publisher =    {Norton},
+year =	       {2007},
+address =      {London},
+edition =      {4},
+note =	       {First publ.\ 1978},
+keywords =     {survey sampling},
+origdate =     {1978}
+}
+
 @Article{freeman1958,
 author =       {N. C. Freeman},
 title =	       {Non-equilibrium flow of an ideal dissociating gas},
@@ -40594,7 +40681,7 @@ year =	       {1971},
 volume =       {3},
 number =       {4},
 pages =	       {381--384},
-note =	       {See also \citebi{tribusetal1972,gageetal1973,friedman1973}}
+note =	       {See also comments and reply \citebi{tribusetal1972,gageetal1973,friedman1973}}
 }
 
 @Article{friedmanetal2000,
@@ -42308,6 +42395,17 @@ pages =	       {053826},
 keywords =     {electromagnetics, quantum theory, quantum field theory, modes}
 }
 
+@Article{garthwaite1992,
+author =       {Paul H. Garthwaite},
+title =	       {Preposterior expected loss as a scoring rule for prior distributions},
+journal =      cstm,
+year =	       {1992},
+volume =       {21},
+number =       {12},
+pages =	       {3601--3619},
+keywords =     {probability elicitation}
+}
+
 @Misc{garzo2004,
 author =       {Vicente Garz{\'o}},
 title =	       {On the {Einstein} relation in a heated granular gas},
@@ -42974,12 +43072,32 @@ keywords =     {variable-rate Poisson process},
 note =	       {\url{http://research.meei.harvard.edu/eplhistory/Kiang_papers_CD_contents/1960_Gerstein_Kiang.pdf}}
 }
 
+@Article{gersteinetal1985,
+author =       {George L. Gerstein and Donald H. Perkel and Judith E. Dayhoff},
+title =	       {Cooperative firing activity in simultaneously recorded populations of neurons: detection and measurement},
+journal =      jns,
+year =	       {1985},
+volume =       {5},
+number =       {4},
+pages =	       {881--889},
+keywords =     {neuronal activity as decaying charge}
+}
+
 @Book{gerstneretal2014,
 author =       {Wulfram Gerstner and Werner M. Kistler and Richard Naud and Liam Paninski},
 title =	       {Neuronal Dynamics: From Single Neurons to Networks and Models of Cognition},
 publisher =    {Cambridge University Press},
 year =	       {2014},
 address =      {Cambridge}
+}
+
+@Article{gerwinnetal2009,
+author =       {Sebastian Gerwinn and Philipp Berens and Matthias Bethge},
+title =	       {A joint maximum-entropy model for binary neural population patterns and continuous signals},
+journal =      anips,
+year =	       {2009},
+volume =       {22},
+pages =	       {620--628}
 }
 
 @Article{gerwinnetal2010,
@@ -44657,7 +44775,7 @@ year =	       {1952},
 volume =       {14},
 number =       {1},
 pages =	       {107--114},
-keywords =     {Bayesian probability theory, Shannon entropy, maximum entropy}
+keywords =     {Bayesian probability theory, Shannon entropy, maximum entropy, Bayes factor, surprise}
 }
 
 @Article{good1953,
@@ -44714,6 +44832,17 @@ chapter =      {\chapb~16},
 pages =	       {173--177},
 keywords =     {probability theory, surprise, Shannon entropy},
 note =	       {First publ.\ 1957}
+}
+
+@Article{good1958,
+author =       {Irving John Good},
+title =	       {Significance Tests in Parallel and in Series},
+journal =      jasa,
+year =	       {1958},
+volume =       {53},
+number =       {284},
+pages =	       {799--813},
+keywords =     {sufficiency, sufficient statistics}
 }
 
 @Article{good1960,
@@ -44784,6 +44913,19 @@ note = 	       {With discussion},
 keywords =     {Johnson-Dirichlet prior, exchangeability, frequencies of frequencies}
 }
 
+@Article{good1975,
+author =       {Irving John Good},
+title =	       {Explicativity, corroboration, and the relative odds of hypotheses},
+journal =      syn,
+year =	       {1975},
+volume =       {30},
+number =       {1--2},
+pages =	       {39--73},
+keywords =     {Bayes factors, model comparison, hypothesis testing, induction},
+note =	       {Repr.\ in \citebi{good1983}, \chap~15, pp.~149--170},
+mynote =       {\enquote{Note how it is difficult to establish high probability for a hypothesis unless one is able to state other hypotheses clearly enough}, \sect~VI, p.~62}
+}
+
 @Article{good1976,
 author =       {Irving John Good},
 title =	       {On the Application of Symmetric {Dirichlet} Distributions and their Mixtures to Contingency Tables},
@@ -44841,7 +44983,10 @@ author =       {Irving John Good},
 title =	       {Weight of evidence: a brief survey},
 booktitle =    {\citein{bernardoetal1985}},
 pages =	       {249--270},
-year =	       {1985}
+year =	       {1985},
+keywords =     {Bayes factors, model comparison, sufficiency, Shannon entropy, relative entropy, discrimination information, density transformation},
+mynote =       {\enquote{There should be a unity of rational thought applying, for example, to statistics, science, law, and politics. No concept is fundamental if only statisticians use it}, \sect~1, pp.~249--250. \enquote{For legal purposes, $f(E)$ is a possible interpretation of what is meant by ``the whole truth and nothing but the truth''} \enquote{Of course approximate Bayesian sufficiency is all that can be demanded in a court of law. Anyone who swears to tell the whole truth has already committed perjury}, \sect~2, p.~252. \enquote{It can't mean that the probability density is small because the density can be made arbitrarily small, even where the mode originally occurred, by applying a suitable transformation to the independent variable}, \sect~7, p.~259. \enquote{Everybody is to some extent a Bayesian especially when using common sense}, \sect~7, p.~261},
+note =	       {With discussion by H. Rubin, T. Seidenfeld, and reply}
 }
 
 @Article{good1986,
@@ -49354,6 +49499,17 @@ pages =	       {332--350},
 note =	       {See also \citebi{vonneumann1932e}}
 }
 
+@Article{halmosetal1949,
+author =       {Paul R. Halmos and L. J. Savage},
+title =	       {Application of the {Radon-Nikodym} Theorem to the Theory of Sufficient Statistics},
+journal =      ams,
+year =	       {1949},
+volume =       {20},
+number =       {2},
+pages =	       {225--241},
+keywords =     {sufficient statistics, exchangeability, exponential family, Bayesian probability theory, extremal family}
+}
+
 @Article{halperinetal1965,
 author =       {Max Halperin and H. O. Hartley and P. G. Hoel},
 title =	       {Recommended Standards for Statistical Symbols and Notation},
@@ -51022,6 +51178,16 @@ note =	       {\arxiveprint{0910.2499}, \philscieprint{00004914}},
 keywords =     {quantum theory}
 }
 
+@Article{healy1984,
+author =       {M. J. R. Healy},
+title =	       {Where has Statistics Failed? (pp. 368-374)},
+journal =      jrssa,
+year =	       {1984},
+volume =       {147},
+number =       {2},
+pages =	       {368--374}
+}
+
 @Article{heathetal1976,
 author =       {David Heath and William Sudderth},
 title =	       {{De Finetti's} Theorem on Exchangeable Variables},
@@ -51029,7 +51195,8 @@ journal =      amst,
 year =	       {1976},
 volume =       {30},
 number =       {4},
-pages =	       {188--189}
+pages =	       {188--189},
+keywords =     {Bayesian probability theory, finite exchangeability}
 }
 
 @Article{hecht1942,
@@ -53293,6 +53460,17 @@ address =      {Dordrecht},
 keywords =     {probability theory}
 }
 
+@Article{hinton2002,
+author =       {Geoffrey E. Hinton},
+title =	       {Training Products of Experts by Minimizing Contrastive Divergence},
+journal =      ncomp,
+year =	       {2002},
+volume =       {14},
+number =       {8},
+pages =	       {1771--1800},
+keywords =     {hidden neurons, restricted Boltzmann machines, maximum-entropy}
+}
+
 @Article{hintonetal1983,
 author =       {K. Hinton and P. C. W. Davies and J. Pfautsch},
 title =	       {Accelerated observers do not detect isotropic thermal radiation},
@@ -53304,7 +53482,7 @@ pages =	       {88--90}
 }
 
 @InCollection{hintonetal1986_r1999,
-author =       {G. E. Hinton and T. J. Sejnowski},
+author =       {Geoffrey E. Hinton and T. J. Sejnowski},
 title =        {Learning and Relearning in {Boltzmann} Machines},
 booktitle =    {\citein{rumelhartetal1986_r1999}},
 year =         {1999},
@@ -53312,6 +53490,17 @@ chapter =      {\chapb~7},
 pages =        {282--317, 507--516},
 origdate =     {1986},
 note =         {First publ.\ 1986; \url{https://papers.cnl.salk.edu/PDFs/Learning\%20and\%20Relearning\%20in\%20Boltzmann\%20Machines\%201986-3239.pdf}}
+}
+
+@Article{hintonetal2006,
+author =       {Geoffrey E. Hinton and R. R. Salakhutdinov},
+title =	       {Reducing the Dimensionality of Data with Neural Networks},
+journal =      sci,
+year =	       {2006},
+volume =       {303},
+number =       {5786},
+pages =	       {504--507},
+keywords =     {hidden neurons, restricted Boltzmann machines, maximum-entropy}
 }
 
 @Article{hioeetal1981,
@@ -55045,6 +55234,17 @@ pages =	       {479--484},
 keywords =     {quantum mechanics, electromagnetism}
 }
 
+@Article{huang2015,
+author =       {Haiping Huang},
+title =	       {Effects of hidden nodes on network structure inference},
+journal =      jpa,
+year =	       {2015},
+volume =       {48},
+number =       {35},
+pages =	       {355002},
+keywords =     {hidden neurons, maximum-entropy}
+}
+
 @Book{huang3000BCE_t1998,
 editor =       {Alfred Huang},
 title =	       {The Complete I Ching},
@@ -55675,16 +55875,13 @@ number =       {2},
 pages =	       {315--320}
 }
 
-@InProceedings{hutter2001,
+@Article{hutter2001,
 author =       {Marcus Hutter},
 title =	       {General Loss Bounds for Universal Sequence Prediction},
-pages =	       {210--217},
-editor =       {Carla E. Brodley and Andrea Pohoreckyj Danyluk},
-booktitle =    {Proceedings of the Eighteenth International Conference on Machine Learning (ICML 2001)},
-publisher =    {Kaufmann},
-series =       {ICML},
+journal =      picml,
 year =	       {2001},
-address =      {San Francisco}
+volume =       {18},
+pages =	       {210--217}
 }
 
 @Article{hutter2002,
@@ -55809,6 +56006,17 @@ volume =       {42},
 number =       {3/4},
 pages =	       {533--537},
 keywords =     {prior probability, Bayesian probability theory, Jeffreys prior, sufficient statistics}
+}
+
+@Article{huzurbazar1955b,
+author =       {Vasant Shankar Huzurbazar},
+title =	       {On the certainty of an inductive inference},
+journal =      mpcps,
+year =	       {1955},
+volume =       {51},
+number =       {4},
+pages =	       {761--762},
+keywords =     {induction, rule of succession}
 }
 
 @Article{huzurbazar1956,
@@ -56525,7 +56733,7 @@ edition =      {rev.\ second ed.},
 origdate =     {1988},
 year =	       {1998},
 note =	       {\url{http://old.iupac.org/publications/books/gbook/}; prepared for publication by Ian Mills, Tomislav Cvita{\v{s}}, Klaus Homann, Nikola Kallay, and Kozo Kuchitsu. First publ.\ 1988; third ed.\ \citebi{iupac1988_r2007}},
-author = {\textsc{iupac}},
+author =       {\textsc{iupac}},
 keywords =     {standard, SI}
 }
 
@@ -57631,7 +57839,7 @@ booktitle =    {\citein{levineetal1979}},
 pages =	       {15--118},
 year =	       {1979},
 note =	       {\url{http://bayes.wustl.edu/etj/node1.html}; repr.\ with an introduction in \citebi{jaynes1983_r1989}, pp.~210--314},
-keywords =     {maximum-calibre principle, non-equilibrium statistical mechanics, thermodynamics, temperature fluctuations, temporal fluctuation vs uncertainty}
+keywords =     {maximum-calibre principle, non-equilibrium statistical mechanics, thermodynamics, temperature fluctuations, temporal fluctuation vs uncertainty, models by sufficiency pp.~52--55}
 }
 
 @InCollection{jaynes1980,
@@ -57696,7 +57904,8 @@ keywords =     {electromagnetics, modes, quantum field theory}
 author =       {Jaynes, Edwin Thompson},
 title =	       {Prior information in inference},
 note =	       {\url{http://bayes.wustl.edu/etj/node2.html}},
-year =	       {1982}
+year =	       {1982},
+keywords =     {model by sufficiency, pp.~25--28}
 }
 
 @Article{jaynes1982b,
@@ -57785,7 +57994,7 @@ title =	       {Highly informative priors},
 booktitle =    {\citein{bernardoetal1985}},
 pages =	       {329--360},
 year =	       {1985},
-note =	       {\url{http://bayes.wustl.edu/etj/node1.html}}
+note =	       {With discussion by J. J. Deely, A. F. Smith, J. R. M. Ameen, J. Berger, W. H. DuMouchel, I. J. Good, and reply. \url{http://bayes.wustl.edu/etj/node1.html}}
 }
 
 @Misc{jaynes1985d_r1993,
@@ -57841,7 +58050,8 @@ booktitle =    {\citein{goeletal1986}},
 chapter =      {\chapb~3},
 pages =	       {31--42},
 year =	       {1986},
-note =	       {\url{http://bayes.wustl.edu/etj/node1.html}}
+note =	       {\url{http://bayes.wustl.edu/etj/node1.html}},
+keywords =     {finite exchangeability}
 }
 
 @InCollection{jaynes1986d,
@@ -59181,6 +59391,18 @@ pages =	       {480--498},
 keywords =     {electromagnetism, energy-momentum tensor}
 }
 
+@Article{jonesetal1986,
+author =       {B. Jones and David J. Spiegelhalter and G. R. Kimber and M. J. R. Healy and S. M. Gore and P. Armitage and G. J. S. Ross and G. A. Barnard and C. Jennison and O'Hagan, A. and K. J. McConway and A. P. Dawid and L. R. Pericchi and R. A. Bailey and J. C. Gower and C. Chatfield and R. Christensen and David Cox and J. Dickey and A. S. C. Ehrenberg and P. R. Freeman and E. F. Harding and D. V. Hinkley and C. D. Kershaw and J. N. S. Matthews and C. Minder and A. N. Pettitt and L. B. Sheiner and J. Q. Smith and A. Racine and A. P. Grieve and H. Fl{\"u}hler and A. F. M. Smith},
+title =	       {Discussion of the paper by {Mr. Racine} \emph{et al}},
+journal =      ast,
+year =	       {1986},
+volume =       {35},
+number =       {2},
+pages =	       {121--150},
+note =	       {See \citebi{racineetal1986}},
+keywords =     {Bayes factors, model comparison, model uncertainty}
+}
+
 @Article{jonesetal1993,
 author =       {Helen Jones and John Marshall},
 title =	       {Convection with Rotation in a Neutral Ocean: A Study of Open-Ocean Deep Convection},
@@ -60412,6 +60634,17 @@ pages =	       {188--219},
 note =	       {\url{http://lib.stat.cmu.edu/~kass/papers/geometry.pdf}. See also comments and rejoinder \citebi{amarietal1989}}
 }
 
+@Article{kassetal1992,
+author =       {Robert E. Kass and Suresh K. Vaidyanathan},
+title =	       {Approximate {Bayes} Factors and Orthogonal Parameters, with Application to Testing Equality of Two Binomial Proportions},
+journal =      jrssb,
+year =	       {1992},
+volume =       {54},
+number =       {1},
+pages =	       {129--144},
+keywords =     {Laplace approximation}
+}
+
 @Article{kassetal1995,
 author =       {Robert E. Kass and Adrian E. Raftery},
 title =	       {Bayes Factors},
@@ -60420,7 +60653,7 @@ year =	       {1995},
 volume =       {90},
 number =       {430},
 pages =	       {773--795},
-keywords =     {model comparison},
+keywords =     {model comparison, comparison of Bayesian and $p$-value methods},
 note =	       {\url{https://www.stat.washington.edu/raftery/Research/PDF/kass1995.pdf}; \url{https://www.andrew.cmu.edu/user/kk3n/simplicity/KassRaftery1995.pdf}}
 }
 
@@ -61845,6 +62078,16 @@ booktitle =    {\citein{kochetal1982}},
 year =	       {1982},
 pages =	       {97--112},
 keywords =     {infinite exchangeability as approximation of finite exchangeability}
+}
+
+@Article{kingman1984,
+author =       {J. F. C. Kingman},
+title =	       {Probability and Random Processes},
+journal =      jrssa,
+year =	       {1984},
+volume =       {147},
+number =       {2},
+pages =	       {233--244}
 }
 
 @Book{kingman1993_r2002,
@@ -63781,7 +64024,7 @@ title =	       {Modeling Higher-Order Correlations within Cortical Microcolumns}
 journal =      ploscb,
 year =	       {2014},
 volume =       {10},
-keywords =     {maximum-entropy},
+keywords =     {maximum-entropy, restricted Boltzmann machines, Boltzmann learning},
 number =       {7},
 pages =	       {e1003684}
 }
@@ -65172,7 +65415,7 @@ year =	       {1989},
 volume =       {16},
 number =       {3},
 pages =	       {237--261},
-keywords =     {exchangeability, sufficiency, probability theory, Bayesian probability theory}
+keywords =     {exchangeability, sufficiency, probability theory, Bayesian probability theory, extremal families}
 }
 
 @Misc{kuehne2004,
@@ -65258,11 +65501,12 @@ note =	       {See \citebi{scherer1971}}
 @Article{kulkarnietal2007,
 author =       {Kulkarni, J. E. and Paninski, L.},
 title =	       {Common-input models for multiple neural spike-train data},
-journal =      nw,
+journal =      netw,
 year =	       {2007},
 volume =       {18},
 number =       {4},
-pages =	       {375--407}
+pages =	       {375--407},
+keywords =     {maximum-entropy, hidden units}
 }
 
 @Book{kullback1959_r1978,
@@ -67125,7 +67369,18 @@ year =	       {1996},
 address =      {New York}
 }
 
-@Article{lauritzen1974,
+@InCollection{lauritzen1974,
+author =       {Steffen L. Lauritzen},
+title =	       {Sufficiency, prediction and extreme models},
+booktitle =    {\citein{barndorffnielsenetal1974}},
+year =	       {1974},
+pages =	       {249--269},
+keywords =     {sufficient statistics, exchangeability, exponential family, Bayesian probability theory, extremal family},
+note =	       {With discussion. Repr.\ in \citebi{lauritzen1974b}},
+mynote =       {Rasch: \enquote{First a terminological remark. The ``prediction'' is suggestive of the statistician as a magician who can tell the future. Economists have an expression that is less pretentious: forecasting -- not much more reliable than weatherforecasting.\par To speak seriously: you do not really \emph{predict} anything. What you do, is to calculate the distribution of the variate in question, possibly offering its mean value or the like as a likely event -- but only on the assumption that the model -- or a characteristic feature of it -- on which you based this forecasting, still holds, i.e. confronted with what eventually does happen \emph{you are faced with a test of this hypothesis} and nothing else -- \emph{you were not telling what the future would be}!}, p.~268}
+}
+
+@Article{lauritzen1974b,
 author =       {Steffen L. Lauritzen},
 title =	       {Sufficiency, Prediction and Extreme Models},
 journal =      sjs,
@@ -67133,17 +67388,7 @@ year =	       {1974},
 volume =       {1},
 number =       {3},
 pages =	       {128--134},
-keywords =     {sufficient statistics, exchangeability, exponential family, Bayesian probability theory}
-}
-
-@InCollection{lauritzen1974b,
-author =       {Steffen L. Lauritzen},
-title =	       {Sufficiency, prediction and extreme models},
-booktitle =    {\citein{barndorffnielsenetal1974}},
-year =	       {1974},
-pages =	       {249--269},
-keywords =     {sufficient statistics, exchangeability, exponential family},
-note =	       {With discussion}
+keywords =     {sufficient statistics, exchangeability, exponential family, Bayesian probability theory, extremal family}
 }
 
 @Article{lauritzen1975,
@@ -67178,15 +67423,15 @@ year =	       {1984},
 volume =       {11},
 number =       {2},
 pages =	       {65--83},
-keywords =     {exchangeability, sufficiency, probability theory, Bayesian probability theory},
-note =	       {See also discussion \citebi{barndorffnielsenetal1984}}
+keywords =     {exchangeability, sufficiency, probability theory, Bayesian probability theory, extremal family},
+note =	       {See also discussion and reply \citebi{barndorffnielsenetal1984}}
 }
 
 @Misc{lauritzen2007,
 author =       {Steffen L. Lauritzen},
 title =	       {Sufficiency, Partial Exchangeability, and Exponential Families},
 year =	       {2007},
-keywords =     {recursive computable, minimal sufficient statistics},
+keywords =     {recursive computable, minimal sufficient statistics, extremal family},
 note =	       {\url{http://www.stats.ox.ac.uk/~steffen/teaching/grad/partial.pdf}. Lecture notes}
 }
 
@@ -68489,6 +68734,17 @@ pages =	       {1599},
 other =	       {See \citebi{horwitzetal1983} and also \citebi{cahill1983,wheateretal1983,horwitzetal1983b}}
 }
 
+@Article{lerouxetal2008,
+author =       {Le Roux, Nicolas and Yoshua Bengio},
+title =	       {Representational power of restricted {Boltzmann} machines and deep belief networks},
+journal =      ncomp,
+year =	       {2008},
+volume =       {20},
+number =       {6},
+pages =	       {1631--1649},
+keywords =     {hidden neurons, restricted Boltzmann machines, maximum-entropy}
+}
+
 @Article{lesche2004,
 author =       {Bernhard Lesche},
 title =	       {R{\'e}nyi entropies and observables},
@@ -68700,6 +68956,16 @@ year =	       {1927},
 address =      {London \amp\ Glasgow},
 note =	       {Ed.\ by Enrico Persico, transl.\ by M. Long. First publ.\ in Italian 1925},
 origdate =     {1925}
+}
+
+@Article{levinaetal2017,
+author =       {A. Levina and V. Priesemann},
+title =	       {Subsampling scaling},
+journal =      natcomm,
+year =	       {2017},
+volume =       {8},
+pages =	       {15140},
+keywords =     {probability theory, binomial sampling}
 }
 
 @Book{levine1970_r1975,
@@ -76200,6 +76466,17 @@ note =	       {\url{http://www.stat.uchicago.edu/~pmcc/pubs/exchangeability.pdf}
 keywords =     {time series}
 }
 
+@Article{mccullochetal1991,
+author =       {Robert McCulloch and Peter E. Rossi},
+title =	       {A {Bayesian} approach to testing the arbitrage pricing theory},
+journal =      jem,
+year =	       {1991},
+volume =       {49},
+number =       {1--2},
+pages =	       {141--168},
+keywords =     {failure of Schwartz criterion}
+}
+
 @Article{mccullochetal1993,
 author =       {Robert E. McCulloch and Ruey S. Tsay},
 title =	       {Bayesian Inference and Prediction for Mean and Variance Shifts in Autoregressive Time Series},
@@ -81755,6 +82032,17 @@ pages =	       {128--150},
 keywords =     {probability theory, priors}
 }
 
+@Article{nguyenetal2012,
+author =       {H. Chau Nguyen and Johannes Berg},
+title =	       {Mean-Field Theory for the Inverse {Ising} Problem at Low Temperatures},
+journal =      prl,
+year =	       {2012},
+volume =       {109},
+number =       {5},
+pages =	       {050602},
+keywords =     {maximum-entropy, Boltzmann learninng}
+}
+
 @Article{ni1986,
 author =       {Wei-Tou Ni},
 title =	       {Quantum measurements and the standard quantum limit},
@@ -83702,7 +83990,7 @@ keywords =     {probability theory}
 }
 
 @Book{oruanaidhetal1996,
-author =       {{\'O} Ruanaidhoruanaidhetal1996, Joseph J. K. and William J. Fitzgerald},
+author =       {{\'O} Ruanaidh, Joseph J. K. and William J. Fitzgerald},
 title =	       {Numerical Bayesian Methods Applied to Signal Processing},
 publisher =    {Springer},
 year =	       {1996},
@@ -90874,6 +91162,18 @@ keywords =     {computational neuroscience, statistical mechanics},
 note =	       {\url{http://www.pas.rochester.edu/~rajeev/papers/abarbanelrmp.pdf}}
 }
 
+@Article{racineetal1986,
+author =       {A. Racine and A. P. Grieve and H. Fl{\"u}hler and A. F. M. Smith},
+title =	       {Bayesian Methods in Practice: Experiences in the Pharmaceutical Industry},
+journal =      ast,
+year =	       {1986},
+volume =       {35},
+number =       {2},
+pages =	       {93--120},
+keywords =     {Bayes factors, model comparison, model uncertainty},
+note = 	       {See also discussion and reply \citebi{jonesetal1986}}
+}
+
 @Article{radcliffe1971,
 author =       {J. M. Radcliffe},
 title =	       {Some properties of coherent spin states},
@@ -90925,6 +91225,18 @@ number =       {2},
 pages =	       {251--266},
 keywords =     {evidence, Bayesian probability theory, improper priors},
 note =	       {\url{https://www.stat.washington.edu/raftery/Research/PDF/bka1996.pdf}}
+}
+
+@Article{rafteryetal1989,
+author =       {Adrian E. Raftery and David Fairley and Harry Joe and Ishay Weissman and Nozer D. Singpurwalla and Pickands III, James and Richard L. Smith},
+title =	       {{[Extreme} Value Analysis of Environmental Time Series: An Application to Trend Detection in Ground-Level Ozone{]}: {Are} Ozone Exceedance Rates Decreasing? {Comments}. {Rejoinder}},
+journal =      ss,
+year =	       {1989},
+volume =       {4},
+number =       {4},
+pages =	       {378--393},
+note =	       {See \citebi{smith1989}},
+keywords =     {Bayes factors, model comparison, hypothesis creation}
 }
 
 @Article{rahman1974,
@@ -94622,6 +94934,7 @@ journal =      ploscb,
 year =	       {2017},
 volume =       {13},
 number =       {10},
+origdate =     {2016},
 pages =	       {e1005762},
 keywords =     {Bayesian probability theory, computational neuroscience},
 note =	       {See also the slightly different version \arxiveprint{1605.04740}}
@@ -95428,16 +95741,16 @@ note =	       {\arxiveprint{1502.06440}}
 }
 
 @Book{rumelhartetal1986_r1999,
-author =       {David E. Rumelhart and James L. McClelland and {the PDP Research Group}},
-title =        {Parallel Distributed Processing: Explorations in the Microstructure of Cognition. Vol.~1: Foundations},
+editor =       {David E. Rumelhart and James L. McClelland and {PDP Research Group}},
+title =	       {Parallel Distributed Processing: Explorations in the Microstructure of Cognition. Vol.~1: Foundations},
 publisher =    {MIT Press},
-year =         {1999},
+year =	       {1999},
 series =       {Computational models of cognition and perception},
 address =      {Cambridge, USA},
 edition =      {12th printing},
-origdate =     {1986},
-keywords =     {maximum-entropy, Boltzmann machines},
-note =         {First publ.\ 1986}
+keywords =     {hidden neurons, restricted Boltzmann machines, maximum-entropy},
+mynote =       {First publ.\ 1986},
+origdate =     {1986}
 }
 
 @Article{rumelhartetal1986b,
@@ -96052,6 +96365,18 @@ year =	       {1990},
 volume =       {109},
 number =       {4},
 pages =	       {299--321}
+}
+
+@Article{sampfordetal1969,
+author =       {M. R. Sampford and A. Scott and M. Stone and Dennis V. Lindley and T. M. F. Smith and D. F. Kerridge and V. P. Godambe and L. Kish and William Arnold Ericson},
+title =	       {Discussion on professor {Ericson's} paper},
+journal =      jrssb,
+year =	       {1969},
+volume =       {31},
+number =       {2},
+pages =	       {224--233},
+keywords =     {Bayesian probability theory, finite exchangeability, survey sampling},
+note =	       {\url{http://www.stat.cmu.edu/~brian/905-2008/papers/Ericson-JRSSB-1969.pdf}. See \citebi{ericson1969b}}
 }
 
 @Misc{samsonovetal2004,
@@ -97608,7 +97933,8 @@ publisher =    {Cambridge University Press},
 origdate =     {1946},
 year =	       {1948},
 address =      {London},
-note =	       {First publ.\ 1946}
+note =	       {First publ.\ 1946},
+keywords =     {maximum-entropy, exchangeable models, Darwin-Fowler method}
 }
 
 @Article{schroedinger1947,
@@ -101006,6 +101332,17 @@ keywords =     {Fisher metric, probability theory},
 note =	       {First publ.\ 1981 as technical report \url{https://statistics.stanford.edu/sites/default/files/EFS\%20NSF\%20167.pdf}}
 }
 
+@Article{skovgaard1987,
+author =       {Ib M. Skovgaard},
+title =	       {Saddlepoint expansions for conditional distributions},
+journal =      japr,
+year =	       {1987},
+volume =       {24},
+number =       {4},
+pages =	       {875--887},
+keywords =     {Laplace approximation}
+}
+
 @Article{skyrms1985,
 author =       {Brian Skyrms},
 title =	       {Maximum entropy inference as a special case of conditionalization},
@@ -101023,6 +101360,17 @@ year =	       {1987},
 volume =       {22},
 number =       {3},
 pages =	       {225--246}
+}
+
+@Article{slate1994,
+author =       {Elizabeth H. Slate},
+title =	       {Parameterizations for Natural Exponential Families with Quadratic Variance Functions},
+journal =      jasa,
+year =	       {1994},
+volume =       {89},
+number =       {428},
+pages =	       {1471--1482},
+keywords =     {posterior normality}
 }
 
 @Article{slater1925,
@@ -101570,6 +101918,18 @@ number =       {3},
 pages =	       {231--288}
 }
 
+@Article{smith1989,
+author =       {Richard L. Smith},
+title =	       {Extreme Value Analysis of Environmental Time Series: An Application to Trend Detection in Ground-Level Ozone},
+journal =      ss,
+year =	       {1989},
+volume =       {4},
+number =       {4},
+pages =	       {367--377},
+note =	       {See also comments and rejoinder \citebi{rafteryetal1989}},
+keywords =     {Bayes factors, model comparison, hypothesis creation}
+}
+
 @Article{smith1998,
 author =       {Eric Smith},
 title =	       {Carnot's theorem as {Noether's} theorem for thermoacoustic engines},
@@ -101717,6 +102077,16 @@ number =       {48},
 pages =	       {12591--12603},
 keywords =     {cross-correlogram},
 note =	       {\url{http://www.smithlab.net/publications.html}}
+}
+
+@InCollection{smolensky1986,
+author =       {P. Smolensky},
+title =	       {Information Processing in Dynamical Systems: Foundations of Harmony Theory},
+booktitle =    {\citein{rumelhartetal1986_r1999}},
+year =	       {1986},
+chapter =      {\chapb~6},
+pages =	       {194--281},
+keywords =     {hidden neurons, restricted Boltzmann machines, maximum-entropy}
 }
 
 @Article{smolensky1988,
@@ -101999,6 +102369,16 @@ volume =       {13},
 number =       {1},
 pages =	       {334--350},
 keywords =     {Poisson statistics, neural networks}
+}
+
+@Article{sohldicksteinetal2011,
+author =       {Sohl-Dickstein, Jascha and Peter Battaglino and Michael R. DeWeese},
+title =	       {Minimum probability flow learning},
+journal =      picml,
+year =	       {2011},
+volume =       {28},
+pages =	       {905--912},
+keywords =     {Boltzmann learning, maximum-entropy, Monte Carlo}
 }
 
 @Article{soize2008,
@@ -107073,6 +107453,17 @@ pages =	       {543--563},
 keywords =     {Markov-chain Monte Carlo, probability theory}
 }
 
+@Article{tierneyetal1986,
+author =       {Luke Tierney and Joseph B. Kadane},
+title =	       {Accurate Approximations for Posterior Moments and Marginal Densities},
+journal =      jasa,
+year =	       {1986},
+volume =       {81},
+number =       {393},
+pages =	       {82--86},
+keywords =     {Laplace approximation}
+}
+
 @Book{tiersten1990,
 author =       {Harry S. Tiersten},
 title =	       {A Development of the Equations of Electromagnetism in Material Continua},
@@ -110669,6 +111060,17 @@ year =	       {1991},
 address =      {Oxford}
 }
 
+@Article{urdapilletaetal2015,
+author =       {Eugenio Urdapilleta and Francesca Troiani and Federico Stella and Alessandro Treves},
+title =	       {Can rodents conceive hyperbolic spaces?},
+journal =      jrsi,
+year =	       {2015},
+volume =       {12},
+number =       {107},
+pages =	       {20141214},
+keywords =     {non-Euclidean geometry, grid cells}
+}
+
 @Misc{urteagaetal2004,
 author =       {R. Urteaga and Paolo G. Bolcatto},
 title =	       {Dynamics of the tuning process between singers},
@@ -112749,6 +113151,16 @@ volume =       {11},
 number =       {2},
 pages =	       {99--102},
 keywords =     {Bayesian probability theory}
+}
+
+@Book{vonplato1994,
+author =       {von Plato, Jan},
+title =	       {Creating Modern Probability: Its Mathematics, Physics and Philosophy in Historical Perspective},
+publisher =    {Cambridge University Press},
+year =	       {1994},
+series =       {Cambridge studies in probability, induction, and decision theory},
+address =      {Cambridge},
+keywords =     {random-variable notation}
 }
 
 @Article{vonroos1960,
@@ -116720,7 +117132,8 @@ year =	       {1921},
 volume =       {42},
 number =       {249},
 pages =	       {369--390},
-note =	       {See also \citebi{wrinchetal1923}}
+note =	       {See also \citebi{wrinchetal1923}},
+keywords =     {induction, law of succession}
 }
 
 @Article{wrinchetal1923,
@@ -117783,7 +118196,7 @@ publisher =    {Academic Press},
 origdate =     {1963},
 year =	       {1968},
 address =      {New York},
-edition =      {transl.\ of the second Russian ed.},
+edition =      {transl.\ of the 2nd Russian ed.},
 note =	       {Ed.\ by Wallace D. Hayes and Ronald F. Probstein. First publ.\ in Russian 1963}
 }
 
@@ -117795,7 +118208,8 @@ address =      {New York},
 origdate =     {1971},
 year =	       {1996},
 series =       {Wiley classics library},
-note =	       {First publ.\ 1971}
+note =	       {First publ.\ 1971},
+keywords =     {Bayes factors, model comparison}
 }
 
 @Book{zellner1980,
