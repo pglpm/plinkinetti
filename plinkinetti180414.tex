@@ -1,7 +1,7 @@
 \pdfoutput=1
 %% Author: PGL  Porta Mana, ALS Filipowicz
 %% Created: 2018-04-08T16:54:19+0200
-%% Last-Updated: 2018-05-24T13:04:46+0200
+%% Last-Updated: 2018-05-25T11:46:48+0200
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Report-no: ***
 \newif\ifarxiv
@@ -12,7 +12,7 @@
 \newif\iftypodisclaim % typographical disclaim on the side
 \typodisclaimtrue
 \newif\ifpublic
-\publictrue % true = for publication, false = personal notes
+\publicfalse % true = for publication, false = personal notes
 \newcommand*{\memfontfamily}{zplx}
 \newcommand*{\memfontpack}{newpxtext}
 \documentclass[\ifafour a4paper,12pt,\else a5paper,10pt,\fi%extrafontsizes,%
@@ -25,9 +25,11 @@ british%
 \newcommand*{\propertitle}{Bayesian Plinko\\{\large Study notes}}
 \newcommand*{\pdftitle}{Bayesian Plinko}
 \newcommand*{\headtitle}{Bayesian Plinko}
-\newcommand*{\pdfauthor}{A. L. S. Filipowicz, P.G.L.  Porta Mana}
+\newcommand*{\pdfauthor}{A. L. S. Filipowicz, P.G.L.  Porta Mana, Y. Roudi,
+  et al.}
+\newcommand*{\etal}{{et al.}}
 \newcommand*{\headauthor}{\ifpublic Filipowicz \amp\ Porta Mana%
-\else\autanet\ Luca\fi}
+\else Alex \etal\fi}
 \newcommand*{\reporthead}{}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -563,11 +565,11 @@ totalheight=\heightof{@}]{atblack.png}}\makeatother
 \title{\propertitle%\\
 %  {\large A geometric commentary on maximum-entropy proofs}% ***
 }
-\author{\hspace*{\stretch{1}}%
+\author{\ifpublic\hspace*{\stretch{1}}%
 %\begin{tabular}[t]{c}
 \parbox[t]{0.3\linewidth}{\protect\centering%
-A. L. S. Filipowicz\\%
-{\footnotesize\epost{\email{***}{***}}}}%
+Alex\\%
+{\footnotesize\epost{\email{alsfilip}{mail.med.penn.edu}}}}%
 %\end{tabular}&%
 \hspace*{\stretch{1}}%
 %\begin{tabular}[t]{c}
@@ -579,7 +581,8 @@ P.G.L. Porta\,Mana\\%
 % {\footnotesize\href{https://orcid.org/0000-0002-6070-0784}{\protect\includegraphics[scale=0.16]{orcid_32x32.png}\textsc{orcid}:0000-0002-6070-0784}}%
 %\end{tabular}%
 \hspace*{\stretch{1}}%
-}
+\else Alex, Luca, Yasser, \etal%
+\fi}
 
 \date{Draft of \today\ (first drafted \firstdraft)}
 %\date{\firstpublished; updated \oggi}
@@ -686,7 +689,6 @@ P.G.L. Porta\,Mana\\%
 \newcommand*{\cf}{{cf.}}
 %\newcommand*{\Cf}{{Cf.}}
 %\newcommand*{\vd}{{v.}}
-\newcommand*{\etal}{{et al.}}
 %\newcommand*{\etsim}{{et sim.}}
 %\newcommand*{\ibid}{{ibid.}}
 %\newcommand*{\sic}{{sic}}
@@ -792,12 +794,14 @@ P.G.L. Porta\,Mana\\%
 %   may have.}
 
 
-\section{Introductory remarks on the methods}
+\section{Remarks, comments, thoughts on the project}
 \label{sec:method_remarks}
+
+\subsection{[Luca] What goes on in a participant's head? Possible models}
 
 The experimental setup is open to a huge number of analyses and
 interpretations on the participants' part, inspired by past experience. As
-a participant, we can surmise that there's a connection between different
+participants we can surmise that there's a connection between different
 trials, some sort of \enquote{constant mechanism} at some level. Or we can
 surmise that there's no such connection, hence observation of past trials
 doesn't say anything about the next one. Or we can surmise that the next
@@ -809,71 +813,68 @@ using our bar distribution, we could suddenly move all probability to a
 slot at the edge and check if this seems to influence the next outcome
 (\cf\ participant~31).
 
-\medskip
-The same goes for the choice of initial distribution. As a participant, we
-can say \enquote{alright, there are 40 slots}, and just give a uniform
-distributions to the 40 possibilities. Or we can consider the pyramidal
-mechanism of the game, which leads to a binomial distribution. Or we can
-consider that this is a computerized version of the game. The computer
-could simulate the physics of the actual game; but the image of the
-mechanism could also be just for show, the computer being programmed to
-distribute the outcomes according to a predetermined, completely arbitrary
-distribution. From this point of view we could again decide to assign a
-uniform distribution.
+The same goes for the choice of initial distribution. As
+participants we can say \enquote{alright, there are 40 slots}, and just
+give a uniform distributions to the 40 possibilities. Or we can consider
+the pyramidal mechanism of the game, which leads to a binomial
+distribution. Or we can consider that this is a computerized version of the
+game. The computer could simulate the physics of the actual game; but the
+image of the mechanism could also be just for show, the computer being
+programmed to distribute the outcomes according to a predetermined,
+completely arbitrary distribution. From this point of view we could again
+decide to assign a uniform distribution.
 
-\medskip \mynote{L's opinion}Should a participant's \enquote{performance}
-be assessed against a probability distribution that supposedly lies behind
-a computer program? This is a tricky question. Let's assume an operational
-point of view. We have a computer program in which we specify two
-parameters: \enquote{mean} and \enquote{standard deviation}. The program
-then generates a sequence of, say, 100 numbers between $1$ and $N$. Finally
-we ask the participant to guess a distribution that supposedly lies behind
-these 100 outcomes; suppose we also ask him to choose a normal
-distribution. This is equivalent to ask him to guess the two parameters we
-gave to the computer program. But here's the catch: there are two parameter
-values under which the data are more likely than under the values we chose:
-the \emph{empirical} mean and standard deviation. From this point of view
-it's unfair to assess the participant's performance against the values we
-chose, given that there are other values under which the data are more
-likely. It's as if we made a carpenter -- who turns out to be a good cook
--- prepare a delicious dish, then asked a person to guess who prepared it,
-and then assessed their answer -- say, \enquote{a chef} or \enquote{a
-  baker} -- as bad if they didn't guess that it was a
-carpenter.\mynote{L: alright, I must find a better example}
+\subsection{[Luca] Paradigms for judgement and assessment}
 
-The assessment problem just described is worse if the data are few compared
-with the number of possible outcomes, because the empirical mean and
-standard deviation will then usually be very different from our parameter
-choices. It is even worse if we ask the participant to choose not among
-normal distributions but among all possible distributions. There will
-always be a distribution under which the data are be more likely than under
-our normal. On top of this, the likelihood of the data is not the only
-criterion to make a sound judgement. If the empirical mean of the data
-were $17.0362$, for example, it'd be a good bet that the one chosen by the
-human operator was $17$.
+The literature I've seen so far explains at length how the data presented
+to participants are generated, and is very succinct in explaining what was
+said to the participants before the experiment. The participant's behaviour
+is the compared against models based on the pseudo-random algorithm that
+generated the data. Nassar \etal's \citey{nassaretal2010} work is an
+example.
 
-And, given that the computer program is generating the data
-deterministically, shouldn't we assess the participant according to the
-prediction of the \emph{exact} outcome sequence then?
+I think that we should use a different paradigm to describe the experiment
+and assess the participants' behaviours.
 
-This kind of paradoxes always appear when we try to judge a probability
-assignment based on some fictitious distribution \enquote{out there}. It'd
-be best to judge it by checking its consistency with the assumptions that
-went into it. We can thus find other assessment measures. For example, we
-can set up several inference robots, constructed according to different
-assumptions, and compare a participant's response to the robots'.
+As I see it, the participants' inferential behaviours should be compared
+with that of a \enquote{robot} that uses exact or approximate Bayesian or
+decision-theoretic rules, and that \emph{starts from the same information
+  that was given to the participants}. So it's really important that this
+information be explained at length, and whatever the participants were told
+should be reported verbatim.
 
+I don't see the rationale of comparing a participant who doesn't know the
+data-generating algorithm, with a robot that does. Such a robot is
+modelling a different initial state of knowledge. What's important here,
+instead, is to model the inference, given the same initial knowledge.
 
-\medskip De~Finetti introduced the notion of exchangeability, to be
-presented in the next section, in order to avoid thinking in terms of
-\enquote{mechanisms} or of \enquote{true unknown distributions}
-\citep[\cf][\chap~3]{good1965}. He characterized a statistical model in
-terms of \emph{features of the predictive distribution} -- for example,
-that it be invariant under exchanges of the outcomes. This point of view
-was taken up by many other statisticians and has been used to characterize
-many other statistical models, like Markov ones for example
+A consequence of this point of view is that there isn't just one robot that
+can model the inferences. The information given to the participants is
+never be enough to make numeric inferences and apply the probability
+calculus: it must always be augmented with additional assumptions,
+determined by each participant's previous life experiences. Different
+robots can thus be constructed: they use the same initial information as
+the participants, but each is augmented with different auxiliary
+assumptions. \emph{The} ideal observer doesn't exist. There are several
+ideal observers.
+
+Another consequence of this point of view is that the data-generating
+algorithm becomes slightly less important. The robot is constructed based
+on the exact information given the participants, and uses the same data
+given to the participants. The data-generating algorithm nowhere enters in
+the construction of the robot.
+
+\iffalse
+De~Finetti introduced the notion of exchangeability in order to avoid
+thinking in terms of \enquote{mechanisms} or of \enquote{true unknown
+  distributions} \citep[\cf][\chap~3]{good1965}. He characterized a
+statistical model in terms of \emph{features of the predictive
+  distribution} -- for example, that it be invariant under exchanges of the
+outcomes. This point of view was taken up by many other statisticians and
+has been used to characterize many other statistical models, like Markov
+ones for example
 \citep{freedman1962,diaconisetal1980c,zaman1984,fortinietal2002,fortinietal2014}.
-
+\fi
 
 
 
@@ -1091,7 +1092,7 @@ slots is updated to:
   \label{eq:predictive_JD}
   \p(D^{m+1}_{j} \| D^{m}_{k}, \yn^{m},\yN^{m}, \yMJ) =
   \ynn^{m+1}_j \defd
-  \frac{\yN^{m}}{\yN^{m}+1}\ynn^{m}_j+
+  \frac{\yN^{m}}{\yN^{m}+1}\ynn^{m}_j +
     \begin{dcases}
       \frac{1}{\yN^{m}+1} &\text{if $j=k$},
       \\[2\jot]
@@ -1107,6 +1108,7 @@ increased by $1$. The larger $\yN$, the more reluctant the robot is in
 revising its guesses in the light of new observations. The update
 formula~\eqref{eq:update_prior_JD} says that the robot behaves as if it had
 already made $\yN$ observations with outcome frequencies $\yn$.
+
 
 
 \section{Examples: participant vs robot}
