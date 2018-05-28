@@ -1,7 +1,7 @@
 \pdfoutput=1
 %% Author: PGL  Porta Mana, ALS Filipowicz
 %% Created: 2018-04-08T16:54:19+0200
-%% Last-Updated: 2018-05-29T00:57:56+0200
+%% Last-Updated: 2018-05-29T01:28:21+0200
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Report-no: ***
 \newif\ifarxiv
@@ -1523,14 +1523,20 @@ and saved into memory.
 \label{sec:adamsetal_algorithm}
 
 The recursive algorithm to calculate
-\[   \p(D^{m+1}_{d_{m+1}} \|
-  D^{m}_{d_{m}}, \dotsc, D^{1}_{d_{1}}, \yI)
-\]
-is shown in table~\ref{tab:adamsetal_algorithm}. For $m=1$ some preliminary
+$\p(D^{m+1}_{d_{m+1}} \| D^{m}_{d_{m}}, \dotsc, D^{1}_{d_{1}}, \yI)$ is
+shown in table~\ref{tab:adamsetal_algorithm}. For $m=0$ some preliminary
 initialization steps are necessary.
 \begin{table}[!b]
   \centering
   \begin{tabularx}{\textwidth}{X}\hline
+        \begin{enumerate}[0.1.]
+    \item Set $m=0$. Using the Johnson-Dirichlet model calculate
+      \(\p(D^{1}_{d_{1}} \|  \yI) \)
+    \item Save $B_1(r)\equiv 1$, $r=0$
+    \item Observe $d_1$, set $m=1$
+    \end{enumerate}
+
+    \medskip
     \begin{enumerate}
     \item\label{item:first_step}For $0\le r \le m$:
       \begin{enumerate}[label*=\arabic*.]
@@ -1547,10 +1553,10 @@ initialization steps are necessary.
       \item Calculate
         \[ \begin{multlined}[t][0.8\textwidth] B_{m+1}(r) \defd
             \p(R^{m+1}_{r} \| D^{m}_{d_{m}}, \dotsc,
-            D^{1}_{d_{1}}, \yI) ={}\\
+            D^{1}_{d_{1}}, \yI) ={}\\[\jot]
         \begin{cases}
           \sum_{s=0}^{m-1} \yrs(s) \times B_m(s) & \text{if $r=0$},
-          \\
+          \\[\jot]
           [1-\yrs(r-1)]  \times B_m(r-1) & \text{if $r\ge 1$}    
         \end{cases}
       \end{multlined}
@@ -1562,8 +1568,8 @@ initialization steps are necessary.
 \item Calculate
   \[ \p(D^{m+1}_{d_{m+1}} \| D^{m}_{d_{m}}, \dotsc, D^{1}_{d_{1}}, \yI) =
     \sum_{r=0}^{m} A(r) \times B_{m+1}(r)\]
-\item Save $B_{m+1}(r)$ into memory
-\item Increase $m$ by $1$, go to step~\ref{item:first_step}
+\item Save $\set{B_{m+1}(r) \suchthat 0\le r \le m}$ into memory
+\item Observe $d_{m+1}$, increase $m$ by $1$, go to step~\ref{item:first_step}
   \end{enumerate}
   \\\hline
 \end{tabularx}
