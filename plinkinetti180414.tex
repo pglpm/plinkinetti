@@ -1,7 +1,7 @@
 \pdfoutput=1
 %% Author: PGL  Porta Mana, ALS Filipowicz
 %% Created: 2018-04-08T16:54:19+0200
-%% Last-Updated: 2018-05-28T12:58:08+0200
+%% Last-Updated: 2018-05-28T14:39:55+0200
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Report-no: ***
 \newif\ifarxiv
@@ -740,6 +740,7 @@ P.G.L. Porta\,Mana\\%
 \newcommand*{\ymu}{\mu}
 \newcommand*{\yh}{\chi}
 \newcommand*{\yI}{I}
+\newcommand*{\yrs}{h}
 %@@@@@@@@@@ new macros end @@@@@@@@@@
 
 \firmlists
@@ -1428,14 +1429,60 @@ decomposed introducing $R^{m}_{s}$ for the previous observation:
   D^{m-1}_{d_{m-1}} \dotsc, D^{m-s}_{d_{m-s}}, \yI)
   \times{}\\
   \p(R^{m}_{s} \|
-  D^{m-1}_{d_{m-1}} \dotsc, D^{1}_{d_{1}}, \yI)
+  D^{m-1}_{d_{m-1}} \dotsc, D^{1}_{d_{1}}, \yI).
           \end{multlined}
   \end{aligned}
 \end{multline}
+Three factors appear within the last sum; let's examine them.
 
-$  \p(R^{m+1}_{r} \| R^{m}_{s},
-  D^{m}_{d_{m}} \dotsc, D^{1}_{d_{1}}, \yI)
-$
+The second factor can be calculated with
+formula~\eqref{eq:irrelevant_data_conditional_R}.
+
+The first factor was simplified using this assumption:
+\begin{equation}
+  \label{eq:R_cond_R}
+  \p(R^{m+1}_{r} \|
+  R^{m}_{s},  D^{m}_{d_{m}} \dotsc, D^{1}_{d_{1}}, \yI)
+  = \p(R^{m+1}_{r} \|  R^{m}_{s},  \yI);
+\end{equation}
+in words it states that past data are irrelevant for guessing whether the
+next observation starts a new subsequence or not, given that we know how
+many data belong to the current subsequence, and given that we \emph{don't}
+yet know the value of the next observation.
+
+According to this assumption, past observations help us guessing whether
+the next observation starts a new subsequence only if we can compare them
+with it. If we don't know it, past data can't help us. This assumption
+discards the possibility that particular values of past observations may
+ trigger the start of a new sequence. The length of the current
+subsequence, $R^{m}_{s}$, is relevant, however, because the next
+observation can only start a new subsequence or continue the previous one,
+so that either $r=0$ or $r=s+1$:
+\begin{equation}
+  \label{eq:R_cond_R}
+  \p(R^{m+1}_{r} \| R^{m}_{s}, \yI) =
+  \yrs(s)\,\delt_{r,0} + [1-\yrs(s)]\,\delt_{r,s+1} =
+  \begin{cases}
+    \yrs(s) & \text{for $r=0$},
+    \\
+    1-\yrs(s) &\text{for $r=s+1$},
+    \\
+    0 & \text{otherwise},
+  \end{cases}
+\end{equation}
+which simplifies our calculations. In our study we assume that $\yrs(s)$
+either is independent of $s$ or increases with $s$, expressing our
+expectation that subsequences shouldn't be too long. This last option is
+reasonable if the participants were warned about changepoints during the
+experiment.
+
+The third factor is a distribution analogous to
+\eqn~\eqref{eq:prob_R_and_last} but for the previous observation. In our
+recursive scheme it was calculated in the previous observation and saved
+into memory.
+
+
+
 
 
 \clearpage
