@@ -1,7 +1,7 @@
 \pdfoutput=1
 %% Author: PGL  Porta Mana, ALS Filipowicz
 %% Created: 2018-04-08T16:54:19+0200
-%% Last-Updated: 2018-05-28T14:39:55+0200
+%% Last-Updated: 2018-05-28T16:30:53+0200
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Report-no: ***
 \newif\ifarxiv
@@ -741,6 +741,10 @@ P.G.L. Porta\,Mana\\%
 \newcommand*{\yh}{\chi}
 \newcommand*{\yI}{I}
 \newcommand*{\yrs}{h}
+\AtBeginEnvironment{tabularx}{\setlist[enumerate]{wide, leftmargin=*,
+    itemsep=0pt%, before=\vspace{-\dimexpr\baselineskip +2 \partopsep},
+    % after=\vspace{-\baselineskip}
+  }}
 %@@@@@@@@@@ new macros end @@@@@@@@@@
 
 \firmlists
@@ -1393,7 +1397,7 @@ decomposed  using with the formula above:
   \sum_{r=0}^m
   \p(D^{m+1}_{d_{m+1}} \|
   R^{m+1}_{r},  D^{m}_{d_{m}}, \dotsc, D^{m+1-r}_{d_{m+1-r}}, \yI)
-  \;
+  \times
   \p(R^{m+1}_{r} \| D^{m}_{d_{m}}, \dotsc, D^{1}_{d_{1}}, \yI).
 \end{multline}
 
@@ -1435,29 +1439,26 @@ decomposed introducing $R^{m}_{s}$ for the previous observation:
 \end{multline}
 Three factors appear within the last sum; let's examine them.
 
-The second factor can be calculated with
-formula~\eqref{eq:irrelevant_data_conditional_R}.
-
 The first factor was simplified using this assumption:
 \begin{equation}
   \label{eq:R_cond_R}
   \p(R^{m+1}_{r} \|
   R^{m}_{s},  D^{m}_{d_{m}} \dotsc, D^{1}_{d_{1}}, \yI)
-  = \p(R^{m+1}_{r} \|  R^{m}_{s},  \yI);
+  = \p(R^{m+1}_{r} \|  R^{m}_{s},  \yI),
 \end{equation}
-in words it states that past data are irrelevant for guessing whether the
-next observation starts a new subsequence or not, given that we know how
-many data belong to the current subsequence, and given that we \emph{don't}
-yet know the value of the next observation.
+which in words states that past data are irrelevant for guessing whether
+the next observation starts a new subsequence or not, given that we know
+how many data belong to the current subsequence, and given that we
+\emph{don't} yet know the value of the next observation.
 
 According to this assumption, past observations help us guessing whether
 the next observation starts a new subsequence only if we can compare them
 with it. If we don't know it, past data can't help us. This assumption
 discards the possibility that particular values of past observations may
- trigger the start of a new sequence. The length of the current
-subsequence, $R^{m}_{s}$, is relevant, however, because the next
-observation can only start a new subsequence or continue the previous one,
-so that either $r=0$ or $r=s+1$:
+trigger the start of a new sequence. The length of the current subsequence,
+$R^{m}_{s}$, is relevant in any case, because the next observation can only
+start a new subsequence or continue the previous one, so that either $r=0$
+or $r=s+1$:
 \begin{equation}
   \label{eq:R_cond_R}
   \p(R^{m+1}_{r} \| R^{m}_{s}, \yI) =
@@ -1470,20 +1471,79 @@ so that either $r=0$ or $r=s+1$:
     0 & \text{otherwise},
   \end{cases}
 \end{equation}
-which simplifies our calculations. In our study we assume that $\yrs(s)$
-either is independent of $s$ or increases with $s$, expressing our
-expectation that subsequences shouldn't be too long. This last option is
-reasonable if the participants were warned about changepoints during the
-experiment.
+which simplifies our calculations: in the
+sum~\eqref{eq:prob_R_and_last_decompose} when $r\ge 1$ only the term $s=r-1$
+survives. In our study we assume that $\yrs(s)$ either is independent of
+$s$ or increases with $s$, expressing our expectation that subsequences
+shouldn't be too long. This last option is reasonable if the participants
+were warned about changepoints during the experiment.
+
+The second factor can be calculated with
+formula~\eqref{eq:irrelevant_data_conditional_R}.
 
 The third factor is a distribution analogous to
 \eqn~\eqref{eq:prob_R_and_last} but for the previous observation. In our
-recursive scheme it was calculated in the previous observation and saved
-into memory.
+recursive scheme it was already calculated in the previous observation and
+saved into memory.
 
 
+\subsection{The recursive algorithm}
+\label{sec:adamsetal_algorithm}
 
+The recursive algorithm to calculate
+\[   \p(D^{m+1}_{d_{m+1}} \|
+  D^{m}_{d_{m}}, \dotsc, D^{1}_{d_{1}}, \yI)
+\]
+is shown in table~\ref{tab:adamsetal_algorithm}. For $m=1$ some preliminary
+initialization steps are necessary.
 
+\begin{table}[p]
+  \centering
+  \begin{tabularx}{\textwidth}{X}\hline
+    \begin{enumerate}
+  \item\label{item:first_step}for $0\le r \le m$,
+    \begin{enumerate}[label*=\arabic*.]
+    \item using the Johnson-Dirichlet model calculate
+      \[ A(r) \defd \p(D^{m+1}_{d_{m+1}} \| R^{m+1}_{r}, D^{m}_{d_{m}},
+        \dotsc, D^{m+1-r}_{d_{m+1-r}}, \yI) \]
+    \item for $0\le s \le m-1$,
+      \begin{enumerate}[label*=\arabic*.]
+      \item using the Johnson-Dirichlet model calculate
+        \[ J(s) \defd \p(D^{m}_{d_{m}} \| R^{m}_{s}, D^{m-1}_{d_{m-1}}
+          \dotsc, D^{m-s}_{d_{m-s}}, \yI)
+        \]
+      \item retrieve from memory
+        \[ K(s) \defd \p(R^{m}_{s} \| D^{m-1}_{d_{m-1}} \dotsc,
+          D^{1}_{d_{1}}, \yI) \]
+      \end{enumerate}
+    \item calculate
+\[        \begin{multlined}[t][0.8\textwidth]
+        K(r) \defd \p(R^{m+1}_{r}, D^{m}_{d_{m}} \| D^{m-1}_{d_{m-1}}
+        \dotsc,
+        D^{1}_{d_{1}}, \yI) ={}\\
+        \begin{cases}
+          \sum_{s=0}^{m-1} \yrs(s) \times J(s) \times K(s) & \text{if $r=0$},
+          \\
+          [1-\yrs(r-1)] \times J(r-1) \times K(r-1) & \text{if $r\ge 1$};    
+        \end{cases}
+      \end{multlined}
+    \]
+  \end{enumerate}
+  \item retrieve from memory
+    \[ C \defd \p(D^{m}_{d_{m}} \| D^{m-1}_{d_{m-1}} \dotsc, D^{1}_{d_{1}},
+      \yI) \]
+  \item calculate
+    \[D \defd \p(D^{m+1}_{d_{m+1}} \|
+      D^{m}_{d_{m}}, \dotsc, D^{1}_{d_{1}}, \yI) = \frac{\sum_{r=0}^{m}
+        A(r) \times B(r)}{C}.\]
+  \item save $K(r)$ and $C$ into memory
+  \item increase $m$ by $1$, go to step~\ref{item:first_step}
+  \end{enumerate}
+  \\\hline
+\end{tabularx}
+\caption{Predictive algorithm}
+  \label{tab:adamsetal_algorithm}
+\end{table}
 
 \clearpage
 
