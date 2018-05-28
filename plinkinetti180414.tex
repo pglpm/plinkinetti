@@ -1,7 +1,7 @@
 \pdfoutput=1
 %% Author: PGL  Porta Mana, ALS Filipowicz
 %% Created: 2018-04-08T16:54:19+0200
-%% Last-Updated: 2018-05-28T18:16:34+0200
+%% Last-Updated: 2018-05-28T18:21:33+0200
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Report-no: ***
 \newif\ifarxiv
@@ -1447,11 +1447,10 @@ the robot's guess of whether the new observation starts a new subsequence
 or whether it is part of the previous subsequence, and of how long that
 subsequence is. It can be calculated recursively by introducing $R^{m}_{s}$
 for the previous observation:
-\begin{multline}
+\begin{equation}
   \label{eq:prob_R_and_last_decompose}
-  \p(R^{m+1}_{r}\| D^{m}_{d_{m}}, \dotsc, D^{1}_{d_{1}}, \yI) 
-  \\
-  \begin{aligned}[b]
+  \begin{split}
+    \p(R^{m+1}_{r}\| D^{m}_{d_{m}}, \dotsc, D^{1}_{d_{1}}, \yI) 
   &=\sum_{s=0}^{m-1}
   \p(R^{m+1}_{r},R^{m}_{s},\|
   D^{m}_{d_{m}}, \dotsc, D^{1}_{d_{1}}, \yI)
@@ -1460,7 +1459,7 @@ for the previous observation:
   \times
   \p(R^{m}_{s} \|
   D^{m-1}_{d_{m-1}} \dotsc, D^{1}_{d_{1}}, \yI).
-   \end{aligned}
+\end{split}
 % &\!\begin{multlined}[b][0.7\textwidth]
 %   =\sum_{s=0}^{m-1}\p(R^{m+1}_{r} \| R^{m}_{s}, \yI)
 %   \times{}\\
@@ -1471,7 +1470,7 @@ for the previous observation:
 %   D^{m-1}_{d_{m-1}} \dotsc, D^{1}_{d_{1}}, \yI).
 %           \end{multlined}
 %   \end{aligned}
-\end{multline}
+\end{equation}
 Let's examine the two factors in the last sum.
 
 The first factor was simplified using this assumption:
@@ -1546,7 +1545,7 @@ initialization steps are necessary.
           D^{1}_{d_{1}}, \yI),\qquad 0\le s \le m-1 \]
       \item Calculate
         \[ \begin{multlined}[t][0.8\textwidth] B_{m+1}(r) \defd
-            \p(R^{m+1}_{r}, D^{m}_{d_{m}} \| D^{m-1}_{d_{m-1}} \dotsc,
+            \p(R^{m+1}_{r} \| D^{m}_{d_{m}}, \dotsc,
             D^{1}_{d_{1}}, \yI) ={}\\
         \begin{cases}
           \sum_{s=0}^{m-1} \yrs(s) \times B_m(s) & \text{if $r=0$},
