@@ -1,7 +1,7 @@
 \pdfoutput=1
 %% Author: PGL  Porta Mana, ALS Filipowicz
 %% Created: 2018-04-08T16:54:19+0200
-%% Last-Updated: 2018-05-25T11:46:48+0200
+%% Last-Updated: 2018-05-28T12:58:08+0200
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Report-no: ***
 \newif\ifarxiv
@@ -725,6 +725,7 @@ P.G.L. Porta\,Mana\\%
 %\newcommand*{\widebar}[1]{{\mkern1.5mu\skew{2}\overline{\mkern-1.5mu#1\mkern-1.5mu}\mkern 1.5mu}}
 
 %\DeclareMathOperator*{\argsup}{arg\,sup}
+\newcommand*{\ptext}[1]{\text{\small #1}}
 \newcommand*{\simpl}{\varDelta}
 \newcommand*{\yqq}{q}
 \newcommand*{\yq}{\bm{\yqq}}
@@ -877,8 +878,10 @@ ones for example
 \fi
 
 
+\section{First study: exchangeable-model robot}
+\label{sec:first_study}
 
-\section{The Bayesian robot}
+\subsection{The Bayesian robot}
 \label{sec:bayes_robot}
 
 In the context of these notes and of the Plinko experiments
@@ -891,7 +894,8 @@ express in writing. Denote the proposition \enquote{The outcome of the
 Then $M$ allows us to give a numeric value to
 \begin{equation}
   \label{eq:general_prediction}
-  \p(D^{m+1}_{d_{m+1}} \| D^1_{d_1} \land D^2_{d_2} \land \dotsb \land D^m_{d_m} \land M),
+  \p(D^{m+1}_{d_{m+1}} \|
+  D^m_{d_m} \land \dotsb \land  D^2_{d_2} \land D^1_{d_1} \land  M),
 \end{equation}
 
 We will abbreviate logical conjunction \enquote{$\land$} with a comma, for
@@ -985,7 +989,7 @@ update its predictive probabilities at each new observation of a Plinko outcome.
 %
 
 
-\section{General remarks on the robot's behaviour}
+\subsection{General remarks on the robot's behaviour}
 \label{sec:remarks}
 
 The exchangeable-model formula~\eqref{eq:prediction_exchangeability} leads
@@ -1017,7 +1021,7 @@ evolution:
 \end{itemize}
 
 
-\section{Initial prior}
+\subsection{Initial prior}
 \label{sec:initial_prior}
 
 The shape of the initial prior heavily determines the predictions in the
@@ -1029,7 +1033,7 @@ the initial predictive probabilities of the participants,
 \end{equation}
 but not their prior $\pf(\yq \| M)\,\di\yq$.
 
-As a first exploration we consider a \emph{Johnson-Dirichlet} prior,
+As a first study we consider a \emph{Johnson-Dirichlet} prior,
 proportional to a monomial $\prod_i{\yq_i}^{x_i}$ for some values of $x_i$:
 \begin{equation}
   \label{eq:JD_prior}
@@ -1111,7 +1115,7 @@ already made $\yN$ observations with outcome frequencies $\yn$.
 
 
 
-\section{Examples: participant vs robot}
+\subsection{Examples: participant vs robot}
 \label{sec:examples_partic_robot}
 
 Let's choose a participant, and use
@@ -1214,7 +1218,7 @@ examples:
 \end{itemize}
 
 
-\section{Examples: robot's surprise}
+\subsection{Robot's surprise}
 \label{sec:examples_robot_surprise}
 
 A robot with low stubbornness quickly adapts its predictions to the
@@ -1286,7 +1290,160 @@ even more striking if we average the sequences of standard deviations over
 
 \clearpage
 
-\section{How hierarchic models get updated}
+\section{Second study: exchangeable model with change-points}
+\label{sec:second_study}
+
+\subsection{The robot looks for change-points}
+\label{sec:changepoints}
+
+The robot of the previous study remembers past observations but not their
+order. Said otherwise, it assumes that past frequencies are all that
+matters for its inference. We now consider a new robot that takes the order
+of observations into account in a simple way.
+
+This new robot assumes that the sequence of observations is divided into
+subsequences of contiguous observations. \emph{Within each subsequence} the
+order of the observations doesn't matter: frequencies are sufficient
+statistics, and the robot therefore uses an infinitely exchangeable model
+with a Johnson-Dirichlet parameter density, as in the previous study. Only
+observations within the subsequence contribute to the update of the
+parameter density. Observations from other subsequences are irrelevant to
+inferences within each subsequence, provided that the start point of that
+subsequence is known. The stubbornness and frequency parameters are
+therefore \enquote{reset} at the start of each subsequence.
+
+The observations at which the subsequences start, called changepoints, are
+guessed from the whole sequence of observations. The robot is effectively
+considering all possible numbers and positions of changepoints. For
+example, every observation could be a subsequence by itself, or all
+observations could belong to just one subsequence -- which was the
+assumption of the robot of the previous study. According to Bayes's
+theorem, the robot assigns a probability to each possible division
+proportionally to a prior times the product of the probabilities for the
+data in each subsequence determined by that division, calculated with the
+Johnson-Dirichlet model described above:
+\begin{multline}
+  \label{eq:explanation_P_group}
+  \p(\ptext{particular division into subsequences} \| \ptext{data}, \yI)
+  \propto{}\\
+  \text{\footnotesize\emph{Johnson-Dirichlet}}\left\{\;
+    \!\begin{aligned}
+        &\p(\ptext{data in 1st subsequence} \| \ptext{particular division}, \yI)
+          \times{}\\
+        &\p(\ptext{data in 2nd subsequence} \| \ptext{particular division}, \yI)
+          \times{}
+  \end{aligned}\right.\\
+    {}\dotsm \times
+  \p(\ptext{particular division} \| \yI),
+\end{multline}
+where $\yI$ stands for other background assumptions. The final inference is
+a combination of the inferences conditional on each possible division:
+\begin{multline}
+  \label{eq:explanation_group_mixed}
+  \p(\ptext{new observation} \| \ptext{data}, \yI) \propto{}\\[\jot]
+  \sum_{\mathclap{\text{all divisions}}}
+  \p(\ptext{new observation} \| \ptext{division}, \ptext{data}, \yI)
+\times  \p(\ptext{division} \| \ptext{data}, \yI),
+\end{multline}
+where the probability for the new observation given the division is
+determined by the Johnson-Dirichlet model.
+
+Adams \amp\ MacKay \citey{adamsetal2007} give an algorithm to do the
+calculations above on-line as new observations are made. Before each
+observation the algorithm saves the probability distribution for the
+divisions~\eqref{eq:explanation_P_group}, which is used to calculate the
+updated distribution with the new observation adjoined to the data.
+
+For each observation $i$, consider the proposition \enquote{only the
+  previous $r$ observations are relevant for the $i$th one}, denoted by
+$R^{i}_{r}$. This proposition is equivalent to say that observations
+$\set{i-r, i-r+1, \dotsc, i}$ form a subsequence. Obviously
+$0\le r \le i-1$, where $i-1$ is the total number of observations before
+the $i$th one; if $r=0$ then the $i$th observation is a changepoint,
+starting a new subsequence, and no past data are relevant for its
+inference. In symbols
+\begin{multline}
+  \label{eq:irrelevant_data_conditional_R}
+  \p(D^{m+1}_{d_{m+1}} \|
+  R^{m+1}_{r},  D^{m}_{d_{m}}, \dotsc, D^{1}_{d_{1}}, \yI)
+  ={}\\
+  \shoveright{\begin{cases}
+  \p(D^{m+1}_{d_{m+1}} \|
+    R^{m+1}_{r},  D^{m}_{d_{m}}, \dotsc, D^{m+1-r}_{d_{m+1-r}}, \yI)
+    &\text{if $1\le r\le m$},
+      \\[2\jot]
+  \p(D^{m+1}_{d_{m+1}} \|
+    R^{m+1}_{r}, \yI)
+    &\text{if $r=0$},
+  \end{cases}}
+  \\
+  \text{with probabilities given by the Johnson-Dirichlet
+model~\eqref{eq:prediction_exchangeability}, \eqref{eq:JD_prior},
+\eqref{eq:predictive_JD}.}
+\end{multline}
+
+The probability for the $(m+1)$th observation given the data can be thus
+decomposed  using with the formula above:
+\begin{multline}
+  \label{eq:prob_new_cond_R}
+  \p(D^{m+1}_{d_{m+1}} \|
+  D^{m}_{d_{m}}, \dotsc, D^{1}_{d_{1}}, \yI)
+  ={}\\
+  \sum_{r=0}^m
+  \p(D^{m+1}_{d_{m+1}} \|
+  R^{m+1}_{r},  D^{m}_{d_{m}}, \dotsc, D^{m+1-r}_{d_{m+1-r}}, \yI)
+  \;
+  \p(R^{m+1}_{r} \| D^{m}_{d_{m}}, \dotsc, D^{1}_{d_{1}}, \yI).
+\end{multline}
+
+The probability distribution for $R^{m+1}_{r}$ given the data represents
+the robot's guess of whether the new observation starts a new subsequence
+or whether it is part of the previous subsequence, and of how long that
+subsequence is. This distribution is calculate recursively. First write it as
+\begin{equation}
+  \label{eq:prob_R_and_last}
+  \p(R^{m+1}_{r} \| D^{m}_{d_{m}}, \dotsc, D^{1}_{d_{1}}, \yI) =
+  \frac{
+  \p(R^{m+1}_{r}, D^{m}_{d_{m}} \| D^{m-1}_{d_{m-1}} \dotsc, D^{1}_{d_{1}}, \yI) 
+  }{  \p(D^{m}_{d_{m}} \| D^{m-1}_{d_{m-1}} \dotsc, D^{1}_{d_{1}}, \yI) 
+},
+\end{equation}
+where the denominator corresponds to the
+distribution~\eqref{eq:prob_new_cond_R} calculated in the previous
+observation, which we can have saved into memory. The numerator can be
+decomposed introducing $R^{m}_{s}$ for the previous observation:
+\begin{multline}
+  \label{eq:prob_R_and_last_decompose}
+  \p(R^{m+1}_{r}, D^{m}_{d_{m}} \| D^{m-1}_{d_{m-1}} \dotsc, D^{1}_{d_{1}}, \yI) 
+  \\
+  \begin{aligned}[b]
+  &=\sum_{s=0}^{m-1}
+  \p(R^{m+1}_{r}, D^{m}_{d_{m}}, R^{m}_{s},\|
+  D^{m-1}_{d_{m-1}} \dotsc, D^{1}_{d_{1}}, \yI)
+  \\
+&\!\begin{multlined}[b][0.7\textwidth]
+  =\sum_{s=0}^{m-1}\p(R^{m+1}_{r} \| R^{m}_{s}, \yI)
+  \times{}\\
+  \p(D^{m}_{d_{m}} \| R^{m}_{s},
+  D^{m-1}_{d_{m-1}} \dotsc, D^{m-s}_{d_{m-s}}, \yI)
+  \times{}\\
+  \p(R^{m}_{s} \|
+  D^{m-1}_{d_{m-1}} \dotsc, D^{1}_{d_{1}}, \yI)
+          \end{multlined}
+  \end{aligned}
+\end{multline}
+
+$  \p(R^{m+1}_{r} \| R^{m}_{s},
+  D^{m}_{d_{m}} \dotsc, D^{1}_{d_{1}}, \yI)
+$
+
+
+\clearpage
+
+\section{Notes on hierarchic models}
+\label{sec:notes_hierarchic}
+
+\subsection{How hierarchic models get updated}
 \label{sec:hierarchic_models}
 
 The probability calculus allows for inferences that learn from data in
@@ -1479,7 +1636,7 @@ finer one within each coarser selection.
 We can of course multiply this kind of hierarchy ad libitum, proceeding as
 we've done so far.
 
-\section{Flattening hierarchic models}
+\subsection{Flattening hierarchic models}
 \label{sec:flatten}
 
 The subdivision of learning into two or more levels of different coarseness
