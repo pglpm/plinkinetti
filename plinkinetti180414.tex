@@ -1,7 +1,7 @@
 \pdfoutput=1
 %% Author: PGL  Porta Mana, ALS Filipowicz
 %% Created: 2018-04-08T16:54:19+0200
-%% Last-Updated: 2018-05-29T08:13:41+0200
+%% Last-Updated: 2018-05-29T10:29:37+0200
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Report-no: ***
 \newif\ifarxiv
@@ -1524,28 +1524,36 @@ and saved into memory.
 
 The recursive algorithm to calculate
 $\p(D^{m+1}_{d_{m+1}} \| D^{m}_{d_{m}}, \dotsc, D^{1}_{d_{1}}, \yI)$ is
-shown in table~\ref{tab:adamsetal_algorithm}. For $m=0$ some preliminary
-initialization steps are necessary.
+shown in table~\ref{tab:adamsetal_algorithm}. For $m=0$ some initialization
+steps are necessary.
 \begin{table}[!b]
   \centering
+  \caption{Predictive algorithm}
+  \label{tab:adamsetal_algorithm}
   \begin{tabularx}{\textwidth}{X}\hline
-        \begin{enumerate}[0.1.]
+    \begin{enumerate}[label=0.\arabic*.,start=0]
+      \item Set $\yN=0.01$, $\ynn_d=1/N$, $d\in\set{1,\dotsc,N}$
     \item Set $m=0$. Using the Johnson-Dirichlet model calculate
-      \(\p(D^{1}_{d_{1}} \|  \yI) \)
+      \[\p(D^{1}_{d_{1}} \|  \yI) =1/N, \qquad d_1 \in \set{1,\dotsc,N} \]
     \item Keep $B_1(0)\equiv 1$ for next steps
     \item Observe $d_1$, set $m=1$
     \end{enumerate}
 
-    \medskip
+    \bigskip
     \begin{enumerate}
       % \item Retrieve from memory
       %   \[ B_m(s) \defd \p(R^{m}_{s} \| D^{m-1}_{d_{m-1}} \dotsc,
       %     D^{1}_{d_{1}}, \yI),\qquad 0\le s \le m-1 \]
-    \item\label{item:first_step}For $0\le r \le m$:
+    \item\label{item:first_step}For $r \in \set{0,\dotsc, m}$:
       \begin{enumerate}[label*=\arabic*.]
-      \item Using the Johnson-Dirichlet model calculate
-        \[ A(r) \defd \p(D^{m+1}_{d_{m+1}} \| R^{m+1}_{r}, D^{m}_{d_{m}},
-          \dotsc, D^{m+1-r}_{d_{m+1-r}}, \yI) \]
+      \item For $d_{m+1} \in \set{1,\dotsc,N}$, calculate
+        \[ \begin{multlined}[][0.8\textwidth]
+A(r,d_{m+1}) \defd \p(D^{m+1}_{d_{m+1}} \| R^{m+1}_{r}, D^{m}_{d_{m}},
+          \dotsc, D^{m+1-r}_{d_{m+1-r}}, \yI) ={}\\[\jot]
+         \frac{\yN\ynn_{d_{m+1}}+r\yff_{d_{m+1}}}{\yN + r},
+        \end{multlined} \]
+where $\yff_{d_{m+1}}$ is the relative frequency of outcome $d_{m+1}$ in the past
+$r$ observations
       % \item using the Johnson-Dirichlet model calculate (or retrieve from memory)
       %   \[ A_m(s) \defd \p(D^{m}_{d_{m}} \| R^{m}_{s}, D^{m-1}_{d_{m-1}}
       %     \dotsc, D^{m-s}_{d_{m-s}}, \yI)
@@ -1565,16 +1573,14 @@ initialization steps are necessary.
   %   \[ C_m \defd \p(D^{m}_{d_{m}} \| D^{m-1}_{d_{m-1}} \dotsc, D^{1}_{d_{1}},
   %     \yI) \]
   \end{enumerate}
-\item Calculate
+\item For $d_{m+1} \in \set{1,\dotsc,N}$, calculate
   \[ \p(D^{m+1}_{d_{m+1}} \| D^{m}_{d_{m}}, \dotsc, D^{1}_{d_{1}}, \yI) =
-    \sum_{r=0}^{m} A(r) \times B_{m+1}(r)\]
+    \sum_{r=0}^{m} A(r,d_{m+1}) \times B_{m+1}(r)\]
 \item Keep $\set{B_{m+1}(r) \suchthat 0\le r \le m}$ for next steps
 \item Observe $d_{m+1}$, increase $m$ by $1$, go to step~\ref{item:first_step}
   \end{enumerate}
   \\\hline
 \end{tabularx}
-\caption{Predictive algorithm}
-  \label{tab:adamsetal_algorithm}
 \end{table}
 
 \clearpage
