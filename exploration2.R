@@ -42,26 +42,50 @@ maxstd <- sqrt((1+N^2)*0.5-(N+1)*0.5)
 ## sequence of observations for a participant
 observations <- function(participant, maxtrials=200){c(d[d$Participant==participant & d$Slot.Number==1,'Ball.Position'])[1:maxtrials]}
 
+
 ## sequence of distributions for a participant
 ## (consistency checked by for-loop)
 ## and find minimal non-zero value
 distribution <- function(participant, maxtrials=200){matrix(d[d$Participant == participant & d$Trial <= maxtrials+1, c('Participant.Slot.Estimate')], maxtrials+1, N, byrow=T)}
 
-## sequence of robot distributions
+
+## sequence of robot distributions: uses the changepoint & Johnson-Dirichlet model
+
+## first define the probability of new changepoint, h(s)
+probchangepoint <- function(s){0.1}
+
 robotdistribution <- function(priorfrequencies,stubbornness,obs){
+
+    probchangepoint <- function(s){0.05}
     n <- length(obs)
+
+    ## sequence of cumulative frequencies:
+    ## column i are the frequencies up to observation i inclusive
+    cumfreqs <- sapply(1:(n+1), function(i) sapply(1:N, function(j) sum(c(0,obs)[1:i] == j)))
+
     ## Johnson-Dirichlet model:
     ## stubbornness parameter and ensuing sequence
-    L <- stubbornness + (0:(n+1))
+    L <- stubbornness # + (0:(n+1))
     ## initialize
     ldistr <- matrix(NA, n+1, N)
+    probR <- list()
+    ## Predictive algorithm: changepoint + Johnson-Dirichlet
     ldistr[1,] <- priorfrequencies
-    ## Update the frequency parameters of the model from the observations
-    ## as explained in plinkinetti180414
-    for(i in 1:n){
-        ldistr[1+i,] <- (L[i] * ldistr[i,] + replace(slots, obs[i], 1))/L[i+1]
-    }
-ldistr}
+    probR[[1]] <- rep(1,1)
+
+    for(m in 1:n){
+        ## calculate h(s)
+        h <- sapply(0:(m-1),probchangepoint)
+        ## calculate B_{m+1}(r)
+        probR[[m+1]] <- c(h %*% probR[[m]], # r=0
+                           (1-h) * probR[[m]]) # r>0
+
+        jdprob <- t(t(L*priorfrequencies +
+                   (cumfreqs[,m+1]-cumfreqs[,(m+1):1]))/(L+(0:m)))
+
+        ldistr[m+1,] <-  jdprob %*% probR[[m+1]]
+        }
+        plot(probR[[100]])
 
 ## sequences of means and stds
 allmeans <- function(distrib){distrib %*% (1:N)}

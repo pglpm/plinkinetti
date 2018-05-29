@@ -1,7 +1,7 @@
 \pdfoutput=1
 %% Author: PGL  Porta Mana, ALS Filipowicz
 %% Created: 2018-04-08T16:54:19+0200
-%% Last-Updated: 2018-05-29T10:34:02+0200
+%% Last-Updated: 2018-05-29T22:35:07+0200
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Report-no: ***
 \newif\ifarxiv
@@ -1393,89 +1393,58 @@ decomposed
   \label{eq:prob_new_cond_R}
   \p(D^{m+1}_{d_{m+1}} \|
   D^{m}_{d_{m}}, \dotsc, D^{1}_{d_{1}}, \yI)
-  ={}\\
-  \sum_{r=0}^m
+  =
+  \frac{\p(D^{m+1}_{d_{m+1}}, D^{m}_{d_{m}} \|
+    D^{m-1}_{d_{m-1}},\dotsc, D^{1}_{d_{1}}, \yI)}{
+    \p(D^{m}_{d_{m}} \| D^{m-1}_{d_{m-1}}, \dotsc, D^{1}_{d_{1}}, \yI)}
+=  {}\\[2\jot]
+  \frac{\sum\limits_{r=0}^m
   \p(D^{m+1}_{d_{m+1}} \|
   R^{m+1}_{r},  D^{m}_{d_{m}}, \dotsc, D^{m+1-r}_{d_{m+1-r}}, \yI)
   \times
-  \p(R^{m+1}_{r} \| D^{m}_{d_{m}}, \dotsc, D^{1}_{d_{1}}, \yI).
+  \p(R^{m+1}_{r}, D^{m}_{d_{m}} \| D^{m-1}_{d_{m-1}} \dotsc, D^{1}_{d_{1}}, \yI)}{
+\p(D^{m}_{d_{m}} \| D^{m-1}_{d_{m-1}} \dotsc, D^{1}_{d_{1}}, \yI)
+}.
 \end{multline}
-The products in the sum contain the term given
-by~\eqref{eq:irrelevant_data_conditional_R} and the probability for
-$R^{m+1}_{r}$ given the data.
-% We can rewrite the above probability also as
-% \begin{multline}
-%   \label{eq:prob_new_cond_R_cond_last}
-%   \p(D^{m+1}_{d_{m+1}} \|
-%   D^{m}_{d_{m}}, \dotsc, D^{1}_{d_{1}}, \yI)
-%   ={}\\[\jot]
-%   \frac{\sum_{r=0}^m
-%   \p(D^{m+1}_{d_{m+1}} \|
-%   R^{m+1}_{r},  D^{m}_{d_{m}}, \dotsc, D^{m+1-r}_{d_{m+1-r}}, \yI)
-%   \times
-%   \p(R^{m+1}_{r}, D^{m}_{d_{m}} \| D^{m-1}_{d_{m-1}} \dotsc, D^{1}_{d_{1}}, \yI)}{
-% \p(D^{m}_{d_{m}} \| D^{m-1}_{d_{m-1}} \dotsc, D^{1}_{d_{1}}, \yI)
-% },
-% \end{multline}
-% where the denominator corresponds to the
-% distribution~\eqref{eq:prob_new_cond_R} calculated in the previous
-% observation, which we can have saved into memory. The joint probability for
-% $R^{m+1}_{r}$ and $D^{m}_{d_{m}}$ in the sum can be decomposed introducing
-% $R^{m}_{s}$ for the previous observation:
-%
-% \begin{multline}
-%   \label{eq:prob_R_and_last_decompose}
-%   \p(R^{m+1}_{r}, D^{m}_{d_{m}} \| D^{m-1}_{d_{m-1}} \dotsc, D^{1}_{d_{1}}, \yI) 
-%   \\
-%   \begin{aligned}[b]
-%   &=\sum_{s=0}^{m-1}
-%   \p(R^{m+1}_{r}, D^{m}_{d_{m}}, R^{m}_{s},\|
-%   D^{m-1}_{d_{m-1}} \dotsc, D^{1}_{d_{1}}, \yI)
-%   \\
-% &\!\begin{multlined}[b][0.7\textwidth]
-%   =\sum_{s=0}^{m-1}\p(R^{m+1}_{r} \| R^{m}_{s}, \yI)
-%   \times{}\\
-%   \p(D^{m}_{d_{m}} \| R^{m}_{s},
-%   D^{m-1}_{d_{m-1}} \dotsc, D^{m-s}_{d_{m-s}}, \yI)
-%   \times{}\\
-%   \p(R^{m}_{s} \|
-%   D^{m-1}_{d_{m-1}} \dotsc, D^{1}_{d_{1}}, \yI).
-%           \end{multlined}
-%   \end{aligned}
-% \end{multline}
+The reason for this taking $D^{m}_{d_{m}}$ out of the conditional will be
+apparent in a moment. Note that the denominator is the probability of the
+previous observation given the previous data: in a recursive computation
+this would have been computed in the preceding step.
 
-This distribution for $R^{m+1}_r$ represents the robot's guess of whether
-the new observation starts a new subsequence or whether it is part of the
-previous subsequence, and of how long that subsequence is. It can be
-calculated recursively by introducing $R^{m}_{s}$ for the previous
-observation:
+The products in the sum contain the term given
+by~\eqref{eq:irrelevant_data_conditional_R} and the joint probability for
+$R^{m+1}_{r}, D^{m}_{d_{m}}$  given the previous data. This joint probability
+ can be decomposed introducing $R^{m}_{s}$ for the previous observation:
+\begin{multline}
+  \label{eq:prob_R_and_last_decompose}
+  \p(R^{m+1}_{r}, D^{m}_{d_{m}} \| D^{m-1}_{d_{m-1}}, \dotsc, D^{1}_{d_{1}}, \yI) 
+ ={} \\[2\jot]
+  \frac{\sum_{s=0}^{m-1}
+    \p(R^{m+1}_{r}, D^{m}_{d_{m}}, R^{m}_{s}, D^{m-1}_{d_{m-1}}
+    \| D^{m-2}_{d_{m-2}}, \dotsc, D^{1}_{d_{1}}, \yI)}{
+\p(D^{m-1}_{d_{m-1}} \| D^{m-2}_{d_{m-2}}, \dotsc, D^{1}_{d_{1}}, \yI)}
+  ={}\\[2\jot]
+  % \begin{multlined}[b][0.9\textwidth]
+  \begin{aligned}
+    \frac{1}{\p(D^{m-1}_{d_{m-1}} \| D^{m-2}_{d_{m-2}}, \dotsc, D^{1}_{d_{1}}, \yI)}
+  \sum_{s=0}^{m-1} \p(R^{m+1}_{r} \| R^{m}_{s}, \yI)
+  \times{}\qquad\qquad&\\[\jot]
+  \p(D^{m}_{d_{m}} \|
+    R^{m}_{s}, D^{m-1}_{d_{m-1}} \dotsc, D^{m-s}_{d_{m-s}}, \yI)
+    \times{}\qquad&\\[\jot]
+ \p(R^{m}_{s}, D^{m-1}_{d_{m-1}} \|
+  D^{m-2}_{d_{m-2}},\dotsc, D^{1}_{d_{1}}, \yI).&
+  \end{aligned}
+\end{multline}
+The last expression contains four kinds of term. Let's analyse them.
+
+1. The denominator is the probability for the $(m-1)$th observation given the
+previous data. In a recursive algorithm this has been calculated in a
+previous step.
+
+2. The first factor within the sum was simplified using this assumption:
 \begin{equation}
   \label{eq:prob_R_and_last_decompose}
-    \p(R^{m+1}_{r}\| D^{m}_{d_{m}}, \dotsc, D^{1}_{d_{1}}, \yI) 
-  % &=\sum_{s=0}^{m-1}
-  % \p(R^{m+1}_{r},R^{m}_{s},\|
-  % D^{m}_{d_{m}}, \dotsc, D^{1}_{d_{1}}, \yI)
-  % \\
-=\sum_{s=0}^{m-1}\p(R^{m+1}_{r} \| R^{m}_{s}, \yI)
-  \times
-  \p(R^{m}_{s} \|
-  D^{m-1}_{d_{m-1}} \dotsc, D^{1}_{d_{1}}, \yI).
-% &\!\begin{multlined}[b][0.7\textwidth]
-%   =\sum_{s=0}^{m-1}\p(R^{m+1}_{r} \| R^{m}_{s}, \yI)
-%   \times{}\\
-%   \p(D^{m}_{d_{m}} \| R^{m}_{s},
-%   D^{m-1}_{d_{m-1}} \dotsc, D^{m-s}_{d_{m-s}}, \yI)
-%   \times{}\\
-%   \p(R^{m}_{s} \|
-%   D^{m-1}_{d_{m-1}} \dotsc, D^{1}_{d_{1}}, \yI).
-%           \end{multlined}
-%   \end{aligned}
-\end{equation}
-Let's examine the two factors in the sum.
-
-The first factor was simplified using this assumption:
-\begin{equation}
-  \label{eq:R_cond_R}
   \p(R^{m+1}_{r} \|
   R^{m}_{s},  D^{m}_{d_{m}} \dotsc, D^{1}_{d_{1}}, \yI)
   = \p(R^{m+1}_{r} \|  R^{m}_{s},  \yI),
@@ -1513,10 +1482,33 @@ subsequences shouldn't be too long. This last option is reasonable if the
 participants were warned about the possibility of changepoints before the
 experiment.
 
-The second factor in~\eqref{eq:prob_R_and_last_decompose} is a distribution
-analogous to the one calculated there, but for the previous observation. In
-our recursive scheme it was already calculated in the previous observation
-and saved into memory.
+3. The second factor within the sum is given by the Johnson-Dirichlet
+model, according to discussion of
+\eqn~\eqref{eq:irrelevant_data_conditional_R}.
+
+4. The last factor within the sum is analogous to the joint probability for
+$R^{m+1}_{r}, D^{m}_{d_{m}}$, but calculated for the previous observation.
+In a recursive scheme it would have been computed in the preceding step.
+
+
+\bigskip
+
+In a recursive scheme we also need some initial values.
+
+For $m=0$ we have that $\p(D^{1}_{d_1} \| \yI)$ is given by the
+Johnson-Dirichlet model, and $\p(R^{1}_{0} \| \yI)=1$ because the first
+observation is trivially a changepoint. Owing to the certainty of $R^1_0$,
+for $m=1$ we have
+\begin{equation}
+  \label{eq:initial_R2}
+  \p(R^{2}_{r}, D^{1}_{d_{1}} \|  \yI)
+  = \p(R^{2}_{r},R^{1}_{0}, D^{1}_{d_{1}} \|  \yI)
+  = \p(R^{2}_{r} \| R^{1}_{0},  \yI) \times
+  \p( D^{1}_{d_{1}} \|  \yI).
+\end{equation}
+With the probabilities above, from $m=2$ onward the recursion can be
+calculated with
+\eqns~\eqref{eq:irrelevant_data_conditional_R}--\eqref{eq:R_cond_R_simple}.
 
 
 \subsection{The recursive algorithm}
@@ -1528,18 +1520,40 @@ shown in table~\ref{tab:adamsetal_algorithm}. For $m=0$ some initialization
 steps are necessary.
 \begin{table}[!b]
   \centering
-  \caption{Predictive algorithm}
-  \label{tab:adamsetal_algorithm}
+  \caption{Initial steps of predictive algorithm}
+  \label{tab:adamsetal_initial}
   \begin{tabularx}{\textwidth}{X}\hline
     \begin{enumerate}[label=0.\arabic*.,start=0]
-      \item Set $\yN=0.01$, $\ynn_d=1/N$, $d\in\set{1,\dotsc,N}$
-    \item Set $m=0$. Using the Johnson-Dirichlet model calculate
-      \[\p(D^{1}_{d_{1}} \|  \yI) =1/N, \qquad d_1 \in \set{1,\dotsc,N} \]
+    \item Set $\yN=0.01$, $\ynn_d=1/N$, $d\in\set{1,\dotsc,N}$
+    \item For $d_1 \in \set{1,\dotsc,N}$ calculate
+      \[A_1(d_1)\ defd
+        \p(D^{1}_{d_{1}} \|  \yI) =\ynn_{d_1} \]
+    \item Observe $d_1$
+    \item Set $m=1$. For $r \in\set{0,1}$ calculate
+      \[
+        B_2(r) \defd \p(R^{2}_{r}, D^{1}_{d_1} \| \yI)
+        =
+        \begin{cases}
+          \yrs(0) &\text{for $r=0$},\\ 1-\yrs(0)&\text{for $r=1$}
+        \end{cases}
+      \]
+    \item  For $d_2 \in \set{1,\dotsc,N}$ calculate
+      \[A_2(d_2) \defd
+        \p(D^{2}_{d_{12}} \| D^{1}_{d_{1}}, \yI) =
+        \ynn_{d_1} \]
+
+
     \item Keep $B_1(0)\equiv 1$ for next steps
     \item Observe $d_1$, set $m=1$
     \end{enumerate}
+  \end{tabularx}
+\end{table}
 
-    \bigskip
+\begin{table}[!b]
+  \centering
+  \caption{Predictive algorithm}
+  \label{tab:adamsetal_algorithm}
+  \begin{tabularx}{\textwidth}{X}\hline
     \begin{enumerate}
       % \item Retrieve from memory
       %   \[ B_m(s) \defd \p(R^{m}_{s} \| D^{m-1}_{d_{m-1}} \dotsc,
@@ -1547,37 +1561,39 @@ steps are necessary.
     \item\label{item:first_step}For $r \in \set{0,\dotsc, m}$:
       \begin{enumerate}[label*=\arabic*.]
       \item Calculate
-        \[ \begin{multlined}[t][0.8\textwidth] B_{m+1}(r) \defd
-            \p(R^{m+1}_{r} \| D^{m}_{d_{m}}, \dotsc,
+        \[ \begin{multlined}[t][0.85\textwidth] C_{m+1}(r) \defd
+            \p(R^{m+1}_{r} , D^{m}_{d_{m}} \| D^{m-1}_{d_{m-1}}, \dotsc,
             D^{1}_{d_{1}}, \yI) ={}\\[\jot]
-        \begin{cases}
-          \sum_{s=0}^{m-1} \yrs(s) \times B_m(s) & \text{if $r=0$},
+       \shoveleft{\frac{1}{A_{m-1}(d_{m-1})} \times{}}\\\begin{cases}
+          \sum_{s=0}^{m-1} \yrs(s) \times B_m(s,d_m) \times C_m(s) & \text{if $r=0$},
           \\[\jot]
-          [1-\yrs(r-1)]  \times B_m(r-1) & \text{if $r\ge 1$}    
+          [1-\yrs(r-1)]  \times B_m(r-1,d_m) \times C_m(r-1)& \text{if $r\ge 1$}    
         \end{cases}
       \end{multlined}
     \]
-  % \item retrieve from memory
-  %   \[ C_m \defd \p(D^{m}_{d_{m}} \| D^{m-1}_{d_{m-1}} \dotsc, D^{1}_{d_{1}},
-  %     \yI) \]
       \item For $d_{m+1} \in \set{1,\dotsc,N}$, calculate
-        \[ \begin{multlined}[][0.8\textwidth]
-A(r,d_{m+1}) \defd \p(D^{m+1}_{d_{m+1}} \| R^{m+1}_{r}, D^{m}_{d_{m}},
+        \[ \begin{multlined}[][0.85\textwidth]
+B_{m+1}(r,d_{m+1}) \defd \p(D^{m+1}_{d_{m+1}} \| R^{m+1}_{r}, D^{m}_{d_{m}},
           \dotsc, D^{m+1-r}_{d_{m+1-r}}, \yI) ={}\\[\jot]
          \frac{\yN\ynn_{d_{m+1}}+r\yff_{d_{m+1}}}{\yN + r},
-        \end{multlined} \]
-where $\yff_{d_{m+1}}$ is the relative frequency of outcome $d_{m+1}$ in the past
-$r$ observations
+       \end{multlined} \]
+     where $\yff_{d_{m+1}}$ is the relative frequency of outcome $d_{m+1}$ in the previous $r$ observations
       % \item using the Johnson-Dirichlet model calculate (or retrieve from memory)
       %   \[ A_m(s) \defd \p(D^{m}_{d_{m}} \| R^{m}_{s}, D^{m-1}_{d_{m-1}}
       %     \dotsc, D^{m-s}_{d_{m-s}}, \yI)
       %   \]
   \end{enumerate}
 \item For $d_{m+1} \in \set{1,\dotsc,N}$, calculate
-  \[ \p(D^{m+1}_{d_{m+1}} \| D^{m}_{d_{m}}, \dotsc, D^{1}_{d_{1}}, \yI) =
-    \sum_{r=0}^{m} A(r,d_{m+1}) \times B_{m+1}(r)\]
-\item Keep $\set{B_{m+1}(r) \suchthat 0\le r \le m}$ for next steps
-\item Observe $d_{m+1}$, increase $m$ by $1$, go to step~\ref{item:first_step}
+  \[ \begin{multlined}[][0.85\textwidth]
+      A_{m+1}(d_{m+1}) \defd \p(D^{m+1}_{d_{m+1}} \| D^{m}_{d_{m}}, \dotsc, D^{1}_{d_{1}}, \yI) ={}\\
+    \frac{\sum_{r=0}^{m} B_{m+1}(r,d_{m+1}) \times
+      C_{m+1}(r)}{A_{m}(d_{m})}
+  \end{multlined}
+\]
+\item Observe $d_{m+1}$, 
+\item Keep $A_{m+1}(d_{m+1})$ for the next two steps, and
+  $B_{m+1}(r,d_{m+1})$, $C_{m+1}(r)$, $r\in\set{0,\dotsc,m}$ for the next step
+\item Increase $m$ by $1$, go to step~\ref{item:first_step}
   \end{enumerate}
   \\\hline
 \end{tabularx}
@@ -1886,6 +1902,35 @@ a value will be the sum of the probability for the various equivalent values.
 \end{document}
 ---------- cut text ----------------
 
+
+% This distribution for $R^{m+1}_r$ represents the robot's guess of whether
+% the new observation starts a new subsequence or whether it is part of the
+% previous subsequence, and of how long that subsequence is. It can be
+% calculated recursively by introducing $R^{m}_{s}$ for the previous
+% observation:
+% \begin{equation}
+%   \label{eq:prob_R_and_last_decompose2}
+%     \p(R^{m+1}_{r}\| D^{m}_{d_{m}}, \dotsc, D^{1}_{d_{1}}, \yI) 
+%   % &=\sum_{s=0}^{m-1}
+%   % \p(R^{m+1}_{r},R^{m}_{s},\|
+%   % D^{m}_{d_{m}}, \dotsc, D^{1}_{d_{1}}, \yI)
+%   % \\
+% =\sum_{s=0}^{m-1}\p(R^{m+1}_{r} \| R^{m}_{s}, \yI)
+%   \times
+%   \p(R^{m}_{s} \|
+%   D^{m-1}_{d_{m-1}} \dotsc, D^{1}_{d_{1}}, \yI).
+% % &\!\begin{multlined}[b][0.7\textwidth]
+% %   =\sum_{s=0}^{m-1}\p(R^{m+1}_{r} \| R^{m}_{s}, \yI)
+% %   \times{}\\
+% %   \p(D^{m}_{d_{m}} \| R^{m}_{s},
+% %   D^{m-1}_{d_{m-1}} \dotsc, D^{m-s}_{d_{m-s}}, \yI)
+% %   \times{}\\
+% %   \p(R^{m}_{s} \|
+% %   D^{m-1}_{d_{m-1}} \dotsc, D^{1}_{d_{1}}, \yI).
+% %           \end{multlined}
+% %   \end{aligned}
+% \end{equation}
+% Let's examine the two factors in the sum.
 
 %%% Local Variables: 
 %%% mode: LaTeX
