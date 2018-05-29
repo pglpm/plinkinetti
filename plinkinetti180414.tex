@@ -1,7 +1,7 @@
 \pdfoutput=1
 %% Author: PGL  Porta Mana, ALS Filipowicz
 %% Created: 2018-04-08T16:54:19+0200
-%% Last-Updated: 2018-05-29T10:29:37+0200
+%% Last-Updated: 2018-05-29T10:34:02+0200
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Report-no: ***
 \newif\ifarxiv
@@ -1546,18 +1546,6 @@ steps are necessary.
       %     D^{1}_{d_{1}}, \yI),\qquad 0\le s \le m-1 \]
     \item\label{item:first_step}For $r \in \set{0,\dotsc, m}$:
       \begin{enumerate}[label*=\arabic*.]
-      \item For $d_{m+1} \in \set{1,\dotsc,N}$, calculate
-        \[ \begin{multlined}[][0.8\textwidth]
-A(r,d_{m+1}) \defd \p(D^{m+1}_{d_{m+1}} \| R^{m+1}_{r}, D^{m}_{d_{m}},
-          \dotsc, D^{m+1-r}_{d_{m+1-r}}, \yI) ={}\\[\jot]
-         \frac{\yN\ynn_{d_{m+1}}+r\yff_{d_{m+1}}}{\yN + r},
-        \end{multlined} \]
-where $\yff_{d_{m+1}}$ is the relative frequency of outcome $d_{m+1}$ in the past
-$r$ observations
-      % \item using the Johnson-Dirichlet model calculate (or retrieve from memory)
-      %   \[ A_m(s) \defd \p(D^{m}_{d_{m}} \| R^{m}_{s}, D^{m-1}_{d_{m-1}}
-      %     \dotsc, D^{m-s}_{d_{m-s}}, \yI)
-      %   \]
       \item Calculate
         \[ \begin{multlined}[t][0.8\textwidth] B_{m+1}(r) \defd
             \p(R^{m+1}_{r} \| D^{m}_{d_{m}}, \dotsc,
@@ -1572,6 +1560,18 @@ $r$ observations
   % \item retrieve from memory
   %   \[ C_m \defd \p(D^{m}_{d_{m}} \| D^{m-1}_{d_{m-1}} \dotsc, D^{1}_{d_{1}},
   %     \yI) \]
+      \item For $d_{m+1} \in \set{1,\dotsc,N}$, calculate
+        \[ \begin{multlined}[][0.8\textwidth]
+A(r,d_{m+1}) \defd \p(D^{m+1}_{d_{m+1}} \| R^{m+1}_{r}, D^{m}_{d_{m}},
+          \dotsc, D^{m+1-r}_{d_{m+1-r}}, \yI) ={}\\[\jot]
+         \frac{\yN\ynn_{d_{m+1}}+r\yff_{d_{m+1}}}{\yN + r},
+        \end{multlined} \]
+where $\yff_{d_{m+1}}$ is the relative frequency of outcome $d_{m+1}$ in the past
+$r$ observations
+      % \item using the Johnson-Dirichlet model calculate (or retrieve from memory)
+      %   \[ A_m(s) \defd \p(D^{m}_{d_{m}} \| R^{m}_{s}, D^{m-1}_{d_{m-1}}
+      %     \dotsc, D^{m-s}_{d_{m-s}}, \yI)
+      %   \]
   \end{enumerate}
 \item For $d_{m+1} \in \set{1,\dotsc,N}$, calculate
   \[ \p(D^{m+1}_{d_{m+1}} \| D^{m}_{d_{m}}, \dotsc, D^{1}_{d_{1}}, \yI) =
