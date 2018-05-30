@@ -19,7 +19,7 @@ mmtoin <- 0.0393701
 plotsdir <- './comparisons2/'
 
 ## load all data
-dpath = "./data/"
+dpath = "./_data/"
 fs = dir(path = dpath,pattern = "barData")
 d <- read.csv(paste0(dpath,fs[1]))
 for (f in fs[2:40]) {
@@ -52,11 +52,11 @@ distribution <- function(participant, maxtrials=200){matrix(d[d$Participant == p
 ## sequence of robot distributions: uses the changepoint & Johnson-Dirichlet model
 
 ## first define the probability of new changepoint, h(s)
-probchangepoint <- function(s){0.1}
+#probchangepoint <- function(s){20^s*exp(-20)/factorial(s)}
+probchangepoint <- function(s,m){1-dnorm(m-s-1,0,75)*sqrt(2*pi)*75*0.9}
+#probchangepoint <- function(s){1}
 
 robotdistribution <- function(priorfrequencies,stubbornness,obs){
-
-    probchangepoint <- function(s){0.05}
     n <- length(obs)
 
     ## sequence of cumulative frequencies:
@@ -69,23 +69,46 @@ robotdistribution <- function(priorfrequencies,stubbornness,obs){
     ## initialize
     ldistr <- matrix(NA, n+1, N)
     probR <- list()
-    ## Predictive algorithm: changepoint + Johnson-Dirichlet
+
+    ## m=0
     ldistr[1,] <- priorfrequencies
-    probR[[1]] <- rep(1,1)
+    AA <- ldistr[1,obs[1]]
+    probR[[1]] <- 1
 
-    for(m in 1:n){
+    ## m=1
+    h <- probchangepoint(0,1)
+    CC <- AA * c(h,1-h)
+    tempB <- t(t(L*priorfrequencies +
+                   (cumfreqs[,2]-cumfreqs[,2:1]))/(L+(0:1)))
+    ldistr[2,] <- (tempB %*% CC)/AA
+    probR[[2]] <- CC/AA
+    AA1 <- AA
+    AA <- ldistr[2,obs[2]]
+    BB <- tempB[obs[2],]
+
+    for(m in 2:n){
         ## calculate h(s)
-        h <- sapply(0:(m-1),probchangepoint)
-        ## calculate B_{m+1}(r)
-        probR[[m+1]] <- c(h %*% probR[[m]], # r=0
-                           (1-h) * probR[[m]]) # r>0
+        h <- sapply(0:(m-1),function(i){probchangepoint(i,m)})
+        
+        ## calculate C_{m+1}(r)
+        CC <- c(sum(h * BB * CC), # r=0
+        (1-h) * BB * CC # r>0
+        )/AA1
 
-        jdprob <- t(t(L*priorfrequencies +
+        ## calculate B_{m+1}(r, d)
+        tempB  <- t(t(L*priorfrequencies +
                    (cumfreqs[,m+1]-cumfreqs[,(m+1):1]))/(L+(0:m)))
 
-        ldistr[m+1,] <-  jdprob %*% probR[[m+1]]
-        }
-        plot(probR[[100]])
+        ## calculate A_{m+1}(d)
+        ldistr[m+1,] <- (tempB %*% CC)/AA
+
+        probR[[m+1]] <- CC/AA
+        AA1 <- AA
+        AA <- ldistr[m+1,obs[m+1]]
+        BB <- tempB[obs[m+1],]
+    }
+
+    list(ldistr,probR)}
 
 ## sequences of means and stds
 allmeans <- function(distrib){distrib %*% (1:N)}
@@ -110,7 +133,7 @@ comparison <- function(participant,maxtrials=200,trialstoshow=c(1:10, 95:105, 19
     mini <- min(c(distr[distr>0]))
     temp <- distr[1,] + mini/10
     temp <- temp/sum(temp)
-    ldistr <- robotdistribution(temp,stubbornness,obs)
+    ldistr <- robotdistribution(temp,stubbornness,obs)[[1]]
 
     ## calculate the overlap and relative entropy of the participant's distr.
     temp <-  distr * log(distr/ldistr)
@@ -280,8 +303,8 @@ dev.off()}
 ## function to assess speed of robot re-learning
 comparerobots <- function(index,obs,changepoint,priorfrequencies=rep(1/N,N),stubbornness=0.1){
     n <- length(obs)
-    distr1 <- robotdistribution(priorfrequencies,stubbornness,obs)
-    distr2 <- robotdistribution(distr1[changepoint-1,],stubbornness,obs[changepoint:n])
+    distr1 <- robotdistribution(priorfrequencies,stubbornness,obs)[[1]]
+    distr2 <- robotdistribution(distr1[changepoint-1,],stubbornness,obs[changepoint:n])[[1]]
     pdfname <- paste0(plotsdir,'compare_robots_',index,'-stub_',stubbornness,'.pdf')
     df0 <- data.frame(x=2:(n+1),y=obs)
     df1 <- data.frame(x=1:(n+1),y=allstds(distr1))
@@ -329,8 +352,8 @@ comparerobots <- function(index,obs,changepoint,priorfrequencies=rep(1/N,N),stub
 ## as previous function, but without plots
 comparerobotssimple <- function(obs,changepoint,priorfrequencies=rep(1/N,N),stubbornness=0.1){
     n <- length(obs)
-    distr1 <- robotdistribution(priorfrequencies,stubbornness,obs)
-    distr2 <- robotdistribution(distr1[changepoint-1,],stubbornness,obs[changepoint:n])
+    distr1 <- robotdistribution(priorfrequencies,stubbornness,obs)[[1]]
+    distr2 <- robotdistribution(distr1[changepoint-1,],stubbornness,obs[changepoint:n])[[1]]
     ## std, relative entropy, and overlap
     std1 <- allstds(distr1)
     std2 <- allstds(distr2)
