@@ -1,7 +1,7 @@
 \pdfoutput=1
 %% Author: PGL  Porta Mana, ALS Filipowicz
 %% Created: 2018-04-08T16:54:19+0200
-%% Last-Updated: 2018-05-29T23:49:08+0200
+%% Last-Updated: 2018-05-30T15:17:26+0200
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Report-no: ***
 \newif\ifarxiv
@@ -1465,18 +1465,18 @@ or $r=s+1$:
 \begin{equation}
   \label{eq:R_cond_R_simple}
   \p(R^{m+1}_{r} \| R^{m}_{s}, \yI) =
-  \yrs(s)\,\delt_{r,0} + [1-\yrs(s)]\,\delt_{r,s+1} =
+  \yrs(s,m)\,\delt_{r,0} + [1-\yrs(s,m)]\,\delt_{r,s+1} =
   \begin{cases}
-    \yrs(s) & \text{for $r=0$},
+    \yrs(s,m) & \text{for $r=0$},
     \\
-    1-\yrs(s) &\text{for $r=s+1$},
+    1-\yrs(s,m) &\text{for $r=s+1$},
     \\
     0 & \text{otherwise},
   \end{cases}
 \end{equation}
 which simplifies our calculations: in the
 sum~\eqref{eq:prob_R_and_last_decompose} when $r\ge 1$ only the term
-$s=r-1$ survives. In our study we assume that $\yrs(s)$ either is
+$s=r-1$ survives. In our study we assume that $\yrs(s,m)$ either is
 independent of $s$ or increases with $s$, expressing our expectation that
 subsequences shouldn't be too long. This last option is reasonable if the
 participants were warned about the possibility of changepoints before the
@@ -1539,7 +1539,7 @@ steps are necessary.
         C_2(r) \defd \p(R^{2}_{r}, D^{1}_{d_1} \| \yI)
         =
 A_1(d_1) \times \begin{cases}
-          \yrs(0) &\text{for $r=0$},\\ 1-\yrs(0)&\text{for $r=1$}
+          \yrs(0,1) &\text{for $r=0$},\\ 1-\yrs(0,1)&\text{for $r=1$}
         \end{cases}
       \]
       \item For $d_{2} \in \set{1,\dotsc,N}$, calculate
@@ -1580,9 +1580,9 @@ A_1(d_1) \times \begin{cases}
             \p(R^{m+1}_{r} , D^{m}_{d_{m}} \| D^{m-1}_{d_{m-1}}, \dotsc,
             D^{1}_{d_{1}}, \yI) ={}\\[\jot]
        \shoveleft{\frac{1}{A_{m-1}(d_{m-1})} \times{}}\\\begin{cases}
-          \sum_{s=0}^{m-1} \yrs(s) \times B_m(s,d_m) \times C_m(s) & \text{if $r=0$},
+          \sum_{s=0}^{m-1} \yrs(s,m) \times B_m(s,d_m) \times C_m(s) & \text{if $r=0$},
           \\[\jot]
-          [1-\yrs(r-1)]  \times B_m(r-1,d_m) \times C_m(r-1)& \text{if $r\ge 1$}    
+          [1-\yrs(r-1,m)]  \times B_m(r-1,d_m) \times C_m(r-1)& \text{if $r\ge 1$}    
         \end{cases}
       \end{multlined}
     \]
