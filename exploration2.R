@@ -5,6 +5,7 @@ library('ggplot2')
 library('RColorBrewer')
 library('cowplot')
 library('png')
+library('plot3D')
 mypurpleblue <- '#4477AA'
 myblue <- '#66CCEE'
 mygreen <- '#228833'
@@ -477,6 +478,20 @@ discrepancy <- function(params,pdistr,obs,nregions=3,maxtrials=200,stubbornness=
     ## calculate total discrepancy
     mean(sapply(1:(maxtrials+1),function(i){kld(rdistr[i,],pdistr[i,])}))
 }
+
+plotminparams <- function(nregions,params,label='',maxtrials=200){
+	nobs <- 0:maxtrials
+	probd <- function(s,m,n,nregions,params){
+	if(s>m | m<0 | s<0){return(NA)}
+	probchangepointdiscr(s,m,n,nregions,params)
+	}
+	
+	pmatrix <- sapply(nobs,function(i){sapply(nobs,function(j){probd(i,j,	maxtrials,nregions,params)})})
+	pdf(paste0(plotsdir,label,'optimh.pdf'),width = 148*mmtoin, height = 148*1*mmtoin)
+	image2D(pmatrix,x=nobs,y=nobs,xlab='m',ylab='s',zlim=c(0,1))
+	dev.off()
+}
+
 
 reducediscrepancy <- function(participant,maxtrials,nregions=3,startpoints=10,seed=999){
     set.seed(seed)
