@@ -120,33 +120,32 @@ allstds <- function(distrib){sqrt(distrib %*% (1:N)^2 - allmeans(distrib)^2)}
 ## - sequences of overlap, relative entropies, means, stds
 ## - histograms for a selected set of trials
 ## and that outputs the final distributions, rel-entropies, overlaps, means, stds
-comparison <- function(participant,maxtrials=200,trialstoshow=c(1:10, 95:105, 190:200),stubbornness=0.01,label='',params=c(0,0,0)){
+comparison <- function(participant,maxtrials=200,trialstoshow=c(1:10, 95:105, 190:200),stubbornness=0.01,label='',params=rep(0.5,6),nregions=3){
     n <- maxtrials ## number of trials to consider
     
     obs <- observations(participant,n)
 
-    distr <- distribution(participant,n)
-
     ## sequence of frequency parameters of the changepoint-JD model. At
     ## every "reset" we set the first equal to the participant's initial
-    ## distribution plus a value equal to 1/10 of the minimum nonzero value
+    ## distribution plus a value equal to 1/1000 of the minimum nonzero value
     ## ever assigned
-    mini <- min(c(distr[distr>0]))
-    temp <- distr[1,] + mini/10
-    temp <- temp/sum(temp)
-    ldistr <- robotdistributiondiscr(temp,stubbornness,obs,params)
+    tdistr <- distribution(participant,n)
+    mini <- tdistr + min(c(tdistr[tdistr>0]))/1000
+    pdistr <- t(sapply(1:(n+1),function(i){mini[i,]/sum(mini[i,])}))
+
+    rdistr <- robotdistributiondiscr(pdistr[1,],stubbornness,obs,params,nregions)
 
     ## calculate the overlap and relative entropy of the participant's distr.
-    temp <-  distr * log(distr/ldistr)
+    temp <-  rdistr * log(rdistr/pdistr)
     temp[is.nan(temp)] <- 0
     rentropy <- apply(temp,1,sum)
-    overlap <- diag(ldistr %*% t(distr))
+    overlap <- diag(rdistr %*% t(pdistr))
 
     ## sequence of means and stds
-    meanperson <- allmeans(distr)
-    stdperson <- allstds(distr)
-    meanrobot <- allmeans(ldistr)
-    stdrobot <- allstds(ldistr)
+    meanperson <- allmeans(pdistr)
+    stdperson <- allstds(pdistr)
+    meanrobot <- allmeans(rdistr)
+    stdrobot <- allstds(rdistr)
 
 ## ## plot obzervations
 ## df <- data.frame(x=2:(n+1), y1=obs)
@@ -258,14 +257,14 @@ dev.off()
 
 ## plot histograms for a range of trials
 if(!is.null(trialstoshow)){rangehist <- trialstoshow
-maxhist <- max(c(distr,ldistr))
+maxhist <- max(c(pdistr,rdistr))
 pdfname <- paste0(plotsdir,label,'histogram_',rangehist[1],'-',rangehist[length(rangehist)],'_',participant,'-stub_',stubbornness,'.pdf')
 pdf(pdfname,width = 148*mmtoin, height = 148*0.6*mmtoin)
 for(j in 1:length(rangehist)){
     i <- rangehist[j]
     df <- data.frame(x=rep(1:N, 2),
                      who=rep(c('person','robot'), each=N),
-                     y=c(distr[i,], ldistr[i,]))
+                     y=c(pdistr[i,], rdistr[i,]))
     maxy <- max(df$y)
     miny <- 0
     iconheight <- (maxy-miny)/10
@@ -298,7 +297,7 @@ print(g)
 }
 dev.off()}
 
-    return(list(distr=distr,robotdistr=ldistr,rentropy=rentropy,overlap=overlap,meanperson=meanperson,meanrobot=meanrobot,stdperson=stdperson,stdrobot=stdrobot))
+    return(list(distr=pdistr,robotdistr=rdistr,rentropy=rentropy,overlap=overlap,meanperson=meanperson,meanrobot=meanrobot,stdperson=stdperson,stdrobot=stdrobot))
 }
 
 ## function to assess speed of robot re-learning
@@ -377,11 +376,16 @@ ilogit <- function(a){exp(a)/(1+exp(a))}
 ##     return(params[1])
 ## }
 
-probchangepointdiscr <- function(s,m,n,params){1-dnorm(m-s-1,0,75)*sqrt(2*pi)*75*0.9}
+probchangepointdiscr <- function(s,m,n,nregions,params){
+    ##if(s>m | m<0 | s<0){return(NA)}
+    params[choose(floor(nregions*m/(n+1))+1,2)+1+nregions*s/(n+1)]
+}
+
+## probchangepointdiscr <- function(s,m,n,params){1-dnorm(m-s-1,0,75)*sqrt(2*pi)*75*0.9}
 
 
 ## simplified robotdistribution function
-robotdistributiondiscr <- function(priorfrequencies,stubbornness,obs,params){
+robotdistributiondiscr <- function(priorfrequencies,stubbornness,obs,params,nregions=3){
     n <- length(obs)
 
     ## sequence of cumulative frequencies:
@@ -399,7 +403,7 @@ robotdistributiondiscr <- function(priorfrequencies,stubbornness,obs,params){
     AA <- ldistr[1,obs[1]]
 
     ## m=1
-    h <- probchangepointdiscr(0,1,n,params)
+    h <- probchangepointdiscr(0,1,n,nregions,params)
     CC <- AA * c(h,1-h)
     tempB <- t(t(L*priorfrequencies +
                    (cumfreqs[,2]-cumfreqs[,2:1]))/(L+(0:1)))
@@ -410,7 +414,7 @@ robotdistributiondiscr <- function(priorfrequencies,stubbornness,obs,params){
 
     for(m in 2:n){
         ## calculate h(s)
-        h <- sapply(0:(m-1),function(i){probchangepointdiscr(i,m,n,params)})
+        h <- sapply(0:(m-1),function(i){probchangepointdiscr(i,m,n,nregions,params)})
         
         ## calculate C_{m+1}(r)
         CC <- c(sum(h * BB * CC), # r=0
@@ -446,8 +450,8 @@ kl2d <- function(a,b){
 
 
 ## function to calculate "discrepancy" between participant's and robot's sequences of distributions
-discrepancy <- function(params,participant,maxtrials=200,stubbornness=0.01){
-	iparams <- ilogit(params)
+discrepancypart <- function(params,participant,nregions=3,maxtrials=200,stubbornness=0.01){
+    iparams <- ilogit(params) ## convert from (-inf,+inf) to (0,1)
     n <- maxtrials ## number of trials to consider
     obs <- observations(participant,n)
     distr <- distribution(participant,n)
@@ -459,20 +463,52 @@ discrepancy <- function(params,participant,maxtrials=200,stubbornness=0.01){
     mini <- min(c(distr[distr>0]))
     temp <- distr[1,] + mini/100
     temp <- temp/sum(temp)
-    ldistr <- robotdistributiondiscr(temp,stubbornness,obs,iparams)
+    ldistr <- robotdistributiondiscr(temp,stubbornness,obs,iparams,nregions)
 
     ## calculate total discrepancy
-    mean(sapply(1:n,function(i){kld(distr[i,],ldistr[i,])}))
+    mean(sapply(1:n,function(i){kld(ldistr[i,],distr[i,])}))
 }
 
-reducediscrepancy <- function(participant,maxtrials){
+discrepancy <- function(params,pdistr,obs,nregions=3,maxtrials=200,stubbornness=0.01){
+    iparams <- ilogit(params) ## convert from (-inf,+inf) to (0,1)
+
+    rdistr <- robotdistributiondiscr(pdistr[1,],stubbornness,obs,iparams,nregions)
+
+    ## calculate total discrepancy
+    mean(sapply(1:(maxtrials+1),function(i){kld(rdistr[i,],pdistr[i,])}))
+}
+
+reducediscrepancy <- function(participant,maxtrials,nregions=3,startpoints=10,seed=999){
+    set.seed(seed)
+    n <- maxtrials
+    obs <- observations(participant,n)
+    tdistr <- distribution(participant,n)
+
+    ## sequence of frequency parameters of the JD model. At every "reset"
+    ## we set the first equal to the participant's initial distribution
+    ## plus a value equal to 1/100 of the minimum nonzero value ever
+    ## assigned (to avoid zero probabilities in the robot)
+    mini <- tdistr + min(c(tdistr[tdistr>0]))/1000
+    pdistr <- t(sapply(1:(n+1),function(i){mini[i,]/sum(mini[i,])}))
+
+    maxval <- Inf
+    for(i in 1:startpoints){
+        startpar <- logit(runif((nregions^2+nregions)/2))
+        optrobot <- optim(startpar,discrepancy,gr=NULL, pdistr=pdistr,obs=obs,nregions=nregions,maxtrials=maxtrials,stubbornness=0.01)
+        if(optrobot$value < maxval){maxval <- optrobot$value
+            maxpars <- optrobot$par
+            region <- startpar}
+    }
+    list(par=ilogit(maxpars),value=maxval,region=ilogit(region))}
+
+reducediscrepancy3 <- function(participant,maxtrials){
     maxval=Inf
     prange <- logit(2/3)*c(-1,1)
 
     for(a1 in prange){
         for(a2 in prange){
             for(a3 in prange){
-                optrobot <- optim(c(a1,a2,a3),discrepancy,gr=NULL, participant=participant,maxtrials=maxtrials,stubbornness=0.01)
+                optrobot <- optim(c(a1,a2,a3),discrepancypart,gr=NULL, participant=participant,maxtrials=maxtrials,stubbornness=0.01)
                 if(optrobot$value < maxval){maxval <- optrobot$value
                     maxpars <- optrobot$par
                     region <- c(a1,a2,a3)}
