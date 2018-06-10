@@ -17,7 +17,7 @@ mmtoin <- 0.0393701
 plotsdir <- './comparisons1/'
 
 ## load all data
-dpath = "./data/"
+dpath = "./_data/"
 fs = dir(path = dpath,pattern = "barData")
 d <- read.csv(paste0(dpath,fs[1]))
 for (f in fs[2:40]) {

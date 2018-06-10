@@ -28,7 +28,7 @@ d <- rbind(d,dprime)
 rm(dprime)
 }
 d <- d[,1:(ncol(d)-2)]
-person <- readPNG('face3.png')
+person <- readPNG('face2.png')
 robot <- readPNG('robot1.png')
 robot2 <- readPNG('robot2.png')
 
@@ -54,9 +54,10 @@ distribution <- function(participant, maxtrials=200){matrix(d[d$Participant == p
 ## first define the probability of new changepoint, h(s)
 #probchangepoint <- function(s){20^s*exp(-20)/factorial(s)}
 probchangepoint <- function(s,m){1-dnorm(m-s-1,0,75)*sqrt(2*pi)*75*0.9}
+#probchangepoint <- function(s,m){0.9-s/m}
 #probchangepoint <- function(s){1}
 
-robotdistribution <- function(priorfrequencies,stubbornness,obs){
+robotdistribution <- function(priorfrequencies,stubbornness,obs,fprobchangepoint=probchangepoint){
     n <- length(obs)
 
     ## sequence of cumulative frequencies:
@@ -76,7 +77,7 @@ robotdistribution <- function(priorfrequencies,stubbornness,obs){
     probR[[1]] <- 1
 
     ## m=1
-    h <- probchangepoint(0,1)
+    h <- fprobchangepoint(0,1)
     CC <- AA * c(h,1-h)
     tempB <- t(t(L*priorfrequencies +
                    (cumfreqs[,2]-cumfreqs[,2:1]))/(L+(0:1)))
@@ -88,7 +89,7 @@ robotdistribution <- function(priorfrequencies,stubbornness,obs){
 
     for(m in 2:n){
         ## calculate h(s)
-        h <- sapply(0:(m-1),function(i){probchangepoint(i,m)})
+        h <- sapply(0:(m-1),function(i){fprobchangepoint(i,m)})
         
         ## calculate C_{m+1}(r)
         CC <- c(sum(h * BB * CC), # r=0
@@ -119,21 +120,21 @@ allstds <- function(distrib){sqrt(distrib %*% (1:N)^2 - allmeans(distrib)^2)}
 ## - sequences of overlap, relative entropies, means, stds
 ## - histograms for a selected set of trials
 ## and that outputs the final distributions, rel-entropies, overlaps, means, stds
-comparison <- function(participant,maxtrials=200,trialstoshow=c(1:10, 95:105, 190:200),stubbornness=0.1){
-## number of trials to consider
-    n <- maxtrials
+comparison <- function(participant,maxtrials=200,trialstoshow=c(1:10, 95:105, 190:200),stubbornness=0.01,label='',params=c(0,0,0)){
+    n <- maxtrials ## number of trials to consider
     
     obs <- observations(participant,n)
 
     distr <- distribution(participant,n)
 
-    ## sequence of frequency parameters of the JD model
-    ## we set the first equal to the participant's initial distribution
-    ## plus a value equal to 1/10 of the minimum nonzero value ever assigned
+    ## sequence of frequency parameters of the changepoint-JD model. At
+    ## every "reset" we set the first equal to the participant's initial
+    ## distribution plus a value equal to 1/10 of the minimum nonzero value
+    ## ever assigned
     mini <- min(c(distr[distr>0]))
     temp <- distr[1,] + mini/10
     temp <- temp/sum(temp)
-    ldistr <- robotdistribution(temp,stubbornness,obs)[[1]]
+    ldistr <- robotdistributiondiscr(temp,stubbornness,obs,params)
 
     ## calculate the overlap and relative entropy of the participant's distr.
     temp <-  distr * log(distr/ldistr)
@@ -163,33 +164,33 @@ comparison <- function(participant,maxtrials=200,trialstoshow=c(1:10, 95:105, 19
 ## dev.off()
 ## ##ggsave(pdfname, width = 148, height = 148*0.6, units='mm', dpi = 300)
 
-## plot the overlap
-df <- data.frame(x=1:(n+1), y=overlap)
-g <- ggplot() + theme_classic() 
-g <- g + #geom_point(data=df, aes(x,y), colour=mygreen) +
-    geom_line(data=df, aes(x,y), colour=mygreen) +
-    xlim(1,n+1) + # ylim(0,1) +
-    theme_classic() +
-    theme(aspect.ratio=0.5) +
-    labs(x='trial',y='overlap',
-         title=paste0('participant ', participant,', stub ',stubbornness))
-pdfname <- paste0(plotsdir,'overlap_',participant,'-stub_',stubbornness,'.pdf')
-save_plot(pdfname, g, base_width = 148, base_height = 148*0.6, units='mm', dpi = 300)
-dev.off()
+## ## plot the overlap
+## df <- data.frame(x=1:(n+1), y=overlap)
+## g <- ggplot() + theme_classic() 
+## g <- g + #geom_point(data=df, aes(x,y), colour=mygreen) +
+##     geom_line(data=df, aes(x,y), colour=mygreen) +
+##     xlim(1,n+1) + # ylim(0,1) +
+##     theme_classic() +
+##     theme(aspect.ratio=0.5) +
+##     labs(x='trial',y='overlap',
+##          title=paste0('participant ', participant,', stub ',stubbornness))
+## pdfname <- paste0(plotsdir,'overlap_',participant,'-stub_',stubbornness,'.pdf')
+## save_plot(pdfname, g, base_width = 148, base_height = 148*0.6, units='mm', dpi = 300)
+## dev.off()
 
-## plot the relative entropy
-df <- data.frame(x=1:(n+1), y=rentropy)
-g <- ggplot() + theme_classic() 
-g <- g + #geom_point(data=df, aes(x,y), colour=myyellow) +
-    geom_line(data=df, aes(x,y), colour=myyellow) +
-    xlim(1,n+1) +
-    theme(aspect.ratio=0.5) +
-    labs(x='trial',y='relative entropy',
-         title=paste0('participant ', participant,', stub ',stubbornness))
-pdfname <- paste0(plotsdir,'rentropy_',participant,'-stub_',stubbornness,'.pdf')
-save_plot(pdfname, g, base_width = 148, base_height = 148*0.6, units='mm', dpi = 300)
-dev.off()
-##ggsave(pdfname, width = 148, height = 148*0.6, units='mm', dpi = 300)
+## ## plot the relative entropy
+## df <- data.frame(x=1:(n+1), y=rentropy)
+## g <- ggplot() + theme_classic() 
+## g <- g + #geom_point(data=df, aes(x,y), colour=myyellow) +
+##     geom_line(data=df, aes(x,y), colour=myyellow) +
+##     xlim(1,n+1) +
+##     theme(aspect.ratio=0.5) +
+##     labs(x='trial',y='relative entropy',
+##          title=paste0('participant ', participant,', stub ',stubbornness))
+## pdfname <- paste0(plotsdir,'rentropy_',participant,'-stub_',stubbornness,'.pdf')
+## save_plot(pdfname, g, base_width = 148, base_height = 148*0.6, units='mm', dpi = 300)
+## dev.off()
+## ##ggsave(pdfname, width = 148, height = 148*0.6, units='mm', dpi = 300)
 
 ## plot sequence of means
 df <- data.frame(x=1:(n+1), y1=meanperson, y2=meanrobot, y3=c(NA,obs))
@@ -218,7 +219,7 @@ g <- g + geom_rect(aes(xmax=n+1-robotwidth,xmin=n+1-2*robotwidth,
         geom_rect(aes(xmax=n+1-robotwidth,xmin=n+1-2*robotwidth,
                           ymax=maxy*0.99-iconheight,ymin = maxy*0.99-2*iconheight),
                           color=NA, fill=myblue, alpha=0.5)
-pdfname <- paste0(plotsdir,'means_',participant,'-stub_',stubbornness,'.pdf')
+pdfname <- paste0(plotsdir,label,'means_',participant,'-stub_',stubbornness,'.pdf')
 save_plot(pdfname, g, base_width = 148, base_height=148*0.6, units='mm', dpi = 300)
 #ggsave(pdfname, width = 148, height = 148*0.2, units='mm', dpi = 300)
 dev.off()
@@ -249,7 +250,7 @@ g <- g + geom_rect(aes(xmax=n+1-robotwidth,xmin=n+1-2*robotwidth,
         geom_rect(aes(xmax=n+1-robotwidth,xmin=n+1-2*robotwidth,
                           ymax=maxy*0.99-iconheight,ymin = maxy*0.99-2*iconheight),
                           color=NA, fill=myblue, alpha=0.5)
-pdfname <- paste0(plotsdir,'stds_',participant,'-stub_',stubbornness,'.pdf')
+pdfname <- paste0(plotsdir,label,'stds_',participant,'-stub_',stubbornness,'.pdf')
 save_plot(pdfname, g, base_width = 148, base_height = 148*0.6, units='mm', dpi = 300)
 dev.off()
 ##ggsave(pdfname, width = 148, height = 148*0.6, units='mm', dpi = 300)
@@ -258,7 +259,7 @@ dev.off()
 ## plot histograms for a range of trials
 if(!is.null(trialstoshow)){rangehist <- trialstoshow
 maxhist <- max(c(distr,ldistr))
-pdfname <- paste0(plotsdir,'histogram_',rangehist[1],'-',rangehist[length(rangehist)],'_',participant,'-stub_',stubbornness,'.pdf')
+pdfname <- paste0(plotsdir,label,'histogram_',rangehist[1],'-',rangehist[length(rangehist)],'_',participant,'-stub_',stubbornness,'.pdf')
 pdf(pdfname,width = 148*mmtoin, height = 148*0.6*mmtoin)
 for(j in 1:length(rangehist)){
     i <- rangehist[j]
@@ -301,11 +302,11 @@ dev.off()}
 }
 
 ## function to assess speed of robot re-learning
-comparerobots <- function(index,obs,changepoint,priorfrequencies=rep(1/N,N),stubbornness=0.1){
+comparerobots <- function(index,obs,changepoint,priorfrequencies=rep(1/N,N),stubbornness=0.1,label=''){
     n <- length(obs)
     distr1 <- robotdistribution(priorfrequencies,stubbornness,obs)[[1]]
     distr2 <- robotdistribution(distr1[changepoint-1,],stubbornness,obs[changepoint:n])[[1]]
-    pdfname <- paste0(plotsdir,'compare_robots_',index,'-stub_',stubbornness,'.pdf')
+    pdfname <- paste0(plotsdir,label,'compare_robots_',index,'-stub_',stubbornness,'.pdf')
     df0 <- data.frame(x=2:(n+1),y=obs)
     df1 <- data.frame(x=1:(n+1),y=allstds(distr1))
     df2 <- data.frame(x=changepoint:(n+1),y=allstds(distr2))
@@ -348,6 +349,136 @@ comparerobots <- function(index,obs,changepoint,priorfrequencies=rep(1/N,N),stub
              overlap))
 }
 
+#######################################################################
+## minimization of discrepancy between robot and participant
+
+logit <- function(a){log(a/(1-a))}
+ilogit <- function(a){exp(a)/(1+exp(a))}
+
+## changepoint probability
+## probchangepointdiscr <- function(s,m,n,params){
+##     if(s>m | m<0 | s<0){return(NA)}
+##     if(s+m>=2*n/sqrt(3)){return(params[3])}
+##     if(s+m>=sqrt(2/3)*n){return(params[2])}
+##     return(params[1])
+## }
+
+## probchangepointdiscr <- function(s,m,n,params){
+##     ##if(s>m | m<0 | s<0){return(NA)}
+##     if(s>=n/2){return(params[3])}
+##     if(m>=n/2){return(params[2])}
+##     return(params[1])
+## }
+
+## probchangepointdiscr <- function(s,m,n,params){
+##     if(s>m | m<0 | s<0){return(NA)}
+##     if(m-s >=2*n/3){return(params[3])}
+##     if(m-s >= n/3){return(params[2])}
+##     return(params[1])
+## }
+
+probchangepointdiscr <- function(s,m,n,params){1-dnorm(m-s-1,0,75)*sqrt(2*pi)*75*0.9}
+
+
+## simplified robotdistribution function
+robotdistributiondiscr <- function(priorfrequencies,stubbornness,obs,params){
+    n <- length(obs)
+
+    ## sequence of cumulative frequencies:
+    ## column i are the frequencies up to observation i inclusive
+    cumfreqs <- sapply(1:(n+1), function(i) sapply(1:N, function(j) sum(c(0,obs)[1:i] == j)))
+
+    ## Johnson-Dirichlet model:
+    ## stubbornness parameter and ensuing sequence
+    L <- stubbornness # + (0:(n+1))
+    ## initialize
+    ldistr <- matrix(NA, n+1, N)
+
+    ## m=0
+    ldistr[1,] <- priorfrequencies
+    AA <- ldistr[1,obs[1]]
+
+    ## m=1
+    h <- probchangepointdiscr(0,1,n,params)
+    CC <- AA * c(h,1-h)
+    tempB <- t(t(L*priorfrequencies +
+                   (cumfreqs[,2]-cumfreqs[,2:1]))/(L+(0:1)))
+    ldistr[2,] <- (tempB %*% CC)/AA
+    AA1 <- AA
+    AA <- ldistr[2,obs[2]]
+    BB <- tempB[obs[2],]
+
+    for(m in 2:n){
+        ## calculate h(s)
+        h <- sapply(0:(m-1),function(i){probchangepointdiscr(i,m,n,params)})
+        
+        ## calculate C_{m+1}(r)
+        CC <- c(sum(h * BB * CC), # r=0
+        (1-h) * BB * CC # r>0
+        )/AA1
+
+        ## calculate B_{m+1}(r, d)
+        tempB  <- t(t(L*priorfrequencies +
+                   (cumfreqs[,m+1]-cumfreqs[,(m+1):1]))/(L+(0:m)))
+
+        ## calculate A_{m+1}(d)
+        ldistr[m+1,] <- (tempB %*% CC)/AA
+
+        AA1 <- AA
+        AA <- ldistr[m+1,obs[m+1]]
+        BB <- tempB[obs[m+1],]
+    }
+    ldistr}
+
+
+
+
+## probability-discrepancy measures
+hellingerd <- function(a,b){sqrt(1-sum(sqrt(a*b)))}
+kld <- function(a,b){
+    temp <-  a * log(a/b)
+    temp[is.nan(temp)] <- 0
+    sum(temp)}
+kl2d <- function(a,b){
+    temp <-  b * log(b/a)
+    temp[is.nan(temp)] <- 0
+    apply(temp,1,sum)}
+
+
+## function to calculate "discrepancy" between participant's and robot's sequences of distributions
+discrepancy <- function(params,participant,maxtrials=200,stubbornness=0.01){
+	iparams <- ilogit(params)
+    n <- maxtrials ## number of trials to consider
+    obs <- observations(participant,n)
+    distr <- distribution(participant,n)
+
+    ## sequence of frequency parameters of the JD model. At every "reset"
+    ## we set the first equal to the participant's initial distribution
+    ## plus a value equal to 1/100 of the minimum nonzero value ever
+    ## assigned (to avoid zero probabilities in the robot)
+    mini <- min(c(distr[distr>0]))
+    temp <- distr[1,] + mini/100
+    temp <- temp/sum(temp)
+    ldistr <- robotdistributiondiscr(temp,stubbornness,obs,iparams)
+
+    ## calculate total discrepancy
+    mean(sapply(1:n,function(i){kld(distr[i,],ldistr[i,])}))
+}
+
+reducediscrepancy <- function(participant,maxtrials){
+    maxval=Inf
+    prange <- logit(2/3)*c(-1,1)
+
+    for(a1 in prange){
+        for(a2 in prange){
+            for(a3 in prange){
+                optrobot <- optim(c(a1,a2,a3),discrepancy,gr=NULL, participant=participant,maxtrials=maxtrials,stubbornness=0.01)
+                if(optrobot$value < maxval){maxval <- optrobot$value
+                    maxpars <- optrobot$par
+                    region <- c(a1,a2,a3)}
+            }}}
+list(par=ilogit(maxpars),value=maxval,region=region)}
+
 
 ## as previous function, but without plots
 comparerobotssimple <- function(obs,changepoint,priorfrequencies=rep(1/N,N),stubbornness=0.1){
@@ -371,7 +502,7 @@ comparerobotssimple <- function(obs,changepoint,priorfrequencies=rep(1/N,N),stub
 }
 
 ## average results of previous function over many experiments
-averagecomparerobots <- function(index,numexperiments,meanstd1,meanstd2,numobs,changepoint,priorfrequencies=rep(1/N,N),stubbornness=0.1,seed=666){
+averagecomparerobots <- function(index,numexperiments,meanstd1,meanstd2,numobs,changepoint,priorfrequencies=rep(1/N,N),stubbornness=0.1,seed=666,label=''){
     set.seed(seed)
     obs1 <- matrix(round(rnorm(numexperiments*(changepoint-1),meanstd1[1],meanstd1[2])),numexperiments,changepoint-1)
     obs1[obs1<1] <- 1
@@ -396,7 +527,7 @@ averagecomparerobots <- function(index,numexperiments,meanstd1,meanstd2,numobs,c
     }
     ##plots
     n <- numobs
-    pdfname <- paste0(plotsdir,'avg_compare_robots_',index,'-stub_',stubbornness,'.pdf')
+    pdfname <- paste0(plotsdir,label,'avg_compare_robots_',index,'-stub_',stubbornness,'.pdf')
     df1 <- data.frame(x=1:(n+1),y=apply(mstd1,2,mean))
     df2 <- data.frame(x=changepoint:(n+1),y=apply(mstd2,2,mean))
     ##

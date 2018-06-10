@@ -6,7 +6,7 @@
 %% Home page: http://magnaspesmeretrix.org/
 %% Email (remove ZZ): pglpm0ZZ[at]gmail.com
 %% Created: 2000-08-23T16:53:30+0200
-%% Last-Updated: 2018-05-28T11:10:29+0200
+%% Last-Updated: 2018-06-09T16:38:53+0200
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %
 % NB: This database contains also items whose content's validity I
@@ -142,7 +142,6 @@
 @String{an = {Analysis}}
 @String{ane = {Ann.\ Nucl.\ Energy}}
 @String{anemb = {Anat.\ Embryol.}}
-@String{anips = {Adv.\ Neural Information Processing Systems (NIPS proceedings)}}
 @String{anj = {Astron.\ J.}}
 @String{annim = {Ann.\ Intern.\ Med.}}
 @String{ansen = {\langfrench{Archives n{\'e}erlandaises des Sciences exactes et naturelles}}}
@@ -468,6 +467,7 @@
 @String{jacousa = {J. Acoust.\ Soc.\ Am.}}
 @String{jacs = {J. Am.\ Chem.\ Soc.}}
 @String{jae = {J. Aerosp.\ Engrg.}}
+@String{jaigbi = {J. Anthropol.\ Inst.\ Great Brit.\ Ireland}}
 @String{jair = {J. Artif.\ Intell.\ Res.}}
 @String{jal = {J. Appl.\ Logic}}
 @String{jam = {J. Appl.\ Mech.}}
@@ -704,6 +704,7 @@
 @String{ni = {NeuroImage}}
 @String{nim = {Nucl.\ Instrum.\ Methods}}
 @String{nimpra = {Nucl.\ Instrum.\ Meth.\ A}}
+@String{nips = {Adv.\ Neural Information Processing Systems (NIPS)}}
 @String{njp = {New J. Phys.}}
 @String{njpl = {Nord.\ J. Phil.\ Logic}}
 @String{nl = {Nonlinearity}}
@@ -1243,17 +1244,6 @@ edition =      {2},
 note =	       {Transl.\ by D. E. Brown and ed.\ by D. ter~Haar. First publ.\ in Russian 1962}
 }
 
-@Book{accardietal2009,
-editor =       {Luigi Accardi and Guillaume Adenier and Christopher A. Fuchs and Gregg Jaeger and Andrei Khrennikov and Jan-{\AA}ke Larsson and Stig Stenholm},
-title =	       {Foundations of Probability and Physics -- 5: V{\"a}xj{\"o}, Sweden 24--27 August 2008},
-publisher =    {American Institute of Physics},
-year =	       {2009},
-volume =       {1101},
-series =       {AIP conference proceedings},
-address =      {New York},
-keywords =     {quantum mechanics, probability theory, Bell theorem}
-}
-
 @Article{ackleyetal1985,
 author =       {David H. Ackley and Geoffrey E. Hinton and Terrence J. Sejnowski},
 title =	       {A Learning Algorithm for {Boltzmann} Machines},
@@ -1327,21 +1317,24 @@ number =       {3--4},
 pages =	       {247--274}
 }
 
-@InCollection{aczel2004,
+@Article{aczel2004,
 author =       {Acz{\'e}l, J{\'a}nos},
 title =	       {Entropies Old and New (and Both New and Old) and Their Characterizations},
-booktitle =    {\citein{ericksonetal2004}},
-pages =	       {119--126},
+journal =      aipcp,
 year =	       {2004},
+volume =       {707},
+pages =	       {119--126},
 keywords =     {maximum entropy}
 }
 
-@InCollection{aczel2004b,
+@Article{aczel2004b,
 author =       {Acz{\'e}l, J{\'a}nos},
 title =	       {The Associativity Equation Re-Revisited},
-booktitle =    {\citein{ericksonetal2004}},
+journal =      aipcp,
+year =	       {2004},
+volume =       {707},
 pages =	       {195--203},
-year =	       {2004}
+keywords =     {Probability theory, Cox's theorem}
 }
 
 @InCollection{aczel2006,
@@ -1492,16 +1485,6 @@ volume =       {34},
 number =       {38},
 pages =	       {7733--7737},
 keywords =     {thermodynamics, statistical mechanics}
-}
-
-@Proceedings{adenieretal2006,
-title =	       {Quantum Theory: Reconsideratioin of Foundations -- 3: V{\"a}xj{\"o}, Sweden, 6--11 June 2005},
-year =	       {2006},
-editor =       {Guillaume Adenier and Andrei Y. Khrennikov and Theo M. Nieuwenhuizen},
-volume =       {810},
-series =       {AIP Conference Proceedings},
-address =      {New York},
-publisher =    {American Institute of Physics}
 }
 
 @Article{adhikaryetal1997,
@@ -4130,7 +4113,7 @@ note =	       {\arxiveprint{quant-ph/0312204}}
 @Article{archeretal2014,
 author =       {Archer, Evan W. and K{\"o}ster, Urs and Pillow, Jonathan W. and Macke, Jakob H.},
 title =	       {Low-dimensional models of neural population activity in sensory cortical circuits},
-journal =      anips,
+journal =      nips,
 year =	       {2014},
 volume =       {27},
 pages =	       {343--351},
@@ -5577,6 +5560,15 @@ origdate =     {2001},
 year =	       {2006},
 note =	       {\arxiveprint{gr-qc/0103044}, \url{http://math.ucr.edu/home/baez/einstein/}},
 keywords =     {general relativity}
+}
+
+@InCollection{baezetal2001b,
+author =       {John C. Baez and James Dolan},
+title =	       {From Finite Sets to {Feynman} Diagrams},
+booktitle =    {\citein{engquistetal2001}},
+year =	       {2001},
+pages =	       {29--50},
+keywords =     {ordinal numbers}
 }
 
 @Article{baezetal2014,
@@ -7186,6 +7178,17 @@ pages =	       {120--160},
 keywords =     {geometric algebra, quaternions, exterior differential forms, twisted vectors}
 }
 
+@Article{barnard1989,
+author =       {G. A. Barnard},
+title =	       {Sophisticated Theory and Practice in Quality Improvement},
+journal =      ptrsla,
+year =	       {1989},
+volume =       {327},
+number =       {1596},
+pages =	       {581--589},
+keywords =     {Fechner family density}
+}
+
 @Article{barnardetal1974,
 author =       {G. A. Barnard and A. C. Atkinson and Lai K. Chan and A. P. Dawid and F. Downton and J. Dickey and A. G. Baker and Barndorff-Nielsen, O. and D. R. Cox and Seymour Geisser and David Hinkley and R. R. Hocking and A. S. Young and M. Stone},
 title =	       {Discussion {[}{Cross-Validatory} Choice and Assessment of Statistical Predictions{]}},
@@ -7958,16 +7961,6 @@ journal =      pla,
 year =	       {2000},
 volume =       {275},
 pages =	       {373}
-}
-
-@Book{bassietal2006,
-title =	       {Quantum Mechanics: Are There Quantum Jumps? \emph{Trieste, Italy 5 September 2005} and On the Present Status of Quantum Mechanics \emph{Lo{\v{s}}inj, Croatia 7 -- 9 September 2005}},
-year =	       {2006},
-editor =       {Angelo Bassi and Detlef D{\"u}rr and Tullio Weber and Nino Zangh{\`i}},
-volume =       {844},
-series =       {AIP Conference Proceedings},
-address =      {New York},
-publisher =    {American Institute of Physics}
 }
 
 @Article{basu1958,
@@ -10968,7 +10961,7 @@ address =      {Berlin}
 @Article{bethgeetal2007,
 author =       {Matthias Bethge and Philipp Berens},
 title =	       {Near-Maximum Entropy Models for Binary Neural Representations of Natural Images},
-journal =      anips,
+journal =      nips,
 year =	       {2007},
 volume =       {20},
 pages =	       {97--104}
@@ -11632,10 +11625,9 @@ journal =      jasa,
 year =	       {1962},
 volume =       {57},
 number =       {298},
-pages =	       {269--326},
+pages =	       {269--306},
 keywords =     {likelihood principle, Bayesian probability theory, classical statistics},
-note =	       {With discussion by L. J. Savage, George Barnard, Jerome Cornfield, Irwin Bross, George E. P. Box, I. J. Good, Dennis V. Lindley, C. W. Clunies-Ross, John W. Pratt, Howard Levene, Thomas Goldman, A. P. Dempster, Oscar Kempthorne and Allan Birnbaum. \url{http://www.phil.vt.edu/dmayo/PhilStatistics/ii\%20optional\%20section/Birnbaum,\%20intro\%20\%26\%20discussion/Birnbaum\%201962\%20on\%20the\%20foundations\%20of\%20statistical\%20inference.pdf}},
-mynote =       {See Pratt's example against $p$ values: \quotation{An engineer draws a random sample of electron tubes and measures the plate voltage under certain conditions with a very accurate voltmeter, accurate enough so that measurement error is negligible compared with the variability of the tubes. A statistician examines the measurements, which look normally distributed and vary from 75 to 99 volts with a mean of 87 and a standard deviation of 4. He makes the ordinary normal analysis, giving a confidence interval for the true mean. Later he visits the engineer's laboratory, and notices that the volt meter used reads only as far as 100, so the population appears to be "censored." This necessitates a new analysis, if the statistician is orthodox. However, the engineer says he has another meter, equally accurate and reading to 1000 volts, which he would have used if any voltage had been over 100. This is a relief to the orthodox statistician, because it means the population was effectively uncensored after all. But the next day the engineer telephones and says: "I just discovered my high-range volt-meter was not working the day I did the experiment you analyzed for me." The statistician ascertains that the engineer would not have held up the experiment until the meter was fixed, and informs him that a new analysis will be required. The engineer is astounded. He says: "But the experiment turned out just the same as if the high-range meter had been working. I obtained the precise voltages of my sample anyway, so I learned exactly what I would have learned if the high-range meter had been available. Next you'll be asking me about my oscilloscope."\par I agree with the engineer. If the sample has voltages under 100, it doesn't matter whether the upper limit of the meter is 100, 1000, or 1 million. The sample provides the same information in any case. And this is true whether the end-product of the analysis is an evidential interpretation, a working conclusion, a decision, or an action.}}
+note =	       {See also discussion and reply \citebi{savageetal1962}. \url{http://www.phil.vt.edu/dmayo/PhilStatistics/ii\%20optional\%20section/Birnbaum,\%20intro\%20\%26\%20discussion/Birnbaum\%201962\%20on\%20the\%20foundations\%20of\%20statistical\%20inference.pdf}}
 }
 
 @Book{biro2011,
@@ -25525,6 +25517,14 @@ note =	       {\url{http://www.renyi.hu/~csiszar/}},
 keywords =     {Sanov property, maximum entropy}
 }
 
+@Misc{cuberoetal2018,
+author =       {Ryan John Abat Cubero and Matteo Marsili and Yasser Roudi},
+title =	       {Finding informative neurons in the brain using Multi-Scale Relevance},
+year =	       {2018},
+note =	       {\biorxiveprint{2018/05/09/316190}},
+keywords =     {Shannon entropy}
+}
+
 @Article{cubittetal2008,
 author =       {T. S. Cubitt and J. I. Cirac},
 title =	       {Engineering Correlation and Entanglement Dynamics in Spin Systems},
@@ -25546,17 +25546,14 @@ note =	       {\url{http://www.cs.cmu.edu/afs/cs/user/bhiksha/WWW/courses/deeple
 keywords =     {Bayesian probability theory, deep learning}
 }
 
-@InProceedings{cugliandolo1999,
+@Article{cugliandolo1999,
 author =       {Leticia F. Cugliandolo},
 title =	       {Effective temperatures out of equilibrium},
-booktitle =    {Trends in Theoretical Physics II},
-pages =	       {238--248},
+journal =      aipcp,
 year =	       {1999},
-editor =       {Falomir, Horacio and Gamboa Saravi, Ricardo E. and Schaposnik, Fidel A.},
 volume =       {484},
-series =       {AIP Conference Proceedings},
-address =      {Berlin},
-publisher =    {Springer}
+pages =	       {238--248},
+keywords =     {thermodynamics, statistical mechanics}
 }
 
 @Article{cugliandoloetal1993,
@@ -26703,12 +26700,14 @@ pages =	       {379--397},
 keywords =     {Bohmian mechanics, POVM, statistical models, measurement, quantum mechanics}
 }
 
-@InCollection{daumeretal2006,
+@Article{daumeretal2006,
 author =       {Martin Daumer and Detlef D{\"u}rr and Sheldon Goldstein and Tim Maudlin and Roderich Tumulka and Nino Zangh{\`i}},
 title =	       {The Message of the Quantum?},
-booktitle =    {\citein{bassietal2006}},
+journal =      aipcp,
+year =	       {2006},
+volume =       {844},
 pages =	       {129--132},
-year =	       {2006}
+keywords =     {Bohmian mechanics, Bell inequalities}
 }
 
 @Article{dauxois2008,
@@ -27790,6 +27789,17 @@ year =	       {2005},
 volume =       {318},
 number =       {1},
 pages =	       {37--80}
+}
+
+@Article{decelleetal2016,
+author =       {Aur{\'e}lien Decelle and Ricci-Tersenghi, Federico},
+title =	       {Solving the inverse {Ising} problem by mean-field methods in a clustered phase space with many states},
+journal =      pre,
+year =	       {2016},
+volume =       {94},
+number =       {1},
+pages =	       {012112},
+keywords =     {maximum-entropy, Boltzmann machines, Boltzmann learning}
 }
 
 @Article{dedominicis1976,
@@ -29129,7 +29139,7 @@ mynote =       {\enquote{We emphasize that rule extraction is a rather slippery 
 @Article{denkeretal1990,
 author =       {John S. Denker and Yann leCun},
 title =	       {Transforming Neural-Net Output Levels to Probability Distributions},
-journal =      anips,
+journal =      nips,
 year =	       {1990},
 volume =       {3},
 number =       {853--859},
@@ -35376,14 +35386,6 @@ series =       {Interscience monographs and texts in physics and astronomy},
 address =      {New York}
 }
 
-@InCollection{emch2004,
-author =       {Emch, G{\'e}rard G.},
-title =	       {Not What Models Are, But What Models Do},
-booktitle =    {\citein{khrennikov2005}},
-pages =	       {76--86},
-year =	       {2005}
-}
-
 @Article{emch2005,
 author =       {Emch, G{\'e}rard G.},
 title =	       {Probabilistic issues in statistical mechanics},
@@ -35392,6 +35394,16 @@ year =	       {2005},
 volume =       {36},
 number =       {2},
 pages =	       {303--322}
+}
+
+@Article{emch2005b,
+author =       {Emch, G{\'e}rard G.},
+title =	       {Not What Models Are, But What Models Do},
+journal =      aipcp,
+year =	       {2005},
+volume =       {750},
+pages =	       {76--86},
+keywords =     {statistical models}
 }
 
 @Article{emchetal1968,
@@ -35537,6 +35549,15 @@ number =       {10},
 pages =	       {1045--1056},
 keywords =     {quantum mechanics},
 note =	       {See also \citebi{schwingeretal1988,scullyetal1989b}}
+}
+
+@Book{engquistetal2001,
+editor =       {Bj{\"o}rn Engquist and Wilfried Schmid},
+title =	       {Mathematics Unlimited -- 2001 and Beyond},
+publisher =    {Springer},
+year =	       {2001},
+address =      {Berlin},
+keywords =     {continuum mechanics, Feynman diagrams, number theory, ordinal numbers}
 }
 
 @Article{enjalranetal2004,
@@ -35858,16 +35879,6 @@ volume =       {98},
 series =       {Fundamental theories of physics},
 year =	       {1998},
 address =      {Dordrecht}
-}
-
-@Proceedings{ericksonetal2004,
-title =	       {Bayesian Inference and Maximum Entropy Methods in Science and Engineering: 23rd International Workshop},
-year =	       {2004},
-editor =       {Erickson, Gary and Zhai, Yuxiang},
-volume =       {707},
-series =       {AIP Conference Proceedings},
-address =      {Berlin},
-publisher =    {Springer}
 }
 
 @Article{ericson1969,
@@ -41047,16 +41058,6 @@ number =       {8},
 pages =	       {2347--2350}
 }
 
-@Proceedings{fry2002,
-title =	       {Bayesian Inference and Maximum Entropy Methods in Science and Engineering: 21st International Workshop},
-year =	       {2002},
-editor =       {Fry, Robert L.},
-volume =       {617},
-series =       {AIP Conference Proceedings},
-address =      {Berlin},
-publisher =    {Springer}
-}
-
 @Misc{fuchs2001,
 author =       {Fuchs, Christopher A.},
 title =	       {Quantum foundations in the light of quantum information},
@@ -41185,12 +41186,13 @@ pages =	       {062305},
 keywords =     {exchangeability}
 }
 
-@InCollection{fuchsetal2009,
+@Article{fuchsetal2009,
 author =       {Christopher A. Fuchs and R{\"u}diger Schack},
 title =	       {Priors in Quantum {Bayesian} Inference},
-booktitle =    {\citein{accardietal2009}},
-pages =	       {255--259},
+journal =      aipcp,
 year =	       {2009},
+volume =       {1101},
+pages =	       {255--259},
 keywords =     {quantum mechanics, Bayesian probability theory}
 }
 
@@ -42080,6 +42082,17 @@ edition =      {2},
 keywords =     {general relativity, continuum thermomechanics},
 origdate =     {1981},
 note =	       {First publ.\ 1981}
+}
+
+@Article{galton1886,
+author =       {Francis Galton},
+title =	       {Regression Towards Mediocrity in Hereditary Stature},
+journal =      jaigbi,
+year =	       {1886},
+volume =       {15},
+pages =	       {246--263},
+note =	       {\url{http://galton.org/essays/1880-1889/galton-1886-jaigi-regression-stature.pdf}},
+keywords =     {probability theory}
 }
 
 @Misc{galvagnoetal2004,
@@ -43186,7 +43199,7 @@ address =      {Cambridge}
 @Article{gerwinnetal2009,
 author =       {Sebastian Gerwinn and Philipp Berens and Matthias Bethge},
 title =	       {A joint maximum-entropy model for binary neural population patterns and continuous signals},
-journal =      anips,
+journal =      nips,
 year =	       {2009},
 volume =       {22},
 pages =	       {620--628}
@@ -43622,6 +43635,18 @@ number =       {6},
 pages =	       {1458--1464},
 keywords =     {variational Bayes},
 note =	       {\url{http://www.inference.phy.cam.ac.uk/mackay/abstracts/vgc.html}}
+}
+
+@Article{gibbsetal2002,
+author =       {Alison L. Gibbs and Francis Edward Su},
+title =	       {On Choosing and Bounding Probability Metrics},
+journal =      isr,
+year =	       {2002},
+volume =       {70},
+number =       {3},
+pages =	       {419--435},
+keywords =     {Kullback-Leibler divergence, information discrimination, entropy, Hellinger distance, probability theory},
+note = 	       {\url{https://www.math.hmc.edu/~su/papers.dir/metrics.pdf}}
 }
 
 @Article{gibson1991,
@@ -46801,29 +46826,31 @@ volume =       {568},
 pages =	       {83--93}
 }
 
-@InCollection{grendaretal2002,
+@Article{grendaretal2002,
 author =       {Grend{\'a}r, Jr., Marian and Marian Grend{\'a}r},
 title =	       {Why Maximum Entropy? {A} Non-axiomatic Approach},
-booktitle =    {\citein{fry2002}},
-pages =	       {375--379},
+journal =      aipcp,
 year =	       {2002},
-keywords =     {probability theory}
+volume =       {617},
+pages =	       {375--379}
 }
 
-@InCollection{grendaretal2003,
+@Article{grendaretal2004,
 author =       {Grend{\'a}r, Jr., Marian and Marian Grend{\'a}r},
 title =	       {Maximum Probability and Maximum Entropy methods: {Bayesian} interpretation},
-booktitle =    {\citein{ericksonetal2004}},
-pages =	       {490--494},
-year =	       {2004}
+journal =      aipcp,
+year =	       {2004},
+volume =       {707},
+pages =	       {490--494}
 }
 
-@InCollection{grendaretal2003b,
+@Article{grendaretal2004b,
 author =       {Grend{\'a}r, Jr., Marian and Marian Grend{\'a}r},
 title =	       {Maximum Entropy method with non-linear moment constraints: challenges},
-booktitle =    {\citein{ericksonetal2004}},
-pages =	       {97--109},
-year =	       {2004}
+journal =      aipcp,
+year =	       {2004},
+volume =       {707},
+pages =	       {97--109}
 }
 
 @Book{grevenetal2003,
@@ -48385,6 +48412,29 @@ volume =       {12},
 number =       {3},
 pages =	       {343--358},
 keywords =     {semiclassical theory}
+}
+
+@Article{guy1988,
+author =       {Richard K. Guy},
+title =	       {The Strong Law of Small Numbers},
+journal =      amm,
+year =	       {1988},
+volume =       {95},
+number =       {8},
+pages =	       {697--712},
+keywords =     {sequences},
+note =	       {\url{http://www.maa.org/sites/default/files/pdf/upload_library/22/Ford/Guy697-712.pdf}}
+}
+
+@Article{guy1990,
+author =       {Richard K. Guy},
+title =	       {The Second Strong Law of Small Numbers},
+journal =      mm,
+year =	       {1990},
+volume =       {63},
+number =       {1},
+pages =	       {3--20},
+keywords =     {sequences}
 }
 
 @Article{guz1978,
@@ -52282,7 +52332,7 @@ address =      {New York}
 @Article{hennequinetal2014,
 author =       {Guillaume Hennequin and Laurence Aitchison and M{\'a}t{\'e} Lengyel},
 title =	       {Fast Sampling-Based Inference in Balanced Neuronal Networks},
-journal =      anips,
+journal =      nips,
 year =	       {2014},
 volume =       {27},
 pages =	       {2240--2248}
@@ -56240,7 +56290,7 @@ keywords =     {relativity theory}
 @Article{ihleretal2007,
 author =       {Alexander T. Ihler and Padhraic Smyth},
 title =	       {Learning Time-Intensity Profiles of Human Activity using Non-Parametric {Bayesian} Models},
-journal =      anips,
+journal =      nips,
 year =	       {2007},
 volume =       {19},
 pages =	       {625--632},
@@ -61811,16 +61861,6 @@ year =	       {2004},
 volume =       {10},
 series =       {Mathematical modelling in physics, engineering and cognitive science},
 address =      {V{\"a}xj{\"o}, Sweden}
-}
-
-@Proceedings{khrennikov2005,
-title =	       {Foundations of Probability and Physics -- 3: V{\"a}xj{\"o}, Sweden, 7--12 June 2004},
-year =	       {2005},
-editor =       {Andrei Y. Khrennikov},
-volume =       {750},
-series =       {AIP Conference Proceedings},
-address =      {New York},
-publisher =    {American Institute of Physics}
 }
 
 @Article{kibble1978,
@@ -68586,7 +68626,7 @@ keywords =     {general relativity, initial-value problem}
 @Article{leisinketal2001,
 author =       {Martijn A. R. Leisink and Hilbert J. Kappen},
 title =	       {A Tighter Bound for Graphical Models},
-journal =      anips,
+journal =      nips,
 year =	       {2001},
 volume =       {13},
 pages =	       {266--272},
@@ -68619,7 +68659,7 @@ keywords =     {maximum-entropy, Thouless et al approximation, TAP}
 @Article{leisinketal2002b,
 author =       {Martijn A. R. Leisink and Hilbert J. Kappen},
 title =	       {Means, Correlations and Bounds},
-journal =      anips,
+journal =      nips,
 year =	       {2002},
 volume =       {14},
 pages =	       {455--462},
@@ -73027,7 +73067,7 @@ pages =	       {208102}
 @Article{mackeetal2011b,
 author =       {Jakob H. Macke and Lars Buesing and John P. Cunningham and Byron M. Yu and Krishna V. Shenoy and Maneesh Sahani},
 title =	       {Empirical models of spiking in neural populations},
-journal =      anips,
+journal =      nips,
 year =	       {2011},
 volume =       {24},
 pages =	       {1350--1358}
@@ -81409,6 +81449,18 @@ address =      {New York},
 note =	       {First publ.\ 1979}
 }
 
+@Book{neal1996,
+author =       {Radford M. Neal},
+title =	       {Bayesian Learning for Neural Networks},
+publisher =    {Springer},
+year =	       {1996},
+volume =       {118},
+series =       {Lecture notes in statistics},
+address =      {New York},
+note =	       {\url{https://www.cs.toronto.edu/~radford/bnn.book.html}},
+keywords =     {deep learning, probability theory}
+}
+
 @Article{nebel2004,
 author =       {Markus E. Nebel},
 title =	       {Investigation of the {Bernoulli} model for {RNA} secondary structures},
@@ -81741,7 +81793,7 @@ note =	       {\arxiveprint{physics/0207009}}
 @Article{nemenmanetal2002,
 author =       {Ilya Nemenman and Fariel Shafee and William Bialek},
 title =	       {Entropy and inference, revisited},
-journal =      anips,
+journal =      nips,
 year =	       {2002},
 volume =       {14},
 pages =	       {471--478},
@@ -82271,11 +82323,20 @@ pages =	       {405--430}
 }
 
 @PhdThesis{nielsen1998,
-author =       {M. A. Nielsen},
+author =       {Michael A. Nielsen},
 title =	       {Quantum information theory},
 school =       {University of New Mexico},
 address =      {Albuquerque},
 year =	       {1998}
+}
+
+@Book{nielsen2015,
+author =       {Michael A. Nielsen},
+title =	       {Neural Networks and Deep Learning},
+publisher =    {Determination Press},
+year =	       {2015},
+address =      {San Francisco},
+note =	       {\url{http://neuralnetworksanddeeplearning.com/}}
 }
 
 @Book{nielsenetal2000_r2010,
@@ -82318,12 +82379,11 @@ note =	       {\langgerman{Herausgegeben von Giorgio Colli und Mazzino Montinari
 mynote =       {S{\"a}mtliche Werke: kritische Studienausgabe. 4, Also sprach Zarathustra: I-IV. \begin{quote}\langgerman{nur auf dem Markt wird man mit Ja?\ oder Nein?\ {\"u}berfallen}\end{quote} (I. Von den Fliegen des Marktes)}
 }
 
-@InCollection{nieuwenhuizen2008_r2009,
+@InCollection{nieuwenhuizen2009,
 author =       {Theo M. Nieuwenhuizen},
 title =	       {Where {Bell} went wrong},
 booktitle =    {\citein{accardietal2009}},
 pages =	       {127--133},
-origdate =     {2008},
 year =	       {2009},
 keywords =     {Bell theorem, quantum mechanics, locality}
 }
@@ -84217,7 +84277,7 @@ year =	       {1974},
 volume =       {376},
 series =       {Lecture notes in mathematics},
 address =      {Berlin},
-keywords =     {consistency of Bayes prediction, true hypothesis, Bayesian probability theory}
+keywords =     {consistency of Bayes prediction, true hypothesis, Bayesian probability theory, model comparison, relative entropy, Shannon entropy, Kullback-Leibler divergence}
 }
 
 @Article{ostillietal2013,
@@ -88514,6 +88574,17 @@ series =       {Penguin popular classics},
 address =      {London}
 }
 
+@Article{poggioetal1985,
+author =       {Tomaso Poggio and Vincent Torre and Christof Koch},
+title =	       {Computational vision and regularization theory},
+journal =      nat,
+year =	       {1985},
+volume =       {317},
+number =       {6035},
+pages =	       {314--319},
+keywords =     {model comparison, Bayesian probability theory, smoothing}
+}
+
 @Article{pohletal2005,
 author =       {T. Pohl and T. Pattard and J. M. Rost},
 title =	       {Relaxation to Nonequilibrium in Expanding Ultracold Neutral Plasmas},
@@ -89902,8 +89973,8 @@ keywords =     {general relativity, Galilean relativity}
 }
 
 @Booklet{post1997,
-title =	       {{A History of Physics as an Exercise in Philosophy}},
 author =       {Evert Jan Post},
+title =	       {A History of Physics as an Exercise in Philosophy},
 howpublished = {\url{http://www22.pair.com/csdc/car/carfre56.htm}},
 year =	       {1997},
 keywords =     {quantum mechanics}
@@ -90820,7 +90891,7 @@ keywords =     {truth interpretation}
 @Article{putzkyetal2014,
 author =       {Putzky, Patrick and Franzen, Florian and Bassetto, Giacomo and Macke, Jakob H.},
 title =	       {A {Bayesian} model for identifying hierarchically organised states in neural population activity},
-journal =      anips,
+journal =      nips,
 year =	       {2014},
 volume =       {27},
 pages =	       {3095--3103},
@@ -94652,12 +94723,13 @@ pages =	       {13--16},
 note =	       {See also \citebi{chambers1999}}
 }
 
-@InCollection{romeraetal2002,
+@Article{romeraetal2002,
 author =       {E. Romera and J. C. Angulo and J. S. Dehesa},
 title =	       {Reconstruction of a density from its entropic moments},
-booktitle =    {\citein{fry2002}},
-pages =	       {449--457},
+journal =      aipcp,
 year =	       {2002},
+volume =       {617},
+pages =	       {449--457},
 keywords =     {maximum-entropy principle, Bayesian probability theory}
 }
 
@@ -96957,6 +97029,18 @@ pages =	       {783--801},
 keywords =     {Bayesian probability theory, Shannon entropy, maximum entropy}
 }
 
+@Article{savageetal1962,
+author =       {L. J. Savage and George Barnard and Jerome Cornfield and Irwin Bross and George E. P. Box and I. J. Good and Dennis V. Lindley and C. W. Clunies-Ross and John W. Pratt and Howard Levene and Thomas Goldman and A. P. Dempster and Oscar Kempthorne and Allan Birnbaum},
+title =	       {Discussion {[On} the Foundations of Statistical Inference{]}},
+journal =      jasa,
+year =	       {1962},
+volume =       {57},
+number =       {298},
+pages =	       {307--326},
+note = 	       {See \citebi{birnbaumetal1962}},
+mynote =       {\enquote{An engineer draws a random sample of electron tubes and measures the plate voltage under certain conditions with a very accurate voltmeter, accurate enough so that measurement error is negligible compared with the variability of the tubes. A statistician examines the measurements, which look normally distributed and vary from 75 to 99 volts with a mean of 87 and a standard deviation of 4. He makes the ordinary normal analysis, giving a confidence interval for the true mean. Later he visits the engineer's laboratory, and notices that the volt meter used reads only as far as 100, so the population appears to be "censored." This necessitates a new analysis, if the statistician is orthodox. However, the engineer says he has another meter, equally accurate and reading to 1000 volts, which he would have used if any voltage had been over 100. This is a relief to the orthodox statistician, because it means the population was effectively uncensored after all. But the next day the engineer telephones and says: "I just discovered my high-range volt-meter was not working the day I did the experiment you analyzed for me." The statistician ascertains that the engineer would not have held up the experiment until the meter was fixed, and informs him that a new analysis will be required. The engineer is astounded. He says: "But the experiment turned out just the same as if the high-range meter had been working. I obtained the precise voltages of my sample anyway, so I learned exactly what I would have learned if the high-range meter had been available. Next you'll be asking me about my oscilloscope."\par I agree with the engineer. If the sample has voltages under 100, it doesn't matter whether the upper limit of the meter is 100, 1000, or 1 million. The sample provides the same information in any case. And this is true whether the end-product of the analysis is an evidential interpretation, a working conclusion, a decision, or an action.}, Pratt, pp.~314--315}
+}
+
 @Article{savickas2002,
 author =       {D. Savickas},
 title =	       {Relations between {Newtonian} mechanics, general relativity, and quantum mechanics},
@@ -98854,7 +98938,7 @@ note =	       {\url{http://stockage.univ-brest.fr/~scott/Pubs/Scott_Arbic_2007_J
 @Article{scottetal2012,
 author =       {James Scott and Jonathan W. Pillow},
 title =	       {Fully {Bayesian} inference for neural models with negative-binomial spiking},
-journal =      anips,
+journal =      nips,
 year =	       {2012},
 volume =       {25},
 pages =	       {1907--1915},
@@ -103826,12 +103910,13 @@ pages =	       {247--272},
 year =	       {1984}
 }
 
-@InCollection{stenholm2005,
+@Article{stenholm2006,
 author =       {Stig Stenholm},
 title =	       {When is an Entropy an Entropy?},
-booktitle =    {\citein{adenieretal2006}},
-pages =	       {263--270},
+journal =      aipcp,
 year =	       {2006},
+volume =       {810},
+pages =	       {263--270},
 keywords =     {thermodynamics, statistical mechanics}
 }
 
@@ -107932,6 +108017,17 @@ number =       {2},
 pages =	       {3--56}
 }
 
+@Article{titterington1985,
+author =       {D. M. Titterington},
+title =	       {Common Structure of Smoothing Techniques in Statistics},
+journal =      isr,
+year =	       {1985},
+volume =       {53},
+number =       {2},
+pages =	       {141--170},
+keywords =     {model comparison, Bayesian probability theory, regularization}
+}
+
 @Book{titteringtonetal1985,
 author =       {D. M. Titterington and A. F. M. Smith and U. E. Makov},
 title =        {Statistical Analysis of Finite Mixture Distributions},
@@ -110131,34 +110227,50 @@ note =	       {Transl.\ by Eudo C. Mason. First publ.\ in German 1940; \url{http
 keywords =     {typography}
 }
 
-@InCollection{tsengetal2001,
+@Article{tsengetal2002,
 author =       {Chih-Yuan Tseng and Ariel Caticha},
 title =	       {Yet another resolution of the {Gibbs} paradox: an information theory approach},
-booktitle =    {\citein{fry2002}},
+journal =      aipcp,
+year =	       {2002},
+volume =       {617},
 pages =	       {331--339},
-year =	       {2002}
+keywords =     {thermodynamics, statistical mechanics}
 }
 
-@InCollection{tsengetal2002,
+@Article{tsengetal2003,
 author =       {Chih-Yuan Tseng and Ariel Caticha},
 title =	       {Maximum entropy approach to a mean field theory for fluids},
-booktitle =    {\citein{williams2003}},
+journal =      aipcp,
+year =	       {2003},
+volume =       {659},
 pages =	       {73--91},
-year =	       {2003}
+keywords =     {continuum mechanics, thermodynamics, statistical mechanics}
 }
 
-@Misc{tsengetal2003,
+
+@Misc{tsengetal2003b,
 author =       {Chih-Yuan Tseng and Ariel Caticha},
 title =	       {Maximum entropy approach to the theory of simple fluids},
 year =	       {2003},
 note =	       {\arxiveprint{cond-mat/0310746}}
 }
 
-@Misc{tsengetal2004,
+@Misc{tsengetal2004_r2007,
 author =       {Chih-Yuan Tseng and Ariel Caticha},
 title =	       {Maximum Entropy and the Variational Method in Statistical Mechanics: an Application to Simple Fluids},
+year =	       {2007},
+note =	       {\arxiveprint{cond-mat/0411625}},
+origdate =     {2004}
+}
+
+@Article{tsengetal2004b,
+author =       {Chih-Yuan Tseng and Ariel Caticha},
+title =	       {Maximum entropy approach to the theory of simple fluids},
+journal =      aipcp,
 year =	       {2004},
-note =	       {\arxiveprint{cond-mat/0411625}}
+volume =       {707},
+pages =	       {17--29},
+keywords =     {continuum mechanics, thermodynamics, statistical mechanics}
 }
 
 @Article{tsengetal2008,
@@ -116184,14 +116296,25 @@ year =	       {1986},
 keywords =     {continuum mechanics}
 }
 
-@Proceedings{williams2003,
-title =	       {Bayesian Inference and Maximum Entropy Methods in Science and Engineering: 22nd International Workshop},
-year =	       {2003},
-editor =       {Williams, C. J.},
-volume =       {659},
-series =       {AIP Conference Proceedings},
-address =      {Berlin},
-publisher =    {Springer}
+@Article{williams1996,
+author =       {Christopher K. I. Williams},
+title =	       {Computing with Infinite Networks},
+journal =      nips,
+year =	       {1996},
+volume =       {9},
+pages =	       {295--301},
+keywords =     {deep learning, model comparison, Bayesian probability theory}
+}
+
+@Article{williams1998,
+author =       {Christopher K. I. Williams},
+title =	       {Computation with infinite neural networks},
+journal =      ncomp,
+year =	       {1998},
+volume =       {10},
+number =       {5},
+pages =	       {1203--1216},
+keywords =     {deep learning, model comparison, Bayesian probability theory}
 }
 
 @PhdThesis{williams2003b,
