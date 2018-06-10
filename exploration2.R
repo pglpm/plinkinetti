@@ -211,14 +211,14 @@ g <- g + geom_line(data=df, aes(x,y3), colour='black', alpha=0.33)
     xlim(1,n+1) + ylim(miny,maxy) +
     theme(aspect.ratio=0.5) +
     labs(x='trial',y='mean',
-         title=paste0('participant ', participant,', stub ',stubbornness))
+         title=paste0('participant #', participant,', divisions = ',nregions))
 g <- g + geom_rect(aes(xmax=n+1-robotwidth,xmin=n+1-2*robotwidth,
                           ymax=maxy,ymin = maxy-iconheight),
                           color=NA, fill=myred, alpha=0.5, stat='identity', position='identity') +
         geom_rect(aes(xmax=n+1-robotwidth,xmin=n+1-2*robotwidth,
                           ymax=maxy*0.99-iconheight,ymin = maxy*0.99-2*iconheight),
                           color=NA, fill=myblue, alpha=0.5)
-pdfname <- paste0(plotsdir,label,'means_',participant,'-stub_',stubbornness,'.pdf')
+pdfname <- paste0(plotsdir,label,'means_partc',participant,'.pdf')
 save_plot(pdfname, g, base_width = 148, base_height=148*0.6, units='mm', dpi = 300)
 #ggsave(pdfname, width = 148, height = 148*0.2, units='mm', dpi = 300)
 dev.off()
@@ -242,14 +242,14 @@ g <- g + #geom_point(data=df, aes(x,y1), colour=myred, alpha=0.33) +
     xlim(1,n+1) + ylim(miny,maxy) +
     theme(aspect.ratio=0.5) +
     labs(x='trial',y='std',
-         title=paste0('participant ', participant,', stub ',stubbornness))
+         title=paste0('participant #', participant,', divisions = ',nregions))
 g <- g + geom_rect(aes(xmax=n+1-robotwidth,xmin=n+1-2*robotwidth,
                           ymax=maxy,ymin = maxy-iconheight),
                           color=NA, fill=myred, alpha=0.5, stat='identity', position='identity') +
         geom_rect(aes(xmax=n+1-robotwidth,xmin=n+1-2*robotwidth,
                           ymax=maxy*0.99-iconheight,ymin = maxy*0.99-2*iconheight),
                           color=NA, fill=myblue, alpha=0.5)
-pdfname <- paste0(plotsdir,label,'stds_',participant,'-stub_',stubbornness,'.pdf')
+pdfname <- paste0(plotsdir,label,'stds_partc',participant,'.pdf')
 save_plot(pdfname, g, base_width = 148, base_height = 148*0.6, units='mm', dpi = 300)
 dev.off()
 ##ggsave(pdfname, width = 148, height = 148*0.6, units='mm', dpi = 300)
@@ -258,7 +258,7 @@ dev.off()
 ## plot histograms for a range of trials
 if(!is.null(trialstoshow)){rangehist <- trialstoshow
 maxhist <- max(c(pdistr,rdistr))
-pdfname <- paste0(plotsdir,label,'histogram_',rangehist[1],'-',rangehist[length(rangehist)],'_',participant,'-stub_',stubbornness,'.pdf')
+pdfname <- paste0(plotsdir,label,'histogram_',rangehist[1],'-',rangehist[length(rangehist)],'_partc',participant,'.pdf')
 pdf(pdfname,width = 148*mmtoin, height = 148*0.6*mmtoin)
 for(j in 1:length(rangehist)){
     i <- rangehist[j]
@@ -286,7 +286,7 @@ g <- g + annotation_raster(person, xmax = N, xmin = N-robotwidth,
               legend.position='none',
               ) +
         labs(x='slot',y='probability',
-             title=paste0('participant ', participant,', stub ',stubbornness,', trial ',i,', overlap ',signif(overlap[i],2),', relentr. ',signif(rentropy[i],2)))
+             title=paste0('participant #', participant,', divisions = ',nregions,', trial ',i,', overlap ',signif(overlap[i],2),', rel-entr. ',signif(rentropy[i],2)))
 g <- g + geom_rect(aes(xmax=N-robotwidth,xmin=N-2*robotwidth,
                           ymax=maxy,ymin = maxy-iconheight),
                           color=NA, fill=myred, alpha=0.5, stat='identity', position='identity') +
