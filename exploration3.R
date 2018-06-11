@@ -96,23 +96,22 @@ distribution <- function(participant, maxtrials=200){matrix(d[d$Participant == p
 ## }
 
 ## This defines h region-wise
-probchangepoint <- function(s,m,n,nregions,params){
-    ##if(s>m | m<0 | s<0){return(NA)}
-    params[choose(floor(nregions*m/(n+1))+1,2)+1+nregions*s/(n+1)]
-}
+## probchangepoint <- function(s,m,n,nregions,params){
+##     ##if(s>m | m<0 | s<0){return(NA)}
+##     params[choose(floor(nregions*m/(n+1))+1,2)+1+nregions*s/(n+1)]
+## }
 
 probchangepoint <- function(s,m,n,nregions,params){
     ##if(s>m | m<0 | s<0){return(NA)}
-    ilogit(sum(unlist(lapply(0:nregions, function(i){lapply(0:i, function(j){params[choose(i+1,2)+1+j]*s^j*m^(i-j)})}))))
+    ilogit(sum(unlist(lapply(0:nregions, function(i){lapply(0:i, function(j){params[choose(i+1,2)+1+j]*((s/n)^j)*((m/n)^(i-j))})}))))
 }
-
 
 ## sequences of means and stds
 allmeans <- function(distrib){distrib %*% (1:N)}
 allstds <- function(distrib){sqrt(distrib %*% (1:N)^2 - allmeans(distrib)^2)}
 
 ## simplified robotdistribution function
-robotdistribution <- function(priorfrequencies,stubbornness,obs,params,nregions=3){
+robotdistribution <- function(priorfrequencies,stubbornness,obs,params,nregions=2){
     n <- length(obs)
 
     ## sequence of cumulative frequencies:
@@ -165,17 +164,18 @@ robotdistribution <- function(priorfrequencies,stubbornness,obs,params,nregions=
 ## minimization of discrepancy between robot and participant
 
 ## Discrepancy between robot's and participant's sequences of distributions
-discrepancy <- function(params,pdistr,obs,nregions=3,maxtrials=200,stubbornness=0.01){
+discrepancy <- function(params,pdistr,obs,nregions=2,maxtrials=200,stubbornness=0.01){
     ##iparams <- ilogit(params) ## convert from (-inf,+inf) to (0,1)
 
     rdistr <- robotdistribution(pdistr[1,],stubbornness,obs,params,nregions)
+    if(anyNA(rdistr)){return(NA)}
 
     ## calculate total discrepancy
     mean(sapply(1:(maxtrials+1),function(i){kld(rdistr[i,],pdistr[i,])}))
 }
 
 ## Algorithm to seek discrepancy minimum
-reducediscrepancy <- function(participant,maxtrials,nregions=3,startpoints=10,seed=999){
+reducediscrepancy <- function(participant,maxtrials,nregions=2,startpoints=10,seed=999){
     set.seed(seed)
     n <- maxtrials
     obs <- observations(participant,n)
@@ -190,13 +190,25 @@ reducediscrepancy <- function(participant,maxtrials,nregions=3,startpoints=10,se
 
     maxval <- Inf
     for(i in 1:startpoints){
-        startpar <- rnorm((nregions^2+nregions)/2,0,100)
+        message("iteration ",i)
+        testNA <- TRUE
+        counti <- 0
+        while(testNA){
+            message('finding acceptable starting point...')
+            startpar <- rnorm(((nregions+1)^2+nregions+1)/2,0,1)
+            testNA <- anyNA(discrepancy(startpar,pdistr,obs,nregions,maxtrials,0.01))
+            counti <- counti + 1
+        }
+        message('found in ',counti, ' trials.')
         optrobot <- optim(startpar,discrepancy,gr=NULL, pdistr=pdistr,obs=obs,nregions=nregions,maxtrials=maxtrials,stubbornness=0.01)
-        if(optrobot$value < maxval){maxval <- optrobot$value
+        if(optrobot$convergence > 0){message("iteration ",i," didn't converge: ",optrobot$convergence)}
+        if(optrobot$convergence == 0 & optrobot$value < maxval){
+            maxval <- optrobot$value
             maxpars <- optrobot$par
-            region <- startpar}
+            region <- startpar
+            details <- optrobot}
     }
-    list(par=maxpars,value=maxval,region=region)}
+    list(par=maxpars,value=maxval,region=region,details=details)}
 
 ## Function to plot the resulting h(s,m) from optimization
 plotminparams <- function(nregions,params,label='',maxtrials=200){
@@ -207,7 +219,7 @@ plotminparams <- function(nregions,params,label='',maxtrials=200){
 	}
 	
 	pmatrix <- sapply(nobs,function(i){sapply(nobs,function(j){probd(i,j,	maxtrials,nregions,params)})})
-	pdf(paste0(plotsdir,label,'optimh.pdf'),width = 148*mmtoin, height = 148*1*mmtoin)
+	png(paste0(plotsdir,label,'optimh.png'))
 	image2D(pmatrix,x=nobs,y=nobs,xlab='m',ylab='s',zlim=c(0,1))
 	dev.off()
 }
@@ -218,7 +230,7 @@ plotminparams <- function(nregions,params,label='',maxtrials=200){
 ## - sequences of overlap, relative entropies, means, stds
 ## - histograms for a selected set of trials
 ## and that outputs the final distributions, rel-entropies, overlaps, means, stds
-comparison <- function(participant,maxtrials=200,trialstoshow=c(1:10, 95:105, 190:200),stubbornness=0.01,label='',params=rep(0.5,6),nregions=3){
+comparison <- function(participant,maxtrials=200,trialstoshow=c(1:10, 95:105, 190:200),stubbornness=0.01,label='',params=rep(0.5,6),nregions=2){
     n <- maxtrials ## number of trials to consider
     
     obs <- observations(participant,n)
@@ -291,7 +303,7 @@ comparison <- function(participant,maxtrials=200,trialstoshow=c(1:10, 95:105, 19
 
 
     ## plot h(s,m)
-    plotminparams(nregions,params,label=paste0(plotsdir,label,'_partc',participant,'.pdf'),maxtrials=maxtrials)
+    plotminparams(nregions,params,label=label,maxtrials=maxtrials)
 
 
 ## plot sequence of means
