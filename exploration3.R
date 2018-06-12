@@ -1,3 +1,4 @@
+## 2418.753    0.454 2418.239 (3, optim)
 ## This code studies the behaviour of a robot based on a piece-wise Johnson-Dirichlet model. The pieces are given by change-points determined with the Adams-MacKay algorithm (adamsetal2007).
 
 ## libraries and colour-blind palette from http://www.sron.nl/~pault/
@@ -52,6 +53,10 @@ lkd <- function(a,b){
     temp <-  b * log(b/a)
     temp[is.nan(temp)] <- 0
     apply(temp,1,sum)}
+jsd <- function(a,b){
+    temp <-  a * log(a/b) + b * log(b/a)
+    temp[is.nan(temp)] <- 0
+    sum(temp)/2}
 
 ## sequence of observations for a participant
 observations <- function(participant, maxtrials=200){c(d[d$Participant==participant & d$Slot.Number==1,'Ball.Position'])[1:maxtrials]}
@@ -103,7 +108,7 @@ distribution <- function(participant, maxtrials=200){matrix(d[d$Participant == p
 
 probchangepoint <- function(s,m,n,nregions,params){
     ##if(s>m | m<0 | s<0){return(NA)}
-    ilogit(sum(unlist(lapply(0:nregions, function(i){lapply(0:i, function(j){params[choose(i+1,2)+1+j]*((s/n)^j)*((m/n)^(i-j))})}))))
+    ilogit(sum(unlist(lapply(0:nregions, function(i){lapply(0:i, function(j){params[choose(i+1,2)+1+j]*(((2*s-n)/n)^j)*(((2*m-n)/n)^(i-j))})}))))
 }
 
 ## sequences of means and stds
@@ -171,13 +176,15 @@ discrepancy <- function(params,pdistr,obs,nregions=2,maxtrials=200,stubbornness=
     if(anyNA(rdistr)){return(NA)}
 
     ## calculate total discrepancy
-    mean(sapply(1:(maxtrials+1),function(i){kld(rdistr[i,],pdistr[i,])}))
+    mean(sapply(1:(maxtrials+1),function(i){jsd(rdistr[i,],pdistr[i,])}))
 }
 
-## Algorithm to seek discrepancy minimum
+## Algorithm to seek discrepancy minimum using optim
+## time for nregions=2: 799.122   0.133 798.936
 reducediscrepancy <- function(participant,maxtrials,nregions=2,startpoints=10,seed=999){
     set.seed(seed)
     n <- maxtrials
+    nparams <- ((nregions+1)^2+nregions+1)/2
     obs <- observations(participant,n)
     tdistr <- distribution(participant,n)
 
@@ -189,24 +196,71 @@ reducediscrepancy <- function(participant,maxtrials,nregions=2,startpoints=10,se
     pdistr <- t(sapply(1:(n+1),function(i){mini[i,]/sum(mini[i,])}))
 
     maxval <- Inf
+    maxpars <- NA
+    region <- NA
     for(i in 1:startpoints){
         message("iteration ",i)
         testNA <- TRUE
         counti <- 0
         while(testNA){
-            message('finding acceptable starting point...')
-            startpar <- rnorm(((nregions+1)^2+nregions+1)/2,0,1)
+            message('looking for acceptable starting point...')
+            startpar <- rnorm(nparams,0,1/sqrt(nparams))
             testNA <- anyNA(discrepancy(startpar,pdistr,obs,nregions,maxtrials,0.01))
             counti <- counti + 1
         }
         message('found in ',counti, ' trials.')
-        optrobot <- optim(startpar,discrepancy,gr=NULL, pdistr=pdistr,obs=obs,nregions=nregions,maxtrials=maxtrials,stubbornness=0.01)
-        if(optrobot$convergence > 0){message("iteration ",i," didn't converge: ",optrobot$convergence)}
+        optrobot <- optim(startpar,discrepancy,gr=NULL, pdistr=pdistr,obs=obs,nregions=nregions,maxtrials=maxtrials,stubbornness=0.01,control=list(maxit=2500))
+        if(optrobot$convergence > 0){message("iteration ",i," didn't converge: ",optrobot$convergence)
+        details <- optrobot}
         if(optrobot$convergence == 0 & optrobot$value < maxval){
+            message('iteration ',i,' accepted')
             maxval <- optrobot$value
             maxpars <- optrobot$par
             region <- startpar
             details <- optrobot}
+    }
+    list(par=maxpars,value=maxval,region=region,details=details)}
+
+## Algorithm to seek discrepancy minimum using nlm
+## time for nregions=2: 1107.021    0.101 1106.673
+reducediscrepancynlm <- function(participant,maxtrials,nregions=2,startpoints=10,seed=999){
+    set.seed(seed)
+    n <- maxtrials
+    nparams <- ((nregions+1)^2+nregions+1)/2
+    obs <- observations(participant,n)
+    tdistr <- distribution(participant,n)
+
+    ## sequence of frequency parameters of the JD model. At every "reset"
+    ## we set the first equal to the participant's initial distribution
+    ## plus a value equal to 1/100 of the minimum nonzero value ever
+    ## assigned (to avoid zero probabilities in the robot)
+    mini <- tdistr + min(c(tdistr[tdistr>0]))/1000
+    pdistr <- t(sapply(1:(n+1),function(i){mini[i,]/sum(mini[i,])}))
+
+    maxval <- Inf
+    maxpars <- NA
+    region <- NA
+    for(i in 1:startpoints){
+        message("iteration ",i)
+        testNA <- TRUE
+        counti <- 0
+        while(testNA){
+            message('looking for acceptable starting point...')
+            startpar <- rnorm(nparams,0,1/sqrt(nparams))
+            testNA <- anyNA(discrepancy(startpar,pdistr,obs,nregions,maxtrials,0.01))
+            counti <- counti + 1
+        }
+        message('found in ',counti, ' trials.')
+        optrobot <- nlm(discrepancy,startpar, pdistr=pdistr,obs=obs,nregions=nregions,maxtrials=maxtrials,stubbornness=0.01,iterlim=2500)
+        if(optrobot$code > 3){message("iteration ",i," didn't converge: ",optrobot$code)
+        details <- optrobot}
+        if(optrobot$code <= 3 & optrobot$minimum < maxval){
+            message('iteration ',i,' accepted')
+            maxval <- optrobot$minimum
+            maxpars <- optrobot$estimate
+            region <- startpar
+            details <- optrobot
+        if(optrobot$code==3){message('warning: may be a local minimum only')}}
     }
     list(par=maxpars,value=maxval,region=region,details=details)}
 
