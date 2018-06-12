@@ -18,7 +18,7 @@ mycolours <- c(myblue, myred, mygreen, myyellow, myredpurple, mypurpleblue, mygr
 palette(mycolours)
 dev.off()
 mmtoin <- 0.0393701
-plotsdir <- './comparisons2/'
+plotsdir <- './comparisons3/'
 
 ## load all data
 dpath = "./_data/"
@@ -106,9 +106,14 @@ distribution <- function(participant, maxtrials=200){matrix(d[d$Participant == p
 ##     params[choose(floor(nregions*m/(n+1))+1,2)+1+nregions*s/(n+1)]
 ## }
 
+## probchangepoint <- function(s,m,n,nregions,params){
+##     ##if(s>m | m<0 | s<0){return(NA)}
+##     ilogit(sum(unlist(lapply(0:nregions, function(i){lapply(0:i, function(j){params[choose(i+1,2)+1+j]*(((2*s-n)/n)^j)*(((2*m-n)/n)^(i-j))})}))))
+## }
+
 probchangepoint <- function(s,m,n,nregions,params){
     ##if(s>m | m<0 | s<0){return(NA)}
-    ilogit(sum(unlist(lapply(0:nregions, function(i){lapply(0:i, function(j){params[choose(i+1,2)+1+j]*(((2*s-n)/n)^j)*(((2*m-n)/n)^(i-j))})}))))
+    ilogit(params[1+(params[3]+sin(params[4])*((2*m-n)/n)+cos(params[4])*((2*s-n)/n)>0)])
 }
 
 ## sequences of means and stds
@@ -176,7 +181,7 @@ discrepancy <- function(params,pdistr,obs,nregions=2,maxtrials=200,stubbornness=
     if(anyNA(rdistr)){return(NA)}
 
     ## calculate total discrepancy
-    mean(sapply(1:(maxtrials+1),function(i){jsd(rdistr[i,],pdistr[i,])}))
+    mean(sapply(1:(maxtrials+1),function(i){kld(rdistr[i,],pdistr[i,])}))
 }
 
 ## Algorithm to seek discrepancy minimum using optim
@@ -185,7 +190,7 @@ discrepancy <- function(params,pdistr,obs,nregions=2,maxtrials=200,stubbornness=
 reducediscrepancy <- function(participant,maxtrials,nregions=2,startpoints=10,seed=999){
     set.seed(seed)
     n <- maxtrials
-    nparams <- ((nregions+1)^2+nregions+1)/2
+    nparams <- 4 ##((nregions+1)^2+nregions+1)/2
     obs <- observations(participant,n)
     tdistr <- distribution(participant,n)
 
@@ -205,7 +210,7 @@ reducediscrepancy <- function(participant,maxtrials,nregions=2,startpoints=10,se
         counti <- 0
         while(testNA){
             message('looking for acceptable starting point...')
-            startpar <- rnorm(nparams,0,1/sqrt(nparams))
+            startpar <- c(rnorm(2,0,1),rnorm(1,0,2),rnorm(1,pi,pi/2))
             testNA <- anyNA(discrepancy(startpar,pdistr,obs,nregions,maxtrials,0.01))
             counti <- counti + 1
         }
@@ -216,9 +221,10 @@ reducediscrepancy <- function(participant,maxtrials,nregions=2,startpoints=10,se
         if(optrobot$convergence == 0 & optrobot$value < maxval){
             message('iteration ',i,' accepted:')
             maxval <- optrobot$value
+            optrobot$par[4] <- (optrobot$par[4]) %% (2*pi)
             maxpars <- optrobot$par
-            message(maxval)
-            message(maxpars)
+            print(maxval)
+            print(maxpars)
             region <- startpar
             details <- optrobot}
     }
