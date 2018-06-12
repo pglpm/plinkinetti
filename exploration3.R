@@ -176,11 +176,12 @@ discrepancy <- function(params,pdistr,obs,nregions=2,maxtrials=200,stubbornness=
     if(anyNA(rdistr)){return(NA)}
 
     ## calculate total discrepancy
-    mean(sapply(1:(maxtrials+1),function(i){jsd(rdistr[i,],pdistr[i,])}))
+    mean(sapply(1:(maxtrials+1),function(i){kld(rdistr[i,],pdistr[i,])}))
 }
 
 ## Algorithm to seek discrepancy minimum using optim
 ## time for nregions=2: 799.122   0.133 798.936
+## time region 1, jsd: 1529.376    0.074 1528.824
 reducediscrepancy <- function(participant,maxtrials,nregions=2,startpoints=10,seed=999){
     set.seed(seed)
     n <- maxtrials
@@ -213,9 +214,11 @@ reducediscrepancy <- function(participant,maxtrials,nregions=2,startpoints=10,se
         if(optrobot$convergence > 0){message("iteration ",i," didn't converge: ",optrobot$convergence)
         details <- optrobot}
         if(optrobot$convergence == 0 & optrobot$value < maxval){
-            message('iteration ',i,' accepted')
+            message('iteration ',i,' accepted:')
             maxval <- optrobot$value
             maxpars <- optrobot$par
+            message(maxval)
+            message(maxpars)
             region <- startpar
             details <- optrobot}
     }
@@ -223,6 +226,7 @@ reducediscrepancy <- function(participant,maxtrials,nregions=2,startpoints=10,se
 
 ## Algorithm to seek discrepancy minimum using nlm
 ## time for nregions=2: 1107.021    0.101 1106.673
+## time region 1, jsd: 1137.590    1.277 1138.407
 reducediscrepancynlm <- function(participant,maxtrials,nregions=2,startpoints=10,seed=999){
     set.seed(seed)
     n <- maxtrials
