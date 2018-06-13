@@ -16,11 +16,9 @@ myredpurple <- '#AA3377'
 mygrey <- '#BBBBBB'
 mycolours <- c(myblue, myred, mygreen, myyellow, myredpurple, mypurpleblue, mygrey, 'black')
 palette(mycolours)
-barpalette <- colorRampPalette(c(mypurpleblue,'white',myredpurple),space='Lab')
-barpalettepos <- colorRampPalette(c('white','black'),space='Lab')
 dev.off()
 mmtoin <- 0.0393701
-plotsdir <- './comparisons2/'
+plotsdir <- './comparisons3/'
 
 ## load all data
 dpath = "./_data/"
@@ -108,12 +106,14 @@ distribution <- function(participant, maxtrials=200){matrix(d[d$Participant == p
 ##     params[choose(floor(nregions*m/(n+1))+1,2)+1+nregions*s/(n+1)]
 ## }
 
-## note for the case nregions=1:
-## = ilogit(param[1] + m*param[2] + s*param[3]),
-## where m and s range from -1 to 1 inclusive
+## probchangepoint <- function(s,m,n,nregions,params){
+##     ##if(s>m | m<0 | s<0){return(NA)}
+##     ilogit(sum(unlist(lapply(0:nregions, function(i){lapply(0:i, function(j){params[choose(i+1,2)+1+j]*(((2*s-n)/n)^j)*(((2*m-n)/n)^(i-j))})}))))
+## }
+
 probchangepoint <- function(s,m,n,nregions,params){
     ##if(s>m | m<0 | s<0){return(NA)}
-    ilogit(sum(unlist(lapply(0:nregions, function(i){lapply(0:i, function(j){params[choose(i+1,2)+1+j]*(((2*s-n)/n)^j)*(((2*m-n)/n)^(i-j))})}))))
+    ilogit(params[1+(params[3]+sin(params[4])*((2*m-n)/n)+cos(params[4])*((2*s-n)/n)>0)])
 }
 
 ## sequences of means and stds
@@ -190,14 +190,13 @@ discrepancy <- function(params,pdistr,obs,nregions=2,maxtrials=200,stubbornness=
 reducediscrepancy <- function(participant,maxtrials,nregions=2,startpoints=10,seed=999){
     set.seed(seed)
     n <- maxtrials
-    nparams <- ((nregions+1)^2+nregions+1)/2
+    nparams <- 4 ##((nregions+1)^2+nregions+1)/2
     obs <- observations(participant,n)
     tdistr <- distribution(participant,n)
 
-    ## sequence of frequency parameters of the JD model. At every "reset"
-    ## we set the first equal to the participant's initial distribution
-    ## plus a value equal to 1/100 of the minimum nonzero value ever
-    ## assigned (to avoid zero probabilities in the robot)
+    ## we modify the participant's distributions adding plus a value equal
+    ## to 1/100 of the minimum nonzero value ever assigned (to avoid zero
+    ## probabilities in the robot)
     mini <- tdistr + min(c(tdistr[tdistr>0]))/1000
     pdistr <- t(sapply(1:(n+1),function(i){mini[i,]/sum(mini[i,])}))
 
@@ -210,7 +209,7 @@ reducediscrepancy <- function(participant,maxtrials,nregions=2,startpoints=10,se
         counti <- 0
         while(testNA){
             message('looking for acceptable starting point...')
-            startpar <- rnorm(nparams,0,1/sqrt(nparams))
+            startpar <- c(rnorm(2,0,1),rnorm(1,0,2),rnorm(1,pi,pi/2))
             testNA <- anyNA(discrepancy(startpar,pdistr,obs,nregions,maxtrials,0.01))
             counti <- counti + 1
         }
@@ -221,9 +220,10 @@ reducediscrepancy <- function(participant,maxtrials,nregions=2,startpoints=10,se
         if(optrobot$convergence == 0 & optrobot$value < maxval){
             message('iteration ',i,' accepted:')
             maxval <- optrobot$value
+            optrobot$par[4] <- (optrobot$par[4]) %% (2*pi)
             maxpars <- optrobot$par
-            message(maxval)
-            message(maxpars)
+            print(maxval)
+            print(maxpars)
             region <- startpar
             details <- optrobot}
     }
@@ -309,8 +309,10 @@ comparison <- function(participant,maxtrials=200,trialstoshow=c(1:10, 95:105, 19
     rdistr <- robotdistribution(pdistr[1,],stubbornness,obs,params,nregions)
 
     ## calculate the overlap and relative entropy of the participant's distr.
-    jsseq <- sapply(1:(maxtrials+1),function(i){jsd(rdistr[i,],pdistr[i,])})
-    klseq <- sapply(1:(maxtrials+1),function(i){kld(rdistr[i,],pdistr[i,])})
+    temp <-  rdistr * log(rdistr/pdistr)
+    temp[is.nan(temp)] <- 0
+    rentropy <- apply(temp,1,sum)
+    overlap <- diag(rdistr %*% t(pdistr))
 
     ## sequence of means and stds
     meanperson <- allmeans(pdistr)
@@ -348,32 +350,19 @@ comparison <- function(participant,maxtrials=200,trialstoshow=c(1:10, 95:105, 19
 ## save_plot(pdfname, g, base_width = 148, base_height = 148*0.6, units='mm', dpi = 300)
 ## dev.off()
 
-## plot the relative entropy and Jansen-Shannon
-df <- data.frame(x=1:(n+1), y=klseq)
-g <- ggplot() + theme_classic() 
-g <- g + #geom_point(data=df, aes(x,y), colour=myyellow) +
-    geom_line(data=df, aes(x,y), colour=myyellow) +
-    xlim(1,n+1) +
-    theme(aspect.ratio=0.5) +
-    labs(x='observation',y='relative entropy',
-         title=paste0('participant ', participant))
-pdfname <- paste0(plotsdir,'rentropy_',participant,'.pdf')
-save_plot(pdfname, g, base_width = 148, base_height = 148*0.6, units='mm', dpi = 300)
-dev.off()
-
-    ## plot the relative entropy and Jansen-Shannon
-df <- data.frame(x=1:(n+1), y=jsseq)
-g <- ggplot() + theme_classic() 
-g <- g + #geom_point(data=df, aes(x,y), colour=myyellow) +
-    geom_line(data=df, aes(x,y), colour=mygreen) +
-    xlim(1,n+1) +
-    theme(aspect.ratio=0.5) +
-    labs(x='observation',y='Jansen-Shannon',
-         title=paste0('participant ', participant))
-pdfname <- paste0(plotsdir,'jsdiscr_',participant,'.pdf')
-save_plot(pdfname, g, base_width = 148, base_height = 148*0.6, units='mm', dpi = 300)
-dev.off()
-##ggsave(pdfname, width = 148, height = 148*0.6, units='mm', dpi = 300)
+## ## plot the relative entropy
+## df <- data.frame(x=1:(n+1), y=rentropy)
+## g <- ggplot() + theme_classic() 
+## g <- g + #geom_point(data=df, aes(x,y), colour=myyellow) +
+##     geom_line(data=df, aes(x,y), colour=myyellow) +
+##     xlim(1,n+1) +
+##     theme(aspect.ratio=0.5) +
+##     labs(x='trial',y='relative entropy',
+##          title=paste0('participant ', participant,', stub ',stubbornness))
+## pdfname <- paste0(plotsdir,'rentropy_',participant,'-stub_',stubbornness,'.pdf')
+## save_plot(pdfname, g, base_width = 148, base_height = 148*0.6, units='mm', dpi = 300)
+## dev.off()
+## ##ggsave(pdfname, width = 148, height = 148*0.6, units='mm', dpi = 300)
 
 
     ## plot h(s,m)
@@ -399,8 +388,8 @@ g <- g + geom_line(data=df, aes(x,y3), colour='black', alpha=0.33)
     geom_line(data=df, aes(x,y2), colour=myblue, alpha=0.75) +
     xlim(1,n+1) + ylim(miny,maxy) +
     theme(aspect.ratio=0.5) +
-    labs(x='observation',y='mean',
-         title=paste0('participant #', participant))
+    labs(x='trial',y='mean',
+         title=paste0('participant #', participant,', divisions = ',nregions))
 g <- g + geom_rect(aes(xmax=n+1-robotwidth,xmin=n+1-2*robotwidth,
                           ymax=maxy,ymin = maxy-iconheight),
                           color=NA, fill=myred, alpha=0.5, stat='identity', position='identity') +
@@ -430,8 +419,8 @@ g <- g + #geom_point(data=df, aes(x,y1), colour=myred, alpha=0.33) +
     geom_line(data=df, aes(x,y2), colour=myblue, alpha=0.75) +
     xlim(1,n+1) + ylim(miny,maxy) +
     theme(aspect.ratio=0.5) +
-    labs(x='observation',y='std',
-         title=paste0('participant #', participant))
+    labs(x='trial',y='std',
+         title=paste0('participant #', participant,', divisions = ',nregions))
 g <- g + geom_rect(aes(xmax=n+1-robotwidth,xmin=n+1-2*robotwidth,
                           ymax=maxy,ymin = maxy-iconheight),
                           color=NA, fill=myred, alpha=0.5, stat='identity', position='identity') +
@@ -475,7 +464,7 @@ g <- g + annotation_raster(person, xmax = N, xmin = N-robotwidth,
               legend.position='none',
               ) +
         labs(x='slot',y='probability',
-             title=paste0('participant #', participant,', degree = ',nregions,', observation ',i,', J-S ',signif(jsseq[i],2),', rel-entr. ',signif(klseq[i],2)))
+             title=paste0('participant #', participant,', divisions = ',nregions,', trial ',i,', overlap ',signif(overlap[i],2),', rel-entr. ',signif(rentropy[i],2)))
 g <- g + geom_rect(aes(xmax=N-robotwidth,xmin=N-2*robotwidth,
                           ymax=maxy,ymin = maxy-iconheight),
                           color=NA, fill=myred, alpha=0.5, stat='identity', position='identity') +
@@ -486,58 +475,6 @@ print(g)
 }
 dev.off()}
 
-    return(list(distr=pdistr,robotdistr=rdistr,rentropy=klseq,js=jsseq,meanperson=meanperson,meanrobot=meanrobot,stdperson=stdperson,stdrobot=stdrobot))
+    return(list(distr=pdistr,robotdistr=rdistr,rentropy=rentropy,overlap=overlap,meanperson=meanperson,meanrobot=meanrobot,stdperson=stdperson,stdrobot=stdrobot))
 }
-
-
-
-### function to calculate discrepancy on cubic grid
-### time: ca 22000 s for grid of side 25
-arraydiscrepancy <- function(participant,border=1e-6,gridpoints=11,label='',maxtrials=200,stubbornness=0.01){
-    n <- maxtrials
-    nparams <- 3 ##((nregions+1)^2+nregions+1)/2
-    obs <- observations(participant,n)
-    tdistr <- distribution(participant,n)
-    ## we modify the participant's distributions adding plus a value equal
-    ## to 1/100 of the minimum nonzero value ever assigned (to avoid zero
-    ## probabilities in the robot)
-    mini <- tdistr + min(c(tdistr[tdistr>0]))/1000
-    pdistr <- t(sapply(1:(n+1),function(i){mini[i,]/sum(mini[i,])}))
-
-    vpoints <- seq(border,1-border,length.out=gridpoints)
-    tarray <- sapply(vpoints,function(k){sapply(vpoints,function(j){sapply(vpoints,function(i){
-        discrepancy(logit(c(k, ## constant, 3rd array dim.
-                            j, ## m coeff., columns
-                            i)), ## s coeff., rows
-                    pdistr,obs,nregions=1,maxtrials=maxtrials,stubbornness=stubbornness)})})})
-    dim(tarray) <- rep(gridpoints,3)
-
-    mint <- min(tarray[])
-    maxt <- max(tarray[])
-
-    pdf(paste0(plotsdir,label,'_discrepancy.pdf'))
-    for(i in 1:gridpoints){
-        image2D(tarray[,,i],zlim=c(mint,maxt),col=barpalettepos(50),
-                NAcol=myred,
-                x=vpoints,
-                y=vpoints,
-                xlab='invlogit(m coeff)',ylab='invlogit(s coeff)')
-                title(paste0('intercept = ',logit(vpoints[i])))}
-    dev.off()
-    tarray}
-## to know which dimension is which, check this:
-## a <- sapply(1:2,function(k){sapply(1:3,function(j){sapply(1:4,function(i){i})})});dim(a) <- c(4,3,2);a
-## , , 1
-##      [,1] [,2] [,3]
-## [1,]    1    1    1
-## [2,]    2    2    2
-## [3,]    3    3    3
-## [4,]    4    4    4
-##
-## , , 2
-##      [,1] [,2] [,3]
-## [1,]    1    1    1
-## [2,]    2    2    2
-## [3,]    3    3    3
-## [4,]    4    4    4
 

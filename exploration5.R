@@ -7,6 +7,7 @@ library('RColorBrewer')
 library('cowplot')
 library('png')
 library('plot3D')
+library('dfoptim')
 mypurpleblue <- '#4477AA'
 myblue <- '#66CCEE'
 mygreen <- '#228833'
@@ -20,7 +21,7 @@ barpalette <- colorRampPalette(c(mypurpleblue,'white',myredpurple),space='Lab')
 barpalettepos <- colorRampPalette(c('white','black'),space='Lab')
 dev.off()
 mmtoin <- 0.0393701
-plotsdir <- './comparisons2/'
+plotsdir <- './comparisons5/'
 
 ## load all data
 dpath = "./_data/"
@@ -111,9 +112,14 @@ distribution <- function(participant, maxtrials=200){matrix(d[d$Participant == p
 ## note for the case nregions=1:
 ## = ilogit(param[1] + m*param[2] + s*param[3]),
 ## where m and s range from -1 to 1 inclusive
+## probchangepoint <- function(s,m,n,nregions,params){
+##     ##if(s>m | m<0 | s<0){return(NA)}
+##     ilogit(sum(unlist(lapply(0:nregions, function(i){lapply(0:i, function(j){params[choose(i+1,2)+1+j]*(((2*s-n)/n)^j)*(((2*m-n)/n)^(i-j))})}))))
+## }
+
 probchangepoint <- function(s,m,n,nregions,params){
     ##if(s>m | m<0 | s<0){return(NA)}
-    ilogit(sum(unlist(lapply(0:nregions, function(i){lapply(0:i, function(j){params[choose(i+1,2)+1+j]*(((2*s-n)/n)^j)*(((2*m-n)/n)^(i-j))})}))))
+    ilogit(params[1] + params[2]*(2*m-n)/n + params[3]*(2*s-n)/n)
 }
 
 ## sequences of means and stds
@@ -184,9 +190,19 @@ discrepancy <- function(params,pdistr,obs,nregions=2,maxtrials=200,stubbornness=
     mean(sapply(1:(maxtrials+1),function(i){jsd(rdistr[i,],pdistr[i,])}))
 }
 
+regularizedistr <- function(tdistr,n=200){
+    if(length(tdistr)==1){tdistr <- distribution(tdistr,n)}
+    ## we set the distributions plus a value equal to 1/100 of the minimum
+    ## nonzero value ever assigned
+    mini <- tdistr + min(c(tdistr[tdistr>0]))/1000
+    pdistr <- t(sapply(1:(n+1),function(i){mini[i,]/sum(mini[i,])}))
+    pdistr}
+
 ## Algorithm to seek discrepancy minimum using optim
-## time for nregions=2: 799.122   0.133 798.936
-## time region 1, jsd: 1529.376    0.074 1528.824
+## max + kl: 600
+## max + js: 500
+## mean + kl: 370
+## mean + js: 360
 reducediscrepancy <- function(participant,maxtrials,nregions=2,startpoints=10,seed=999){
     set.seed(seed)
     n <- maxtrials
@@ -222,8 +238,8 @@ reducediscrepancy <- function(participant,maxtrials,nregions=2,startpoints=10,se
             message('iteration ',i,' accepted:')
             maxval <- optrobot$value
             maxpars <- optrobot$par
-            message(maxval)
-            message(maxpars)
+            print(maxval)
+            print(maxpars)
             region <- startpar
             details <- optrobot}
     }
@@ -232,7 +248,7 @@ reducediscrepancy <- function(participant,maxtrials,nregions=2,startpoints=10,se
 ## Algorithm to seek discrepancy minimum using nlm
 ## time for nregions=2: 1107.021    0.101 1106.673
 ## time region 1, jsd: 1137.590    1.277 1138.407
-reducediscrepancynlm <- function(participant,maxtrials,nregions=2,startpoints=10,seed=999){
+reducediscrepancyhjk <- function(participant,maxtrials,nregions=2,startpoints=10,seed=999){
     set.seed(seed)
     n <- maxtrials
     nparams <- ((nregions+1)^2+nregions+1)/2
@@ -260,16 +276,17 @@ reducediscrepancynlm <- function(participant,maxtrials,nregions=2,startpoints=10
             counti <- counti + 1
         }
         message('found in ',counti, ' trials.')
-        optrobot <- nlm(discrepancy,startpar, pdistr=pdistr,obs=obs,nregions=nregions,maxtrials=maxtrials,stubbornness=0.01,iterlim=2500)
-        if(optrobot$code > 3){message("iteration ",i," didn't converge: ",optrobot$code)
+        optrobot <- hjk(startpar,discrepancy, pdistr=pdistr,obs=obs,nregions=nregions,maxtrials=maxtrials,stubbornness=0.01)##,control=list(maxit=2500))
+        if(optrobot$convergence > 0){message("iteration ",i," didn't converge: ",optrobot$convergence)
         details <- optrobot}
-        if(optrobot$code <= 3 & optrobot$minimum < maxval){
-            message('iteration ',i,' accepted')
-            maxval <- optrobot$minimum
-            maxpars <- optrobot$estimate
+        if(optrobot$convergence == 0 & optrobot$value < maxval){
+            message('iteration ',i,' accepted:')
+            maxval <- optrobot$value
+            maxpars <- optrobot$par
+            print(maxval)
+            print(maxpars)
             region <- startpar
-            details <- optrobot
-        if(optrobot$code==3){message('warning: may be a local minimum only')}}
+            details <- optrobot}
     }
     list(par=maxpars,value=maxval,region=region,details=details)}
 
@@ -282,8 +299,9 @@ plotminparams <- function(nregions,params,label='',maxtrials=200){
 	}
 	
 	pmatrix <- sapply(nobs,function(i){sapply(nobs,function(j){probd(i,j,	maxtrials,nregions,params)})})
-	png(paste0(plotsdir,label,'optimh.png'))
-	image2D(pmatrix,x=nobs,y=nobs,xlab='m',ylab='s',zlim=c(0,1))
+	png(paste0(plotsdir,label,'_optimh.png'))
+	image2D(pmatrix,x=nobs,y=nobs,xlab='m',ylab='s',zlim=c(0,1),
+                col=barpalettepos(25))
 	dev.off()
 }
 
@@ -293,7 +311,7 @@ plotminparams <- function(nregions,params,label='',maxtrials=200){
 ## - sequences of overlap, relative entropies, means, stds
 ## - histograms for a selected set of trials
 ## and that outputs the final distributions, rel-entropies, overlaps, means, stds
-comparison <- function(participant,maxtrials=200,trialstoshow=c(1:10, 95:105, 190:200),stubbornness=0.01,label='',params=rep(0.5,6),nregions=2){
+comparison <- function(participant,maxtrials=200,trialstoshow=c(1:4, 99:102, 197:200),stubbornness=0.01,label='',params=rep(0.5,6),nregions=2){
     n <- maxtrials ## number of trials to consider
     
     obs <- observations(participant,n)
@@ -348,7 +366,7 @@ comparison <- function(participant,maxtrials=200,trialstoshow=c(1:10, 95:105, 19
 ## save_plot(pdfname, g, base_width = 148, base_height = 148*0.6, units='mm', dpi = 300)
 ## dev.off()
 
-## plot the relative entropy and Jansen-Shannon
+## plot the relative entropy
 df <- data.frame(x=1:(n+1), y=klseq)
 g <- ggplot() + theme_classic() 
 g <- g + #geom_point(data=df, aes(x,y), colour=myyellow) +
@@ -357,23 +375,23 @@ g <- g + #geom_point(data=df, aes(x,y), colour=myyellow) +
     theme(aspect.ratio=0.5) +
     labs(x='observation',y='relative entropy',
          title=paste0('participant ', participant))
-pdfname <- paste0(plotsdir,'rentropy_',participant,'.pdf')
+pdfname <- paste0(plotsdir,label,'_rentropy_',participant,'.pdf')
 save_plot(pdfname, g, base_width = 148, base_height = 148*0.6, units='mm', dpi = 300)
 dev.off()
 
-    ## plot the relative entropy and Jansen-Shannon
-df <- data.frame(x=1:(n+1), y=jsseq)
-g <- ggplot() + theme_classic() 
-g <- g + #geom_point(data=df, aes(x,y), colour=myyellow) +
-    geom_line(data=df, aes(x,y), colour=mygreen) +
+    ## plot the Jansen-Shannon
+    df <- data.frame(x=1:(n+1), y=jsseq)
+    g <- ggplot() + theme_classic() 
+    g <- g + #geom_point(data=df, aes(x,y), colour=myyellow) +
+        geom_line(data=df, aes(x,y), colour=mygreen) +
     xlim(1,n+1) +
-    theme(aspect.ratio=0.5) +
-    labs(x='observation',y='Jansen-Shannon',
-         title=paste0('participant ', participant))
-pdfname <- paste0(plotsdir,'jsdiscr_',participant,'.pdf')
-save_plot(pdfname, g, base_width = 148, base_height = 148*0.6, units='mm', dpi = 300)
-dev.off()
-##ggsave(pdfname, width = 148, height = 148*0.6, units='mm', dpi = 300)
+        theme(aspect.ratio=0.5) +
+        labs(x='observation',y='Jansen-Shannon',
+             title=paste0('participant ', participant))
+    pdfname <- paste0(plotsdir,label,'_jsdiscr_',participant,'.pdf')
+    save_plot(pdfname, g, base_width = 148, base_height = 148*0.6, units='mm', dpi = 300)
+    dev.off()
+    ##ggsave(pdfname, width = 148, height = 148*0.6, units='mm', dpi = 300)
 
 
     ## plot h(s,m)
@@ -407,7 +425,7 @@ g <- g + geom_rect(aes(xmax=n+1-robotwidth,xmin=n+1-2*robotwidth,
         geom_rect(aes(xmax=n+1-robotwidth,xmin=n+1-2*robotwidth,
                           ymax=maxy*0.99-iconheight,ymin = maxy*0.99-2*iconheight),
                           color=NA, fill=myblue, alpha=0.5)
-pdfname <- paste0(plotsdir,label,'means_partc',participant,'.pdf')
+pdfname <- paste0(plotsdir,label,'_means_partc',participant,'.pdf')
 save_plot(pdfname, g, base_width = 148, base_height=148*0.6, units='mm', dpi = 300)
 #ggsave(pdfname, width = 148, height = 148*0.2, units='mm', dpi = 300)
 dev.off()
@@ -438,7 +456,7 @@ g <- g + geom_rect(aes(xmax=n+1-robotwidth,xmin=n+1-2*robotwidth,
         geom_rect(aes(xmax=n+1-robotwidth,xmin=n+1-2*robotwidth,
                           ymax=maxy*0.99-iconheight,ymin = maxy*0.99-2*iconheight),
                           color=NA, fill=myblue, alpha=0.5)
-pdfname <- paste0(plotsdir,label,'stds_partc',participant,'.pdf')
+pdfname <- paste0(plotsdir,label,'_stds_partc',participant,'.pdf')
 save_plot(pdfname, g, base_width = 148, base_height = 148*0.6, units='mm', dpi = 300)
 dev.off()
 ##ggsave(pdfname, width = 148, height = 148*0.6, units='mm', dpi = 300)
@@ -447,7 +465,7 @@ dev.off()
 ## plot histograms for a range of trials
 if(!is.null(trialstoshow)){rangehist <- trialstoshow
 maxhist <- max(c(pdistr,rdistr))
-pdfname <- paste0(plotsdir,label,'histogram_',rangehist[1],'-',rangehist[length(rangehist)],'_partc',participant,'.pdf')
+pdfname <- paste0(plotsdir,label,'_histogram_',rangehist[1],'-',rangehist[length(rangehist)],'_partc',participant,'.pdf')
 pdf(pdfname,width = 148*mmtoin, height = 148*0.6*mmtoin)
 for(j in 1:length(rangehist)){
     i <- rangehist[j]
@@ -507,8 +525,8 @@ arraydiscrepancy <- function(participant,border=1e-6,gridpoints=11,label='',maxt
     vpoints <- seq(border,1-border,length.out=gridpoints)
     tarray <- sapply(vpoints,function(k){sapply(vpoints,function(j){sapply(vpoints,function(i){
         discrepancy(logit(c(k, ## constant, 3rd array dim.
-                            j, ## m coeff., columns
-                            i)), ## s coeff., rows
+                            i, ## m coeff., columns
+                            j)), ## s coeff., rows
                     pdistr,obs,nregions=1,maxtrials=maxtrials,stubbornness=stubbornness)})})})
     dim(tarray) <- rep(gridpoints,3)
 
@@ -541,3 +559,27 @@ arraydiscrepancy <- function(participant,border=1e-6,gridpoints=11,label='',maxt
 ## [3,]    3    3    3
 ## [4,]    4    4    4
 
+## testarray <- function(s,m,border=1e-6,gridpoints=11,label=''){
+##     nparams <- 3 ##((nregions+1)^2+nregions+1)/2
+
+##     vpoints <- seq(border,1-border,length.out=gridpoints)
+##     tarray <- sapply(vpoints,function(k){sapply(vpoints,function(j){sapply(vpoints,function(i){
+##         probchangepoint(s,m,200,1,logit(c(k, ## constant, 3rd array dim.
+##                             i, ## m coeff., columns
+##                             j)))})})})
+##     dim(tarray) <- rep(gridpoints,3)
+
+##     mint <- min(tarray[])
+##     maxt <- max(tarray[])
+
+##     pdf(paste0(plotsdir,label,'_discrepancy.pdf'))
+##     for(i in 1:gridpoints){
+##         image2D(tarray[,,i],zlim=c(0,1),col=barpalettepos(50),
+##                 NAcol=myred,
+##                 x=vpoints,
+##                 y=vpoints,
+##                 xlab='invlogit(m coeff)',ylab='invlogit(s coeff)')
+##                 title(paste0('intercept = ',logit(vpoints[i])))}
+##     dev.off()
+##     tarray}
+##  a<-testarray(100,100,1e-6,3,'test')
