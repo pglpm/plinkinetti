@@ -181,7 +181,7 @@ discrepancy <- function(params,pdistr,obs,nregions=2,maxtrials=200,stubbornness=
     if(anyNA(rdistr)){return(NA)}
 
     ## calculate total discrepancy
-    mean(sapply(1:(maxtrials+1),function(i){kld(rdistr[i,],pdistr[i,])}))
+    mean(sapply(1:(maxtrials+1),function(i){jsd(rdistr[i,],pdistr[i,])}))
 }
 
 ## Algorithm to seek discrepancy minimum using optim
@@ -194,10 +194,9 @@ reducediscrepancy <- function(participant,maxtrials,nregions=2,startpoints=10,se
     obs <- observations(participant,n)
     tdistr <- distribution(participant,n)
 
-    ## sequence of frequency parameters of the JD model. At every "reset"
-    ## we set the first equal to the participant's initial distribution
-    ## plus a value equal to 1/100 of the minimum nonzero value ever
-    ## assigned (to avoid zero probabilities in the robot)
+    ## we modify the participant's distributions adding plus a value equal
+    ## to 1/100 of the minimum nonzero value ever assigned (to avoid zero
+    ## probabilities in the robot)
     mini <- tdistr + min(c(tdistr[tdistr>0]))/1000
     pdistr <- t(sapply(1:(n+1),function(i){mini[i,]/sum(mini[i,])}))
 
@@ -478,5 +477,4 @@ dev.off()}
 
     return(list(distr=pdistr,robotdistr=rdistr,rentropy=rentropy,overlap=overlap,meanperson=meanperson,meanrobot=meanrobot,stdperson=stdperson,stdrobot=stdrobot))
 }
-
 
