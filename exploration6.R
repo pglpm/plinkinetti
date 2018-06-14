@@ -21,7 +21,7 @@ barpalette <- colorRampPalette(c(mypurpleblue,'white',myredpurple),space='Lab')
 barpalettepos <- colorRampPalette(c('white','black'),space='Lab')
 dev.off()
 mmtoin <- 0.0393701
-plotsdir <- './comparisons5/'
+plotsdir <- './matches_3_parameters/KL-max/'
 
 ## load all data
 dpath = "./_data/"
@@ -187,7 +187,7 @@ discrepancy <- function(params,pdistr,obs,nregions=1,maxtrials=200,stubbornness=
     if(anyNA(rdistr)){return(NA)}
 
     ## calculate total discrepancy
-    mean(sapply(1:(maxtrials+1),function(i){jsd(rdistr[i,],pdistr[i,])}))
+    max(sapply(1:(maxtrials+1),function(i){kld(rdistr[i,],pdistr[i,])}))
 }
 
 regularizedistr <- function(tdistr,n=200){
@@ -451,7 +451,7 @@ g <- g + scale_color_manual(values=cols) +
     ## plot h function
     nobs <- 0:maxtrials
     probd <- function(s,m,n,nregions,params){
-	if(s>m | m<0 | s<0){return(NA)}
+	if(s>=m | m<0 | s<0){return(NA)}
 	probchangepoint(s,m,n,nregions,params)
     }
     pmatrix <- sapply(nobs,function(i){sapply(nobs,function(j){probd(i,j, maxtrials,nregions,params)})})
@@ -600,4 +600,18 @@ summaryparticipants <- function(participants,label='',seed=999){
         message(' ')
     }
     message('finished')
+}
+
+saveparams <- function(participants,dir,label){
+    setwd(dir)
+    mat <- matrix(NA,length(participants),4)
+    j <- 0
+    for(i in participants){j <- j+1
+        filename <- paste0('summary_p',i,'_',label,'.rds')
+        if(!file.exists(filename)){
+        filename <- paste0('summary_p',i,'_NOTCONVERGED_',label,'.rds')}
+        if(file.exists(filename)){
+        mat[j,] <- c(i,readRDS(filename)$optres$par)
+        }}
+    write.table(mat,paste0('points_',label,'.csv'),sep=',',row.names=F,col.names=F,na='Infinity')
 }
