@@ -1,7 +1,7 @@
 \pdfoutput=1
 %% Author: PGL  Porta Mana, ALS Filipowicz
 %% Created: 2018-04-08T16:54:19+0200
-%% Last-Updated: 2018-06-30T00:32:10+0200
+%% Last-Updated: 2018-06-30T00:49:06+0200
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Report-no: ***
 \newif\ifarxiv
@@ -920,6 +920,11 @@ these distributions is the joint distribution above, and conversely each of
 these distributions can be obtained from the joint one above by
 condizionalization and marginalization.
 
+Our assumptions can have different natures and motivations, for example
+from symmetry, mechanics, biology. As long as they lead to definite
+numerical values for the distribution above, they constitute a statistical
+model.
+
 The term \enquote{statistical model} is not universally used this way,
 though.\footnote{\enquote{The conflict regarding the existence of a or the
     true model, model uncertainty, identification, selection,
@@ -938,7 +943,12 @@ of probability to make numeric probabilistic inferences and update them in
 view of new observations. But to do so it first needs to be fully
 programmed with a complete set of probabilistic assumptions, in the form of
 the joint distribution~\eqref{eq:distr_statmodel} or in another equivalent
-way.
+way. A Bayesian robot is thus equivalent to a statistical model.
+
+In the context described above, the set of possible robots is a simplex of
+$N^m-1$ dimensions, since this is the set of all possible distributions for
+$m$ joint outcomes, each having $N$ possible values. In the case of the
+Plinko experiments it has $40^{200}-1 \approx 3\times10^{320}$ dimensions.
 
 
 
