@@ -1,7 +1,7 @@
 \pdfoutput=1
 %% Author: PGL  Porta Mana, ALS Filipowicz
 %% Created: 2018-04-08T16:54:19+0200
-%% Last-Updated: 2018-05-30T15:17:26+0200
+%% Last-Updated: 2018-06-30T00:32:10+0200
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Report-no: ***
 \newif\ifarxiv
@@ -19,14 +19,14 @@
 onecolumn,oneside,article,%french,italian,german,swedish,latin,
 british%
 ]{memoir}
-\newcommand*{\oggi}{\today}
+\newcommand*{\updated}{\today}
 \newcommand*{\firstdraft}{14 April 2018}
-\newcommand*{\firstpublished}{\oggi}
+\newcommand*{\firstpublished}{\today}
 \newcommand*{\propertitle}{Bayesian Plinko\\{\large Study notes}}
 \newcommand*{\pdftitle}{Bayesian Plinko}
 \newcommand*{\headtitle}{Bayesian Plinko}
 \newcommand*{\pdfauthor}{A. L. S. Filipowicz, P.G.L.  Porta Mana, Y. Roudi,
-  et al.}
+  Britt Anderson, James Danckert}
 \newcommand*{\etal}{{et al.}}
 \newcommand*{\headauthor}{\ifpublic Filipowicz \amp\ Porta Mana%
 \else Alex \etal\fi}
@@ -72,11 +72,12 @@ british%
 % \makeatother
 \usepackage{amsmath}
 \usepackage{mathtools}
+\addtolength{\jot}{\jot} % increase spacing in multiline formulae
 \usepackage{empheq}% automatically calls amsmath and mathtools
 \newcommand*{\widefbox}[1]{\fbox{\hspace{1em}#1\hspace{1em}}}
 \setlength{\multlinegap}{0pt}
 %\usepackage{fancybox}
-\usepackage{framed}
+%\usepackage{framed}
 % \usepackage[misc]{ifsym} % for dice
 % \newcommand*{\diceone}{{\scriptsize\Cube{1}}}
 \usepackage{amssymb}
@@ -581,10 +582,12 @@ P.G.L. Porta\,Mana\\%
 % {\footnotesize\href{https://orcid.org/0000-0002-6070-0784}{\protect\includegraphics[scale=0.16]{orcid_32x32.png}\textsc{orcid}:0000-0002-6070-0784}}%
 %\end{tabular}%
 \hspace*{\stretch{1}}%
-\else Alex, Luca, Yasser, \etal%
+\else Alex, Luca, Yasser, Britt, James%
 \fi}
 
-\date{Draft of \today\ (first drafted \firstdraft)}
+%\date{\firstpublished; updated \updated}
+\date{\firstdraft; updated \updated}
+
 %\date{\firstpublished; updated \oggi}
 
 %@@@@@@@@@@ new macros @@@@@@@@@@
@@ -881,6 +884,65 @@ has been used to characterize many other statistical models, like Markov
 ones for example
 \citep{freedman1962,diaconisetal1980c,zaman1984,fortinietal2002,fortinietal2014}.
 \fi
+
+
+\section{The Bayesian robot}
+\label{sec:bayesian_robot}
+
+A \emph{statistical model} can be defined as a set of assumptions that
+allow us to make all possible numeric probabilistic inferences in the
+context of an experiment or of a sequence of observations. These
+assumptions correspond to -- indeed they're the exact generalization of --
+axioms in propositional logic
+\citep{hailperin1996,hailperin2011,jaynes1994_r2003}. Without axioms we
+can't derive theorems with the logical calculus; without initial
+probabilistic assumptions we can't derive or update probabilities with the
+probability calculus.
+
+Consider this context: a set of $m$ observations $1,2,\dotsc,m$, each of
+which can have $N$ possible outcomes $\set{1,\dotsc,N}$. Denote \enquote{The
+  outcome of the $i$th observation is $d$} by $D^i_d$. In this context,
+choosing a statistical model $M$ is equivalent to choosing the numerical
+values of the joint distribution
+\begin{equation}
+  \label{eq:distr_statmodel}
+  \p( D^m_{d_m}, D^{m-1}_{d_{m-1}}, \dotsc,  D^2_{d_2}, D^1_{d_1} \|  M)
+\end{equation}
+for all combinations of $d_1,\dotsc,d_m \in \set{1,\dotsc,N}$; or to
+choosing any other probabilistic assignments equivalent to this
+distribution. An equivalent alternative, for example, is to assign the
+distribution for the first observation, $\p(D^1_{d_1} \|M)$, the
+distributions for the second observation conditional on the first,
+$\p(D^2_{d_2} \|D^1_{d_1}, M)$, and so on up to the distributions for the
+$m$th observation conditional on the rest,
+$\p(D^m_{d_m} \| D^{m-1}_{d_{m-1}},\dotsc,D^1_{d_1},M)$. The product of
+these distributions is the joint distribution above, and conversely each of
+these distributions can be obtained from the joint one above by
+condizionalization and marginalization.
+
+The term \enquote{statistical model} is not universally used this way,
+though.\footnote{\enquote{The conflict regarding the existence of a or the
+    true model, model uncertainty, identification, selection,
+    misspecification, etc.\ can be resolved if a clear definition of a
+    model is stated. Models have different meanings in different fields.
+    Once a young woman was interviewed for a data handling job in Unilever.
+    She was puzzled by one of the interviewers who asked her whether she
+    had done any modelling. It was found later that to her the question
+    meant whether she had posed for photographs!} J. R. M. Ameen
+  \citep[p.~453]{copasetal1995}.} It often has a more general meaning --
+what we'd call \enquote{classes of statistical models} in our terminology.
+
+To avoid using this ambiguous term, we'll figuratively speak of a
+\emph{Bayesian robot} instead of a model. Such a robot uses the three laws
+of probability to make numeric probabilistic inferences and update them in
+view of new observations. But to do so it first needs to be fully
+programmed with a complete set of probabilistic assumptions, in the form of
+the joint distribution~\eqref{eq:distr_statmodel} or in another equivalent
+way.
+
+
+
+
 
 
 \section{First study: exchangeable-model robot}
