@@ -1,7 +1,7 @@
 \pdfoutput=1
 %% Author: PGL  Porta Mana, ALS Filipowicz
 %% Created: 2018-04-08T16:54:19+0200
-%% Last-Updated: 2018-06-30T01:05:38+0200
+%% Last-Updated: 2018-06-30T16:47:41+0200
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Report-no: ***
 \newif\ifarxiv
@@ -734,7 +734,8 @@ P.G.L. Porta\,Mana\\%
 \newcommand*{\yq}{\bm{\yqq}}
 \newcommand*{\yff}{f}
 \newcommand*{\yf}{\bm{\yff}}
-\newcommand*{\yMJ}{M_{\text{J}}}
+\newcommand*{\yI}{\varIota}
+\newcommand*{\yMJ}{\yI_{\text{J}}}
 \newcommand*{\yN}{\varLambda}
 \newcommand*{\ynn}{\nu}
 \newcommand*{\yn}{\bm{\nu}}
@@ -742,7 +743,6 @@ P.G.L. Porta\,Mana\\%
 \newcommand*{\yTh}{\varTheta}
 \newcommand*{\ymu}{\mu}
 \newcommand*{\yh}{\chi}
-\newcommand*{\yI}{I}
 \newcommand*{\yrs}{h}
 \AtBeginEnvironment{tabularx}{\setlist[enumerate]{wide, leftmargin=*,
     itemsep=0pt%, before=\vspace{-\dimexpr\baselineskip +2 \partopsep},
@@ -899,23 +899,23 @@ can't derive theorems with the logical calculus; without initial
 probabilistic assumptions we can't derive or update probabilities with the
 probability calculus.
 
-Consider this context: a set of $m$ observations $1,2,\dotsc,m$, each of
+Consider this context: a set of $M$ observations $1,2,\dotsc,M$, each of
 which can have $N$ possible outcomes $\set{1,\dotsc,N}$. Denote \enquote{The
   outcome of the $i$th observation is $d$} by $D^i_d$. In this context,
-choosing a statistical model $M$ is equivalent to choosing the numerical
+choosing a statistical model $\yI$ is equivalent to choosing the numerical
 values of the joint distribution
 \begin{equation}
   \label{eq:distr_statmodel}
-  \p( D^m_{d_m}, D^{m-1}_{d_{m-1}}, \dotsc,  D^2_{d_2}, D^1_{d_1} \|  M)
+  \p( D^M_{d_M}, D^{M-1}_{d_{M-1}}, \dotsc,  D^2_{d_2}, D^1_{d_1} \|  \yI)
 \end{equation}
-for all combinations of $d_1,\dotsc,d_m \in \set{1,\dotsc,N}$; or to
+for all combinations of $d_1,\dotsc,d_M \in \set{1,\dotsc,N}$; or to
 choosing any other probabilistic assignments equivalent to this
 distribution. An equivalent alternative, for example, is to assign the
-distribution for the first observation, $\p(D^1_{d_1} \|M)$, the
+distribution for the first observation, $\p(D^1_{d_1} \|\yI)$, the
 distributions for the second observation conditional on the first,
-$\p(D^2_{d_2} \|D^1_{d_1}, M)$, and so on up to the distributions for the
-$m$th observation conditional on the rest,
-$\p(D^m_{d_m} \| D^{m-1}_{d_{m-1}},\dotsc,D^1_{d_1},M)$. The product of
+$\p(D^2_{d_2} \|D^1_{d_1}, \yI)$, and so on up to the distributions for the
+$M$th observation conditional on the rest,
+$\p(D^M_{d_M} \| D^{M-1}_{d_{M-1}},\dotsc,D^1_{d_1},\yI)$. The product of
 these distributions is the joint distribution above, and conversely each of
 these distributions can be obtained from the joint one above by
 condizionalization and marginalization.
@@ -946,14 +946,16 @@ the joint distribution~\eqref{eq:distr_statmodel} or in another equivalent
 way. A Bayesian robot is thus equivalent to a statistical model.
 
 In the context described above, the set of possible robots is a simplex of
-$N^m-1$ dimensions, since this is the set of all possible distributions for
-$m$ joint outcomes, each having $N$ possible values. In the case of the
+$N^M-1$ dimensions, since this is the set of all possible distributions for
+$M$ joint outcomes, each having $N$ possible values. In the case of the
 Plinko experiments \citep{filipowiczetal2014,filipowiczetal2016} it has
 $40^{200}-1 \approx 3\times10^{320}$ dimensions.
 
-Our statistical terminology and notation follow ISO standards
-\citep{iso1993_r2009,iso2006}, except for the use of a comma to denote
-logical conjunction \enquote{$\land$}, for simplicity.
+In this study, the term \enquote{inference} will be synonymous with
+\enquote{assignment of a probability (distribution)}, just to keep
+sentences short. Our statistical terminology and notation follow ISO
+standards \citep{iso1993_r2009,iso2006}, except for the use of a comma to
+denote logical conjunction \enquote{$\land$}, for simplicity.
 
 
 \section{First study: exchangeable-model robot}
@@ -962,120 +964,148 @@ logical conjunction \enquote{$\land$}, for simplicity.
 \subsection{The first Bayesian robot}
 \label{sec:bayes_robot}
 
-We shall consider a robot programmed with either of these two equivalent
+We first consider a robot programmed with either of these two equivalent
 assumptions:
 \begin{itemize}
-\item the joint distribution for any number of observations is symmetric with
-respect to their order; that is, the order of the observations is
-irrelevant for inferential purposes;
-\item for inferential purposes, only the relative frequencies of past observations
-  are relevant. Any additional data about past observation is irrelevant
-  and can be discarded.
+\item The joint probability distribution~\eqref{eq:distr_statmodel} for
+  \emph{any} number of observations is invariant with respect to exchanges
+  of their order. That is, the order of the observations is irrelevant for
+  making inferences.
+\item Only the relative frequencies of past observations are relevant for
+  making inferences. Any additional data about known observations is
+  irrelevant and can be discarded.
 \end{itemize}
-Distributions for different number of observations must of course be
-consistent with one another through marginalization.
+In either of these assumptions it's implicit that probability distributions
+for different number of observations must of course be consistent with one
+another through marginalization.
 
-The two equivalent assumptions are technically called \emph{infinite
+These two equivalent assumptions are called \emph{infinite
   exchangeability}. This notion was introduced by de~Finetti
-\parentext{\cite*{definetti1930,definetti1937}; \cite{heathetal1976}}; it
-is described in detail in \textcite[\sect~4.2]{bernardoetal1994_r2000}.
+\parentext{\cite*{definetti1930,definetti1937}; \cite{heathetal1976}}.
+Dawid \citey{dawid2013} gives a non-technical, insightful introduction to
+it. It is studied in detail in Bernardo \amp\ Smith
+\citey[\sect~4.2]{bernardoetal1994_r2000}.
 
-Infinite exchangeability determines this form of the
-probability~\eqref{eq:distr_statmodel}:
+A theorem by de~Finetti \parentext{references above} shows that the
+assumption of infinite exchangeability implies that the probability
+distribution~\eqref{eq:distr_statmodel} must have this mathematical form,
+for any $m$:
 \begin{equation}
   \label{eq:exchangeability_form}
-  \p(D^1_{d_1} , D^2_{d_2} , \dotsc , D^m_{d_m} \| M) =
-  \int_\simpl   \Biggl( \prod_{i=1}^m \yqq_{d_i} \Biggr)\, \pf(\yq \| M)\,\di\yq,
+  \p(D^1_{d_1} , D^2_{d_2} , \dotsc , D^m_{d_m} \| \yI) =
+  \int_\simpl   \Biggl( \prod_{i=1}^m \yqq_{d_i} \Biggr)\, \pf(\yq \| \yI)\,\di\yq,
 \end{equation}
 where $\yq$ is a normalized $N$-tuple of positive numbers:
-$\simpl \defd \set{\yq \in \RR^N \suchthat \yqq_i\ge0,
-  \sum_{i=1}^N\yqq_i=1}$. This $N$-tuple can be thought of the relative,
-long-run frequencies of the possible outcomes\footnote{\enquote{But this
-    \emph{long run} is a misleading guide to current affairs. \emph{In the
-      long run} we are all dead.} \citep[\sect~3.I,
-  p.~65]{keynes1923_r2013}}, and $\pf(\yq \| M)\,\di\yq$ as their
-probability density. From this point of view it is as if the robot first
-assumes to know the long-run frequencies of the different outcomes and, not
-knowing their particular order in the observation, 
-assigns to the occurrence of each a probability proportional to its
-frequency: this is the term $\prod_{i=1}^m \yqq_{d_i}$ in the integral.
-Then, not being sure about the long-run frequencies, the robot assign to
-them the density $\pf(\yq \| M)\,\di\yq$ -- which is determined by
-additional assumptions besides exchangeability.
+\begin{equation}
+\simpl \defd \set{\yq \in \RR^N \suchthat \yqq_i\ge0,
+  \tsum_{i=1}^N\yqq_i=1},
+\label{eq:simplex}
+\end{equation}
+and $\pf(\yq \| \yI)\,\di\yq$ is a normalized density function, called
+\emph{prior parameter density}.
 
-As an explicit example, say with $N=40$,
+The $N$-tuple $\yq$ can be interpreted as the relative long-run frequencies
+of the possible outcomes\footnote{\enquote{But this \emph{long run} is a
+    misleading guide to current affairs. \emph{In the long run} we are all
+    dead.} \citep[\sect~3.I, p.~65]{keynes1923_r2013}}, and
+$\pf(\yq \| \yI)\,\di\yq$ as their probability density. From this point of
+view it is as if the robot first assumes to know the long-run frequencies
+of the different $N$ outcomes and, not knowing their particular order in
+the observation, assigns to the occurrence of each a probability
+proportional to its frequency: this is the term $\prod_{i=1}^m \yqq_{d_i}$
+in the integral. Then, being uncertain about the long-run frequencies, the
+robot assigns to them the density $\pf(\yq \| \yI)\,\di\yq$. The combined
+uncertainty about the observations is then
+\eqn~\eqref{eq:exchangeability_form} by the law of total probability.
+
+The assumption of infinite exchangeability is not enough to have a fully
+programmed robot, because it doesn't determine the parameter density
+$\pf(\yq \| \yI)\,\di\yq$. Once this is chosen -- for example, the constant
+density $(N-1)!\,\di\yq$, called Bayes's \citey[Scholium]{bayes1763} or
+Laplace's \citey[p.~xvii]{laplace1814_r1819} prior -- the robot is fully
+programmed. In fact, the resulting robot is more powerful than necessary,
+because it can make inferences about \emph{any} number of unknown
+observations, future or past ones, beyond the $M$ considered in our
+context.
+
+An explicit example of formula~\eqref{eq:exchangeability_form} with $N=40$ is
 \begin{equation}
   \label{eq:exchangeability_form_example}
-  \p(D^1_{37} , D^2_{6} , D^3_{25}, D^4_{37} \| M) =
-  \int_\simpl \yqq_{6}\, \yqq_{25} \, {\yqq_{37}}^2\;  \pf(\yq \| M)\,\di\yq.
+  \p(D^1_{37} , D^2_{6} , D^3_{25}, D^4_{37} D^5_{19}\| \yI) =
+  \int_\simpl \yqq_{6}\,\yqq_{19}\, \yqq_{25} \, {\yqq_{37}}^2\;
+  \pf(\yq \| \yI)\,\di\yq.
 \end{equation}
 In the following we omit the integration domain $\simpl$.
 
-From Bayes's theorem we obtain the expression for the predictive
-probability, for each $m$,
+\subsection{Probability updates from observations}
+\label{sec:update_first_robot}
+
+Using Bayes's theorem the robot can calculate
+from~\eqref{eq:exchangeability_form} the probability distribution for the
+$m$th observation, having observed outcomes $d_1,\dotsc,d_{m-1}$,
 \begin{equation}
   \label{eq:general_prediction}
   \p(D^{m}_{d_{m}} \|
-  D^{m-1}_{d_{m-1}}, \dotsc,  D^2_{d_2}, D^1_{d_1},  M),
+  D^{m-1}_{d_{m-1}}, \dotsc,  D^2_{d_2}, D^1_{d_1},  \yI),
 \end{equation}
-as calculated by the robot:
+obtaining
 \begin{subequations}\label{eq:prediction_exchangeability}
   \begin{gather}
-    \p(D^{m}_{d_{m}}\| D^{m-1}_{d_{m-1}}, \dotsc,  D^2_{d_2}, D^1_{d_1}, M)
-    = \int \yqq_{d_{m}} \pf(\yq \| D^1_{d_1}, \dotsc, D^{m-1}_{d_{m-1}}, M)\,\di\yq,
+    \p(D^{m}_{d_{m}}\| D^{m-1}_{d_{m-1}}, \dotsc,  D^2_{d_2}, D^1_{d_1}, \yI)
+    = \int \yqq_{d_{m}} \pf(\yq \| D^1_{d_1}, \dotsc, D^{m-1}_{d_{m-1}}, \yI)\,\di\yq,
     \\
     \shortintertext{with}
-    \pf(\yq \| D^1_{d_1}, \dotsc, D^{m-1}_{d_{m-1}}, M)
-    = \frac{ \bigl( \prod_{i=1}^{m-1} \yqq_{d_i} \bigr)\, \pf(\yq \| M)
+    \pf(\yq \| D^1_{d_1}, \dotsc, D^{m-1}_{d_{m-1}}, \yI)
+    = \frac{ \bigl( \prod_{i=1}^{m-1} \yqq_{d_i} \bigr)\, \pf(\yq \| \yI)
       }{
-      \int  \bigl( \prod_{i=1}^{m-1} \yqq_{d_i}' \bigr)\, \pf(\yq' \| M)\,\di\yq'
+      \int  \bigl( \prod_{i=1}^{m-1} \yqq_{d_i}' \bigr)\, \pf(\yq' \| \yI)\,\di\yq'
       }.
 \label{eq:exchang_updated_prior}
   \end{gather}
 \end{subequations}
-Continuing our numeric example~\eqref{eq:exchangeability_form_example} this
-could be
+
+For our numeric example~\eqref{eq:exchangeability_form_example} this is
 \begin{subequations}\label{eq:prediction_exchangeability_example}
   \begin{gather}
-    \p(D^5_{19} \| D^1_{37} , D^2_{6} , D^3_{25}, D^4_{37}, M)
-    = \int \yqq_{19}\; \pf(\yq \|  D^1_{37} , D^2_{6} , D^3_{25}, D^4_{37}, M)\,\di\yq,
+    \p(D^5_{19} \| D^1_{37} , D^2_{6} , D^3_{25}, D^4_{37}, \yI)
+    = \int \yqq_{19}\; \pf(\yq \|  D^1_{37} , D^2_{6} , D^3_{25}, D^4_{37}, \yI)\,\di\yq,
     \\
-    \pf(\yq \|  D^1_{37} , D^2_{6} , D^3_{25}, D^4_{37}, M)
-    = \frac{ \yqq_{6}\, \yqq_{25} \, {\yqq_{37}}^2\; \pf(\yq \| M)
-      }{
-      \int \yqq_{6}'\, \yqq_{25}' \, {\yqq_{37}'}^2\; \pf(\yq' \| M)\,\di\yq'
-      }.
+    \pf(\yq \|  D^1_{37} , D^2_{6} , D^3_{25}, D^4_{37}, \yI)
+    = \frac{ \yqq_{6}\, \yqq_{25} \, {\yqq_{37}}^2\; \pf(\yq \| \yI)
+    }{
+      \int \yqq_{6}'\, \yqq_{25}' \, {\yqq_{37}'}^2\; \pf(\yq' \| \yI)\,\di\yq'
+    }.
   \end{gather}
 \end{subequations}
 
-
-Formula~\eqref{eq:prediction_exchangeability} tell us how our robot would
-update its predictive probabilities at each new observation of a Plinko outcome.
+Once the density $\pf(\yq \| \yI)\,\di\yq$ is chosen, the robot can perform
+the Plinko task just like all others participants.
 \textcolor{white}{If you find this you can claim a postcard from me.}
 %
+
 
 
 \subsection{General remarks on the robot's behaviour}
 \label{sec:remarks}
 
-The exchangeable-model formula~\eqref{eq:prediction_exchangeability} leads
-to some characteristic features of the robot's beliefs and of their
-evolution:
+The infinite-exchangeability formula~\eqref{eq:prediction_exchangeability}
+leads to some characteristic features of the robot's inferences and of
+their updates:
 \begin{itemize}
-\item The robot's predictions can be interpreted in several ways. One is
+\item The robot's inferences can be interpreted in several ways. One is
   this: the robot believes that there's \enquote{something} constant in all
   trials; loosely speaking, a \enquote{constant mechanism}. Another, maybe
   preferable, is this: the robot has memory of past observations, but not
   of their order; any trends are therefore invisible to it.
 \item As data accumulate, the robot's probabilities for the next outcome
   approach the observed frequencies. Such approach happens independently of
-  the form of the prior $\pf(\yq \| M)\,\di\yq$ -- unless the latter is
+  the form of the prior $\pf(\yq \| \yI)\,\di\yq$ -- unless the latter is
   zero in peculiar regions of the integration domain -- but the prior
   determines the celerity of the approach. A prior heavily peaked on a
   frequency $\yq'$ will require a lot of data to move the predictions to
   a very different frequency $\yq$.
 \item As data $D$ accumulate, the updated density
-  $\pf(\yq \| D, M)\,\di\yq$ will become more and more peaked at the
+  $\pf(\yq \| D, \yI)\,\di\yq$ will become more and more peaked at the
   $N$-tuple of observed frequencies.
 \item Suppose that we first have a long sequence of observations
   concentrating around frequencies $\yq$ -- say, a very long sequence of
@@ -1095,9 +1125,9 @@ first observations, so it must be chosen with care. The Plinko data tell us
 the initial predictive probabilities of the participants,
 \begin{equation}
   \label{eq:initial_predictive}
-  \pf(D^1_{k} \| M) \equiv \int \yqq_{k}\; \pf(\yq \| M)\,\di\yq,
+  \pf(D^1_{k} \| \yI) \equiv \int \yqq_{k}\; \pf(\yq \| \yI)\,\di\yq,
 \end{equation}
-but not their prior $\pf(\yq \| M)\,\di\yq$.
+but not their prior $\pf(\yq \| \yI)\,\di\yq$.
 
 As a first study we consider a \emph{Johnson-Dirichlet} prior,
 proportional to a monomial $\prod_i{\yq_i}^{x_i}$ for some values of $x_i$:
@@ -1145,7 +1175,7 @@ and for the updated density:
   = 
   \frac{\Gamma(\yN')}{\prod_i \Gamma(\yN'\ynn_i')}\,
   \prod_{i=1}^N{\yq_i}^{\yN'\ynn_i'-1}
-  \\\
+  \\
   \text{with}\quad \yN' =\yN+N,\quad
   \yn'=\frac{\yN\yn+N\yf}{\yN+N}.
 \end{multline}
@@ -1165,7 +1195,7 @@ slots is updated to:
   \frac{\yN^{m}}{\yN^{m}+1}\ynn^{m}_j +
     \begin{dcases}
       \frac{1}{\yN^{m}+1} &\text{if $j=k$},
-      \\[2\jot]
+      \\
       0 &\text{if $j\ne k$},
     \end{dcases}
     \\[2\jot]
@@ -1197,7 +1227,7 @@ the participant.
 \centering\includegraphics[width=\linewidth]{{comparisons1/means_12-stub_0.1}.pdf}
 \includegraphics[width=\linewidth]{{comparisons1/stds_12-stub_0.1}.pdf}
 \caption{Comparison of the means and standard deviations of the predictive
-  distributions of participant~12 and of a robot with stubborness
+  distributions of participant~12 and of a robot with stubbornness
   $\yN=0.1$}\label{fig:comparison_12_01}
 \end{figure}% done with exploration1.R
 Figure~\ref{fig:comparison_12_01} shows the means and standard deviations
@@ -1213,7 +1243,7 @@ robot adapted to this change very slowly.
 \centering\includegraphics[width=\linewidth]{{comparisons1/means_12-stub_50}.pdf}
 \includegraphics[width=\linewidth]{{comparisons1/stds_12-stub_50}.pdf}
 \caption{Comparison of the means and standard deviations of the predictive
-  distributions of participant~12 and of a robot with stubborness
+  distributions of participant~12 and of a robot with stubbornness
   $\yN=50$}\label{fig:comparison_12_50}
 \end{figure}% done with exploration1.R
 Figure~\ref{fig:comparison_12_50} is analogous to
@@ -1226,14 +1256,14 @@ standard deviation of the generated outcomes.
 \centering\includegraphics[width=\linewidth]{{comparisons1/means_30-stub_0.1}.pdf}
 \includegraphics[width=\linewidth]{{comparisons1/stds_30-stub_0.1}.pdf}
 \caption{Comparison of the means and standard deviations of the predictive
-  distributions of participant~30 and of a robot with stubborness
+  distributions of participant~30 and of a robot with stubbornness
   $\yN=0.1$}\label{fig:comparison_30_01}
 \end{figure}% done with exploration1.R
 \begin{figure}[p!]
 \centering\includegraphics[width=\linewidth]{{comparisons1/means_30-stub_50}.pdf}
 \includegraphics[width=\linewidth]{{comparisons1/stds_30-stub_50}.pdf}
 \caption{Comparison of the means and standard deviations of the predictive
-  distributions of participant~30 and of a robot with stubborness
+  distributions of participant~30 and of a robot with stubbornness
   $\yN=50$}\label{fig:comparison_30_50}
 \end{figure}% done with exploration1.R
 Figures~\ref{fig:comparison_30_01} and~\ref{fig:comparison_30_50} show
