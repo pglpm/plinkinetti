@@ -1,7 +1,7 @@
 \pdfoutput=1
 %% Author: PGL  Porta Mana, ALS Filipowicz
 %% Created: 2018-04-08T16:54:19+0200
-%% Last-Updated: 2018-06-30T16:47:41+0200
+%% Last-Updated: 2018-07-01T01:48:17+0200
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Report-no: ***
 \newif\ifarxiv
@@ -735,7 +735,7 @@ P.G.L. Porta\,Mana\\%
 \newcommand*{\yff}{f}
 \newcommand*{\yf}{\bm{\yff}}
 \newcommand*{\yI}{\varIota}
-\newcommand*{\yMJ}{\yI_{\text{J}}}
+\newcommand*{\yMJ}{\yI}
 \newcommand*{\yN}{\varLambda}
 \newcommand*{\ynn}{\nu}
 \newcommand*{\yn}{\bm{\nu}}
@@ -965,7 +965,7 @@ denote logical conjunction \enquote{$\land$}, for simplicity.
 \label{sec:bayes_robot}
 
 We first consider a robot programmed with either of these two equivalent
-assumptions:
+assumptions, denoted $\yI$:
 \begin{itemize}
 \item The joint probability distribution~\eqref{eq:distr_statmodel} for
   \emph{any} number of observations is invariant with respect to exchanges
@@ -1023,9 +1023,13 @@ programmed robot, because it doesn't determine the parameter density
 $\pf(\yq \| \yI)\,\di\yq$. Once this is chosen -- for example, the constant
 density $(N-1)!\,\di\yq$, called Bayes's \citey[Scholium]{bayes1763} or
 Laplace's \citey[p.~xvii]{laplace1814_r1819} prior -- the robot is fully
-programmed. In fact, the resulting robot is more powerful than necessary,
-because it can make inferences about \emph{any} number of unknown
-observations, future or past ones, beyond the $M$ considered in our
+programmed. We consider a specific density in
+\sect~\ref{sec:initial_prior}, and consider this part of the assumptions
+$\yI$.
+
+In fact, the robot resulting from the assumptions $\yI$ is more powerful
+than necessary, because it can make inferences about \emph{any} number of
+unknown observations, future or past ones, beyond the $M$ considered in our
 context.
 
 An explicit example of formula~\eqref{eq:exchangeability_form} with $N=40$ is
@@ -1089,101 +1093,149 @@ the Plinko task just like all others participants.
 \label{sec:remarks}
 
 The infinite-exchangeability formula~\eqref{eq:prediction_exchangeability}
-leads to some characteristic features of the robot's inferences and of
-their updates:
+leads to peculiar features of the robot's inferences and of their updates:
 \begin{itemize}
-\item The robot's inferences can be interpreted in several ways. One is
-  this: the robot believes that there's \enquote{something} constant in all
-  trials; loosely speaking, a \enquote{constant mechanism}. Another, maybe
-  preferable, is this: the robot has memory of past observations, but not
-  of their order; any trends are therefore invisible to it.
-\item As data accumulate, the robot's probabilities for the next outcome
-  approach the observed frequencies. Such approach happens independently of
-  the form of the prior $\pf(\yq \| \yI)\,\di\yq$ -- unless the latter is
-  zero in peculiar regions of the integration domain -- but the prior
-  determines the celerity of the approach. A prior heavily peaked on a
-  frequency $\yq'$ will require a lot of data to move the predictions to
-  a very different frequency $\yq$.
+\item One way to interpret the robot's inferences is this: the robot
+  assumes that there are \enquote{constant conditions} in all trials;
+  loosely speaking, a \enquote{constant mechanism}. The outcome of each
+  observation is therefore not influenced by the outcomes of other
+  observations. Another interpretation is this: the robot does not keep
+  track of the order of the observations, because this information is
+  irrelevant; but keeps track of the outcome frequencies. Trends are
+  therefore invisible to the robot.
 \item As data $D$ accumulate, the updated density
   $\pf(\yq \| D, \yI)\,\di\yq$ will become more and more peaked at the
-  $N$-tuple of observed frequencies.
-\item Suppose that we first have a long sequence of observations
-  concentrating around frequencies $\yq$ -- say, a very long sequence of
-  $1$s in a row -- and then a shift to other frequencies $\yq'$ -- say,
-  suddenly $2$s only appear. After the shift, the predictive probabilities
-  will eventually become peaked around the new frequencies, but the shift
-  in the peaks will take a larger number of observations around the new
-  frequencies than the number around the old frequencies.
+  $N$-tuple of observed frequencies. The robot's probabilities for the next
+  outcome will therefore approach the frequencies hitherto observed. This
+  approach happens independently of the form of the density
+  $\pf(\yq \| \yI)\,\di\yq$ -- unless the latter is zero in peculiar
+  regions of the integration domain -- but this density determines the
+  celerity of the approach. A density heavily peaked on a frequency $\yq'$
+  will require a lot of data to move the predictions to a very different
+  frequency $\yq''$.
+\item Suppose that robot receives a long sequence of observations
+  concentrated around frequencies $\yq'$ -- say, a very long sequence of
+  $3$s in a row -- and then another long sequence concentrated around
+  different frequencies $\yq''$ -- say, suddenly only $5$s appear. After
+  the shift, the robot's probabilities will eventually become peaked around
+  the new frequencies, but the shift in the peaks will take a larger number
+  of observations around the new frequencies than the number around the old
+  frequencies.
 \end{itemize}
 
 
-\subsection{Initial prior}
+\subsection{Prior parameter density}
 \label{sec:initial_prior}
 
-The shape of the initial prior heavily determines the predictions in the
-first observations, so it must be chosen with care. The Plinko data tell us
-the initial predictive probabilities of the participants,
+The shape of the prior parameter density heavily determines the first
+inferences. Note that the Plinko data tell us each participant's
+probabilities for the first observation,
 \begin{equation}
   \label{eq:initial_predictive}
-  \pf(D^1_{k} \| \yI) \equiv \int \yqq_{k}\; \pf(\yq \| \yI)\,\di\yq,
+  \pf(D^1_{d} \| \text{\footnotesize participant}) \equiv \int \yqq_{d}\;
+  \pf(\yq \| \text{\footnotesize participant})\,\di\yq,
 \end{equation}
-but not their prior $\pf(\yq \| \yI)\,\di\yq$.
+but not their prior parameter density
+$\pf(\yq \| \text{\footnotesize participant})\,\di\yq$.
 
-As a first study we consider a \emph{Johnson-Dirichlet} prior,
-proportional to a monomial $\prod_i{\yq_i}^{x_i}$ for some values of $x_i$:
+In this first study we consider a \emph{Johnson-Dirichlet} prior density
+\parentext{references below}. This density is proportional to a monomial
+in $(\yqq_i)$:
 \begin{equation}
   \label{eq:JD_prior}
   \pf(\yq \| \yMJ) =
   \frac{\Gamma(\yN)}{\prod_i \Gamma(\yN\ynn_i)}\,
-  \prod_{i=1}^N{\yq_i}^{\yN\ynn_i-1}, \qquad \yN>0, \ynn \in \simpl.
+  \prod_{i=1}^N{\yqq_i}^{\yN\ynn_i-1}, \qquad \yN>0, \ynn \in \simpl.
 \end{equation}
+The $N$ independent parameters $(\yN, \ynn)$ need to be specified by
+additional assumptions.
 
-This prior is determined by the additional assumption -- call it $\yMJ$ --
-that that the frequencies of other outcomes are irrelevant for predicting a
-particular one:
+Such prior density is determined by the assumption that that the
+frequencies of other outcomes are irrelevant for predicting a particular
+one. If $\yf \defd (\yff_{1},\dotsc,\yff_{N})$ are the observed
+outcomes' relative frequencies, this assumption can be mathematically
+expressed as
 \begin{equation}
   \label{eq:sufficientness}
-  \p(D^{m+1}_k \| N\yf, \yMJ) = \p(D^{m+1}_k \| N\yff_{k}, \yMJ)
-  \qquad k\in\set{1,\dotsc, N},
+  \p(D^{m+1}_d \| \yf, N, \yMJ) =
+  \p(D^{m+1}_{d} \| \yff_{d}, N, \yMJ)
+  \qquad\text{for all } d\in\set{1,\dotsc, N}.
 \end{equation}
-where $\yf$ is the $N$-tuple of observed relative frequencies. This
-assumption is called \enquote{sufficientness}
+It is called \enquote{sufficientness}
 \cites{johnson1924,johnson1932c}[\chap~4]{good1965}{zabell1982,jaynes1986d_r1996}.
 % Asymptotically it leads \citep{jaynes1986d_r1996,portamana2009} to a
 % predictive distribution of a maximum-entropy with Burg's \citey{burg1975} entropy
 % $\tsum\ln\yx$.
-This is a conjugate prior
-\cites[\chap~9]{degroot1970_r2004}{diaconisetal1979b} and it has two convenient
-properties: it updates to a density of the same mathematical form, and its
-corresponding predictive distribution can be calculated analytically using
+We consider this assumption and the specification of the parameters above
+to be contained in $\yI$.
+
+
+The density~\eqref{eq:JD_prior} is a conjugate prior
+\cites[\chap~9]{degroot1970_r2004}{diaconisetal1979b}. It has two
+convenient properties: it updates to a density of the same mathematical
+form, and leads to probabilities that can be analytically calculated using
 the formula
 \begin{equation}
   \label{eq:Dirichlet_formula}
   \int_{\simpl} \prod_{i=1}^N {\yqq_{i}}^{x_i-1}\,\di\yq = \frac{\prod_i \Gamma(x_i)}{\Gamma\bigl(\sum_i x_i\bigr)}.
 \end{equation}
+In fact, inserting this prior in the infinite-exchangeability
+formula~\eqref{eq:prediction_exchangeability} we find the joint
+distribution~\eqref{eq:distr_statmodel}, for any $m$:
+\begin{equation}
+  \label{eq:joint_distr_JD}
+\pf( D^1_{d_1}, \dotsc, D^m_{d_m} \| \yMJ) =
+  \frac{\Gamma(\yN)}{\Gamma(\yN+m)}
+  \prod_{d=1}^{N}\frac{\Gamma(\yN\ynn_d + m\yff_d)}{\Gamma(\yN\ynn_d)},
+\end{equation}
+where $\yff_d$ is the frequency of outcome $d$ in the $m$ observations.
 
-We obtain for the initial distribution:
+In particular, the initial distribution is simply
 \begin{equation}
   \label{eq:initial_predictive_JD}
-  \p(D^1_{k} \| \yMJ) = \int \yqq_{k}\; \pf(\yq \| \yMJ)\,\di\yq
-  = \ynn_k,
+  \p(D^1_{d} \| \yMJ)  = \ynn_d.
 \end{equation}
-and for the updated density:
+This formula says that the Johnson-Dirichlet prior can produce any possible
+initial probability distribution, by appropriately choosing $\yn$. Thus the
+robot can be programmed to make the same initial inference as a
+participant, just by setting its parameters $\yn$ equal to the
+participant's initial distribution. The parameter $\yN$ cannot be directly
+determined by a participant's inferences. We call this parameter the
+\emph{stubbornness} of the robot; here's the reason.
+
+From \eqns~\eqref{eq:exchang_updated_prior}, \eqref{eq:JD_prior},
+and~\eqref{eq:Dirichlet_formula} we can calculate the parameter density
+updated after the observations $1,\dotsc,m-1$:
 \begin{multline}
   \label{eq:update_prior_JD}
-  \pf(\yq \| D^1_{d_1}, \dotsc, D^m_{d_m}, \yMJ)
+  \pf(\yq \| D^1_{d_1}, \dotsc, D^{m-1}_{d_{m-1}}, \yMJ)
   = 
   \frac{\Gamma(\yN')}{\prod_i \Gamma(\yN'\ynn_i')}\,
-  \prod_{i=1}^N{\yq_i}^{\yN'\ynn_i'-1}
+  \prod_{i=1}^{N}{\yqq_i}^{\yN'\ynn_i'-1}
   \\
-  \text{with}\quad \yN' =\yN+N,\quad
-  \yn'=\frac{\yN\yn+N\yf}{\yN+N}.
+  \text{with}\quad \yN' =\yN+m-1,\quad
+  \yn'=\frac{\yN\yn+(m-1)\yf}{\yN+m-1}
 \end{multline}
+where $\yf$ are the relative frequencies of the outcomes in the $m-1$
+observations. This formula, together
+with~\eqref{eq:prediction_exchangeability} and~\eqref{eq:Dirichlet_formula},
+yields the robot's inference for the $m$th observation conditional on the
+previous ones:
+\begin{equation}
+  \label{eq:predictive_JD_general}
+  \p(D^{m}_{d} \| D^{m-1}_{d_{m-1}},\dotsc,D^1_{d_1}, \yMJ) =
+\frac{\yN\ynn_d + (m-1)\,\yff_d}{\yN+m-1}.
+\end{equation}
 
-Formula~\eqref{eq:initial_predictive_JD} says that the Johnson-Dirichlet
-prior can produce any initial probabilities assigned by the participants,
-just by equalling the parameters $\yn$ to them. The parameter $\yN$ is left
-arbitrary. We can call it the \emph{stubbornness} of the robot, Here's the reason.
+The latter formula has an interesting interpretation: the distribution the
+robot calculates for the $m$th observation is equal to a weighted sum of
+the initial distribution~\eqref{eq:initial_predictive_JD} and the observed
+relative frequencies $\yf$. The weights are the parameter $\yN$ and the
+number of observations.
+
+
+
+
 
 Suppose that after some observations the predictive distribution is $\yn$,
 and that the next outcome is $k$. Then the probability distribution for the
