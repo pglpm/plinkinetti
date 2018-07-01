@@ -1,7 +1,7 @@
 \pdfoutput=1
 %% Author: PGL  Porta Mana, ALS Filipowicz
 %% Created: 2018-04-08T16:54:19+0200
-%% Last-Updated: 2018-07-01T20:25:09+0200
+%% Last-Updated: 2018-07-01T20:29:20+0200
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Report-no: ***
 \newif\ifarxiv
@@ -1844,26 +1844,18 @@ Owing to the certainty of $R^1_0$, for $m=2$ we have
   \p( D^{1}_{d_{1}} \|  \yMc).
 \end{equation}
 With the probabilities above from $m=3$ onward the recursion can be
-calculated with \eqns~\eqref{eq:recursive_formula_2}.
-
-
-
-\subsection{The recursive algorithm}
-\label{sec:adamsetal_algorithm}
+calculated with \eqns~\eqref{eq:recursive_formula_2}. These initialization
+steps are summarized in table~\ref{tab:adamsetal_initial}.
 
 \bigskip\mynote{Luca: work in progress in the rest of this subsection}
 
-The recursive algorithm to calculate
-$\p(D^{m+1}_{d_{m+1}} \| D^{m}_{d_{m}}, \dotsc, D^{1}_{d_{1}}, \yMc)$ is
-shown in table~\ref{tab:adamsetal_algorithm}. For $m=0$ some initialization
-steps are necessary.
 \begin{table}[!b]
   \centering
   \caption{Initial steps of predictive algorithm}
   \label{tab:adamsetal_initial}
   \begin{tabularx}{\textwidth}{X}\hline
     \begin{enumerate}%[label=0.\arabic*.,start=0]
-    \item Set $\yN=0.01$, $\ynn_d=1/N$, $d\in\set{1,\dotsc,N}$
+    \item Assign numerical values to $\yN$, $\ynn$
     \item For $d_1 \in \set{1,\dotsc,N}$ calculate
       \[A_1(d_1)\defd \p(D^{1}_{d_{1}} \|  \yMc) =\ynn_{d_1} \]
     \item Observe $d_1$
@@ -1892,7 +1884,7 @@ A_1(d_1) \times \begin{cases}
     \end{enumerate}
   \item  For $d_2 \in \set{1,\dotsc,N}$ calculate
       \[A_2(d_2) \defd
-        \p(D^{2}_{d_{12}} \| D^{1}_{d_{1}}, \yMc) =
+        \p(D^{2}_{d_{2}} \| D^{1}_{d_{1}}, \yMc) =
 \frac{\sum_{r=0}^{1} B_{2}(r,d_{2}) \times C_{2}(r)}{A_{1}(d_{1})} \]
 \item Observe $d_2$
 \item Keep $A_{2}(d_{2})$ for the next two steps, and
