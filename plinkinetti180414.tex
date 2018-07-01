@@ -1,7 +1,7 @@
 \pdfoutput=1
 %% Author: PGL  Porta Mana, ALS Filipowicz
 %% Created: 2018-04-08T16:54:19+0200
-%% Last-Updated: 2018-07-01T21:26:40+0200
+%% Last-Updated: 2018-07-01T21:28:16+0200
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Report-no: ***
 \newif\ifarxiv
@@ -1825,15 +1825,15 @@ given recursively by
     \begin{cases}
       \sum_{s=1}^{m-1} \yrs(s,m) \; B_{m-1}(s-1,d_{m-1}) \;
       C_{m-1}(s-1)
-      & \text{if $r=0$},
+      & \text{if $r=0$}
       \\[\jot]
       [1-\yrs(r,m)]  \; B_{m-1}(r-1,d_{m-1}) \; C_{m-1}(r-1)
-      & \text{if $r\ge 1$}.
+      & \text{if $r\ge 1$}
     \end{cases}
   \end{multlined}
 \end{align}
 \end{subequations}
-for all $d_{m} \in\set{1,\dotsc,N}$, $r\in{0,\dotsc,m-1}$. This recursive
+for all $d_{m} \in\set{1,\dotsc,N}$, $r\in\set{0,\dotsc,m-1}$. This recursive
 algorithm is summarized in table~\ref{tab:adamsetal_algorithm}.
 
 \bigskip
