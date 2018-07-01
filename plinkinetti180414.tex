@@ -1,7 +1,7 @@
 \pdfoutput=1
 %% Author: PGL  Porta Mana, ALS Filipowicz
 %% Created: 2018-04-08T16:54:19+0200
-%% Last-Updated: 2018-07-01T21:29:22+0200
+%% Last-Updated: 2018-07-01T23:00:47+0200
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Report-no: ***
 \newif\ifarxiv
@@ -699,7 +699,7 @@ P.G.L. Porta\,Mana\\%
 %\newcommand*{\nbd}{\nobreakdash}%
 %\newcommand*{\bd}{\hspace{0pt}}%
 %\def\hy{-\penalty0\hskip0pt\relax}
-%\newcommand*{\labelbis}[1]{\tag*{(\ref{#1})$_\text{r}$}}
+\newcommand*{\labelbis}[1]{\tag*{(\ref{#1})$_\text{r}$}}
 %\newcommand*{\mathbox}[2][.8]{\parbox[t]{#1\columnwidth}{#2}}
 %\newcommand*{\zerob}[1]{\makebox[0pt][l]{#1}}
 \newcommand*{\tprod}{\mathop{\textstyle\prod}\nolimits}
@@ -1675,7 +1675,7 @@ Recalling, \eqn~\eqref{eq:exhaustive_R_from_previous}, that only the values
 $r_{m}=0$ and $r_{m}= r_{m-1}+1$ are possible, the conditional
 probabilities above are summarized in the \emph{changepoint function}
 \begin{equation}\label{eq:def_changepoint_function}
-  \yrs(s,m)  \defd \p(R^{m}_{0} \|  R^{m-1}_{s-1}, \yMc),
+  \yrs(s,m)  \defd \p(R^{m}_{0} \|  R^{m-1}_{s}, \yMc),
   \qquad m \in\set{2,3,\dotsc}, \quad s\in\set{1,\dotsc,m-1}.
 \end{equation}
 It is the probability that the $m$th observation starts a new subsequence,
@@ -1745,10 +1745,9 @@ computation this would have been computed in the preceding step.
 The products in the $r$ sum contain the term given
 by~\eqref{eq:irrelevant_data_conditional_R}, which is just the
 Johnson-Dirichlet conditional probability~\eqref{eq:predictive_JD_general},
-and the joint probability for $R^{m}_{r}, D^{m-1}_{d_{m-1}}$ given the
+and the joint probability for $(R^{m}_{r}, D^{m-1}_{d_{m-1}})$ given the
 previous data. This joint probability can be decomposed introducing
-$R^{m-1}_{s}$ for the previous observation:\mynote{the following equations
-  have some wrong $\pm1$ for $r,s$}
+$R^{m-1}_{s}$ for the previous observation:
 \begin{multline}
   \label{eq:prob_R_and_last_decompose}
   \p(R^{m}_{r}, D^{m-1}_{d_{m-1}} \| D^{m-2}_{d_{m-2}}, \dotsc, D^{1}_{d_{1}}, \yMc) 
@@ -1852,6 +1851,65 @@ Owing to the certainty of $R^1_0$, for $m=2$ we have
 With the probabilities above from $m=3$ onward the recursion can be
 calculated with \eqns~\eqref{eq:recursive_formula_2}. These initialization
 steps are summarized in table~\ref{tab:adamsetal_initial}.
+
+\subsection{Changepoint functions and }
+\label{sec:changepoint_choice}
+
+The changepoint function~\eqref{eq:def_changepoint_function},
+\begin{equation}\labelbis{eq:def_changepoint_function}
+  \yrs(s,m)  \defd \p(R^{m}_{0} \|  R^{m-1}_{s}, \yMc),
+  \qquad m \in\set{2,3,\dotsc}, \quad s\in\set{1,\dotsc,m-1}
+\end{equation}
+determines the robot's inference about the appearance of changepoints, or
+changes in the \enquote{source} of the data. It can represent a great
+variety of changepoint assumptions or beliefs.
+
+For example, the belief that the data source is the more likely to change
+the longer it's been operative corresponds to a $\yrs$ that increases as
+$s$ increases. The belief that the longer a data source operates the more
+likely it will persist corresponds to a $\yrs$ that decreases as $s$
+increases. Even more complex beliefs can be represented with the dependence
+on $m$. For example, we can have a shift from the first to the second
+belief above as $m$ increases.
+
+Our new robot $\yMc$, thanks to this function, can reproduce a great
+variety of human inferential behaviours. How well can such robots mimic
+reproduce the inferential behaviour of the Plinko participants?
+
+One way to assess this is to tune the stubbornness parameter $\yN$ and the
+changepoint function $\yrs$ so that the robot's sequence of predictive
+distributions is as close to a specific participant's as possible. The
+reset-distribution parameter $\yn$ can be set equal to the participant's
+initial distribution -- thus assuming that the participant would again
+choose that distribution if he or she were informed about a change in the
+algorithm determining the outcomes.
+
+This optimization lead to a set of parameters $\bigl(\yN, \yrs(s,m)\bigr)$
+associated to a participant. We could then explore the distribution of
+these parameters across all participants, for example examining whether
+they cluster into few groups, and so on.
+
+For such a study we need to choose a measure of discrepancy between two
+sequences of distributions, and to restrict our choice of changepoint
+functions, to make the study computationally feasible. We now explore these
+two necessities.
+
+\subsection{Discrepancy between sequences of inferences}
+\label{sec:discrepancy_measure}
+
+There are many measures of the discrepancy between two distributions: the
+relative entropy (also called Kullback-Leibler divergence or information
+discrimination) of the first distribution with respect to the second; or of
+the second with respect to the first; or the symmetrized version, namely the
+Shannon-Jansen discrepancy; or the Hellinger distance; and many others.
+
+Given such a discrepancy for each of the $M$ observations, we could define
+the total discrepancy as the average of these ($L^1$ norm), or the maximum
+among them ($L^{\infty}$ norm), or other similar measures.
+
+
+
+
 
 \bigskip\mynote{Luca: work in progress in the rest of this subsection}
 
