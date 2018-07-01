@@ -1,7 +1,7 @@
 \pdfoutput=1
 %% Author: PGL  Porta Mana, ALS Filipowicz
 %% Created: 2018-04-08T16:54:19+0200
-%% Last-Updated: 2018-07-01T20:29:20+0200
+%% Last-Updated: 2018-07-01T21:26:40+0200
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Report-no: ***
 \newif\ifarxiv
@@ -1678,8 +1678,10 @@ probabilities above are summarized in the \emph{changepoint function}
   \yrs(s,m)  \defd \p(R^{m}_{0} \|  R^{m-1}_{s-1}, \yMc),
   \qquad m \in\set{2,3,\dotsc}, \quad s\in\set{1,\dotsc,m-1}.
 \end{equation}
-It is the probability that the $m$th observation starts a new sequence,
-given that the previous sequence lasted $s$ observations. Note that
+It is the probability that the $m$th observation starts a new subsequence,
+given that the previous subsequence had length $s$, including the $(m-1)$th
+outcome (that's the reason for $s-1$ in the definition). Note that
+from~\eqref{eq:exclusive_across_m}
 \begin{equation}\label{eq:one_minus_h}
   \p(R^{m}_{s} \|  R^{m-1}_{s-1}, \yMc)  = 1-\yrs(s,m),\qquad s\ne 0.
 \end{equation}
@@ -1751,8 +1753,8 @@ $R^{m-1}_{s}$ for the previous observation:\mynote{the following equations
   \label{eq:prob_R_and_last_decompose}
   \p(R^{m}_{r}, D^{m-1}_{d_{m-1}} \| D^{m-2}_{d_{m-2}}, \dotsc, D^{1}_{d_{1}}, \yMc) 
  ={} \\
-  \frac{\sum_{s=0}^{m-2}
-    \p(R^{m}_{r}, D^{m-1}_{d_{m-1}}, R^{m-1}_{s}, D^{m-2}_{d_{m-2}}
+  \frac{\sum_{s=1}^{m-1}
+    \p(R^{m}_{r}, D^{m-1}_{d_{m-1}}, R^{m-1}_{s-1}, D^{m-2}_{d_{m-2}}
     \| D^{m-3}_{d_{m-3}}, \dotsc, D^{1}_{d_{1}}, \yMc)}{
 \p(D^{m-2}_{d_{m-2}} \| D^{m-3}_{d_{m-3}}, \dotsc, D^{1}_{d_{1}}, \yMc)}
   ={}\\
@@ -1765,7 +1767,7 @@ $R^{m-1}_{s}$ for the previous observation:\mynote{the following equations
  \p(R^{m-1}_{s-1}, D^{m-2}_{d_{m-2}} \|
   D^{m-3}_{d_{m-3}},\dotsc, D^{1}_{d_{1}}, \yMc).
 \end{multline}
-The last expression contains four kinds of term. Let's analyse them.
+The last expression contains four kinds of terms. Let's analyse them.
 
 \begin{itemize}
 \item The denominator is the probability for the $(m-2)$th observation
@@ -1795,8 +1797,8 @@ defining
     A_{m}(d_{m}) &\defs
     \p(D^{m}_{d_{m}} \| D^{m-1}_{d_{m-1}}, \dotsc, D^{1}_{d_{1}}, \yMc),
     \\
-    B_{m}(s,d_{m})
-                 &\defd \p(D^{m}_{d_{m}} \| R^{m}_{s-1}, D^{m-1}_{d_{m-1}},
+    B_{m}(r,d_{m})
+                 &\defd \p(D^{m}_{d_{m}} \| R^{m}_{r}, D^{m-1}_{d_{m-1}},
                    \dotsc, D^{m-r}_{d_{m-r}}, \yMc),
     \\
     C_{m}(r) &\defd
@@ -1812,23 +1814,27 @@ given recursively by
   &= \frac{\sum_{r=0}^{m-1} B_{m}(r,d_{m}) \; C_{m}(r)}{A_{m-1}(d_{m-1})},
   \\
   B_{m}(r,d_{m})  &= \frac{\yN\ynn_{d_{m}}+r\yff_{d_{m}}}{\yN + r},
+                    \qquad
+                    \yff_{d_{m}} \defd\left\{
+                    \parbox[c]{0.35\linewidth}{frequency of $d_m$ in\\ the
+                    past $r$ observations}\right.
   \\
   C_{m}(r)
-  &=   \!\begin{multlined}[t][0.5\linewidth]
-\frac{1}{A_{m-1}(d_{m-1})} \times{}\\[\jot]
+  &=   \!\begin{multlined}[t][0.6\linewidth]
+    \frac{1}{A_{m-1}(d_{m-1})} \times{}\\[\jot]
     \begin{cases}
-      \sum_{s=1}^{m-1} \yrs(s,m) \; B_{m-1}(s,d_{m-1}) \;
+      \sum_{s=1}^{m-1} \yrs(s,m) \; B_{m-1}(s-1,d_{m-1}) \;
       C_{m-1}(s-1)
       & \text{if $r=0$},
       \\[\jot]
-      [1-\yrs(r-1,m)]  \; B_{m-1}(r-1,d_{m-1}) \; C_{m-1}(r-1)
+      [1-\yrs(r,m)]  \; B_{m-1}(r-1,d_{m-1}) \; C_{m-1}(r-1)
       & \text{if $r\ge 1$}.
     \end{cases}
   \end{multlined}
 \end{align}
 \end{subequations}
-
-This recursive algorithm is summarized in table~\ref{tab:adamsetal_algorithm}.
+for all $d_{m} \in\set{1,\dotsc,N}$, $r\in{0,\dotsc,m-1}$. This recursive
+algorithm is summarized in table~\ref{tab:adamsetal_algorithm}.
 
 \bigskip
 
