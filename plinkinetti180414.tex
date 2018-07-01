@@ -1,7 +1,7 @@
 \pdfoutput=1
 %% Author: PGL  Porta Mana, ALS Filipowicz
 %% Created: 2018-04-08T16:54:19+0200
-%% Last-Updated: 2018-07-01T01:48:17+0200
+%% Last-Updated: 2018-07-01T02:24:49+0200
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Report-no: ***
 \newif\ifarxiv
@@ -737,8 +737,11 @@ P.G.L. Porta\,Mana\\%
 \newcommand*{\yI}{\varIota}
 \newcommand*{\yMJ}{\yI}
 \newcommand*{\yN}{\varLambda}
+\newcommand*{\yNo}[1]{\yN^{(#1)}}
 \newcommand*{\ynn}{\nu}
 \newcommand*{\yn}{\bm{\nu}}
+\newcommand*{\yno}[1]{\yn^{(#1)}}
+\newcommand*{\ynno}[1]{\ynn^{(#1)}}
 \newcommand*{\yth}{\theta}
 \newcommand*{\yTh}{\varTheta}
 \newcommand*{\ymu}{\mu}
@@ -1227,40 +1230,43 @@ previous ones:
 \frac{\yN\ynn_d + (m-1)\,\yff_d}{\yN+m-1}.
 \end{equation}
 
-The latter formula has an interesting interpretation: the distribution the
-robot calculates for the $m$th observation is equal to a weighted sum of
-the initial distribution~\eqref{eq:initial_predictive_JD} and the observed
-relative frequencies $\yf$. The weights are the parameter $\yN$ and the
-number of observations.
+The conditional probability for the $m$th observation has an interesting
+interpretation: it is equal to a weighted sum of the initial
+distribution~\eqref{eq:initial_predictive_JD} and the relative frequency
+distribution $\yf$ in the $m-1$ previous observations. The weight of the
+former is the parameter $\yN$, and of the latter the number $m-1$ of
+observations. If the parameter $\yN$ is very large with respect to the
+number of observations, then the successive conditional distributions
+remain approximately equal to the initial one $\yn$: the robot is
+\enquote{stubborn} in keeping its initial beliefs. If $\yN$ is very small,
+the initial distribution is quickly replaced with the observed frequencies
+instead. The robot behaves as if it had already made $\yN$ observations
+with outcome frequencies $\yn$. In general it takes $\yN$ observations to
+make the robot appreciably change its initial beliefs.
 
-
-
-
-
-Suppose that after some observations the predictive distribution is $\yn$,
-and that the next outcome is $k$. Then the probability distribution for the
-slots is updated to:
-\begin{multline}
-  \label{eq:predictive_JD}
-  \p(D^{m+1}_{j} \| D^{m}_{k}, \yn^{m},\yN^{m}, \yMJ) =
-  \ynn^{m+1}_j \defd
-  \frac{\yN^{m}}{\yN^{m}+1}\ynn^{m}_j +
+Owing to the special mathematical form of update formulae above, the
+\enquote{state of belief} of this robot before the $(m+1)$th observation can be
+represented by parameters $\bigl( \yNo{m+1}, \yno{m+1} \bigr)$ that are
+updated recursively from those before the previous observation:
+\begin{equation}
+  \label{update_params_JD}
+  \begin{split}
+    \yNo{m+1} &\defd \yNo{m}+1
+    \\
+  \ynno{m+1}_d &\defd
+  \frac{\yNo{m}}{\yNo{m}+1}\ynno{m}_d +
     \begin{dcases}
-      \frac{1}{\yN^{m}+1} &\text{if $j=k$},
+      \frac{1}{\yNo{m}+1} &\text{for $d=d_{m}$},
       \\
-      0 &\text{if $j\ne k$},
+      0 &\text{for $d\ne d_{m}$}.
     \end{dcases}
-    \\[2\jot]
-    \text{and $\yN^{m+1} \defd \yN^{m}+1$}.
-\end{multline}
+  \end{split}
+\end{equation}
+
+
 This update corresponds to a participant's raising the bar assignment under
 slot $k$, leaving the others untouched, and/or lowering the bar assignments
-for \emph{all} other slots by the same proportion. The parameter $\yN$ is
-increased by $1$. The larger $\yN$, the more reluctant the robot is in
-revising its guesses in the light of new observations. The update
-formula~\eqref{eq:update_prior_JD} says that the robot behaves as if it had
-already made $\yN$ observations with outcome frequencies $\yn$.
-
+for \emph{all} other slots by the same proportion.
 
 
 \subsection{Examples: participant vs robot}
