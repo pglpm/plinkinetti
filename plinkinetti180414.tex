@@ -1,7 +1,7 @@
 \pdfoutput=1
 %% Author: PGL  Porta Mana, ALS Filipowicz
 %% Created: 2018-04-08T16:54:19+0200
-%% Last-Updated: 2018-07-01T16:32:23+0200
+%% Last-Updated: 2018-07-01T18:11:23+0200
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Report-no: ***
 \newif\ifarxiv
@@ -654,7 +654,7 @@ P.G.L. Porta\,Mana\\%
 %\providecommand{\varparallel}{\ensuremath{\mathbin{/\mkern-7mu/}}}%parallel (tentative symbol)
 \renewcommand{\le}{\leqslant}%less or equal
 \renewcommand{\ge}{\geqslant}%greater or equal
-%\DeclarePairedDelimiter\clcl{[}{]}
+\DeclarePairedDelimiter\clcl{[}{]}
 \DeclarePairedDelimiter\clop{[}{[}
 %\DeclarePairedDelimiter\opcl{]}{]}
 %\DeclarePairedDelimiter\opop{]}{[}
@@ -1551,16 +1551,20 @@ order. Said otherwise, it assumes that past frequencies are all that
 matters for its inference. We now consider a new robot that takes the
 outcome order into account in a simple way.
 
-This new robot, denoted $\yMc$, assumes that the sequence of observations
-is divided into subsequences of contiguous observations. These subsequences
-can have different lengths. Within each subsequence, the order of the
-observations doesn't matter. This robot therefore uses an infinitely
-exchangeable model with a Johnson-Dirichlet parameter density for each
-subsequence, as in the previous study. Only observations within a
-subsequence contribute to the update of the distributions for the other
-observations in that subsequence. Observations from other subsequences are
-ignored. As one subsequence ends, the robot's initial-distribution
-parameter $\yn$ and stubbornness $\yN$ are reset.
+This new robot, denoted $\yMc$, is based on this assumption:
+\begin{itemize}
+\item the sequence of observations is divided into subsequences of
+  contiguous observations. These subsequences can have different lengths.
+  Within each subsequence, the order of the observations doesn't matter,
+  and the Johnson-Dirichlet assumptions apply locally.
+\end{itemize}
+This robot therefore uses an infinitely exchangeable model with a
+Johnson-Dirichlet parameter density for each subsequence, as in the
+previous study. Only observations within a subsequence contribute to the
+update of the distributions for the other observations in that subsequence.
+Observations from other subsequences are ignored. As one subsequence ends,
+the robot's initial-distribution parameter $\yn$ and stubbornness $\yN$ are
+reset.
 
 The robot doesn't know the changepoints in advance, however. Before each
 observation, the robot first infers whether the observation belongs to a
@@ -1592,8 +1596,29 @@ The proposition $R^{m}_{0}$, in particular, states that \emph{no} previous
 observations are relevant for inferring the $m$th one; in other words, it
 states that this observation is the start of a new subsequence.
 
-With these propositions, the reset rules described above correspond to
-these probability equalities, for all $m$:
+For fixed $m$, the propositions $R^{m}_{r}$, $0\le r \le m-1$, are
+obviously exhaustive (their probabilities sum to unity) and mutually
+exclusive. The assumptions $\yMc$ made thus far imply that some
+propositions for different $m$ are also exclusive:
+\begin{gather}
+  \label{eq:exclusive_across_m}
+  \p(R^{m}_{r_{m}}, R^{m-1}_{r_{m-1}} \| \yMc) = 0
+  \quad\text{if $r_{m}\ne 0$ and $r_{m} \ne r_{m-1}+1$},
+\\\intertext{and therefore}
+  \label{eq:exhaustive_R_from_previous}
+  \p(R^{m}_{0} \| R^{m-1}_{s},\yMc) +
+  \p(R^{m}_{s+1} \| R^{m-1}_{s},\yMc) = 1.
+\end{gather}
+The reason is that the $m$th outcome either starts a new subsequence, hence
+$r_{m}=0$; or continues the current subsequence, which according to
+$R^{m-1}_{r_{m-1}}$ contains the $(m-1)$th outcome and the previous
+$r_{m-1}$ ones, and therefore $r_{m}=r_{m+1}+1$. All other cases are
+impossible. Note that these other cases might be possible under assumptions
+different from $\yMc$; they would represent a robot with a sort of
+moving-window memory.
+
+With these propositions about the changepoints, the reset rules described
+above correspond to the following equalities, for all $m$:
 \begin{multline}
   \label{eq:irrelevant_data_conditional_R}
   \p(D^{m}_{d_{m}} \|
@@ -1613,28 +1638,68 @@ Where the probabilities on the right side are given by the
 Johnson-Dirichlet formulae~\eqref{eq:predictive_JD_general}
 or~\eqref{update_params_JD}.
 
-
 The formulae above lead to a conditional distribution for the $m$th outcome
 given the previous ones only if the robot has been programmed with the
 probabilities
 \begin{equation}
-  \label{eq:prob_R_conditional_before}
-  \p(R^{m}_{r} \| D^{m-1}_{d_{m-1}}, \dotsc, D^{1}_{d_{1}}, \yMc)
+  \label{eq:prob_R_conditional_only_data_before}
+  \p(R^{m}_{r_{m}} \| D^{m-1}_{d_{m-1}},\dotsc, D^{1}_{d_{1}}, \yMc),
 \end{equation}
-for all $m$, $0\le r\le m-1$, and outcomes $d_i$. Additional assumptions
-are necessary to determine these probabilities. For example, the particular
-order of all past outcomes, the robot's previous distributions, and other
-factors external to the experiment might all be relevant. The robot is
-programmed with this assumption:
+which in turn can be obtained by marginalization and condizionalization
+from the probabilities
+\begin{equation}
+  \label{eq:prob_R_conditional_before}
+  \p(R^{m}_{r_{m}} \| D^{m-1}_{d_{m-1}}, R^{m-1}_{r_{m-1}},\dotsc,
+  R^{2}_{r_{2}}, D^{1}_{d_{1}}, \yMc)
+\end{equation}
+for all legitimate $m$, $r_i$, and outcomes $d_i$. Additional assumptions
+are necessary to determine the latter probabilities. For example, the
+particular order of all past outcomes, the lengths of the previous
+subsequences, or even the robot's previous distributions, and other factors
+external to the experiment might all be relevant. The robot is programmed
+with this assumption:
 \begin{itemize}
 \item only two quantities are relevant to infer whether the next
   observation starts a new subsequence: the total number $m-1$ of
   observations made so far, and the current length $s$ of the present
   subsequence.
 \end{itemize}
+In formulae this assumption is equivalent to a Markov property:
+\begin{equation}
+  \label{eq:prob_R_markov}
+  \p(R^{m}_{r_{m}} \| D^{m-1}_{d_{m-1}}, R^{m-1}_{r_{m-1}},\dotsc,
+  R^{2}_{r_{2}}, D^{1}_{d_{1}}, \yMc) =
+  \p(R^{m}_{r_{m}} \|  R^{m-1}_{r_{m-1}}, \yMc).
+\end{equation}
+Recalling, \eqn~\eqref{eq:exhaustive_R_from_previous}, that only the values
+$r_{m}=0$ and $r_{m}= r_{m-1}+1$ are possible, the conditional
+probabilities above are summarized in the \emph{changepoint function}
+\begin{equation}\label{eq:def_changepoint_function}
+  \yrs(s,m)  \defd \p(R^{m}_{0} \|  R^{m-1}_{s-1}, \yMc),
+  \qquad m \in\set{2,3,\dotsc}, \quad s\in\set{1,\dotsc,m-1}.
+\end{equation}
+It is the probability that the $m$th observation starts a new sequence,
+given that the previous sequence lasted $s$ observations. Note that
+\begin{equation}\label{eq:one_minus_h}
+  \p(R^{m}_{s} \|  R^{m-1}_{s-1}, \yMc)  = 1-\yrs(s,m),\qquad s\ne 0.
+\end{equation}
+A little counting shows that the set of the possible changepoint functions,
+for an experiment with $M$ observations, is $\clcl{0,1}^{(M^2-M)/2}$.
+
+\medskip
+
+Once we specify:
+\begin{itemize}
+\item the stubbornness $\yN$ and initial distribution $\yn$ to be used at
+  each reset,
+\item the changepoint function $\yrs(s,m)$,
+\end{itemize}
+our new robot is completely programmed and can face the Plinko task. Note
+that these specifications determine, through the formulae seen so far, the
+joint distribution~\eqref{eq:distr_statmodel}.
 
 
-\mynote{Luca: work in progress in the rest of this subsection}
+\bigskip\mynote{Luca: work in progress in the rest of this subsection}
 
 
 
@@ -1693,25 +1758,6 @@ $0\le r \le i-1$, where $i-1$ is the total number of observations before
 the $i$th one; if $r=0$ then the $i$th observation is a changepoint,
 starting a new subsequence, and no past data are relevant for its
 inference. In symbols
-\begin{multline}
-  \label{eq:irrelevant_data_conditional_R}
-  \p(D^{m+1}_{d_{m+1}} \|
-  R^{m+1}_{r},  D^{m}_{d_{m}}, \dotsc, D^{1}_{d_{1}}, \yMc)
-  ={}\\
-  \shoveright{\begin{cases}
-  \p(D^{m+1}_{d_{m+1}} \|
-    R^{m+1}_{r},  D^{m}_{d_{m}}, \dotsc, D^{m+1-r}_{d_{m+1-r}}, \yMc)
-    &\text{if $1\le r\le m$},
-      \\[2\jot]
-  \p(D^{m+1}_{d_{m+1}} \|
-    R^{m+1}_{r}, \yMc)
-    &\text{if $r=0$},
-  \end{cases}}
-  \\
-  \text{with probabilities given by the Johnson-Dirichlet
-model~\eqref{eq:prediction_exchangeability}, \eqref{eq:JD_prior},
-\eqref{eq:predictive_JD}.}
-\end{multline}
 
 The probability for the $(m+1)$th observation given the data can be thus
 decomposed 
