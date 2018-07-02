@@ -1,7 +1,7 @@
 \pdfoutput=1
 %% Author: PGL  Porta Mana, ALS Filipowicz
 %% Created: 2018-04-08T16:54:19+0200
-%% Last-Updated: 2018-07-01T23:31:35+0200
+%% Last-Updated: 2018-07-02T10:22:08+0200
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Report-no: ***
 \newif\ifarxiv
@@ -178,7 +178,7 @@ british%
  \DeclareMathSymbol{\partialup}{\mathalpha}{egreekr}{"40}
 % \DeclareMathSymbol{\alpha}{\mathalpha}{egreeki}{"0B}
 % \DeclareMathSymbol{\beta}{\mathalpha}{egreeki}{"0C}
-% \DeclareMathSymbol{\gamma}{\mathalpha}{egreeki}{"0D}
+ \DeclareMathSymbol{\gamma}{\mathalpha}{egreeki}{"0D}
 % \DeclareMathSymbol{\delta}{\mathalpha}{egreeki}{"0E}
  \DeclareMathSymbol{\epsilon}{\mathalpha}{egreeki}{"0F}
 % \DeclareMathSymbol{\zeta}{\mathalpha}{egreeki}{"10}
@@ -748,9 +748,9 @@ P.G.L. Porta\,Mana\\%
 \newcommand*{\ymu}{\mu}
 \newcommand*{\yh}{\chi}
 \newcommand*{\yrs}{h}
-\newcommand*{\yc}{c}
-\newcommand*{\ycs}{c_{\text{s}}}
-\newcommand*{\ycm}{c_{\text{m}}}
+\newcommand*{\yc}{\gamma}
+\newcommand*{\ycs}{\gamma_{\text{s}}}
+\newcommand*{\ycm}{\gamma_{\text{m}}}
 %\DeclareMathOperator{\logistic}{logistic}
 \newcommand*{\logistic}{\sigmaup}
 \AtBeginEnvironment{tabularx}{\setlist[enumerate]{wide, leftmargin=*,
@@ -1812,16 +1812,18 @@ defining
 \end{subequations}
 we find that the conditional probability we're seeking, $A_{m}(d_{m})$, is
 given recursively by
+\newlength{\myl}\settowidth{\myl}{\footnotesize the past $r$ observations}
 \begin{subequations}\label{eq:recursive_formula_2}
 \begin{align}
   A_{m}(d_{m})
-  &= \frac{\sum_{r=0}^{m-1} B_{m}(r,d_{m}) \; C_{m}(r)}{A_{m-1}(d_{m-1})},
+  &= \frac{\sum_{r=0}^{m-1} B_{m}(r,d_{m}) \; C_{m}(r)}{A_{m-1}(d_{m-1})}
   \\
-  B_{m}(r,d_{m})  &= \frac{\yN\ynn_{d_{m}}+r\yff_{d_{m}}}{\yN + r},
-                    \qquad
-                    \yff_{d_{m}} \defd\left\{
-                    \parbox[c]{0.35\linewidth}{frequency of $d_m$ in\\ the
-                    past $r$ observations}\right.
+  B_{m}(r,d_{m})
+  &= \frac{\yN\ynn_{d_{m}}+r\yff_{d_{m}}}{\yN + r},
+    \qquad
+    \yff_{d_{m}} \defd\Bigl\{
+    \parbox[c]{\the\myl}{\footnotesize rel. frequency of $d_m$ in\\
+  the past $r$ observations}
   \\
   C_{m}(r)
   &=   \!\begin{multlined}[t][0.6\linewidth]
@@ -2021,8 +2023,9 @@ One restriction is to specify a logistic-polynomial changepoint function
 like this:
 \begin{gather}
   \label{eq:changepoint_logistic_general}
-  \yrs(s,m ; c_0,\dotsc) =
-  \logistic(c_0 + c_1 s + c_2 m + c_3 s^2 + c_4 sm + c_5 m^2 + \dotsb)
+  \yrs(s,m ; \gamma_0,\dotsc) =
+  \logistic(\gamma_0 + \gamma_1 s + \gamma_2 m +
+  \gamma_3 s^2 + \gamma_4 sm + \gamma_5 m^2 + \dotsb)
   \\
   \shortintertext{where the logistic function}
   \label{eq:logistic_def}
