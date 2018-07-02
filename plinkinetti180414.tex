@@ -1,7 +1,7 @@
 \pdfoutput=1
 %% Author: PGL  Porta Mana, ALS Filipowicz
 %% Created: 2018-04-08T16:54:19+0200
-%% Last-Updated: 2018-07-02T15:38:15+0200
+%% Last-Updated: 2018-07-02T16:36:59+0200
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Report-no: ***
 \newif\ifarxiv
@@ -1001,8 +1001,15 @@ $M$ conditional distributions
   \text{conditional on the observed $d_1,\dotsc,d_{m-1}$ only}.
 \label{eq:cond_distribs}
 \end{multline}
-There's a Bayesian robot that yields exactly the participant's
-distributions: it's the robot $\yIp$ for which
+These distributions are not sufficient to define the joint
+distribution~\eqref{eq:distr_statmodel}: they only give us
+$39\times 200=7\,800$ out of the $3\times 10^{320}$ required numbers. The
+participant's statistical model is thus largely unknown.
+
+The participant's inferences can indeed come from several possible
+statistical models: there are several Bayesian robots that would make the
+exact same inferences as the participant. The simplest such robot, call it
+$\yIp$, is the one for which
 \begin{subequations}
   \label{eq:robot_yields_participant}
   \begin{equation}
@@ -1010,7 +1017,7 @@ distributions: it's the robot $\yIp$ for which
     D^{m-1}_{d_{m-1}},\dotsc,D^1_{d_1}, \yIp) = \p(D^m_{d_m} \| \yIp) =
     \text{participant's}
   \end{equation}
-  which give a normalized joint distribution~\eqref{eq:distr_statmodel}:
+  which yields a normalized joint distribution
   \begin{multline}
     \p( D^M_{d_M}, D^{M-1}_{d_{M-1}}, \dotsc,  D^2_{d_2}, D^1_{d_1} \|  \yIp)
     =
@@ -1020,17 +1027,15 @@ distributions: it's the robot $\yIp$ for which
     \text{for all $d_1,\dotsc,d_M$},
   \end{multline}
 \end{subequations}
-which completely defines the robot's inferences.
+which completely defines the robot's inferences. This robot assumes the
+probabilities for all observations to be independent of one another, and
+they happen to be equal to the participant's. One may argue that this is an
+\enquote{unreasonable} robot, and that the participants do not assume
+independence of the probabilities. But \emph{there's no way to prove this}
+from the verbal information given to the participants and the set-up of the
+Plinko experiments \citep{filipowiczetal2014,filipowiczetal2016}.
 
-This robot assumes the probabilities for all observations to be independent
-of one another, and they happen to be equal to the participant's. One may
-argue that this is an \enquote{unreasonable} robot, and that the
-participants do not assume independence of the probabilities. \emph{But
-  there's no way to prove this}, given the verbal information given to the
-participants and the set-up of the Plinko experiments
-\citep{filipowiczetal2014,filipowiczetal2016}.
-
-Since the initial information given to the participants place no
+Since the initial information given to the participants places no
 restrictions is placed on the set of possible statistical models, the
 model~\eqref{eq:robot_yields_participant} is legitimate. Each participant
 is thus making inferences in a perfectly Bayesian way.
@@ -1044,7 +1049,10 @@ this information would restrict the set of allowed Bayesian robots, and we
 could check whether each participant was behaving in a Bayesian way or not
 (assuming no misunderstanding of the initial information occurred).
 
-Another way would be
+Another way to get a glimpse of a participant's statistical model is to let
+him or her do the full Plinko experiment several times, asking to start
+with the same initial distribution and making it very clear that the same
+set-up is used in all repetitions of the experiment.
 
 In the next two sections we consider two sets of robots programmed with two
 different initial assumptions.
