@@ -1,7 +1,7 @@
 \pdfoutput=1
 %% Author: PGL  Porta Mana, ALS Filipowicz
 %% Created: 2018-04-08T16:54:19+0200
-%% Last-Updated: 2018-07-02T10:22:08+0200
+%% Last-Updated: 2018-07-02T15:38:15+0200
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Report-no: ***
 \newif\ifarxiv
@@ -554,10 +554,17 @@ totalheight=\heightof{@}]{atblack.png}}\makeatother
 \firmlists*
 \midsloppy
 
-% handling orphan/widow lines:
-\clubpenalty=10000
-\widowpenalty=10000
-\raggedbottom
+% handling orphan/widow lines, memman.pdf
+% \clubpenalty=10000
+% \widowpenalty=10000
+% \raggedbottom
+% Downes, memman.pdf
+\clubpenalty=9996
+\widowpenalty=9999
+\brokenpenalty=4991
+\predisplaypenalty=10000
+\postdisplaypenalty=1549
+\displaywidowpenalty=1602
 
 \selectlanguage{british}\frenchspacing
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -735,6 +742,7 @@ P.G.L. Porta\,Mana\\%
 \newcommand*{\yff}{f}
 \newcommand*{\yf}{\bm{\yff}}
 \newcommand*{\yI}{\varIota}
+\newcommand*{\yIp}{\yI_{\textrm{p}}}
 \newcommand*{\yMJ}{\yI_1}
 \newcommand*{\yMc}{\yI_2}
 \newcommand*{\yN}{\varLambda}
@@ -749,8 +757,8 @@ P.G.L. Porta\,Mana\\%
 \newcommand*{\yh}{\chi}
 \newcommand*{\yrs}{h}
 \newcommand*{\yc}{\gamma}
-\newcommand*{\ycs}{\gamma_{\text{s}}}
-\newcommand*{\ycm}{\gamma_{\text{m}}}
+\newcommand*{\ycs}{\gamma_{\textrm{s}}}
+\newcommand*{\ycm}{\gamma_{\textrm{m}}}
 %\DeclareMathOperator{\logistic}{logistic}
 \newcommand*{\logistic}{\sigmaup}
 \AtBeginEnvironment{tabularx}{\setlist[enumerate]{wide, leftmargin=*,
@@ -846,10 +854,10 @@ decide to assign a uniform distribution.
 
 The literature I've seen so far explains at length how the data presented
 to participants are generated, and is very succinct in explaining what was
-said to the participants before the experiment. The participant's behaviour
-is the compared against models based on the pseudo-random algorithm that
-generated the data. Nassar \etal's \citey{nassaretal2010} work is an
-example.
+said to the participants before the experiment. The participant's
+inferences are then compared against models based on the pseudo-random
+algorithm that generated the data. Nassar \etal's \citey{nassaretal2010}
+work is an example.
 
 I think that we should use a different paradigm to describe the experiment
 and assess the participants' behaviours.
@@ -868,13 +876,12 @@ instead, is to model the inference, given the same initial knowledge.
 
 A consequence of this point of view is that there isn't just one robot that
 can model the inferences. The information given to the participants is
-never be enough to make numeric inferences and apply the probability
-calculus: it must always be augmented with additional assumptions,
-determined by each participant's previous life experiences. Different
-robots can thus be constructed: they use the same initial information as
-the participants, but each is augmented with different auxiliary
-assumptions. \emph{The} ideal observer doesn't exist. There are several
-ideal observers.
+never enough to make numeric inferences and apply the probability calculus:
+it must always be augmented with additional assumptions, determined by each
+participant's previous life experiences. Different robots can thus be
+constructed: they use the same initial information as the participants, but
+each is augmented with different auxiliary assumptions. \emph{The} ideal
+observer doesn't exist. There are several ideal observers.
 
 Another consequence of this point of view is that the data-generating
 algorithm becomes slightly less important. The robot is constructed based
@@ -923,14 +930,15 @@ values of the joint distribution
 for all combinations of $d_1,\dotsc,d_M \in \set{1,\dotsc,N}$; or to
 choosing any other probabilistic assignments equivalent to this
 distribution. An equivalent alternative, for example, is to assign the
-distribution for the first observation, $\p(D^1_{d_1} \|\yI)$, the
-distributions for the second observation conditional on the first,
-$\p(D^2_{d_2} \|D^1_{d_1}, \yI)$, and so on up to the distributions for the
-$M$th observation conditional on the rest,
+distribution for the first observation, $\p(D^1_{d_1} \|\yI)$, the $N$
+distributions for the second observation conditional on all possible first
+outcomes, $\p(D^2_{d_2} \|D^1_{d_1}, \yI)$, and so on up to the $N^{M-1}$
+distributions for the $M$th observation conditional on all possible
+previous outcomes,
 $\p(D^M_{d_M} \| D^{M-1}_{d_{M-1}},\dotsc,D^1_{d_1},\yI)$. The product of
 these distributions is the joint distribution above, and conversely each of
 these distributions can be obtained from the joint one above by
-condizionalization and marginalization.
+marginalization and condizionalization.
 
 Our assumptions can have different natures and motivations, for example
 from symmetry, mechanics, biology. As long as they lead to definite
@@ -955,7 +963,8 @@ of probability to make numeric probabilistic inferences and update them in
 view of new observations. But to do so it first needs to be fully
 programmed with a complete set of probabilistic assumptions, in the form of
 the joint distribution~\eqref{eq:distr_statmodel} or in another equivalent
-way. A Bayesian robot is thus equivalent to a statistical model.
+way. \emph{A \enquote{Bayesian robot} is thus equivalent to a statistical
+  model.}
 
 In the context of the experiment described above, the set of possible
 robots is a simplex of $N^M-1$ dimensions, since this is the set of all
@@ -968,7 +977,7 @@ sentences short. Our statistical terminology and notation follow ISO
 standards \citep{iso1993_r2009,iso2006}, except for the use of a comma to
 denote logical conjunction \enquote{$\land$}, for simplicity.
 
-\subsection{Statistical models in the Plinko experiment}
+\subsection{Participants' statistical models in the Plinko experiment}
 \label{sec:plinko_statmodels}
 
 In the Plinko experiments \citep{filipowiczetal2014,filipowiczetal2016} the
@@ -984,17 +993,47 @@ what's common sense? Each participant could have widely different past
 experiences; what's common sense to us may not be to them and vice versa.
 
 The distributions sequentially constructed by a participant represent the
-conditional distributions
-\begin{equation}
-  \p(D^m_{d_m} \| D^{m-1}_{d_{m-1}},\dotsc,D^1_{d_1},\yI),
-  \qquad m=1,\dotsc,M,
+$M$ conditional distributions
+\begin{multline}
+  \p(D^m_{d_m} \| D^{m-1}_{d_{m-1}},\dotsc,D^1_{d_1},
+  \text{\footnotesize participant}),
+  \qquad m=1,\dotsc,M,\\
+  \text{conditional on the observed $d_1,\dotsc,d_{m-1}$ only}.
 \label{eq:cond_distribs}
-\end{equation}
-which, multiplied, give a normalized joint
-distribution~\eqref{eq:distr_statmodel} and thus determine a robot's
-initial assumptions, a statistical model. Since no restriction is placed on
-these models, the joint distribution thus obtained is legitimate. Each
-participant is thus making inferences in a perfectly Bayesian way.
+\end{multline}
+There's a Bayesian robot that yields exactly the participant's
+distributions: it's the robot $\yIp$ for which
+\begin{subequations}
+  \label{eq:robot_yields_participant}
+  \begin{equation}
+    \p(D^m_{d_m} \|
+    D^{m-1}_{d_{m-1}},\dotsc,D^1_{d_1}, \yIp) = \p(D^m_{d_m} \| \yIp) =
+    \text{participant's}
+  \end{equation}
+  which give a normalized joint distribution~\eqref{eq:distr_statmodel}:
+  \begin{multline}
+    \p( D^M_{d_M}, D^{M-1}_{d_{M-1}}, \dotsc,  D^2_{d_2}, D^1_{d_1} \|  \yIp)
+    =
+    \p( D^M_{d_M} \|  \yIp) \times \dotsm \times
+    \p(  D^1_{d_1} \|  \yIp)  
+    \\
+    \text{for all $d_1,\dotsc,d_M$},
+  \end{multline}
+\end{subequations}
+which completely defines the robot's inferences.
+
+This robot assumes the probabilities for all observations to be independent
+of one another, and they happen to be equal to the participant's. One may
+argue that this is an \enquote{unreasonable} robot, and that the
+participants do not assume independence of the probabilities. \emph{But
+  there's no way to prove this}, given the verbal information given to the
+participants and the set-up of the Plinko experiments
+\citep{filipowiczetal2014,filipowiczetal2016}.
+
+Since the initial information given to the participants place no
+restrictions is placed on the set of possible statistical models, the
+model~\eqref{eq:robot_yields_participant} is legitimate. Each participant
+is thus making inferences in a perfectly Bayesian way.
 
 If the participants were given more detailed information, for example
 \enquote{All outcomes are generated by the same computer algorithm}, or
@@ -1004,6 +1043,8 @@ If the participants were given more detailed information, for example
 this information would restrict the set of allowed Bayesian robots, and we
 could check whether each participant was behaving in a Bayesian way or not
 (assuming no misunderstanding of the initial information occurred).
+
+Another way would be
 
 In the next two sections we consider two sets of robots programmed with two
 different initial assumptions.
@@ -1170,7 +1211,7 @@ Lauritzen\mynote{add refs}. \textcolor{white}{If you find this you can
 
 
 
-\subsection{General remarks on the robot's behaviour}
+\subsection{General remarks on the Johnson-Dirichlet robot's behaviour}
 \label{sec:remarks}
 
 The infinite-exchangeability formulae~\eqref{eq:exchangeability_form}
