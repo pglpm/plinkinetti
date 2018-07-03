@@ -477,7 +477,7 @@ g <- g + geom_rect(aes(xmax=maxtrials+1-robotwidth,xmin=maxtrials+1-2*robotwidth
     image2D(pmatrix,x=nobs,y=nobs,xlab='m',ylab='v',zlim=c(0,1),
             col=barpalettepos(25),NAcol=mygreen)
 
-    title(paste0("participant #", participant, ", robot's changepoint function"))
+    title(paste0("part. #", participant, ", stub. = ", sprintf("%.3g",exp(params[1])),", changepoint:"))
 
 
     ## plot the relative entropy and Jansen-Shannon
