@@ -179,43 +179,58 @@ robotdistribution <- function(priorfrequencies,stubbornness,obs,params,nregions=
 #######################################################################
 ## minimization of discrepancy between robot and participant
 
-## Discrepancy between robot's and participant's sequences of distributions
-discrepancy <- function(params,pdistr,obs,nregions=1,maxtrials=200,stubbornness=0.01){
-    ##iparams <- ilogit(params) ## convert from (-inf,+inf) to (0,1)
+## eliminate zero-probabilities from distributions
+regularizedistr <- function(tdistr,n=NULL,fraction=1000){
+    if(length(tdistr)==1){tdistr <- distribution(tdistr,n)}
+    if(is.vector(tdistr)){dim(tdistr) <- c(1,length(tdistr))}
+    n <- dim(tdistr)[1]-1
+    ## we set the distributions plus a value equal to 1/100 of the minimum
+    ## nonzero value ever assigned
+    toadd <- min(c(tdistr[tdistr>0]))/fraction
+    pdistr <- t(sapply(1:(n+1),function(i){
+        mini <- tdistr[i,]
+        if(min(mini)==0){
+            mini <- mini + toadd}
+            mini/sum(mini)}))
+    pdistr}
 
-    rdistr <- robotdistribution(pdistr[1,],stubbornness,obs,params,nregions)
+
+## Discrepancy between robot's and participant's sequences of distributions
+discrepancy <- function(params,pdistr,obs,nregions=1,maxtrials=200,stubbornness=0.01,initial.distr=NULL){
+    ##iparams <- ilogit(params) ## convert from (-inf,+inf) to (0,1)
+    n <- maxtrials
+    ## check if pdistr is a participant's ID
+    if(length(pdistr)==1){pdistr <- regularizedistr(pdistr,n)}
+    ## check if obs is a participant's ID
+    if(length(obs)==1){obs <- observations(obs,n)}
+
+    ## robot's reset distribution
+    if(length(initial.distr)==0){## use the first provided
+        initial.distr <- pdistr[1,]
+    }
+    else{## use another participant's or custom
+        initial.distr <- regularizedistr(initial.distr,n)[1,]
+    }
+
+    rdistr <- robotdistribution(initial.distr,stubbornness,obs,params,nregions)
     if(anyNA(rdistr)){return(NA)}
 
     ## calculate total discrepancy
-    max(sapply(1:(maxtrials+1),function(i){kld(rdistr[i,],pdistr[i,])}))
+    mean(sapply(1:(n+1),function(i){jsd(rdistr[i,],pdistr[i,])}))
 }
 
-regularizedistr <- function(tdistr,n=200){
-    if(length(tdistr)==1){tdistr <- distribution(tdistr,n)}
-    ## we set the distributions plus a value equal to 1/100 of the minimum
-    ## nonzero value ever assigned
-    mini <- tdistr + min(c(tdistr[tdistr>0]))/1000
-    pdistr <- t(sapply(1:(n+1),function(i){mini[i,]/sum(mini[i,])}))
-    pdistr}
 
 ## Algorithm to seek discrepancy minimum using optim
 ## max + kl: 600
 ## max + js: 500
 ## mean + kl: 370
 ## mean + js: 360
-reducediscrepancy <- function(participant,maxtrials,nregions=1,startpoints=10,seed=999){
+reducediscrepancy <- function(participant,maxtrials,nregions=1,startpoints=10,seed=999,initial.distr=NULL){
     set.seed(seed)
     n <- maxtrials
     nparams <- ((nregions+1)^2+nregions+1)/2
     obs <- observations(participant,n)
-    tdistr <- distribution(participant,n)
-
-    ## sequence of frequency parameters of the JD model. At every "reset"
-    ## we set the first equal to the participant's initial distribution
-    ## plus a value equal to 1/100 of the minimum nonzero value ever
-    ## assigned (to avoid zero probabilities in the robot)
-    mini <- tdistr + min(c(tdistr[tdistr>0]))/1000
-    pdistr <- t(sapply(1:(n+1),function(i){mini[i,]/sum(mini[i,])}))
+    pdistr <- regularizedistr(participant,n)
 
     maxval <- Inf
     maxpars <- NA
@@ -231,7 +246,7 @@ reducediscrepancy <- function(participant,maxtrials,nregions=1,startpoints=10,se
             counti <- counti + 1
         }
         message('found in ',counti, ' trials.')
-        optrobot <- optim(startpar,discrepancy,gr=NULL, pdistr=pdistr,obs=obs,nregions=nregions,maxtrials=maxtrials,stubbornness=0.01,control=list(maxit=2500))
+        optrobot <- optim(startpar,discrepancy,gr=NULL, pdistr=pdistr,obs=obs,nregions=nregions,maxtrials=maxtrials,stubbornness=0.01,initial.distr=initial.distr,control=list(maxit=2500))
         conv <- optrobot$convergence
         if(conv > 0){message("iteration ",i," didn't converge: ",conv)
         details <- optrobot}
@@ -254,14 +269,7 @@ reducediscrepancyhjk <- function(participant,maxtrials,nregions=1,startpoints=10
     n <- maxtrials
     nparams <- ((nregions+1)^2+nregions+1)/2
     obs <- observations(participant,n)
-    tdistr <- distribution(participant,n)
-
-    ## sequence of frequency parameters of the JD model. At every "reset"
-    ## we set the first equal to the participant's initial distribution
-    ## plus a value equal to 1/100 of the minimum nonzero value ever
-    ## assigned (to avoid zero probabilities in the robot)
-    mini <- tdistr + min(c(tdistr[tdistr>0]))/1000
-    pdistr <- t(sapply(1:(n+1),function(i){mini[i,]/sum(mini[i,])}))
+    pdistr <- regularizedistr(participant,n)
 
     maxval <- Inf
     maxpars <- NA
@@ -312,7 +320,7 @@ plotminparams <- function(nregions,params,label='',maxtrials=200){
 ## - sequences of overlap, relative entropies, means, stds
 ## - histograms for a selected set of trials
 ## and that outputs the final distributions, rel-entropies, overlaps, means, stds
-comparison <- function(participant,maxtrials=200,trialstoshow=c(1:4, 99:102, 197:200),stubbornness=0.01,label='',params=rep(0.5,6),nregions=1){
+comparison <- function(participant,maxtrials=200,trialstoshow=c(1:4, 99:102, 197:200),stubbornness=0.01,label='',params=rep(0.5,6),nregions=1,initial.distr=NULL){
     n <- maxtrials ## number of trials to consider
     
     obs <- observations(participant,n)
@@ -321,11 +329,17 @@ comparison <- function(participant,maxtrials=200,trialstoshow=c(1:4, 99:102, 197
     ## every "reset" we set the first equal to the participant's initial
     ## distribution plus a value equal to 1/1000 of the minimum nonzero value
     ## ever assigned
-    tdistr <- distribution(participant,n)
-    mini <- tdistr + min(c(tdistr[tdistr>0]))/1000
-    pdistr <- t(sapply(1:(n+1),function(i){mini[i,]/sum(mini[i,])}))
+    pdistr <- regularizedistr(participant,n)
 
-    rdistr <- robotdistribution(pdistr[1,],stubbornness,obs,params,nregions)
+    ## robot's reset distribution
+    if(length(initial.distr)==0){## use this participant's
+        initial.distr <- pdistr[1,]
+    }
+    else{## use another participant's or custom
+        initial.distr <- regularizedistr(initial.distr,n)[1,]
+    }
+    
+    rdistr <- robotdistribution(initial.distr,stubbornness,obs,params,nregions)
 
     ## calculate the overlap and relative entropy of the participant's distr.
     jsseq <- sapply(1:(maxtrials+1),function(i){jsd(rdistr[i,],pdistr[i,])})
