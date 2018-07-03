@@ -1,7 +1,7 @@
 \pdfoutput=1
 %% Author: PGL  Porta Mana, ALS Filipowicz
 %% Created: 2018-04-08T16:54:19+0200
-%% Last-Updated: 2018-07-03T18:25:29+0200
+%% Last-Updated: 2018-07-03T18:38:42+0200
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Report-no: ***
 \newif\ifarxiv
@@ -923,19 +923,35 @@ which can have $N$ possible slot outcomes $\set{1,\dotsc,N}$. Denote
 \enquote{The outcome of the $i$th \textbf{o}bservation is slot $s$} by
 $\varOmicron^i_s$. In this context, choosing a statistical model $\yI$ is
 equivalent to choosing the numerical values of the joint distribution
-\begin{equation}
+\begin{multline}
   \label{eq:distr_statmodel}
-  \p( \varOmicron^M_{s_M}, \varOmicron^{M-1}_{s_{M-1}}, \dotsc,  \varOmicron^2_{s_2}, \varOmicron^1_{s_1} \|  \yI)
-\end{equation}
+  \p( \varOmicron^M_{s_M}, \varOmicron^{M-1}_{s_{M-1}}, \dotsc,
+  \varOmicron^2_{s_2}, \varOmicron^1_{s_1} \|  \yI)
+  \quad\text{for all $s_1,\dotsc,s_M$}\\\text{(\ie, $N^M-1$ numbers)}
+\end{multline}
 for all combinations of $s_1,\dotsc,s_M \in \set{1,\dotsc,N}$; or to
 choosing any other probabilistic assignments equivalent to this
 distribution. An equivalent alternative, for example, is to assign the
-distribution for the first observation, $\p(\varOmicron^1_{s_1} \|\yI)$, the $N$
-distributions for the second observation conditional on all possible first
-outcomes, $\p(\varOmicron^2_{s_2} \|\varOmicron^1_{s_1}, \yI)$, and so on up to the $N^{M-1}$
-distributions for the $M$th observation conditional on all possible
-previous outcomes,
-$\p(\varOmicron^M_{s_M} \| \varOmicron^{M-1}_{s_{M-1}},\dotsc,\varOmicron^1_{s_1},\yI)$. The product of
+distribution for the first observation:
+\begin{subequations}
+  \begin{align}
+    &\p(\varOmicron^1_{s_1} \|\yI)
+    \quad\text{all $s_1$} &&\text{($N-1$ values)},
+\\\intertext{
+the $N$ distributions for the second
+  observation conditional on all possible first outcomes:}
+    &\p(\varOmicron^2_{s_2} \|\varOmicron^1_{s_1}, \yI)
+    \quad\text{all $s_1,s_2$} &&\text{($(N-1)\times N$ values)},
+    \\
+    \intertext{and so on up to the
+  $N^{M-1}$ distributions for the $M$th observation conditional on all
+  possible previous outcomes:}
+&\p(\varOmicron^M_{s_M} \|
+\varOmicron^{M-1}_{s_{M-1}},\dotsc,\varOmicron^1_{s_1},\yI)
+\quad\text{all $s_1,\dotsc,s_M$} &&\text{($(N-1)\times N^{M-1}$ values)}
+  \end{align}
+\end{subequations}
+The product of
 these distributions is the joint distribution above, and conversely each of
 these distributions can be obtained from the joint one above by
 marginalization and condizionalization.
