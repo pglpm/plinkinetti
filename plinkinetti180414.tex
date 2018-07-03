@@ -1,7 +1,7 @@
 \pdfoutput=1
 %% Author: PGL  Porta Mana, ALS Filipowicz
 %% Created: 2018-04-08T16:54:19+0200
-%% Last-Updated: 2018-07-03T13:28:43+0200
+%% Last-Updated: 2018-07-03T13:45:36+0200
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Report-no: ***
 \newif\ifarxiv
@@ -757,7 +757,7 @@ P.G.L. Porta\,Mana\\%
 \newcommand*{\yh}{\chi}
 \newcommand*{\yrs}{h}
 \newcommand*{\yc}{\gamma}
-\newcommand*{\ycs}{\gamma_{\textrm{t}}}
+\newcommand*{\ycs}{\gamma_{\textrm{v}}}
 \newcommand*{\ycm}{\gamma_{\textrm{m}}}
 %\DeclareMathOperator{\logistic}{logistic}
 \newcommand*{\logistic}{\sigmaup}
@@ -920,7 +920,7 @@ probability calculus.
 
 Consider this context: a set of $M$ observations $1,2,\dotsc,M$, each of
 which can have $N$ possible slot outcomes $\set{1,\dotsc,N}$. Denote
-\enquote{The outcome of the $i$th observation is slot $s$} by
+\enquote{The outcome of the $i$th \textbf{o}bservation is slot $s$} by
 $\varOmicron^i_s$. In this context, choosing a statistical model $\yI$ is
 equivalent to choosing the numerical values of the joint distribution
 \begin{equation}
@@ -1636,19 +1636,16 @@ Dirichlet model used thus far. The final inference is a combination of
 these two according to the law of total probability.
 
 To translate these assumptions into probability distributions it's
-convenient to introduce some propositions, denoted $R^{m}_{r}$, defined
-this way:
+convenient to introduce some propositions, denoted $R^{m}_{u}$, defined as
 \begin{multline}
   \label{eq:def_prop_changepoint}
   \begin{aligned}
-    R^{m}_{r} &\defd
-    \text{\enquote{Only the previous $r$ outcomes are relevant for the $m$th
-        one}}
+    R^{m}_{u}
+    &\defd \text{\enquote{Only the previous $u$ outcomes are \textbf{r}elevant for the $m$th one}}
     \\
-    &\equiv\text{\enquote{Observations
-        $\set{m-r, m-r+1, \dotsc, m}$ form a subsequence}}
+    &\equiv\text{\enquote{Observations $\set{m-u, m-u+1, \dotsc, m}$ form a subsequence}}
   \end{aligned}
-  \\ \text{with $0\le r \le m-1$}.
+  \\ \text{with $0\le u \le m-1$}.
 \end{multline}
 The equivalence of these two propositions should be clear from the
 discussion above.
@@ -1657,23 +1654,23 @@ The proposition $R^{m}_{0}$, in particular, states that \emph{no} previous
 observations are relevant for inferring the $m$th one; in other words, it
 states that this observation is the start of a new subsequence.
 
-For fixed $m$, the propositions $R^{m}_{r}$, $0\le r \le m-1$, are
+For fixed $m$, the propositions $R^{m}_{u}$, $0\le u \le m-1$, are
 obviously exhaustive (their probabilities sum to unity) and mutually
 exclusive. The assumptions $\yMc$ made thus far imply that some
 propositions for different $m$ are also exclusive:
 \begin{gather}
   \label{eq:exclusive_across_m}
-  \p(R^{m}_{r_{m}}, R^{m-1}_{r_{m-1}} \| \yMc) = 0
-  \quad\text{if $r_{m}\ne 0$ and $r_{m} \ne r_{m-1}+1$},
+  \p(R^{m}_{u_{m}}, R^{m-1}_{u_{m-1}} \| \yMc) = 0
+  \quad\text{if $u_{m}\ne 0$ and $u_{m} \ne u_{m-1}+1$},
 \\\intertext{and therefore}
   \label{eq:exhaustive_R_from_previous}
-  \p(R^{m}_{0} \| R^{m-1}_{t},\yMc) +
-  \p(R^{m}_{t+1} \| R^{m-1}_{t},\yMc) = 1.
+  \p(R^{m}_{0} \| R^{m-1}_{v},\yMc) +
+  \p(R^{m}_{v+1} \| R^{m-1}_{v},\yMc) = 1.
 \end{gather}
 The reason is that the $m$th outcome either starts a new subsequence, hence
-$r_{m}=0$; or continues the current subsequence, which according to
-$R^{m-1}_{r_{m-1}}$ contains the $(m-1)$th outcome and the previous
-$r_{m-1}$ ones, and therefore $r_{m}=r_{m+1}+1$. All other cases are
+$u_{m}=0$; or continues the current subsequence, which according to
+$R^{m-1}_{u_{m-1}}$ contains the $(m-1)$th outcome and the previous
+$u_{m-1}$ ones, and therefore $u_{m}=u_{m+1}+1$. All other cases are
 impossible. Note that these other cases might be possible under assumptions
 different from $\yMc$; they would represent a robot with a sort of
 moving-window memory.
@@ -1683,16 +1680,16 @@ above correspond to the following equalities, for all $m$:
 \begin{multline}
   \label{eq:irrelevant_data_conditional_R}
   \p(\varOmicron^{m}_{s_{m}} \|
-  R^{m}_{r},  \varOmicron^{m-1}_{s_{m-1}}, \dotsc, \varOmicron^{1}_{s_{1}}, \yMc)
+  R^{m}_{u},  \varOmicron^{m-1}_{s_{m-1}}, \dotsc, \varOmicron^{1}_{s_{1}}, \yMc)
   ={}\\
   \begin{cases}
   \p(\varOmicron^{m}_{s_{m}} \|
-    R^{m}_{r},  \varOmicron^{m-1}_{s_{m-1}}, \dotsc, \varOmicron^{m-r}_{s_{m-r}}, \yMc)
-    &\text{for $1\le r\le m-1$},
+    R^{m}_{u},  \varOmicron^{m-1}_{s_{m-1}}, \dotsc, \varOmicron^{m-u}_{s_{m-u}}, \yMc)
+    &\text{for $1\le u\le m-1$},
       \\
   \p(\varOmicron^{m}_{s_{m}} \|
-    R^{m}_{r}, \yMc)
-    &\text{for $r=0$},
+    R^{m}_{u}, \yMc)
+    &\text{for $u=0$},
   \end{cases}
 \end{multline}
 Where the probabilities on the right side are given by the
@@ -1704,16 +1701,16 @@ given the previous ones only if the robot has been programmed with the
 probabilities
 \begin{equation}
   \label{eq:prob_R_conditional_only_data_before}
-  \p(R^{m}_{r_{m}} \| \varOmicron^{m-1}_{s_{m-1}},\dotsc, \varOmicron^{1}_{s_{1}}, \yMc),
+  \p(R^{m}_{u_{m}} \| \varOmicron^{m-1}_{s_{m-1}},\dotsc, \varOmicron^{1}_{s_{1}}, \yMc),
 \end{equation}
 which in turn can be obtained by marginalization and condizionalization
 from the probabilities
 \begin{equation}
   \label{eq:prob_R_conditional_before}
-  \p(R^{m}_{r_{m}} \| \varOmicron^{m-1}_{s_{m-1}}, R^{m-1}_{r_{m-1}},\dotsc,
-  R^{2}_{r_{2}}, \varOmicron^{1}_{s_{1}}, \yMc)
+  \p(R^{m}_{u_{m}} \| \varOmicron^{m-1}_{s_{m-1}}, R^{m-1}_{u_{m-1}},\dotsc,
+  R^{2}_{u_{2}}, \varOmicron^{1}_{s_{1}}, \yMc)
 \end{equation}
-for all legitimate $m$, $r_i$, and outcomes $s_i$. Additional assumptions
+for all legitimate $m$, $u_i$, and outcomes $s_i$. Additional assumptions
 are necessary to determine the latter probabilities. For example, the
 particular order of all past outcomes, the lengths of the previous
 subsequences, or even the robot's previous distributions, and other factors
@@ -1722,29 +1719,29 @@ with this assumption:
 \begin{itemize}
 \item only two quantities are relevant to infer whether the next
   observation starts a new subsequence: the total number $m-1$ of
-  observations made so far, and the current length $t$ of the present
+  observations made so far, and the current length $v$ of the present
   subsequence.
 \end{itemize}
 In formulae this assumption is equivalent to a Markov property:
 \begin{equation}
   \label{eq:prob_R_markov}
-  \p(R^{m}_{r_{m}} \| \varOmicron^{m-1}_{s_{m-1}}, R^{m-1}_{r_{m-1}},\dotsc,
-  R^{2}_{r_{2}}, \varOmicron^{1}_{s_{1}}, \yMc) =
-  \p(R^{m}_{r_{m}} \|  R^{m-1}_{r_{m-1}}, \yMc).
+  \p(R^{m}_{u_{m}} \| \varOmicron^{m-1}_{s_{m-1}}, R^{m-1}_{u_{m-1}},\dotsc,
+  R^{2}_{u_{2}}, \varOmicron^{1}_{s_{1}}, \yMc) =
+  \p(R^{m}_{u_{m}} \|  R^{m-1}_{u_{m-1}}, \yMc).
 \end{equation}
 Recalling, \eqn~\eqref{eq:exhaustive_R_from_previous}, that only the values
-$r_{m}=0$ and $r_{m}= r_{m-1}+1$ are possible, the conditional
+$u_{m}=0$ and $u_{m}= u_{m-1}+1$ are possible, the conditional
 probabilities above are summarized in the \emph{changepoint function}
 \begin{equation}\label{eq:def_changepoint_function}
-  \yrs(t,m)  \defd \p(R^{m}_{0} \|  R^{m-1}_{t}, \yMc),
-  \qquad m \in\set{2,3,\dotsc}, \quad t\in\set{1,\dotsc,m-1}.
+  \yrs(v,m)  \defd \p(R^{m}_{0} \|  R^{m-1}_{v}, \yMc),
+  \qquad m \in\set{2,3,\dotsc}, \quad v\in\set{1,\dotsc,m-1}.
 \end{equation}
 It is the probability that the $m$th observation starts a new subsequence,
-given that the previous subsequence had length $t$, including the $(m-1)$th
-outcome (that's the reason for $t-1$ in the definition). Note that
+given that the previous subsequence had length $v$, including the $(m-1)$th
+outcome (that's the reason for $v-1$ in the definition). Note that
 from~\eqref{eq:exclusive_across_m}
 \begin{equation}\label{eq:one_minus_h}
-  \p(R^{m}_{t} \|  R^{m-1}_{t-1}, \yMc)  = 1-\yrs(t,m),\qquad t\ne 0.
+  \p(R^{m}_{v} \|  R^{m-1}_{v-1}, \yMc)  = 1-\yrs(v,m),\qquad v\ne 0.
 \end{equation}
 A little counting shows that the set of the possible changepoint functions,
 for an experiment with $M$ observations, is $\clcl{0,1}^{(M^2-M)/2}$.
@@ -1755,7 +1752,7 @@ Once we specify:
 \begin{itemize}
 \item the stubbornness $\yN$ and initial distribution $\yn$ to be used at
   each reset,
-\item the changepoint function $\yrs(t,m)$,
+\item the changepoint function $\yrs(v,m)$,
 \end{itemize}
 our new robot $\yMc$ is completely programmed and can face the Plinko task.
 Note that these specifications determine the joint
@@ -1790,11 +1787,11 @@ outcomes can be written
     \varOmicron^{m-2}_{s_{m-2}},\dotsc, \varOmicron^{1}_{s_{1}}, \yMc)}{
     \p(\varOmicron^{m-1}_{s_{m-1}} \| \varOmicron^{m-2}_{s_{m-2}}, \dotsc, \varOmicron^{1}_{s_{1}}, \yMc)}
 =  {}\\
-  \frac{\sum\limits_{r=0}^{m-1}
+  \frac{\sum\limits_{u=0}^{m-1}
   \p(\varOmicron^{m}_{s_{m}} \|
-  R^{m}_{r},  \varOmicron^{m-1}_{s_{m-1}}, \dotsc, \varOmicron^{m-r}_{s_{m-r}}, \yMc)
+  R^{m}_{u},  \varOmicron^{m-1}_{s_{m-1}}, \dotsc, \varOmicron^{m-u}_{s_{m-u}}, \yMc)
   \times
-  \p(R^{m}_{r}, \varOmicron^{m-1}_{s_{m-1}} \| \varOmicron^{m-2}_{s_{m-2}} \dotsc, \varOmicron^{1}_{s_{1}}, \yMc)}{
+  \p(R^{m}_{u}, \varOmicron^{m-1}_{s_{m-1}} \| \varOmicron^{m-2}_{s_{m-2}} \dotsc, \varOmicron^{1}_{s_{1}}, \yMc)}{
 \p(\varOmicron^{m-1}_{s_{m-1}} \| \varOmicron^{m-2}_{s_{m-2}} \dotsc, \varOmicron^{1}_{s_{1}}, \yMc)
 }.
 \end{multline}
@@ -1803,28 +1800,28 @@ will be apparent in a moment. Note that the denominator is the probability
 of the previous observation given the previous data: in a recursive
 computation this would have been computed in the preceding step.
 
-The products in the $r$ sum contain the term given
+The products in the $u$ sum contain the term given
 by~\eqref{eq:irrelevant_data_conditional_R}, which is just the
 Johnson-Dirichlet conditional probability~\eqref{eq:predictive_JD_general},
-and the joint probability for $(R^{m}_{r}, \varOmicron^{m-1}_{s_{m-1}})$ given the
+and the joint probability for $(R^{m}_{u}, \varOmicron^{m-1}_{s_{m-1}})$ given the
 previous data. This joint probability can be decomposed introducing
-$R^{m-1}_{t}$ for the previous observation:
+$R^{m-1}_{v}$ for the previous observation:
 \begin{multline}
   \label{eq:prob_R_and_last_decompose}
-  \p(R^{m}_{r}, \varOmicron^{m-1}_{s_{m-1}} \| \varOmicron^{m-2}_{s_{m-2}}, \dotsc, \varOmicron^{1}_{s_{1}}, \yMc) 
+  \p(R^{m}_{u}, \varOmicron^{m-1}_{s_{m-1}} \| \varOmicron^{m-2}_{s_{m-2}}, \dotsc, \varOmicron^{1}_{s_{1}}, \yMc) 
  ={} \\
-  \frac{\sum_{t=1}^{m-1}
-    \p(R^{m}_{r}, \varOmicron^{m-1}_{s_{m-1}}, R^{m-1}_{t-1}, \varOmicron^{m-2}_{s_{m-2}}
+  \frac{\sum_{v=1}^{m-1}
+    \p(R^{m}_{u}, \varOmicron^{m-1}_{s_{m-1}}, R^{m-1}_{v-1}, \varOmicron^{m-2}_{s_{m-2}}
     \| \varOmicron^{m-3}_{s_{m-3}}, \dotsc, \varOmicron^{1}_{s_{1}}, \yMc)}{
 \p(\varOmicron^{m-2}_{s_{m-2}} \| \varOmicron^{m-3}_{s_{m-3}}, \dotsc, \varOmicron^{1}_{s_{1}}, \yMc)}
   ={}\\
     \frac{1}{\p(\varOmicron^{m-2}_{s_{m-2}} \| \varOmicron^{m-3}_{s_{m-3}}, \dotsc, \varOmicron^{1}_{s_{1}}, \yMc)}
-  \sum_{t=1}^{m-1} \p(R^{m}_{r} \| R^{m-1}_{t-1}, \yMc)
+  \sum_{v=1}^{m-1} \p(R^{m}_{u} \| R^{m-1}_{v-1}, \yMc)
   \times{}\\
   \p(\varOmicron^{m-1}_{s_{m-1}} \|
-    R^{m-1}_{t-1}, \varOmicron^{m-2}_{s_{m-2}} \dotsc, \varOmicron^{m-t}_{s_{m-t}}, \yMc)
+    R^{m-1}_{v-1}, \varOmicron^{m-2}_{s_{m-2}} \dotsc, \varOmicron^{m-v}_{s_{m-v}}, \yMc)
     \times{}\\
- \p(R^{m-1}_{t-1}, \varOmicron^{m-2}_{s_{m-2}} \|
+ \p(R^{m-1}_{v-1}, \varOmicron^{m-2}_{s_{m-2}} \|
   \varOmicron^{m-3}_{s_{m-3}},\dotsc, \varOmicron^{1}_{s_{1}}, \yMc).
 \end{multline}
 The last expression contains four kinds of terms. Let's analyse them.
@@ -1834,15 +1831,15 @@ The last expression contains four kinds of terms. Let's analyse them.
   given the previous data. In a recursive algorithm this is known from two
   previous steps.
 
-\item The first factor within the $t$ sum was simplified using the Markov
+\item The first factor within the $v$ sum was simplified using the Markov
   property~\eqref{eq:prob_R_markov}.
 
-\item The second factor within the $t$ sum is given by the
+\item The second factor within the $v$ sum is given by the
   Johnson-Dirichlet model, according to discussion of
   \eqn~\eqref{eq:irrelevant_data_conditional_R}.
 
-\item The last factor within the $t$ sum is analogous to the joint
-  probability for $R^{m}_{r}, \varOmicron^{m-1}_{s_{m-1}}$, which we are now
+\item The last factor within the $v$ sum is analogous to the joint
+  probability for $R^{m}_{u}, \varOmicron^{m-1}_{s_{m-1}}$, which we are now
   calculating, but for the previous observation. In a recursive scheme it
   is known from the preceding step.
 \end{itemize}
@@ -1857,45 +1854,45 @@ defining
     A_{m}(s_{m}) &\defs
     \p(\varOmicron^{m}_{s_{m}} \| \varOmicron^{m-1}_{s_{m-1}}, \dotsc, \varOmicron^{1}_{s_{1}}, \yMc),
     \\
-    B_{m}(r,s_{m})
-                 &\defd \p(\varOmicron^{m}_{s_{m}} \| R^{m}_{r}, \varOmicron^{m-1}_{s_{m-1}},
-                   \dotsc, \varOmicron^{m-r}_{s_{m-r}}, \yMc),
+    B_{m}(u,s_{m})
+                 &\defd \p(\varOmicron^{m}_{s_{m}} \| R^{m}_{u}, \varOmicron^{m-1}_{s_{m-1}},
+                   \dotsc, \varOmicron^{m-u}_{s_{m-u}}, \yMc),
     \\
-    C_{m}(r) &\defd
-            \p(R^{m}_{r} , \varOmicron^{m-1}_{s_{m-1}} \| \varOmicron^{m-2}_{s_{m-2}}, \dotsc,
+    C_{m}(u) &\defd
+            \p(R^{m}_{u} , \varOmicron^{m-1}_{s_{m-1}} \| \varOmicron^{m-2}_{s_{m-2}}, \dotsc,
             \varOmicron^{1}_{s_{1}}, \yMc),
   \end{align}
 \end{subequations}
 we find that the conditional probability we're seeking, $A_{m}(s_{m})$, is
 given recursively by
-\newlength{\myl}\settowidth{\myl}{\footnotesize the past $r$ observations}
+\newlength{\myl}\settowidth{\myl}{\footnotesize the past $u$ observations}
 \begin{subequations}\label{eq:recursive_formula_2}
 \begin{align}
   A_{m}(s_{m})
-  &= \frac{\sum_{r=0}^{m-1} B_{m}(r,s_{m}) \; C_{m}(r)}{A_{m-1}(s_{m-1})}
+  &= \frac{\sum_{u=0}^{m-1} B_{m}(u,s_{m}) \; C_{m}(u)}{A_{m-1}(s_{m-1})}
   \\
-  B_{m}(r,s_{m})
-  &= \frac{\yN\ynn_{s_{m}}+r\yff_{s_{m}}}{\yN + r},
+  B_{m}(u,s_{m})
+  &= \frac{\yN\ynn_{s_{m}}+u\yff_{s_{m}}}{\yN + u},
     \qquad
     \yff_{s_{m}} \defd\Bigl\{
     \parbox[c]{\the\myl}{\footnotesize rel. frequency of $s_m$ in\\
-  the past $r$ observations}
+  the past $u$ observations}
   \\
-  C_{m}(r)
+  C_{m}(u)
   &=   \!\begin{multlined}[t][0.6\linewidth]
     \frac{1}{A_{m-2}(s_{m-2})} \times{}\\[\jot]
     \begin{cases}
-      \sum_{t=1}^{m-1} \yrs(t,m) \; B_{m-1}(t-1,s_{m-1}) \;
-      C_{m-1}(t-1)
-      & \text{if $r=0$}
+      \sum_{v=1}^{m-1} \yrs(v,m) \; B_{m-1}(v-1,s_{m-1}) \;
+      C_{m-1}(v-1)
+      & \text{if $u=0$}
       \\[\jot]
-      [1-\yrs(r,m)]  \; B_{m-1}(r-1,s_{m-1}) \; C_{m-1}(r-1)
-      & \text{if $r\ge 1$}
+      [1-\yrs(u,m)]  \; B_{m-1}(u-1,s_{m-1}) \; C_{m-1}(u-1)
+      & \text{if $u\ge 1$}
     \end{cases}
   \end{multlined}
 \end{align}
 \end{subequations}
-for all $s_{m} \in\set{1,\dotsc,N}$, $r\in\set{0,\dotsc,m-1}$. This recursive
+for all $s_{m} \in\set{1,\dotsc,N}$, $u\in\set{0,\dotsc,m-1}$. This recursive
 algorithm is summarized in table~\ref{tab:adamsetal_algorithm}.
 
 \bigskip
@@ -1906,9 +1903,9 @@ by the Johnson-Dirichlet model, and trivially $\p(R^{1}_{0} \| \yMc)=1$.
 Owing to the certainty of $R^1_0$, for $m=2$ we have
 \begin{equation}
   \label{eq:initial_R2}
-  \p(R^{2}_{r}, \varOmicron^{1}_{s_{1}} \|  \yMc)
-  = \p(R^{2}_{r},R^{1}_{0}, \varOmicron^{1}_{s_{1}} \|  \yMc)
-  = \p(R^{2}_{r} \| R^{1}_{0},  \yMc) \times
+  \p(R^{2}_{u}, \varOmicron^{1}_{s_{1}} \|  \yMc)
+  = \p(R^{2}_{u},R^{1}_{0}, \varOmicron^{1}_{s_{1}} \|  \yMc)
+  = \p(R^{2}_{u} \| R^{1}_{0},  \yMc) \times
   \p( \varOmicron^{1}_{s_{1}} \|  \yMc).
 \end{equation}
 With the probabilities above from $m=3$ onward the recursion can be
@@ -1929,32 +1926,32 @@ steps are summarized in table~\ref{tab:adamsetal_initial}.
       the next step
 
       \bigskip
-    \item For $r \in\set{0,1}$:
+    \item For $u \in\set{0,1}$:
       \begin{enumerate}[label*=\arabic*.]
    \item Calculate
       \[
-        C_2(r) \defd \p(R^{2}_{r}, \varOmicron^{1}_{s_1} \| \yMc)
+        C_2(u) \defd \p(R^{2}_{u}, \varOmicron^{1}_{s_1} \| \yMc)
         =
 A_1(s_1) \times \begin{cases}
-          \yrs(0,1) &\text{for $r=0$},\\ 1-\yrs(0,1)&\text{for $r=1$}
+          \yrs(0,1) &\text{for $u=0$},\\ 1-\yrs(0,1)&\text{for $u=1$}
         \end{cases}
       \]
       \item For $s_{2} \in \set{1,\dotsc,N}$, calculate
         \[ 
-          B_{2}(r,s_{2}) \defd
-          \p(\varOmicron^{2}_{s_{2}} \| R^{2}_{r}, \varOmicron^{1}_{s_{1}}, \yMc) =
-         \frac{\yN\ynn_{s_{2}}+r\yff_{s_{2}}}{\yN + r},
+          B_{2}(u,s_{2}) \defd
+          \p(\varOmicron^{2}_{s_{2}} \| R^{2}_{u}, \varOmicron^{1}_{s_{1}}, \yMc) =
+         \frac{\yN\ynn_{s_{2}}+u\yff_{s_{2}}}{\yN + u},
         \]
      where $\yff_{s_{2}}$ is the relative frequency of outcome $s_{3}$ in
-     the previous $r$ observations
+     the previous $u$ observations
     \end{enumerate}
   \item  For $s_2 \in \set{1,\dotsc,N}$ calculate
       \[A_2(s_2) \defd
         \p(\varOmicron^{2}_{s_{2}} \| \varOmicron^{1}_{s_{1}}, \yMc) =
-\frac{\sum_{r=0}^{1} B_{2}(r,s_{2}) \times C_{2}(r)}{A_{1}(s_{1})} \]
+\frac{\sum_{u=0}^{1} B_{2}(u,s_{2}) \times C_{2}(u)}{A_{1}(s_{1})} \]
 \item Observe $s_2$
 \item Keep $A_{2}(s_{2})$ for the next two steps, and
-  $B_{2}(r,s_{2})$, $C_{2}(r)$, $r\in\set{0,1}$, for the next step
+  $B_{2}(u,s_{2})$, $C_{2}(u)$, $u\in\set{0,1}$, for the next step
 \item Set $m=2$, go to step~\ref{item:first_step} of table~\ref{tab:adamsetal_algorithm}
 \end{enumerate}
 \\\hline
@@ -1968,44 +1965,44 @@ A_1(s_1) \times \begin{cases}
   \begin{tabularx}{\textwidth}{X}\hline
     \begin{enumerate}
       % \item Retrieve from memory
-      %   \[ B_m(t) \defd \p(R^{m}_{t} \| \varOmicron^{m-1}_{s_{m-1}} \dotsc,
-      %     \varOmicron^{1}_{s_{1}}, \yMc),\qquad 0\le t \le m-1 \]
-    \item\label{item:first_step}For $r \in \set{0,\dotsc, m}$:
+      %   \[ B_m(v) \defd \p(R^{m}_{v} \| \varOmicron^{m-1}_{s_{m-1}} \dotsc,
+      %     \varOmicron^{1}_{s_{1}}, \yMc),\qquad 0\le v \le m-1 \]
+    \item\label{item:first_step}For $u \in \set{0,\dotsc, m}$:
       \begin{enumerate}[label*=\arabic*.]
       \item Calculate
         \[ \begin{multlined}[t][0.85\textwidth]
-            C_{m+1}(r) \defd
-            \p(R^{m+1}_{r} , \varOmicron^{m}_{s_{m}} \| \varOmicron^{m-1}_{s_{m-1}}, \dotsc,
+            C_{m+1}(u) \defd
+            \p(R^{m+1}_{u} , \varOmicron^{m}_{s_{m}} \| \varOmicron^{m-1}_{s_{m-1}}, \dotsc,
             \varOmicron^{1}_{s_{1}}, \yMc) ={}\\[\jot]
        \shoveleft{\frac{1}{A_{m-1}(s_{m-1})} \times{}}\\\begin{cases}
-          \sum_{t=0}^{m-1} \yrs(t,m) \times B_m(t,s_m) \times C_m(t) & \text{if $r=0$},
+          \sum_{v=0}^{m-1} \yrs(v,m) \times B_m(v,s_m) \times C_m(v) & \text{if $u=0$},
           \\[\jot]
-          [1-\yrs(r-1,m)]  \times B_m(r-1,s_m) \times C_m(r-1)& \text{if $r\ge 1$}    
+          [1-\yrs(u-1,m)]  \times B_m(u-1,s_m) \times C_m(u-1)& \text{if $u\ge 1$}    
         \end{cases}
       \end{multlined}
     \]
       \item For $s_{m+1} \in \set{1,\dotsc,N}$, calculate
         \[ \begin{multlined}[][0.85\textwidth]
-B_{m+1}(r,s_{m+1}) \defd \p(\varOmicron^{m+1}_{s_{m+1}} \| R^{m+1}_{r}, \varOmicron^{m}_{s_{m}},
-          \dotsc, \varOmicron^{m+1-r}_{s_{m+1-r}}, \yMc) ={}\\[\jot]
-         \frac{\yN\ynn_{s_{m+1}}+r\yff_{s_{m+1}}}{\yN + r},
+B_{m+1}(u,s_{m+1}) \defd \p(\varOmicron^{m+1}_{s_{m+1}} \| R^{m+1}_{u}, \varOmicron^{m}_{s_{m}},
+          \dotsc, \varOmicron^{m+1-u}_{s_{m+1-u}}, \yMc) ={}\\[\jot]
+         \frac{\yN\ynn_{s_{m+1}}+u\yff_{s_{m+1}}}{\yN + u},
        \end{multlined} \]
-     where $\yff_{s_{m+1}}$ is the relative frequency of outcome $s_{m+1}$ in the previous $r$ observations
+     where $\yff_{s_{m+1}}$ is the relative frequency of outcome $s_{m+1}$ in the previous $u$ observations
       % \item using the Johnson-Dirichlet model calculate (or retrieve from memory)
-      %   \[ A_m(t) \defd \p(\varOmicron^{m}_{s_{m}} \| R^{m}_{t}, \varOmicron^{m-1}_{s_{m-1}}
-      %     \dotsc, \varOmicron^{m-t}_{s_{m-t}}, \yMc)
+      %   \[ A_m(v) \defd \p(\varOmicron^{m}_{s_{m}} \| R^{m}_{v}, \varOmicron^{m-1}_{s_{m-1}}
+      %     \dotsc, \varOmicron^{m-v}_{s_{m-v}}, \yMc)
       %   \]
   \end{enumerate}
 \item For $s_{m+1} \in \set{1,\dotsc,N}$, calculate
   \[ \begin{multlined}[][0.85\textwidth]
       A_{m+1}(s_{m+1}) \defd \p(\varOmicron^{m+1}_{s_{m+1}} \| \varOmicron^{m}_{s_{m}}, \dotsc, \varOmicron^{1}_{s_{1}}, \yMc) ={}\\[\jot]
-    \frac{\sum_{r=0}^{m} B_{m+1}(r,s_{m+1}) \times
-      C_{m+1}(r)}{A_{m}(s_{m})}
+    \frac{\sum_{u=0}^{m} B_{m+1}(u,s_{m+1}) \times
+      C_{m+1}(u)}{A_{m}(s_{m})}
   \end{multlined}
 \]
 \item Observe $s_{m+1}$, 
 \item Keep $A_{m+1}(s_{m+1})$ for the next two steps, and
-  $B_{m+1}(r,s_{m+1})$, $C_{m+1}(r)$, $r\in\set{0,\dotsc,m}$ for the next step
+  $B_{m+1}(u,s_{m+1})$, $C_{m+1}(u)$, $u\in\set{0,\dotsc,m}$ for the next step
 \item Increase $m$ by $1$, go to step~\ref{item:first_step}
   \end{enumerate}
   \\\hline
@@ -2017,8 +2014,8 @@ B_{m+1}(r,s_{m+1}) \defd \p(\varOmicron^{m+1}_{s_{m+1}} \| R^{m+1}_{r}, \varOmic
 
 The changepoint function~\eqref{eq:def_changepoint_function},
 \begin{equation}\labelbis{eq:def_changepoint_function}
-  \yrs(t,m)  \defd \p(R^{m}_{0} \|  R^{m-1}_{t}, \yMc),
-  \qquad m \in\set{2,3,\dotsc}, \quad t\in\set{1,\dotsc,m-1}
+  \yrs(v,m)  \defd \p(R^{m}_{0} \|  R^{m-1}_{v}, \yMc),
+  \qquad m \in\set{2,3,\dotsc}, \quad v\in\set{1,\dotsc,m-1}
 \end{equation}
 determines the robot's inference about the appearance of changepoints, or
 changes in the source of the data. It can represent a great
@@ -2026,8 +2023,8 @@ variety of changepoint assumptions or beliefs.
 
 For example, the belief that the data source is the more likely to change
 the longer it's been operative corresponds to a $\yrs$ that increases as
-$t$ increases. The belief that the longer a data source operates the more
-likely it will persist corresponds to a $\yrs$ that decreases as $t$
+$v$ increases. The belief that the longer a data source operates the more
+likely it will persist corresponds to a $\yrs$ that decreases as $v$
 increases. Even more complex beliefs can be represented with the dependence
 on $m$. For example, we can have a shift from the first to the second
 belief above as $m$ increases.
@@ -2045,7 +2042,7 @@ choose that distribution if he or she were informed about a change in the
 algorithm determining the outcomes.
 
 This optimization leads to a possibly unique set of parameters
-$\bigl(\yN, \yrs(t,m)\bigr)$ associated to a participant. We could then
+$\bigl(\yN, \yrs(v,m)\bigr)$ associated to a participant. We could then
 explore the distribution of these parameters across all participants, for
 example examining whether they cluster into few groups, and so on.
 
@@ -2079,9 +2076,9 @@ One restriction is to specify a logistic-polynomial changepoint function
 like this:
 \begin{gather}
   \label{eq:changepoint_logistic_general}
-  \yrs(t,m ; \gamma_0,\dotsc) =
-  \logistic(\gamma_0 + \gamma_1 t + \gamma_2 m +
-  \gamma_3 t^2 + \gamma_4 sm + \gamma_5 m^2 + \dotsb)
+  \yrs(v,m ; \gamma_0,\dotsc) =
+  \logistic(\gamma_0 + \gamma_1 v + \gamma_2 m +
+  \gamma_3 v^2 + \gamma_4  v m + \gamma_5 m^2 + \dotsb)
   \\
   \shortintertext{where the logistic function}
   \label{eq:logistic_def}
@@ -2092,8 +2089,8 @@ maps real numbers to $\clcl{0,1}$.
 In the rest of this study we choose a logistic-linear function:
 \begin{equation}
   \label{eq:logistic_linear}
-  \yrs(t,m; \yc,\ycs,\ycm) = \logistic\biggl( \yc +
-  \ycs \frac{2s-M}{M} + \ycm \frac{2m-M}{M}\biggr) 
+  \yrs(v,m; \yc,\ycs,\ycm) = \logistic\biggl( \yc +
+  \ycs \frac{2 v-M}{M} + \ycm \frac{2 m-M}{M}\biggr) 
 \end{equation}
 thus reducing our choice to a three-parameter family of changepoint
 functions. This family can reproduce, for example, the two simple kinds of
@@ -2427,7 +2424,7 @@ Johnson-Dirichlet model described above:
   \propto{}\\
 \colorlet{savedcolor}{.}
 \color{gray}
-\protect\parbox[c][][r]{0.2\linewidth}{\footnotesize each is a\\[0.5\jot]Johnson-Dirichlet\\[0.5\jot]model}\color{gray}\left\{\color{savedcolor}\;
+\protect\parbox[c][][u]{0.2\linewidth}{\footnotesize each is a\\[0.5\jot]Johnson-Dirichlet\\[0.5\jot]model}\color{gray}\left\{\color{savedcolor}\;
     \!\begin{aligned}
         &\p(\ptext{data in 1st subsequence} \|
           \ptext{particular division}, \yMc)\times{}
@@ -2456,52 +2453,52 @@ the next observation starts a new subsequence only if we can compare them
 with it. If we don't know it, past data can't help us. This assumption
 discards the possibility that particular values of past observations may
 trigger the start of a new sequence. The length of the current subsequence,
-$R^{m}_{t}$, is relevant in any case, because the next observation can only
-start a new subsequence or continue the previous one, so that either $r=0$
-or $r=t+1$:
+$R^{m}_{v}$, is relevant in any case, because the next observation can only
+start a new subsequence or continue the previous one, so that either $u=0$
+or $u=v+1$:
 \begin{equation}
   \label{eq:R_cond_R_simple}
-  \p(R^{m+1}_{r} \| R^{m}_{t}, \yMc) =
-  \yrs(t,m)\,\delt_{r,0} + [1-\yrs(t,m)]\,\delt_{r,t+1} =
+  \p(R^{m+1}_{u} \| R^{m}_{v}, \yMc) =
+  \yrs(v,m)\,\delt_{u,0} + [1-\yrs(v,m)]\,\delt_{u,v+1} =
   \begin{cases}
-    \yrs(t,m) & \text{for $r=0$},
+    \yrs(v,m) & \text{for $u=0$},
     \\
-    1-\yrs(t,m) &\text{for $r=t+1$},
+    1-\yrs(v,m) &\text{for $u=v+1$},
     \\
     0 & \text{otherwise},
   \end{cases}
 \end{equation}
 which simplifies our calculations: in the
-sum~\eqref{eq:prob_R_and_last_decompose} when $r\ge 1$ only the term
-$t=r-1$ survives. In our study we assume that $\yrs(t,m)$ either is
-independent of $t$ or increases with $t$, expressing our expectation that
+sum~\eqref{eq:prob_R_and_last_decompose} when $u\ge 1$ only the term
+$v=u-1$ survives. In our study we assume that $\yrs(v,m)$ either is
+independent of $v$ or increases with $v$, expressing our expectation that
 subsequences shouldn't be too long. This last option is reasonable if the
 participants were warned about the possibility of changepoints before the
 experiment.
 
-% This distribution for $R^{m+1}_r$ represents the robot's guess of whether
+% This distribution for $R^{m+1}_u$ represents the robot's guess of whether
 % the new observation starts a new subsequence or whether it is part of the
 % previous subsequence, and of how long that subsequence is. It can be
-% calculated recursively by introducing $R^{m}_{t}$ for the previous
+% calculated recursively by introducing $R^{m}_{v}$ for the previous
 % observation:
 % \begin{equation}
 %   \label{eq:prob_R_and_last_decompose2}
-%     \p(R^{m+1}_{r}\| \varOmicron^{m}_{s_{m}}, \dotsc, \varOmicron^{1}_{s_{1}}, \yI) 
-%   % &=\sum_{t=0}^{m-1}
-%   % \p(R^{m+1}_{r},R^{m}_{t},\|
+%     \p(R^{m+1}_{u}\| \varOmicron^{m}_{s_{m}}, \dotsc, \varOmicron^{1}_{s_{1}}, \yI) 
+%   % &=\sum_{v=0}^{m-1}
+%   % \p(R^{m+1}_{u},R^{m}_{v},\|
 %   % \varOmicron^{m}_{s_{m}}, \dotsc, \varOmicron^{1}_{s_{1}}, \yI)
 %   % \\
-% =\sum_{t=0}^{m-1}\p(R^{m+1}_{r} \| R^{m}_{t}, \yI)
+% =\sum_{v=0}^{m-1}\p(R^{m+1}_{u} \| R^{m}_{v}, \yI)
 %   \times
-%   \p(R^{m}_{t} \|
+%   \p(R^{m}_{v} \|
 %   \varOmicron^{m-1}_{s_{m-1}} \dotsc, \varOmicron^{1}_{s_{1}}, \yI).
 % % &\!\begin{multlined}[b][0.7\textwidth]
-% %   =\sum_{t=0}^{m-1}\p(R^{m+1}_{r} \| R^{m}_{t}, \yI)
+% %   =\sum_{v=0}^{m-1}\p(R^{m+1}_{u} \| R^{m}_{v}, \yI)
 % %   \times{}\\
-% %   \p(\varOmicron^{m}_{s_{m}} \| R^{m}_{t},
-% %   \varOmicron^{m-1}_{s_{m-1}} \dotsc, \varOmicron^{m-t}_{s_{m-t}}, \yI)
+% %   \p(\varOmicron^{m}_{s_{m}} \| R^{m}_{v},
+% %   \varOmicron^{m-1}_{s_{m-1}} \dotsc, \varOmicron^{m-v}_{s_{m-v}}, \yI)
 % %   \times{}\\
-% %   \p(R^{m}_{t} \|
+% %   \p(R^{m}_{v} \|
 % %   \varOmicron^{m-1}_{s_{m-1}} \dotsc, \varOmicron^{1}_{s_{1}}, \yI).
 % %           \end{multlined}
 % %   \end{aligned}
