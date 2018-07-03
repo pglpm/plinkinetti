@@ -1,7 +1,7 @@
 \pdfoutput=1
 %% Author: PGL  Porta Mana, ALS Filipowicz
 %% Created: 2018-04-08T16:54:19+0200
-%% Last-Updated: 2018-07-03T10:15:41+0200
+%% Last-Updated: 2018-07-03T13:28:43+0200
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Report-no: ***
 \newif\ifarxiv
@@ -1007,9 +1007,19 @@ $(40-1)\times 200=7\,800$ out of the $3\times 10^{320}$ required numbers. The
 participant's statistical model is thus largely unknown.
 
 The participant's inferences can indeed come from several possible
-statistical models: there are several Bayesian robots that would make the
-exact same inferences as the participant. The simplest such robot, call it
-$\yIp$, is the one for which
+statistical models: there are approximately $3\times 10^{320}-7\,800$
+Bayesian robots that make the exact same inferences as the participant. To
+construct such a robot $\yIp$ we just need to set its distribution for the
+$m$th observation conditional on the observed $s_1,\dotsc,s_{m-1}$, that
+is,
+$\p(\varOmicron^m_{s_m} \|
+\varOmicron^{m-1}_{s_{m-1}},\dotsc,\varOmicron^1_{s_1},\yIp)$, equal to the
+participant's~\eqref{eq:cond_distribs}, for all $m$; and then
+\emph{arbitrarily} choose the distributions conditional on all other
+outcome combinations that haven't been observed. By construction these
+conditional probabilities give a properly normalized joint
+distribution~\eqref{eq:distr_statmodel}. The simplest such robot is the one
+for which
 \begin{subequations}
   \label{eq:robot_yields_participant}
   \begin{equation}
@@ -1029,11 +1039,8 @@ $\yIp$, is the one for which
 \end{subequations}
 which completely defines the robot's inferences. This robot assumes the
 probabilities for all observations to be independent of one another, and
-they happen to be equal to the participant's. One may argue that this is an
-\enquote{unreasonable} robot, and that the participants do not assume
-independence of the probabilities. But \emph{there's no way to prove this}
-from the verbal information given to the participants and the set-up of the
-Plinko experiments \citep{filipowiczetal2014,filipowiczetal2016}.
+they happen to be equal to the participant's. The other possible robots are
+not so simple, of course.
 
 Since the initial information given to the participants places no
 restrictions is placed on the set of possible statistical models, the
