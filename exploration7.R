@@ -23,7 +23,7 @@ barpalette <- colorRampPalette(c(mypurpleblue,'white',myredpurple),space='Lab')
 barpalettepos <- colorRampPalette(c('white','black'),space='Lab')
 dev.off()
 mmtoin <- 0.0393701
-plotsdir <- './comparisons7/'
+plotsdir <- './comparisons7c/'
 
 ## load all data
 dpath = "./_data/"
@@ -59,9 +59,11 @@ lkd <- function(a,b){
     temp[is.nan(temp)] <- 0
     apply(temp,1,sum)}
 jsd <- function(a,b){
-    temp <-  a * log(a/b) + b * log(b/a)
-    temp[is.nan(temp)] <- 0
-    sum(temp)/2}
+    temp1 <-  a * log(a/b)
+    temp1[is.nan(temp1)] <- 0
+	temp2 <-  b * log(b/a)
+	temp2[is.nan(temp2)] <- 0
+    sum(temp1+temp2)/2}
 
 ## sequence of observations for a participant
 observations <- function(participant, maxtrials=200){c(d[d$Participant==participant & d$Slot.Number==1,'Ball.Position'])[1:maxtrials]}
@@ -554,6 +556,221 @@ dev.off()}
     return(list(distr=pdistr,robotdistr=rdistr,rentropy=klseq,js=jsseq,meanperson=meanperson,meanrobot=meanrobot,stdperson=stdperson,stdrobot=stdrobot))
 }
 
+comparisonall <- function(participant,maxtrials=200,trialstoshow=c(1:4, 99:102, 197:200),label='',params=rep(0.5,4),maxes,initial.distr=NULL){
+    obs <- observations(participant,maxtrials)
+    maxstd <- maxes[1] # max for std graph
+    maxent <- maxes[2] # max for entopies graph
+    maxdis <- maxes[3] # max for discrepancies
+    maxhist <- maxes[4] # max for prob. histograms
+
+    ## sequence of frequency parameters of the changepoint-JD model. At
+    ## every "reset" we set the first equal to the participant's initial
+    ## distribution plus a value equal to 1/1000 of the minimum nonzero value
+    ## ever assigned
+    pdistr <- regularizedistr(participant,maxtrials)
+
+    ## robot's reset distribution
+    if(length(initial.distr)==0){## use this participant's
+        initial.distr <- pdistr[1,]
+    }
+    else{## use another participant's or custom
+        initial.distr <- regularizedistr(initial.distr,maxtrials)[1,]
+    }
+    
+    rdistr <- robotdistribution(initial.distr,params,obs)
+
+    ## calculate the overlap and relative entropy of the participant's distr.
+    jsseq <- sapply(1:(maxtrials+1),function(i){jsd(rdistr[i,],pdistr[i,])})
+    klseq <- sapply(1:(maxtrials+1),function(i){kld(rdistr[i,],pdistr[i,])})
+
+    ## sequence of means and stds
+    meanperson <- allmeans(pdistr)
+    stdperson <- allstds(pdistr)
+    meanrobot <- allmeans(rdistr)
+    stdrobot <- allstds(rdistr)
+
+## ## plot obzervations
+## df <- data.frame(x=2:(maxtrials+1), y1=obs)
+##     maxy <- N
+##     miny <- 1
+## g <- ggplot() + theme_classic() 
+## g <- g + geom_point(data=df, aes(x,y1), colour='black') +
+##     geom_line(data=df, aes(x,y1), colour='black') +
+##     xlim(1,maxtrials+1) + ylim(miny,maxy) +
+##     theme(aspect.ratio=0.5) +
+##     labs(x='trial',y='observations',
+##          title=paste0('participant ', participant))
+## pdfname <- paste0(plotsdir,'observ_',participant,'.pdf')
+## save_plot(pdfname, g, base_width = 148, base_height = 148*0.6, units='mm', dpi = 300)
+## dev.off()
+## ##ggsave(pdfname, width = 148, height = 148*0.6, units='mm', dpi = 300)
+
+## ## plot the overlap
+## df <- data.frame(x=1:(maxtrials+1), y=overlap)
+## g <- ggplot() + theme_classic() 
+## g <- g + #geom_point(data=df, aes(x,y), colour=mygreen) +
+##     geom_line(data=df, aes(x,y), colour=mygreen) +
+##     xlim(1,maxtrials+1) + # ylim(0,1) +
+##     theme_classic() +
+##     theme(aspect.ratio=0.5) +
+##     labs(x='trial',y='overlap',
+##          title=paste0('participant ', participant,', stub ',stubbornness))
+## pdfname <- paste0(plotsdir,'overlap_',participant,'-stub_',stubbornness,'.pdf')
+## save_plot(pdfname, g, base_width = 148, base_height = 148*0.6, units='mm', dpi = 300)
+## dev.off()
+
+    ## plots
+    slabel <- substring(label,1,1)
+    if(slabel!='' & slabel!='_'){label <- paste0('_',label)}
+    pdfname <- paste0(plotsdir,'p',participant,label,'.pdf')
+    pdf(pdfname, width = 148*mmtoin, height=148*0.6*mmtoin)
+    
+    ## plot sequence of means
+    df <- data.frame(x=1:(maxtrials+1), y1=meanperson, y2=meanrobot, y3=c(NA,obs))
+    maxy <- N #max(df$y1, df$y2)
+    miny <- 1 #min(df$y1, df$y2)
+    iconheight <- (maxy-miny)/10
+    robotwidth <- (maxtrials+1)/20/300*271
+    personwidth <- (maxtrials+1)/20/300*223
+    g <- ggplot() + theme_classic() 
+    g <- g + annotation_raster(person, xmax = maxtrials+1, xmin = maxtrials+1-robotwidth, 
+                               ymax = maxy, ymin=maxy-iconheight, interpolate = T) +
+        annotation_raster(robot, xmax = maxtrials+1, xmin = maxtrials+1-robotwidth, 
+                          ymax = maxy*0.99-iconheight, ymin=maxy*0.99-2*iconheight, interpolate = T) 
+    g <- g + geom_line(data=df, aes(x,y3), colour='black', alpha=0.25)
+    g <- g + #geom_point(data=df, aes(x,y1), colour=myred, alpha=0.33) +
+        geom_line(data=df, aes(x,y1), colour=myred, alpha=0.75) +
+                                        #geom_point(data=df, aes(x,y2), colour=myblue, alpha=0.33) +
+        geom_line(data=df, aes(x,y2), colour=myblue, alpha=0.75) +
+        xlim(1,maxtrials+1) + ylim(miny,maxy) +
+        theme(aspect.ratio=0.5) +
+        labs(x='observation',y='mean',
+             title=paste0('participant #', participant,', means (black: plinko outcomes)'))
+    g <- g + geom_rect(aes(xmax=maxtrials+1-robotwidth,xmin=maxtrials+1-2*robotwidth,
+                           ymax=maxy,ymin = maxy-iconheight),
+                       color=NA, fill=myred, alpha=0.75, stat='identity', position='identity') +
+        geom_rect(aes(xmax=maxtrials+1-robotwidth,xmin=maxtrials+1-2*robotwidth,
+                      ymax=maxy*0.99-iconheight,ymin = maxy*0.99-2*iconheight),
+                  color=NA, fill=myblue, alpha=0.75)
+    print(g)
+
+    ## plot sequence of stds
+    df <- data.frame(x=1:(maxtrials+1), y1=stdperson, y2=stdrobot)
+    maxy <- maxstd #max(df$y1, df$y2)
+    miny <- 0 #min(df$y1, df$y2)
+    iconheight <- (maxy-miny)/10
+    robotwidth <- (maxtrials+1)/20/300*271
+    personwidth <- (maxtrials+1)/20/300*223
+    g <- ggplot() + theme_classic() 
+    g <- g + annotation_raster(person, xmax = maxtrials+1, xmin = maxtrials+1-robotwidth, 
+                               ymax = maxy, ymin=maxy-iconheight, interpolate = T) +
+        annotation_raster(robot, xmax = maxtrials+1, xmin = maxtrials+1-robotwidth, 
+                          ymax = maxy*0.99-iconheight, ymin=maxy*0.99-2*iconheight, interpolate = T) 
+    g <- g + #geom_point(data=df, aes(x,y1), colour=myred, alpha=0.33) +
+        geom_line(data=df, aes(x,y1), colour=myred, alpha=0.75) +
+                                        #geom_point(data=df, aes(x,y2), colour=myblue, alpha=0.33) +
+        geom_line(data=df, aes(x,y2), colour=myblue, alpha=0.75) +
+        xlim(1,maxtrials+1) + ylim(miny,maxy) +
+        theme(aspect.ratio=0.5) +
+        labs(x='observation',y='std',
+         title=paste0('participant #', participant,', st. deviations'))
+g <- g + geom_rect(aes(xmax=maxtrials+1-robotwidth,xmin=maxtrials+1-2*robotwidth,
+                          ymax=maxy,ymin = maxy-iconheight),
+                          color=NA, fill=myred, alpha=0.75, stat='identity', position='identity') +
+        geom_rect(aes(xmax=maxtrials+1-robotwidth,xmin=maxtrials+1-2*robotwidth,
+                          ymax=maxy*0.99-iconheight,ymin = maxy*0.99-2*iconheight),
+                          color=NA, fill=myblue, alpha=0.75)
+    print(g)
+
+        ## plot h function
+    nobs <- 0:maxtrials
+    probd <- function(s,m,maxtrials,params){
+	if(s>=m | m<0 | s<0){return(NA)}
+	probchangepoint(s,m,maxtrials,params)
+    }
+    pmatrix <- sapply(nobs,function(i){sapply(nobs,function(j){probd(i,j, maxtrials,params)})})
+    ##    png(paste0(plotsdir,label,'_optimh.png'))
+    image2D(pmatrix,x=nobs,y=nobs,xlab='m',ylab='v',zlim=c(0,1),
+            col=barpalettepos(25),NAcol=myyellow)
+
+    title(paste0("h for part. #", participant, ", stubbornness = ", sprintf("%.3g",exp(params[1]))))
+
+
+    ## plot the relative entropy and Jansen-Shannon
+    cols <- c('rel. entropy'=mygreen,'Jansen-Shannon'=myyellow)
+df <- data.frame(x=1:(maxtrials+1), y1=klseq, y2=jsseq)
+g <- ggplot() + theme_classic() 
+g <- g + #geom_point(data=df, aes(x,y), colour=myyellow) +
+    geom_line(data=df, aes(x,y1, colour='rel. entropy'), alpha=0.75)
+g <- g + #geom_point(data=df, aes(x,y), colour=myyellow) +
+    geom_line(data=df, aes(x,y2, colour='Jansen-Shannon'), alpha=0.75)
+g <- g + scale_color_manual(values=cols) +
+    xlim(1,maxtrials+1) + ylim(0,maxent) +
+    theme(aspect.ratio=0.5, legend.title=element_blank(),
+                   legend.background=element_blank(),
+                   legend.justification=c(0,1),
+                   legend.position=c(0,1),
+) +
+    labs(x='observation',y='discrepancy',
+         title=paste0('participant #', participant), ', discrepancies')
+    print(g)
+
+        ## plot graphical discrepancy
+    pmatrix <- rdistr-pdistr
+    dims <- dim(pmatrix)
+##    ssqrt <- function(x){sign(x)*sqrt(abs(x))}
+    ssqrt <- function(x){x}
+##    ssqrt <- function(x){sign(x)*(abs(x)^(1/3))}
+    
+    image2D(ssqrt(pmatrix),y=1:(dims[2]),x=1:(dims[1]),ylab='slot',xlab='observation',zlim=c(-maxdis,+maxdis), col=barpalette(51))
+    title(paste0("participant #", participant, ", sqrt(robot-participant)"))
+
+
+
+          ## plot histograms for a range of trials
+          if(!is.null(trialstoshow)){rangehist <- trialstoshow
+              ##maxhist <- max(c(pdistr,rdistr))
+              #pdf(pdfname,width = 148*mmtoin, height = 148*0.6*mmtoin)
+              for(j in 1:length(rangehist)){
+                  i <- rangehist[j]
+                  df <- data.frame(x=rep(1:N, 2),
+                                   who=rep(c('person','robot'), each=N),
+                                   y=c(pdistr[i,], rdistr[i,]))
+                  maxy <- maxhist
+                  miny <- 0
+                  iconheight <- (maxy-miny)/10
+                  robotwidth <- N/20/300*271
+                  personwidth <- N/20/300*223
+                  g <- ggplot() + theme_classic() 
+                  g <- g + annotation_raster(person, xmax = N, xmin = N-robotwidth, 
+                               ymax = maxy, ymin=maxy-iconheight, interpolate = T) +
+        annotation_raster(robot, xmax = N, xmin = N-robotwidth, 
+                          ymax = maxy*0.99-iconheight, ymin=maxy*0.99-2*iconheight, interpolate = T) 
+                  g <- g + geom_bar(data=df, aes(x=x,y=y,fill=who), alpha=0.5,stat='identity', position='identity') +
+                      scale_fill_manual(values=c(myred,myblue)) +
+        scale_x_continuous(breaks=c(1,seq(5,N,length.out=8))) + 
+            ylim(miny,maxy) +
+            theme(aspect.ratio=0.5,
+                  legend.title=element_blank(),
+                  legend.background=element_blank(),
+                  legend.justification=c(1,1),
+                  legend.position='none',
+                  ) +
+        labs(x='slot',y='probability',
+             title=paste0('participant #', participant,', observation ',i,', rel-entr. = ',signif(klseq[i],2),', JS = ',signif(jsseq[i],2)))
+g <- g + geom_rect(aes(xmax=N-robotwidth,xmin=N-2*robotwidth,
+                          ymax=maxy,ymin = maxy-iconheight),
+                          color=NA, fill=myred, alpha=0.5, stat='identity', position='identity') +
+        geom_rect(aes(xmax=N-robotwidth,xmin=N-2*robotwidth,
+                          ymax=maxy*0.99-iconheight,ymin = maxy*0.99-2*iconheight),
+                          color=NA, fill=myblue, alpha=0.5)
+print(g)
+}
+dev.off()}
+
+    return(list(distr=pdistr,robotdistr=rdistr,rentropy=klseq,js=jsseq,meanperson=meanperson,meanrobot=meanrobot,stdperson=stdperson,stdrobot=stdrobot))
+}
+
 
 
 ### function to calculate discrepancy on cubic grid
@@ -640,7 +857,7 @@ summaryparticipants <- function(participants=(1:40),maxtrials=200,label='',seed=
     for(i in participants){
         message('participant ',i)
         optres <- reducediscrepancy(i,maxtrials,3,seed)
-        warnlabel=''
+        warnlabel <- ''
         if(optres$convergence > 0){warnlabel='_NOTCONVERGED'}
         
         compres <- comparison(i,200,label=paste0(warnlabel,label),params=optres$par)
@@ -649,6 +866,44 @@ summaryparticipants <- function(participants=(1:40),maxtrials=200,label='',seed=
         message(' ')
     }
     message('finished')
+}
+
+generategraphsummary <- function(participants,dir,label){
+    mat <- matrix(NA,length(participants),5)
+    maxes <- matrix(-Inf,length(participants),4)
+    j <- 0
+    for(i in participants){j <- j+1
+        filename <- paste0(dir,'summary_p',i,'_',label,'.rds')
+        if(!file.exists(filename)){
+        filename <- paste0(dir,'summary_p',i,'_NOTCONVERGED_',label,'.rds')}
+        if(file.exists(filename)){
+            mat[j,] <- c(i,readRDS(filename)$optres$par)
+
+            summary <- c(i,readRDS(filename)$compres)
+            maxes <- c(
+                max(c(maxes[1], summary$stdperson,summary$stdrobot)),
+                max(c(maxes[2], summary$rentropy,summary$js)),
+                max(c(maxes[3], max(abs(summary$robotdistr-summary$distr)))),
+                max(c(maxes[4], summary$distr,summary$robotdistr))
+            )
+        }}
+
+    write.table(mat,paste0(plotsdir,'points_',label,'.csv'),sep=',',row.names=F,col.names=F,na='Infinity')
+    write.table(maxes,paste0(plotsdir,'maxima_',label,'.csv'),sep=',',row.names=F,col.names=F,na='Infinity')
+
+    cat('maxima: ',maxes,'\n')
+    
+    for(i in participants){j <- j+1
+        filename <- paste0(dir,'summary_p',i,'_',label,'.rds')
+        warnlabel <- ''
+        if(!file.exists(filename)){
+        filename <- paste0(dir,'summary_p',i,'_NOTCONVERGED_',label,'.rds')}
+        if(file.exists(filename)){
+
+            optp <- c(i,readRDS(filename)$optres)
+            if(optp$convergence > 0){warnlabel='_NOTCONVERGED'}
+            compres <- comparisonall(i,200,label=paste0(warnlabel,label),params=optp$par,maxes=maxes)
+        }}
 }
 
 saveparams <- function(participants,dir,label){
