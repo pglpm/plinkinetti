@@ -1,7 +1,7 @@
 \pdfoutput=1
 %% Author: PGL  Porta Mana, ALS Filipowicz
 %% Created: 2018-04-08T16:54:19+0200
-%% Last-Updated: 2018-07-05T13:21:13+0200
+%% Last-Updated: 2018-07-05T19:56:49+0200
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Report-no: ***
 \newif\ifarxiv
@@ -208,8 +208,8 @@ british%
  \let\varkappa\kappa
 % \DeclareMathSymbol{\varphi}{\mathalpha}{egreeki}{"27}
 % %
-% \DeclareMathSymbol{\varAlpha}{\mathalpha}{egreeki}{"41}
-% \DeclareMathSymbol{\varBeta}{\mathalpha}{egreeki}{"42}
+ \DeclareMathSymbol{\varAlpha}{\mathalpha}{egreeki}{"41}
+ \DeclareMathSymbol{\varBeta}{\mathalpha}{egreeki}{"42}
 % \DeclareMathSymbol{\varGamma}{\mathalpha}{egreeki}{"00}
  \DeclareMathSymbol{\varDelta}{\mathalpha}{egreeki}{"01}
  \DeclareMathSymbol{\varEpsilon}{\mathalpha}{egreeki}{"45}
@@ -742,6 +742,7 @@ P.G.L. Porta\,Mana\\%
 \newcommand*{\yff}{f}
 \newcommand*{\yf}{\bm{\yff}}
 \newcommand*{\yI}{\varIota}
+\newcommand*{\yO}{\varOmicron}
 \newcommand*{\yIp}{\yI_{\textrm{p}}}
 \newcommand*{\yMJ}{\yI_1}
 \newcommand*{\yMc}{\yI_2}
@@ -831,24 +832,24 @@ participants we can surmise that there's a connection between different
 trials, some sort of \enquote{constant mechanism} at some level. Or we can
 surmise that there's no such connection, hence observation of past trials
 doesn't say anything about the next one. Or we can surmise that the next
-trial is influenced by the participant's own bar-height assignments. And
-many other hypotheses. We can also entertain all these hypotheses at the
-same time, and shift from one to another during the experiment. For
-example, if we suddenly wondered whether the computer program is actually
-using our bar distribution, we could suddenly move all probability to a
-slot at the edge and check if this seems to influence the next outcome
-(\cf\ participant~31).
+trial is influenced by our own past probability assignments, recorded in
+previous observations. And many other hypotheses. We can also entertain all
+these hypotheses at the same time, and shift from one to another during the
+experiment. For example, if we suddenly wondered whether the computer
+program is actually using our past distributions, we could suddenly move
+all probability to a slot at the edge and check if this seems to influence
+the next outcome (\cf\ participant~31).
 
-The same goes for the choice of initial distribution. As
-participants we can say \enquote{alright, there are 40 slots}, and just
-give a uniform distributions to the 40 possibilities. Or we can consider
-the pyramidal mechanism of the game, which leads to a binomial
-distribution. Or we can consider that this is a computerized version of the
-game. The computer could simulate the physics of the actual game; but the
-image of the mechanism could also be just for show, the computer being
-programmed to distribute the outcomes according to a predetermined,
-completely arbitrary distribution. From this point of view we could again
-decide to assign a uniform distribution.
+The same goes for the choice of initial distribution. As participants we
+can say \enquote{alright, there are 40 slots}, and just give a uniform
+distributions to the 40 possibilities. Or we can consider the pyramidal
+mechanism of the game, which leads to a binomial distribution. Or we can
+consider that this is a computerized version of the game. The computer
+could simulate the physics of the actual game; but the image of the
+mechanism could also be deceptive, the computer being programmed to
+distribute the outcomes according to a predetermined, completely arbitrary
+distribution. From this point of view we could again decide to assign a
+uniform distribution.
 
 \subsection{[Luca] Paradigms for judgement and assessment}
 
@@ -921,14 +922,14 @@ probability calculus.
 Consider this context: a set of $M$ observations $1,2,\dotsc,M$, each of
 which can have $N$ possible slot outcomes $\set{1,\dotsc,N}$. Denote
 \enquote{The outcome of the $i$th \textbf{o}bservation is slot $s$} by
-$\varOmicron^i_s$, and logical conjunction (\enquote{$\land$}) by a comma.
+$\yO^i_s$, and logical conjunction (\enquote{$\land$}) by a comma.
 In this context, choosing a statistical model $\yI$ is equivalent to
 choosing the numerical values of the joint distribution
 \begin{multline}
   \label{eq:distr_statmodel}
-  \p( \varOmicron^M_{s_M}, \varOmicron^{M-1}_{s_{M-1}}, \dotsc,
-  \varOmicron^2_{s_2}, \varOmicron^1_{s_1} \|  \yI)
-  \quad\text{for all $s_1,\dotsc,s_M$}\\\text{(\ie, $N^M-1$ numbers)}
+  \p( \yO^M_{s_M}, \yO^{M-1}_{s_{M-1}}, \dotsc,
+  \yO^2_{s_2}, \yO^1_{s_1} \|  \yI)
+  \quad\text{for all $s_1,\dotsc,s_M$}\\\text{(\ie, $N^M-1$ values)}
 \end{multline}
 for all combinations of $s_1,\dotsc,s_M \in \set{1,\dotsc,N}$; or to
 choosing any other probabilistic assignments equivalent to this
@@ -936,26 +937,25 @@ distribution. An equivalent alternative, for example, is to assign the
 distribution for the first observation:
 \begin{subequations}
   \begin{align}
-    &\p(\varOmicron^1_{s_1} \|\yI)
+    &\p(\yO^1_{s_1} \|\yI)
     \quad\text{all $s_1$} &&\text{($N-1$ values)},
-\\\intertext{
-the $N$ distributions for the second
+\\\intertext{the $N$ distributions for the second
   observation conditional on all possible first outcomes:}
-    &\p(\varOmicron^2_{s_2} \|\varOmicron^1_{s_1}, \yI)
+    &\p(\yO^2_{s_2} \|\yO^1_{s_1}, \yI)
     \quad\text{all $s_1,s_2$} &&\text{($(N-1)\times N$ values)},
     \\
     \intertext{and so on up to the
   $N^{M-1}$ distributions for the $M$th observation conditional on all
   possible previous outcomes:}
-&\p(\varOmicron^M_{s_M} \|
-\varOmicron^{M-1}_{s_{M-1}},\dotsc,\varOmicron^1_{s_1},\yI)
+&\p(\yO^M_{s_M} \|
+\yO^{M-1}_{s_{M-1}},\dotsc,\yO^1_{s_1},\yI)
 \quad\text{all $s_1,\dotsc,s_M$} &&\text{($(N-1)\times N^{M-1}$ values)}
   \end{align}
 \end{subequations}
-The product of
-these distributions is the joint distribution above, and conversely each of
-these distributions can be obtained from the joint one above by
-marginalization and condizionalization.
+The product of these distributions is the joint
+distribution~\eqref{eq:distr_statmodel}, and conversely each of these
+distributions can be obtained from the joint one above by marginalization
+and condizionalization.
 
 Our assumptions can have different natures and motivations, for example
 from symmetry, mechanics, biology. As long as they lead to definite
@@ -981,15 +981,15 @@ implication:
 \begin{subequations}
     \label{eq:laws_prob}
   \begin{gather}
-\p(\neg A \| \yI) = 1-\p(A \| \yI)\\    
-\p(A, B \| \yI) =\p(B, A \| \yI) = \p(A \| B,\yI)\;\p(B \| \yI)\\
-\p(A \lor B \| \yI) =\p(B \lor A \| \yI) = \p(A \| \yI)+\p(B \| \yI)-\p(A \| B,\yI)\;\p(B \| \yI)\\    
-\p(A\limplies B\|I) = \p(\neg A \| \yI) +\p(A \| B,\yI)\;\p(B \| \yI)
+\p(\neg \varAlpha \| \yI) = 1-\p(\varAlpha \| \yI)\\    
+\p(\varAlpha, \varBeta \| \yI) =\p(\varBeta, \varAlpha \| \yI) = \p(\varAlpha \| \varBeta,\yI)\;\p(\varBeta \| \yI)\\
+\p(\varAlpha \lor \varBeta \| \yI) =\p(\varBeta \lor \varAlpha \| \yI) = \p(\varAlpha \| \yI)+\p(\varBeta \| \yI)-\p(\varAlpha \| \varBeta,\yI)\;\p(\varBeta \| \yI)\\    
+\p(\varAlpha\limplies \varBeta\|I) = \p(\neg \varAlpha \| \yI) +\p(\varAlpha \| \varBeta,\yI)\;\p(\varBeta \| \yI)
   \end{gather}
 \end{subequations}
 (the last three equalities are unnecessary if we define
-$A\lor B \defd \neg(\neg A, \neg B)$ and
-$A \limplies B \defd \neg(A, \neg B)$) to make numeric probabilistic
+$\varAlpha\lor \varBeta \defd \neg(\neg \varAlpha, \neg \varBeta)$ and
+$\varAlpha \limplies \varBeta \defd \neg(\varAlpha, \neg \varBeta)$) to make numeric probabilistic
 inferences and update them in view of new observations. But to do so it
 first needs to be fully programmed with a complete set of probabilistic
 assumptions, in the form of the joint
@@ -1026,7 +1026,7 @@ experiences; what's common sense to us may not be to them and vice versa.
 The distributions sequentially constructed by a participant represent the
 $M$ conditional distributions
 \begin{multline}
-  \p(\varOmicron^m_{s_m} \| \varOmicron^{m-1}_{s_{m-1}},\dotsc,\varOmicron^1_{s_1},
+  \p(\yO^m_{s_m} \| \yO^{m-1}_{s_{m-1}},\dotsc,\yO^1_{s_1},
   \text{\footnotesize participant}),
   \qquad m=1,\dotsc,M,\\
   \text{conditional on the observed $s_1,\dotsc,s_{m-1}$ only}.
@@ -1044,8 +1044,8 @@ construct such a robot $\yIp$ we just need to
 \begin{enumerate}
 \item set its distribution for the $m$th observation conditional on the
   observed $s_1,\dotsc,s_{m-1}$, that is,
-  $\p(\varOmicron^m_{s_m} \|
-  \varOmicron^{m-1}_{s_{m-1}},\dotsc,\varOmicron^1_{s_1},\yIp)$, equal to
+  $\p(\yO^m_{s_m} \|
+  \yO^{m-1}_{s_{m-1}},\dotsc,\yO^1_{s_1},\yIp)$, equal to
   the participant's~\eqref{eq:cond_distribs}, for all $m$;
 \item \emph{arbitrarily} choose the distributions conditional on all other
   outcome combinations that haven't been observed.
@@ -1056,16 +1056,16 @@ the one for which
 \begin{subequations}
   \label{eq:robot_yields_participant}
   \begin{equation}
-    \p(\varOmicron^m_{s_m} \|
-    \varOmicron^{m-1}_{s_{m-1}},\dotsc,\varOmicron^1_{s_1}, \yIp) = \p(\varOmicron^m_{s_m} \| \yIp) =
+    \p(\yO^m_{s_m} \|
+    \yO^{m-1}_{s_{m-1}},\dotsc,\yO^1_{s_1}, \yIp) = \p(\yO^m_{s_m} \| \yIp) =
     \text{participant's}
   \end{equation}
   which yields a normalized joint distribution
   \begin{multline}
-    \p( \varOmicron^M_{s_M}, \varOmicron^{M-1}_{s_{M-1}}, \dotsc,  \varOmicron^2_{s_2}, \varOmicron^1_{s_1} \|  \yIp)
+    \p( \yO^M_{s_M}, \yO^{M-1}_{s_{M-1}}, \dotsc,  \yO^2_{s_2}, \yO^1_{s_1} \|  \yIp)
     =
-    \p( \varOmicron^M_{s_M} \|  \yIp) \times \dotsm \times
-    \p(  \varOmicron^1_{s_1} \|  \yIp)  
+    \p( \yO^M_{s_M} \|  \yIp) \times \dotsm \times
+    \p(  \yO^1_{s_1} \|  \yIp)  
     \\
     \text{for all $s_1,\dotsc,s_M$},
   \end{multline}
@@ -1143,7 +1143,7 @@ distribution~\eqref{eq:distr_statmodel} must have this mathematical form,
 for any $m$:
 \begin{equation}
   \label{eq:exchangeability_form}
-  \p(\varOmicron^1_{s_1} , \varOmicron^2_{s_2} , \dotsc , \varOmicron^m_{s_m} \| \yMJ) =
+  \p(\yO^1_{s_1} , \yO^2_{s_2} , \dotsc , \yO^m_{s_m} \| \yMJ) =
   \int_\simpl   \Biggl( \prod_{i=1}^m \yqq_{s_i} \Biggr)\, \pf(\yq \| \yMJ)\,\di\yq,
 \end{equation}
 where $\yq$ is a normalized $N$-tuple of positive numbers:
@@ -1167,7 +1167,7 @@ each outcome in the forthcoming observations is thus proportional to its
 frequency:
 \begin{equation}
   \label{eq:param_conditional_definetti}
-  \pf(\varOmicron^1_{s_1} , \varOmicron^2_{s_2} , \dotsc , \varOmicron^m_{s_m}  \| \yq,\yMJ)
+  \pf(\yO^1_{s_1} , \yO^2_{s_2} , \dotsc , \yO^m_{s_m}  \| \yq,\yMJ)
   = \prod_{i=1}^m \yqq_{s_i}.
 \end{equation}
 Then, being uncertain about the long-run frequencies, the robot assigns to
@@ -1194,7 +1194,7 @@ context.
 An explicit example of formula~\eqref{eq:exchangeability_form} with $N=40$ is
 \begin{equation}
   \label{eq:exchangeability_form_example}
-  \p(\varOmicron^1_{37} , \varOmicron^2_{6} , \varOmicron^3_{25}, \varOmicron^4_{37} \varOmicron^5_{19}\| \yMJ) =
+  \p(\yO^1_{37} , \yO^2_{6} , \yO^3_{25}, \yO^4_{37} \yO^5_{19}\| \yMJ) =
   \int_\simpl \yqq_{6}\,\yqq_{19}\, \yqq_{25} \, {\yqq_{37}}^2\;
   \pf(\yq \| \yMJ)\,\di\yq.
 \end{equation}
@@ -1208,17 +1208,17 @@ from~\eqref{eq:exchangeability_form} the probability distribution for the
 $m$th observation, having observed outcomes $s_1,\dotsc,s_{m-1}$,
 \begin{equation}
   \label{eq:general_prediction}
-  \p(\varOmicron^{m}_{s_{m}} \|
-  \varOmicron^{m-1}_{s_{m-1}}, \dotsc,  \varOmicron^2_{s_2}, \varOmicron^1_{s_1},  \yMJ),
+  \p(\yO^{m}_{s_{m}} \|
+  \yO^{m-1}_{s_{m-1}}, \dotsc,  \yO^2_{s_2}, \yO^1_{s_1},  \yMJ),
 \end{equation}
 obtaining
 \begin{subequations}\label{eq:prediction_exchangeability}
   \begin{gather}
-    \p(\varOmicron^{m}_{s_{m}}\| \varOmicron^{m-1}_{s_{m-1}}, \dotsc,  \varOmicron^2_{s_2}, \varOmicron^1_{s_1}, \yMJ)
-    = \int \yqq_{s_{m}} \pf(\yq \| \varOmicron^1_{s_1}, \dotsc, \varOmicron^{m-1}_{s_{m-1}}, \yMJ)\,\di\yq,
+    \p(\yO^{m}_{s_{m}}\| \yO^{m-1}_{s_{m-1}}, \dotsc,  \yO^2_{s_2}, \yO^1_{s_1}, \yMJ)
+    = \int \yqq_{s_{m}} \pf(\yq \| \yO^1_{s_1}, \dotsc, \yO^{m-1}_{s_{m-1}}, \yMJ)\,\di\yq,
     \\
     \shortintertext{with}
-    \pf(\yq \| \varOmicron^1_{s_1}, \dotsc, \varOmicron^{m-1}_{s_{m-1}}, \yMJ)
+    \pf(\yq \| \yO^1_{s_1}, \dotsc, \yO^{m-1}_{s_{m-1}}, \yMJ)
     = \frac{ \bigl( \prod_{i=1}^{m-1} \yqq_{s_i} \bigr)\, \pf(\yq \| \yMJ)
       }{
       \int  \bigl( \prod_{i=1}^{m-1} \yqq_{s_i}' \bigr)\, \pf(\yq' \| \yMJ)\,\di\yq'
@@ -1232,10 +1232,10 @@ the Plinko task just like all others participants.
 For our numeric example~\eqref{eq:exchangeability_form_example} this is
 \begin{subequations}\label{eq:prediction_exchangeability_example}
   \begin{gather}
-    \p(\varOmicron^5_{19} \| \varOmicron^1_{37} , \varOmicron^2_{6} , \varOmicron^3_{25}, \varOmicron^4_{37}, \yMJ)
-    = \int \yqq_{19}\; \pf(\yq \|  \varOmicron^1_{37} , \varOmicron^2_{6} , \varOmicron^3_{25}, \varOmicron^4_{37}, \yMJ)\,\di\yq,
+    \p(\yO^5_{19} \| \yO^1_{37} , \yO^2_{6} , \yO^3_{25}, \yO^4_{37}, \yMJ)
+    = \int \yqq_{19}\; \pf(\yq \|  \yO^1_{37} , \yO^2_{6} , \yO^3_{25}, \yO^4_{37}, \yMJ)\,\di\yq,
     \\
-    \pf(\yq \|  \varOmicron^1_{37} , \varOmicron^2_{6} , \varOmicron^3_{25}, \varOmicron^4_{37}, \yMJ)
+    \pf(\yq \|  \yO^1_{37} , \yO^2_{6} , \yO^3_{25}, \yO^4_{37}, \yMJ)
     = \frac{ \yqq_{6}\, \yqq_{25} \, {\yqq_{37}}^2\; \pf(\yq \| \yMJ)
     }{
       \int \yqq_{6}'\, \yqq_{25}' \, {\yqq_{37}'}^2\; \pf(\yq' \| \yMJ)\,\di\yq'
@@ -1275,8 +1275,8 @@ robot's inferences and of their updates:
   track of the order of the observations, because this information is
   irrelevant; but keeps track of the outcome frequencies. Trends are
   therefore invisible to the robot.
-\item As data $\varOmicron$ accumulate, the updated density
-  $\pf(\yq \| \varOmicron, \yMJ)\,\di\yq$ becomes more and more peaked at the
+\item As data $\yO$ accumulate, the updated density
+  $\pf(\yq \| \yO, \yMJ)\,\di\yq$ becomes more and more peaked at the
   $N$-tuple of observed frequencies. The robot's probabilities for the next
   outcome will therefore approach the frequencies hitherto observed. This
   approach happens independently of the form of the density
@@ -1304,7 +1304,7 @@ inferences. Note that the Plinko experiment tells us each participant's
 probabilities for the first observation,
 \begin{equation}
   \label{eq:initial_predictive}
-  \pf(\varOmicron^1_{s} \| \text{\footnotesize participant}) \equiv \int \yqq_{s}\;
+  \pf(\yO^1_{s} \| \text{\footnotesize participant}) \equiv \int \yqq_{s}\;
   \pf(\yq \| \text{\footnotesize participant})\,\di\yq,
 \end{equation}
 but this does not determine the prior parameter density
@@ -1329,8 +1329,8 @@ outcomes' relative frequencies, this assumption can be mathematically
 expressed as
 \begin{equation}
   \label{eq:sufficientness}
-  \p(\varOmicron^{m+1}_s \| \yf, N, \yMJ) =
-  \p(\varOmicron^{m+1}_{s} \| \yff_{s}, N, \yMJ)
+  \p(\yO^{m+1}_s \| \yf, N, \yMJ) =
+  \p(\yO^{m+1}_{s} \| \yff_{s}, N, \yMJ)
   \qquad\text{for all } s\in\set{1,\dotsc, N}.
 \end{equation}
 It is called \enquote{sufficientness}
@@ -1356,7 +1356,7 @@ formula~\eqref{eq:prediction_exchangeability} we find the joint
 distribution~\eqref{eq:distr_statmodel}, for any $m$:
 \begin{equation}
   \label{eq:joint_distr_JD}
-\pf( \varOmicron^1_{s_1}, \dotsc, \varOmicron^m_{s_m} \| \yMJ) =
+\pf( \yO^1_{s_1}, \dotsc, \yO^m_{s_m} \| \yMJ) =
   \frac{\Gamma(\yN)}{\Gamma(\yN+m)}
   \prod_{s=1}^{N}\frac{\Gamma(\yN\ynn_s + m\yff_s)}{\Gamma(\yN\ynn_s)},
 \end{equation}
@@ -1365,7 +1365,7 @@ where $\yff_s$ is the frequency of outcome $s$ in the $m$ observations.
 In particular, the initial distribution is simply
 \begin{equation}
   \label{eq:initial_predictive_JD}
-  \p(\varOmicron^1_{s} \| \yMJ)  = \ynn_s,
+  \p(\yO^1_{s} \| \yMJ)  = \ynn_s,
 \end{equation}
 for this reason we call this parameter the \emph{initial distribution} of
 the robot. This formula says that the Johnson-Dirichlet prior can produce
@@ -1381,7 +1381,7 @@ and~\eqref{eq:Dirichlet_formula} we can calculate the parameter density
 updated after the observations $1,\dotsc,m-1$:
 \begin{multline}
   \label{eq:update_prior_JD}
-  \pf(\yq \| \varOmicron^1_{s_1}, \dotsc, \varOmicron^{m-1}_{s_{m-1}}, \yMJ)
+  \pf(\yq \| \yO^1_{s_1}, \dotsc, \yO^{m-1}_{s_{m-1}}, \yMJ)
   = 
   \frac{\Gamma(\yN')}{\prod_i \Gamma(\yN'\ynn_i')}\,
   \prod_{i=1}^{N}{\yqq_i}^{\yN'\ynn_i'-1}
@@ -1396,7 +1396,7 @@ yields the robot's inference for the $m$th observation conditional on the
 previous ones:
 \begin{equation}
   \label{eq:predictive_JD_general}
-  \p(\varOmicron^{m}_{s} \| \varOmicron^{m-1}_{s_{m-1}},\dotsc,\varOmicron^1_{s_1}, \yMJ) =
+  \p(\yO^{m}_{s} \| \yO^{m-1}_{s_{m-1}},\dotsc,\yO^1_{s_1}, \yMJ) =
 \frac{\yN\ynn_s + (m-1)\,\yff_s}{\yN+m-1}.
 \end{equation}
 
@@ -1713,15 +1713,15 @@ With these propositions about the changepoints, the reset rules described
 above correspond to the following equalities, for all $m$:
 \begin{multline}
   \label{eq:irrelevant_data_conditional_R}
-  \p(\varOmicron^{m}_{s_{m}} \|
-  R^{m}_{u},  \varOmicron^{m-1}_{s_{m-1}}, \dotsc, \varOmicron^{1}_{s_{1}}, \yMc)
+  \p(\yO^{m}_{s_{m}} \|
+  R^{m}_{u},  \yO^{m-1}_{s_{m-1}}, \dotsc, \yO^{1}_{s_{1}}, \yMc)
   ={}\\
   \begin{cases}
-  \p(\varOmicron^{m}_{s_{m}} \|
-    R^{m}_{u},  \varOmicron^{m-1}_{s_{m-1}}, \dotsc, \varOmicron^{m-u}_{s_{m-u}}, \yMc)
+  \p(\yO^{m}_{s_{m}} \|
+    R^{m}_{u},  \yO^{m-1}_{s_{m-1}}, \dotsc, \yO^{m-u}_{s_{m-u}}, \yMc)
     &\text{for $1\le u\le m-1$},
       \\
-  \p(\varOmicron^{m}_{s_{m}} \|
+  \p(\yO^{m}_{s_{m}} \|
     R^{m}_{u}, \yMc)
     &\text{for $u=0$},
   \end{cases}
@@ -1735,14 +1735,14 @@ given the previous ones only if the robot has been programmed with the
 probabilities
 \begin{equation}
   \label{eq:prob_R_conditional_only_data_before}
-  \p(R^{m}_{u_{m}} \| \varOmicron^{m-1}_{s_{m-1}},\dotsc, \varOmicron^{1}_{s_{1}}, \yMc),
+  \p(R^{m}_{u_{m}} \| \yO^{m-1}_{s_{m-1}},\dotsc, \yO^{1}_{s_{1}}, \yMc),
 \end{equation}
 which in turn can be obtained by marginalization and condizionalization
 from the probabilities
 \begin{equation}
   \label{eq:prob_R_conditional_before}
-  \p(R^{m}_{u_{m}} \| \varOmicron^{m-1}_{s_{m-1}}, R^{m-1}_{u_{m-1}},\dotsc,
-  R^{2}_{u_{2}}, \varOmicron^{1}_{s_{1}}, \yMc)
+  \p(R^{m}_{u_{m}} \| \yO^{m-1}_{s_{m-1}}, R^{m-1}_{u_{m-1}},\dotsc,
+  R^{2}_{u_{2}}, \yO^{1}_{s_{1}}, \yMc)
 \end{equation}
 for all legitimate $m$, $u_i$, and outcomes $s_i$. Additional assumptions
 are necessary to determine the latter probabilities. For example, the
@@ -1759,8 +1759,8 @@ with this assumption:
 In formulae this assumption is equivalent to a Markov property:
 \begin{equation}
   \label{eq:prob_R_markov}
-  \p(R^{m}_{u_{m}} \| \varOmicron^{m-1}_{s_{m-1}}, R^{m-1}_{u_{m-1}},\dotsc,
-  R^{2}_{u_{2}}, \varOmicron^{1}_{s_{1}}, \yMc) =
+  \p(R^{m}_{u_{m}} \| \yO^{m-1}_{s_{m-1}}, R^{m-1}_{u_{m-1}},\dotsc,
+  R^{2}_{u_{2}}, \yO^{1}_{s_{1}}, \yMc) =
   \p(R^{m}_{u_{m}} \|  R^{m-1}_{u_{m-1}}, \yMc).
 \end{equation}
 Recalling, \eqn~\eqref{eq:exhaustive_R_from_previous}, that only the values
@@ -1814,22 +1814,22 @@ We first write probability for the $m$th observation given the previous
 outcomes can be written
 \begin{multline}
   \label{eq:prob_new_cond_R}
-  \p(\varOmicron^{m}_{s_{m}} \|
-  \varOmicron^{m-1}_{s_{m-1}}, \dotsc, \varOmicron^{1}_{s_{1}}, \yMc)
+  \p(\yO^{m}_{s_{m}} \|
+  \yO^{m-1}_{s_{m-1}}, \dotsc, \yO^{1}_{s_{1}}, \yMc)
   =
-  \frac{\p(\varOmicron^{m}_{s_{m}}, \varOmicron^{m-1}_{s_{m-1}} \|
-    \varOmicron^{m-2}_{s_{m-2}},\dotsc, \varOmicron^{1}_{s_{1}}, \yMc)}{
-    \p(\varOmicron^{m-1}_{s_{m-1}} \| \varOmicron^{m-2}_{s_{m-2}}, \dotsc, \varOmicron^{1}_{s_{1}}, \yMc)}
+  \frac{\p(\yO^{m}_{s_{m}}, \yO^{m-1}_{s_{m-1}} \|
+    \yO^{m-2}_{s_{m-2}},\dotsc, \yO^{1}_{s_{1}}, \yMc)}{
+    \p(\yO^{m-1}_{s_{m-1}} \| \yO^{m-2}_{s_{m-2}}, \dotsc, \yO^{1}_{s_{1}}, \yMc)}
 =  {}\\
   \frac{\sum\limits_{u=0}^{m-1}
-  \p(\varOmicron^{m}_{s_{m}} \|
-  R^{m}_{u},  \varOmicron^{m-1}_{s_{m-1}}, \dotsc, \varOmicron^{m-u}_{s_{m-u}}, \yMc)
+  \p(\yO^{m}_{s_{m}} \|
+  R^{m}_{u},  \yO^{m-1}_{s_{m-1}}, \dotsc, \yO^{m-u}_{s_{m-u}}, \yMc)
   \times
-  \p(R^{m}_{u}, \varOmicron^{m-1}_{s_{m-1}} \| \varOmicron^{m-2}_{s_{m-2}} \dotsc, \varOmicron^{1}_{s_{1}}, \yMc)}{
-\p(\varOmicron^{m-1}_{s_{m-1}} \| \varOmicron^{m-2}_{s_{m-2}} \dotsc, \varOmicron^{1}_{s_{1}}, \yMc)
+  \p(R^{m}_{u}, \yO^{m-1}_{s_{m-1}} \| \yO^{m-2}_{s_{m-2}} \dotsc, \yO^{1}_{s_{1}}, \yMc)}{
+\p(\yO^{m-1}_{s_{m-1}} \| \yO^{m-2}_{s_{m-2}} \dotsc, \yO^{1}_{s_{1}}, \yMc)
 }.
 \end{multline}
-The reason for taking $\varOmicron^{m-1}_{s_{m-1}}$ out of the conditional argument
+The reason for taking $\yO^{m-1}_{s_{m-1}}$ out of the conditional argument
 will be apparent in a moment. Note that the denominator is the probability
 of the previous observation given the previous data: in a recursive
 computation this would have been computed in the preceding step.
@@ -1837,26 +1837,26 @@ computation this would have been computed in the preceding step.
 The products in the $u$ sum contain the term given
 by~\eqref{eq:irrelevant_data_conditional_R}, which is just the
 Johnson-Dirichlet conditional probability~\eqref{eq:predictive_JD_general},
-and the joint probability for $(R^{m}_{u}, \varOmicron^{m-1}_{s_{m-1}})$ given the
+and the joint probability for $(R^{m}_{u}, \yO^{m-1}_{s_{m-1}})$ given the
 previous data. This joint probability can be decomposed introducing
 $R^{m-1}_{v}$ for the previous observation:
 \begin{multline}
   \label{eq:prob_R_and_last_decompose}
-  \p(R^{m}_{u}, \varOmicron^{m-1}_{s_{m-1}} \| \varOmicron^{m-2}_{s_{m-2}}, \dotsc, \varOmicron^{1}_{s_{1}}, \yMc) 
+  \p(R^{m}_{u}, \yO^{m-1}_{s_{m-1}} \| \yO^{m-2}_{s_{m-2}}, \dotsc, \yO^{1}_{s_{1}}, \yMc) 
  ={} \\
   \frac{\sum_{v=1}^{m-1}
-    \p(R^{m}_{u}, \varOmicron^{m-1}_{s_{m-1}}, R^{m-1}_{v-1}, \varOmicron^{m-2}_{s_{m-2}}
-    \| \varOmicron^{m-3}_{s_{m-3}}, \dotsc, \varOmicron^{1}_{s_{1}}, \yMc)}{
-\p(\varOmicron^{m-2}_{s_{m-2}} \| \varOmicron^{m-3}_{s_{m-3}}, \dotsc, \varOmicron^{1}_{s_{1}}, \yMc)}
+    \p(R^{m}_{u}, \yO^{m-1}_{s_{m-1}}, R^{m-1}_{v-1}, \yO^{m-2}_{s_{m-2}}
+    \| \yO^{m-3}_{s_{m-3}}, \dotsc, \yO^{1}_{s_{1}}, \yMc)}{
+\p(\yO^{m-2}_{s_{m-2}} \| \yO^{m-3}_{s_{m-3}}, \dotsc, \yO^{1}_{s_{1}}, \yMc)}
   ={}\\
-    \frac{1}{\p(\varOmicron^{m-2}_{s_{m-2}} \| \varOmicron^{m-3}_{s_{m-3}}, \dotsc, \varOmicron^{1}_{s_{1}}, \yMc)}
+    \frac{1}{\p(\yO^{m-2}_{s_{m-2}} \| \yO^{m-3}_{s_{m-3}}, \dotsc, \yO^{1}_{s_{1}}, \yMc)}
   \sum_{v=1}^{m-1} \p(R^{m}_{u} \| R^{m-1}_{v-1}, \yMc)
   \times{}\\
-  \p(\varOmicron^{m-1}_{s_{m-1}} \|
-    R^{m-1}_{v-1}, \varOmicron^{m-2}_{s_{m-2}} \dotsc, \varOmicron^{m-v}_{s_{m-v}}, \yMc)
+  \p(\yO^{m-1}_{s_{m-1}} \|
+    R^{m-1}_{v-1}, \yO^{m-2}_{s_{m-2}} \dotsc, \yO^{m-v}_{s_{m-v}}, \yMc)
     \times{}\\
- \p(R^{m-1}_{v-1}, \varOmicron^{m-2}_{s_{m-2}} \|
-  \varOmicron^{m-3}_{s_{m-3}},\dotsc, \varOmicron^{1}_{s_{1}}, \yMc).
+ \p(R^{m-1}_{v-1}, \yO^{m-2}_{s_{m-2}} \|
+  \yO^{m-3}_{s_{m-3}},\dotsc, \yO^{1}_{s_{1}}, \yMc).
 \end{multline}
 The last expression contains four kinds of terms. Let's analyse them.
 
@@ -1873,7 +1873,7 @@ The last expression contains four kinds of terms. Let's analyse them.
   \eqn~\eqref{eq:irrelevant_data_conditional_R}.
 
 \item The last factor within the $v$ sum is analogous to the joint
-  probability for $R^{m}_{u}, \varOmicron^{m-1}_{s_{m-1}}$, which we are now
+  probability for $R^{m}_{u}, \yO^{m-1}_{s_{m-1}}$, which we are now
   calculating, but for the previous observation. In a recursive scheme it
   is known from the preceding step.
 \end{itemize}
@@ -1886,15 +1886,15 @@ defining
   \begin{align}
     \label{eq:def_A}
     A_{m}(s_{m}) &\defs
-    \p(\varOmicron^{m}_{s_{m}} \| \varOmicron^{m-1}_{s_{m-1}}, \dotsc, \varOmicron^{1}_{s_{1}}, \yMc),
+    \p(\yO^{m}_{s_{m}} \| \yO^{m-1}_{s_{m-1}}, \dotsc, \yO^{1}_{s_{1}}, \yMc),
     \\
     B_{m}(u,s_{m})
-                 &\defd \p(\varOmicron^{m}_{s_{m}} \| R^{m}_{u}, \varOmicron^{m-1}_{s_{m-1}},
-                   \dotsc, \varOmicron^{m-u}_{s_{m-u}}, \yMc),
+                 &\defd \p(\yO^{m}_{s_{m}} \| R^{m}_{u}, \yO^{m-1}_{s_{m-1}},
+                   \dotsc, \yO^{m-u}_{s_{m-u}}, \yMc),
     \\
     C_{m}(u) &\defd
-            \p(R^{m}_{u} , \varOmicron^{m-1}_{s_{m-1}} \| \varOmicron^{m-2}_{s_{m-2}}, \dotsc,
-            \varOmicron^{1}_{s_{1}}, \yMc),
+            \p(R^{m}_{u} , \yO^{m-1}_{s_{m-1}} \| \yO^{m-2}_{s_{m-2}}, \dotsc,
+            \yO^{1}_{s_{1}}, \yMc),
   \end{align}
 \end{subequations}
 we find that the conditional probability we're seeking, $A_{m}(s_{m})$, is
@@ -1932,15 +1932,15 @@ algorithm is summarized in table~\ref{tab:adamsetal_algorithm}.
 \bigskip
 
 Some initial values are necessary for this recursive scheme. For $m=1$, the
-first observation, the distribution is $\p(\varOmicron^{1}_{s_1} \| \yMc)=\ynn_{s_1}$
+first observation, the distribution is $\p(\yO^{1}_{s_1} \| \yMc)=\ynn_{s_1}$
 by the Johnson-Dirichlet model, and trivially $\p(R^{1}_{0} \| \yMc)=1$.
 Owing to the certainty of $R^1_0$, for $m=2$ we have
 \begin{equation}
   \label{eq:initial_R2}
-  \p(R^{2}_{u}, \varOmicron^{1}_{s_{1}} \|  \yMc)
-  = \p(R^{2}_{u},R^{1}_{0}, \varOmicron^{1}_{s_{1}} \|  \yMc)
+  \p(R^{2}_{u}, \yO^{1}_{s_{1}} \|  \yMc)
+  = \p(R^{2}_{u},R^{1}_{0}, \yO^{1}_{s_{1}} \|  \yMc)
   = \p(R^{2}_{u} \| R^{1}_{0},  \yMc) \times
-  \p( \varOmicron^{1}_{s_{1}} \|  \yMc).
+  \p( \yO^{1}_{s_{1}} \|  \yMc).
 \end{equation}
 With the probabilities above from $m=3$ onward the recursion can be
 calculated with \eqns~\eqref{eq:recursive_formula_2}. These initialization
@@ -1954,7 +1954,7 @@ steps are summarized in table~\ref{tab:adamsetal_initial}.
     \begin{enumerate}%[label=0.\arabic*.,start=0]
     \item Assign numerical values to $\yN$, $\ynn$
     \item For $s_1 \in \set{1,\dotsc,N}$ calculate
-      \[A_1(s_1)\defd \p(\varOmicron^{1}_{s_{1}} \|  \yMc) =\ynn_{s_1} \]
+      \[A_1(s_1)\defd \p(\yO^{1}_{s_{1}} \|  \yMc) =\ynn_{s_1} \]
     \item Observe $s_1$
     \item Keep  $A_1(s_1)$ for the next two steps and $B_1(0)\equiv 1$ for
       the next step
@@ -1964,7 +1964,7 @@ steps are summarized in table~\ref{tab:adamsetal_initial}.
       \begin{enumerate}[label*=\arabic*.]
    \item Calculate
       \[
-        C_2(u) \defd \p(R^{2}_{u}, \varOmicron^{1}_{s_1} \| \yMc)
+        C_2(u) \defd \p(R^{2}_{u}, \yO^{1}_{s_1} \| \yMc)
         =
 A_1(s_1) \times \begin{cases}
           \yrs(0,1) &\text{for $u=0$},\\ 1-\yrs(0,1)&\text{for $u=1$}
@@ -1973,7 +1973,7 @@ A_1(s_1) \times \begin{cases}
       \item For $s_{2} \in \set{1,\dotsc,N}$, calculate
         \[ 
           B_{2}(u,s_{2}) \defd
-          \p(\varOmicron^{2}_{s_{2}} \| R^{2}_{u}, \varOmicron^{1}_{s_{1}}, \yMc) =
+          \p(\yO^{2}_{s_{2}} \| R^{2}_{u}, \yO^{1}_{s_{1}}, \yMc) =
          \frac{\yN\ynn_{s_{2}}+u\yff_{s_{2}}}{\yN + u},
         \]
      where $\yff_{s_{2}}$ is the relative frequency of outcome $s_{3}$ in
@@ -1981,7 +1981,7 @@ A_1(s_1) \times \begin{cases}
     \end{enumerate}
   \item  For $s_2 \in \set{1,\dotsc,N}$ calculate
       \[A_2(s_2) \defd
-        \p(\varOmicron^{2}_{s_{2}} \| \varOmicron^{1}_{s_{1}}, \yMc) =
+        \p(\yO^{2}_{s_{2}} \| \yO^{1}_{s_{1}}, \yMc) =
 \frac{\sum_{u=0}^{1} B_{2}(u,s_{2}) \times C_{2}(u)}{A_{1}(s_{1})} \]
 \item Observe $s_2$
 \item Keep $A_{2}(s_{2})$ for the next two steps, and
@@ -1999,15 +1999,15 @@ A_1(s_1) \times \begin{cases}
   \begin{tabularx}{\textwidth}{X}\hline
     \begin{enumerate}
       % \item Retrieve from memory
-      %   \[ B_m(v) \defd \p(R^{m}_{v} \| \varOmicron^{m-1}_{s_{m-1}} \dotsc,
-      %     \varOmicron^{1}_{s_{1}}, \yMc),\qquad 0\le v \le m-1 \]
+      %   \[ B_m(v) \defd \p(R^{m}_{v} \| \yO^{m-1}_{s_{m-1}} \dotsc,
+      %     \yO^{1}_{s_{1}}, \yMc),\qquad 0\le v \le m-1 \]
     \item\label{item:first_step}For $u \in \set{0,\dotsc, m}$:
       \begin{enumerate}[label*=\arabic*.]
       \item Calculate
         \[ \begin{multlined}[t][0.85\textwidth]
             C_{m+1}(u) \defd
-            \p(R^{m+1}_{u} , \varOmicron^{m}_{s_{m}} \| \varOmicron^{m-1}_{s_{m-1}}, \dotsc,
-            \varOmicron^{1}_{s_{1}}, \yMc) ={}\\[\jot]
+            \p(R^{m+1}_{u} , \yO^{m}_{s_{m}} \| \yO^{m-1}_{s_{m-1}}, \dotsc,
+            \yO^{1}_{s_{1}}, \yMc) ={}\\[\jot]
        \shoveleft{\frac{1}{A_{m-1}(s_{m-1})} \times{}}\\\begin{cases}
           \sum_{v=0}^{m-1} \yrs(v,m) \times B_m(v,s_m) \times C_m(v) & \text{if $u=0$},
           \\[\jot]
@@ -2017,19 +2017,19 @@ A_1(s_1) \times \begin{cases}
     \]
       \item For $s_{m+1} \in \set{1,\dotsc,N}$, calculate
         \[ \begin{multlined}[][0.85\textwidth]
-B_{m+1}(u,s_{m+1}) \defd \p(\varOmicron^{m+1}_{s_{m+1}} \| R^{m+1}_{u}, \varOmicron^{m}_{s_{m}},
-          \dotsc, \varOmicron^{m+1-u}_{s_{m+1-u}}, \yMc) ={}\\[\jot]
+B_{m+1}(u,s_{m+1}) \defd \p(\yO^{m+1}_{s_{m+1}} \| R^{m+1}_{u}, \yO^{m}_{s_{m}},
+          \dotsc, \yO^{m+1-u}_{s_{m+1-u}}, \yMc) ={}\\[\jot]
          \frac{\yN\ynn_{s_{m+1}}+u\yff_{s_{m+1}}}{\yN + u},
        \end{multlined} \]
      where $\yff_{s_{m+1}}$ is the relative frequency of outcome $s_{m+1}$ in the previous $u$ observations
       % \item using the Johnson-Dirichlet model calculate (or retrieve from memory)
-      %   \[ A_m(v) \defd \p(\varOmicron^{m}_{s_{m}} \| R^{m}_{v}, \varOmicron^{m-1}_{s_{m-1}}
-      %     \dotsc, \varOmicron^{m-v}_{s_{m-v}}, \yMc)
+      %   \[ A_m(v) \defd \p(\yO^{m}_{s_{m}} \| R^{m}_{v}, \yO^{m-1}_{s_{m-1}}
+      %     \dotsc, \yO^{m-v}_{s_{m-v}}, \yMc)
       %   \]
   \end{enumerate}
 \item For $s_{m+1} \in \set{1,\dotsc,N}$, calculate
   \[ \begin{multlined}[][0.85\textwidth]
-      A_{m+1}(s_{m+1}) \defd \p(\varOmicron^{m+1}_{s_{m+1}} \| \varOmicron^{m}_{s_{m}}, \dotsc, \varOmicron^{1}_{s_{1}}, \yMc) ={}\\[\jot]
+      A_{m+1}(s_{m+1}) \defd \p(\yO^{m+1}_{s_{m+1}} \| \yO^{m}_{s_{m}}, \dotsc, \yO^{1}_{s_{1}}, \yMc) ={}\\[\jot]
     \frac{\sum_{u=0}^{m} B_{m+1}(u,s_{m+1}) \times
       C_{m+1}(u)}{A_{m}(s_{m})}
   \end{multlined}
@@ -2517,23 +2517,23 @@ experiment.
 % observation:
 % \begin{equation}
 %   \label{eq:prob_R_and_last_decompose2}
-%     \p(R^{m+1}_{u}\| \varOmicron^{m}_{s_{m}}, \dotsc, \varOmicron^{1}_{s_{1}}, \yI) 
+%     \p(R^{m+1}_{u}\| \yO^{m}_{s_{m}}, \dotsc, \yO^{1}_{s_{1}}, \yI) 
 %   % &=\sum_{v=0}^{m-1}
 %   % \p(R^{m+1}_{u},R^{m}_{v},\|
-%   % \varOmicron^{m}_{s_{m}}, \dotsc, \varOmicron^{1}_{s_{1}}, \yI)
+%   % \yO^{m}_{s_{m}}, \dotsc, \yO^{1}_{s_{1}}, \yI)
 %   % \\
 % =\sum_{v=0}^{m-1}\p(R^{m+1}_{u} \| R^{m}_{v}, \yI)
 %   \times
 %   \p(R^{m}_{v} \|
-%   \varOmicron^{m-1}_{s_{m-1}} \dotsc, \varOmicron^{1}_{s_{1}}, \yI).
+%   \yO^{m-1}_{s_{m-1}} \dotsc, \yO^{1}_{s_{1}}, \yI).
 % % &\!\begin{multlined}[b][0.7\textwidth]
 % %   =\sum_{v=0}^{m-1}\p(R^{m+1}_{u} \| R^{m}_{v}, \yI)
 % %   \times{}\\
-% %   \p(\varOmicron^{m}_{s_{m}} \| R^{m}_{v},
-% %   \varOmicron^{m-1}_{s_{m-1}} \dotsc, \varOmicron^{m-v}_{s_{m-v}}, \yI)
+% %   \p(\yO^{m}_{s_{m}} \| R^{m}_{v},
+% %   \yO^{m-1}_{s_{m-1}} \dotsc, \yO^{m-v}_{s_{m-v}}, \yI)
 % %   \times{}\\
 % %   \p(R^{m}_{v} \|
-% %   \varOmicron^{m-1}_{s_{m-1}} \dotsc, \varOmicron^{1}_{s_{1}}, \yI).
+% %   \yO^{m-1}_{s_{m-1}} \dotsc, \yO^{1}_{s_{1}}, \yI).
 % %           \end{multlined}
 % %   \end{aligned}
 % \end{equation}
