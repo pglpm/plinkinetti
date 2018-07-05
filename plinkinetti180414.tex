@@ -1,7 +1,7 @@
 \pdfoutput=1
 %% Author: PGL  Porta Mana, ALS Filipowicz
 %% Created: 2018-04-08T16:54:19+0200
-%% Last-Updated: 2018-07-05T10:40:13+0200
+%% Last-Updated: 2018-07-05T10:44:16+0200
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Report-no: ***
 \newif\ifarxiv
@@ -921,8 +921,9 @@ probability calculus.
 Consider this context: a set of $M$ observations $1,2,\dotsc,M$, each of
 which can have $N$ possible slot outcomes $\set{1,\dotsc,N}$. Denote
 \enquote{The outcome of the $i$th \textbf{o}bservation is slot $s$} by
-$\varOmicron^i_s$. In this context, choosing a statistical model $\yI$ is
-equivalent to choosing the numerical values of the joint distribution
+$\varOmicron^i_s$, and logical conjunction (\enquote{$\land$}) by a comma.
+In this context, choosing a statistical model $\yI$ is equivalent to
+choosing the numerical values of the joint distribution
 \begin{multline}
   \label{eq:distr_statmodel}
   \p( \varOmicron^M_{s_M}, \varOmicron^{M-1}_{s_{M-1}}, \dotsc,
@@ -974,8 +975,8 @@ though.\footnote{\enquote{The conflict regarding the existence of a or the
 what we'd call \enquote{classes of statistical models} in our terminology.
 
 To avoid using this ambiguous term, we'll figuratively speak of a
-\emph{Bayesian robot} instead of a model. Such a robot uses the five or six
-laws of probability
+\emph{Bayesian robot} instead of a model. Such a robot uses the three,
+five, or six laws of probability
 \begin{subequations}
     \label{eq:laws_prob}
   \begin{gather}
