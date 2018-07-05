@@ -1,7 +1,7 @@
 \pdfoutput=1
 %% Author: PGL  Porta Mana, ALS Filipowicz
 %% Created: 2018-04-08T16:54:19+0200
-%% Last-Updated: 2018-07-03T18:38:42+0200
+%% Last-Updated: 2018-07-05T08:40:50+0200
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Report-no: ***
 \newif\ifarxiv
@@ -640,7 +640,7 @@ P.G.L. Porta\,Mana\\%
 %\newcommand*{\lland}{\mathbin{\ \land\ }}
 %\newcommand*{\llor}{\mathbin{\ \lor\ }}
 %\newcommand*{\lonlyif}{\mathbin{\Rightarrow}}%implies
-%\newcommand*{\limplies}{\mathbin{\Rightarrow}}%implies
+\newcommand*{\limplies}{\mathbin{\Rightarrow}}%implies
 \newcommand*{\mimplies}{\Rightarrow}%implies
 %\newcommand*{\liff}{\mathbin{\Leftrightarrow}}%if and only if
 %\newcommand*{\cond}{\mathpunct{|}}%conditional sign (in probabilities)
@@ -974,8 +974,19 @@ though.\footnote{\enquote{The conflict regarding the existence of a or the
 what we'd call \enquote{classes of statistical models} in our terminology.
 
 To avoid using this ambiguous term, we'll figuratively speak of a
-\emph{Bayesian robot} instead of a model. Such a robot uses the three laws
-of probability to make numeric probabilistic inferences and update them in
+\emph{Bayesian robot} instead of a model. Such a robot uses the three or
+four laws
+of probability
+\begin{subequations}
+    \label{eq:laws_prob}
+  \begin{gather}
+\p(\neg A \| \yI) = 1-\p(A \| \yI)\\    
+\p(A \lor B \| \yI) =\p(B \lor A \| \yI) = \p(A \| \yI)+\p(B \| \yI)-\p(A \| B,\yI)\;\p(B \| \yI)\\    
+\p(A, B \| \yI) =\p(B, A \| \yI) = \p(A \| B,\yI)\;\p(B \| \yI)\\
+\p(A\limplies B\|I) = \p(\neg A \| \yI) +\p(A \| B,\yI)\;\p(B \| \yI)
+  \end{gather}
+\end{subequations}
+to make numeric probabilistic inferences and update them in
 view of new observations. But to do so it first needs to be fully
 programmed with a complete set of probabilistic assumptions, in the form of
 the joint distribution~\eqref{eq:distr_statmodel} or in another equivalent
