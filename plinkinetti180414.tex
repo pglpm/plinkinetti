@@ -1,7 +1,7 @@
 \pdfoutput=1
 %% Author: PGL  Porta Mana, ALS Filipowicz
 %% Created: 2018-04-08T16:54:19+0200
-%% Last-Updated: 2018-07-05T08:40:50+0200
+%% Last-Updated: 2018-07-05T10:40:13+0200
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Report-no: ***
 \newif\ifarxiv
@@ -974,23 +974,25 @@ though.\footnote{\enquote{The conflict regarding the existence of a or the
 what we'd call \enquote{classes of statistical models} in our terminology.
 
 To avoid using this ambiguous term, we'll figuratively speak of a
-\emph{Bayesian robot} instead of a model. Such a robot uses the three or
-four laws
-of probability
+\emph{Bayesian robot} instead of a model. Such a robot uses the five or six
+laws of probability
 \begin{subequations}
     \label{eq:laws_prob}
   \begin{gather}
 \p(\neg A \| \yI) = 1-\p(A \| \yI)\\    
-\p(A \lor B \| \yI) =\p(B \lor A \| \yI) = \p(A \| \yI)+\p(B \| \yI)-\p(A \| B,\yI)\;\p(B \| \yI)\\    
 \p(A, B \| \yI) =\p(B, A \| \yI) = \p(A \| B,\yI)\;\p(B \| \yI)\\
+\p(A \lor B \| \yI) =\p(B \lor A \| \yI) = \p(A \| \yI)+\p(B \| \yI)-\p(A \| B,\yI)\;\p(B \| \yI)\\    
 \p(A\limplies B\|I) = \p(\neg A \| \yI) +\p(A \| B,\yI)\;\p(B \| \yI)
   \end{gather}
 \end{subequations}
-to make numeric probabilistic inferences and update them in
-view of new observations. But to do so it first needs to be fully
-programmed with a complete set of probabilistic assumptions, in the form of
-the joint distribution~\eqref{eq:distr_statmodel} or in another equivalent
-way. \emph{A \enquote{Bayesian robot} is thus equivalent to a statistical
+(the last three equalities are unnecessary if we define
+$A\lor B \defd \neg(\neg A, \neg B)$ and
+$A \limplies B \defd \neg(A, \neg B)$) to make numeric probabilistic
+inferences and update them in view of new observations. But to do so it
+first needs to be fully programmed with a complete set of probabilistic
+assumptions, in the form of the joint
+distribution~\eqref{eq:distr_statmodel} or in another equivalent way.
+\emph{A \enquote{Bayesian robot} is thus equivalent to a statistical
   model.}
 
 In the context of the experiment described above, the set of possible
