@@ -59,9 +59,10 @@ lkd <- function(a,b){
     temp[is.nan(temp)] <- 0
     apply(temp,1,sum)}
 jsd <- function(a,b){
-    temp1 <-  a * log(a/b)
+    c <- (a+b)/2
+    temp1 <-  a * log(a/c)
     temp1[is.nan(temp1)] <- 0
-	temp2 <-  b * log(b/a)
+    temp2 <-  b * log(b/c)
 	temp2[is.nan(temp2)] <- 0
     sum(temp1+temp2)/2}
 
@@ -240,7 +241,7 @@ discrepancyfast <- function(allparams,pdistr,obs){
 reducediscrepancy <- function(participant,maxtrials,startpoints=4,seed=999){
     set.seed(seed)
     obs <- observations(participant,maxtrials)
-    pdistr <- regularizedistr(participant,maxtrials)
+    pdistr <- distribution(participant,maxtrials)
     startstub <- c(log(0.1),log(10),log(1),rnorm(startpoints,0,2)) 
 
     maxval <- Inf
@@ -346,21 +347,21 @@ plotdiscrseq <- function(rdistr,pdistr,label=''){
 ## - sequences of overlap, relative entropies, means, stds
 ## - histograms for a selected set of trials
 ## and that outputs the final distributions, rel-entropies, overlaps, means, stds
-comparison <- function(participant,maxtrials=200,trialstoshow=c(1:4, 99:102, 197:200),label='',params=rep(0.5,4),initial.distr=NULL){
+comparison <- function(participant,maxtrials=200,trialstoshow=c(1:4, 99:102, 197:200),label='',params=rep(0.5,4),initial.distr=NULL,graphs=TRUE){
     obs <- observations(participant,maxtrials)
 
     ## sequence of frequency parameters of the changepoint-JD model. At
     ## every "reset" we set the first equal to the participant's initial
     ## distribution plus a value equal to 1/1000 of the minimum nonzero value
     ## ever assigned
-    pdistr <- regularizedistr(participant,maxtrials)
+    pdistr <- distribution(participant,maxtrials)
 
     ## robot's reset distribution
     if(length(initial.distr)==0){## use this participant's
         initial.distr <- pdistr[1,]
     }
     else{## use another participant's or custom
-        initial.distr <- regularizedistr(initial.distr,maxtrials)[1,]
+        initial.distr <- distribution(initial.distr,maxtrials)[1,]
     }
     
     rdistr <- robotdistribution(initial.distr,params,obs)
@@ -406,6 +407,7 @@ comparison <- function(participant,maxtrials=200,trialstoshow=c(1:4, 99:102, 197
 ## dev.off()
 
     ## plots
+if(graphs==TRUE){
     slabel <- substring(label,1,1)
     if(slabel!='' & slabel!='_'){label <- paste0('_',label)}
     pdfname <- paste0(plotsdir,'p',participant,label,'.pdf')
@@ -484,6 +486,7 @@ g <- g + geom_rect(aes(xmax=maxtrials+1-robotwidth,xmin=maxtrials+1-2*robotwidth
 
     ## plot the relative entropy and Jansen-Shannon
     cols <- c('rel. entropy'=mygreen,'Jansen-Shannon'=myyellow)
+    maxjs <- max(c(jsseq))
 df <- data.frame(x=1:(maxtrials+1), y1=klseq, y2=jsseq)
 g <- ggplot() + theme_classic() 
 g <- g + #geom_point(data=df, aes(x,y), colour=myyellow) +
@@ -491,7 +494,7 @@ g <- g + #geom_point(data=df, aes(x,y), colour=myyellow) +
 g <- g + #geom_point(data=df, aes(x,y), colour=myyellow) +
     geom_line(data=df, aes(x,y2, colour='Jansen-Shannon'), alpha=0.75)
 g <- g + scale_color_manual(values=cols) +
-    xlim(1,maxtrials+1) +
+    xlim(1,maxtrials+1) + ylim(0,maxjs) +
     theme(aspect.ratio=0.5, legend.title=element_blank(),
                    legend.background=element_blank(),
                    legend.justification=c(0,1),
@@ -550,13 +553,13 @@ g <- g + geom_rect(aes(xmax=N-robotwidth,xmin=N-2*robotwidth,
                           ymax=maxy*0.99-iconheight,ymin = maxy*0.99-2*iconheight),
                           color=NA, fill=myblue, alpha=0.5)
 print(g)
-}
+}}
 dev.off()}
 
     return(list(distr=pdistr,robotdistr=rdistr,rentropy=klseq,js=jsseq,meanperson=meanperson,meanrobot=meanrobot,stdperson=stdperson,stdrobot=stdrobot))
 }
 
-comparisonall <- function(participant,maxtrials=200,trialstoshow=c(1:4, 99:102, 197:200),label='',params=rep(0.5,4),maxes,initial.distr=NULL){
+comparisonall <- function(participant,maxtrials=200,trialstoshow=c(1:4, 99:102, 197:200),savedir='./',label='',params=rep(0.5,4),maxes,initial.distr=NULL){
     obs <- observations(participant,maxtrials)
     maxstd <- maxes[1] # max for std graph
     maxent <- maxes[2] # max for entopies graph
@@ -567,14 +570,14 @@ comparisonall <- function(participant,maxtrials=200,trialstoshow=c(1:4, 99:102, 
     ## every "reset" we set the first equal to the participant's initial
     ## distribution plus a value equal to 1/1000 of the minimum nonzero value
     ## ever assigned
-    pdistr <- regularizedistr(participant,maxtrials)
+    pdistr <- distribution(participant,maxtrials)
 
     ## robot's reset distribution
     if(length(initial.distr)==0){## use this participant's
         initial.distr <- pdistr[1,]
     }
     else{## use another participant's or custom
-        initial.distr <- regularizedistr(initial.distr,maxtrials)[1,]
+        initial.distr <- distribution(initial.distr,maxtrials)[1,]
     }
     
     rdistr <- robotdistribution(initial.distr,params,obs)
@@ -622,7 +625,7 @@ comparisonall <- function(participant,maxtrials=200,trialstoshow=c(1:4, 99:102, 
     ## plots
     slabel <- substring(label,1,1)
     if(slabel!='' & slabel!='_'){label <- paste0('_',label)}
-    pdfname <- paste0(plotsdir,'p',participant,label,'.pdf')
+    pdfname <- paste0(savedir,'p',participant,label,'.pdf')
     pdf(pdfname, width = 148*mmtoin, height=148*0.6*mmtoin)
     
     ## plot sequence of means
@@ -868,7 +871,7 @@ summaryparticipants <- function(participants=(1:40),maxtrials=200,label='',seed=
     message('finished')
 }
 
-generategraphsummary <- function(participants,dir,label){
+generategraphsummary <- function(participants,dir,savedir,label){
     mat <- matrix(NA,length(participants),5)
     maxes <- matrix(-Inf,length(participants),4)
     j <- 0
@@ -882,7 +885,8 @@ generategraphsummary <- function(participants,dir,label){
             summary <- c(i,readRDS(filename)$compres)
             maxes <- c(
                 max(c(maxes[1], summary$stdperson,summary$stdrobot)),
-                max(c(maxes[2], summary$rentropy,summary$js)),
+                max(c(maxes[2], ##if(length(c(summary$rentropy[summary$rentropy==Inf]))>0){-Inf}else{summary$rentropy},
+                      summary$js)),
                 max(c(maxes[3], max(abs(summary$robotdistr-summary$distr)))),
                 max(c(maxes[4], summary$distr,summary$robotdistr))
             )
@@ -902,7 +906,7 @@ generategraphsummary <- function(participants,dir,label){
 
             optp <- c(i,readRDS(filename)$optres)
             if(optp$convergence > 0){warnlabel='_NOTCONVERGED'}
-            compres <- comparisonall(i,200,label=paste0(warnlabel,label),params=optp$par,maxes=maxes)
+            compres <- comparisonall(i,200,savedir=savedir,label=paste0(warnlabel,label),params=optp$par,maxes=maxes)
         }}
 }
 
