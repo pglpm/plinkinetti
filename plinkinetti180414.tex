@@ -1,7 +1,7 @@
 \pdfoutput=1
 %% Author: PGL  Porta Mana, ALS Filipowicz
 %% Created: 2018-04-08T16:54:19+0200
-%% Last-Updated: 2018-05-30T15:17:26+0200
+%% Last-Updated: 2018-07-05T20:01:50+0200
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Report-no: ***
 \newif\ifarxiv
@@ -19,14 +19,14 @@
 onecolumn,oneside,article,%french,italian,german,swedish,latin,
 british%
 ]{memoir}
-\newcommand*{\oggi}{\today}
+\newcommand*{\updated}{\today}
 \newcommand*{\firstdraft}{14 April 2018}
-\newcommand*{\firstpublished}{\oggi}
+\newcommand*{\firstpublished}{\today}
 \newcommand*{\propertitle}{Bayesian Plinko\\{\large Study notes}}
 \newcommand*{\pdftitle}{Bayesian Plinko}
 \newcommand*{\headtitle}{Bayesian Plinko}
 \newcommand*{\pdfauthor}{A. L. S. Filipowicz, P.G.L.  Porta Mana, Y. Roudi,
-  et al.}
+  Britt Anderson, James Danckert}
 \newcommand*{\etal}{{et al.}}
 \newcommand*{\headauthor}{\ifpublic Filipowicz \amp\ Porta Mana%
 \else Alex \etal\fi}
@@ -72,11 +72,12 @@ british%
 % \makeatother
 \usepackage{amsmath}
 \usepackage{mathtools}
+\addtolength{\jot}{\jot} % increase spacing in multiline formulae
 \usepackage{empheq}% automatically calls amsmath and mathtools
 \newcommand*{\widefbox}[1]{\fbox{\hspace{1em}#1\hspace{1em}}}
 \setlength{\multlinegap}{0pt}
 %\usepackage{fancybox}
-\usepackage{framed}
+%\usepackage{framed}
 % \usepackage[misc]{ifsym} % for dice
 % \newcommand*{\diceone}{{\scriptsize\Cube{1}}}
 \usepackage{amssymb}
@@ -177,7 +178,7 @@ british%
  \DeclareMathSymbol{\partialup}{\mathalpha}{egreekr}{"40}
 % \DeclareMathSymbol{\alpha}{\mathalpha}{egreeki}{"0B}
 % \DeclareMathSymbol{\beta}{\mathalpha}{egreeki}{"0C}
-% \DeclareMathSymbol{\gamma}{\mathalpha}{egreeki}{"0D}
+ \DeclareMathSymbol{\gamma}{\mathalpha}{egreeki}{"0D}
 % \DeclareMathSymbol{\delta}{\mathalpha}{egreeki}{"0E}
  \DeclareMathSymbol{\epsilon}{\mathalpha}{egreeki}{"0F}
 % \DeclareMathSymbol{\zeta}{\mathalpha}{egreeki}{"10}
@@ -207,8 +208,8 @@ british%
  \let\varkappa\kappa
 % \DeclareMathSymbol{\varphi}{\mathalpha}{egreeki}{"27}
 % %
-% \DeclareMathSymbol{\varAlpha}{\mathalpha}{egreeki}{"41}
-% \DeclareMathSymbol{\varBeta}{\mathalpha}{egreeki}{"42}
+ \DeclareMathSymbol{\varAlpha}{\mathalpha}{egreeki}{"41}
+ \DeclareMathSymbol{\varBeta}{\mathalpha}{egreeki}{"42}
 % \DeclareMathSymbol{\varGamma}{\mathalpha}{egreeki}{"00}
  \DeclareMathSymbol{\varDelta}{\mathalpha}{egreeki}{"01}
  \DeclareMathSymbol{\varEpsilon}{\mathalpha}{egreeki}{"45}
@@ -221,7 +222,7 @@ british%
 % \DeclareMathSymbol{\varMu}{\mathalpha}{egreeki}{"4D}
 % \DeclareMathSymbol{\varNu}{\mathalpha}{egreeki}{"4E}
 % \DeclareMathSymbol{\varXi}{\mathalpha}{egreeki}{"04}
-% \DeclareMathSymbol{\varOmicron}{\mathalpha}{egreeki}{"4F}
+ \DeclareMathSymbol{\varOmicron}{\mathalpha}{egreeki}{"4F}
 % \DeclareMathSymbol{\varPi}{\mathalpha}{egreeki}{"05}
 % \DeclareMathSymbol{\varRho}{\mathalpha}{egreeki}{"50}
 % \DeclareMathSymbol{\varSigma}{\mathalpha}{egreeki}{"06}
@@ -274,7 +275,7 @@ british%
 % \DeclareMathSymbol{\omicronup}{\mathalpha}{egreekr}{"6F}
   \DeclareMathSymbol{\piup}{\mathalpha}{egreekr}{"19}
 % \DeclareMathSymbol{\rhoup}{\mathalpha}{egreekr}{"1A}
-% \DeclareMathSymbol{\sigmaup}{\mathalpha}{egreekr}{"1B}
+ \DeclareMathSymbol{\sigmaup}{\mathalpha}{egreekr}{"1B}
 % \DeclareMathSymbol{\tauup}{\mathalpha}{egreekr}{"1C}
 % \DeclareMathSymbol{\upsilonup}{\mathalpha}{egreekr}{"1D}
 % \DeclareMathSymbol{\phiup}{\mathalpha}{egreekr}{"1E}
@@ -553,10 +554,17 @@ totalheight=\heightof{@}]{atblack.png}}\makeatother
 \firmlists*
 \midsloppy
 
-% handling orphan/widow lines:
-\clubpenalty=10000
-\widowpenalty=10000
-\raggedbottom
+% handling orphan/widow lines, memman.pdf
+% \clubpenalty=10000
+% \widowpenalty=10000
+% \raggedbottom
+% Downes, memman.pdf
+\clubpenalty=9996
+\widowpenalty=9999
+\brokenpenalty=4991
+\predisplaypenalty=10000
+\postdisplaypenalty=1549
+\displaywidowpenalty=1602
 
 \selectlanguage{british}\frenchspacing
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -581,10 +589,12 @@ P.G.L. Porta\,Mana\\%
 % {\footnotesize\href{https://orcid.org/0000-0002-6070-0784}{\protect\includegraphics[scale=0.16]{orcid_32x32.png}\textsc{orcid}:0000-0002-6070-0784}}%
 %\end{tabular}%
 \hspace*{\stretch{1}}%
-\else Alex, Luca, Yasser, \etal%
+\else Alex, Luca, Yasser, Britt, James%
 \fi}
 
-\date{Draft of \today\ (first drafted \firstdraft)}
+%\date{\firstpublished; updated \updated}
+\date{\firstdraft; updated \updated}
+
 %\date{\firstpublished; updated \oggi}
 
 %@@@@@@@@@@ new macros @@@@@@@@@@
@@ -602,7 +612,7 @@ P.G.L. Porta\,Mana\\%
 %\newcommand*{\celsius}{\textcelsius}% degree Celsius
 %\newcommand*{\micro}{\textmu}% degree Celsius
 %\newcommand*{\I}{\mathrm{i}}%imaginary unit
-%\newcommand*{\e}{\mathrm{e}}%Neper
+\newcommand*{\e}{\mathrm{e}}%Neper
 \newcommand*{\di}{\mathrm{d}}%differential
 %\newcommand*{\Di}{\mathrm{D}}%capital differential
 %\newcommand*{\planckc}{\hslash}
@@ -630,7 +640,7 @@ P.G.L. Porta\,Mana\\%
 %\newcommand*{\lland}{\mathbin{\ \land\ }}
 %\newcommand*{\llor}{\mathbin{\ \lor\ }}
 %\newcommand*{\lonlyif}{\mathbin{\Rightarrow}}%implies
-%\newcommand*{\limplies}{\mathbin{\Rightarrow}}%implies
+\newcommand*{\limplies}{\mathbin{\Rightarrow}}%implies
 \newcommand*{\mimplies}{\Rightarrow}%implies
 %\newcommand*{\liff}{\mathbin{\Leftrightarrow}}%if and only if
 %\newcommand*{\cond}{\mathpunct{|}}%conditional sign (in probabilities)
@@ -651,7 +661,7 @@ P.G.L. Porta\,Mana\\%
 %\providecommand{\varparallel}{\ensuremath{\mathbin{/\mkern-7mu/}}}%parallel (tentative symbol)
 \renewcommand{\le}{\leqslant}%less or equal
 \renewcommand{\ge}{\geqslant}%greater or equal
-%\DeclarePairedDelimiter\clcl{[}{]}
+\DeclarePairedDelimiter\clcl{[}{]}
 \DeclarePairedDelimiter\clop{[}{[}
 %\DeclarePairedDelimiter\opcl{]}{]}
 %\DeclarePairedDelimiter\opop{]}{[}
@@ -696,7 +706,7 @@ P.G.L. Porta\,Mana\\%
 %\newcommand*{\nbd}{\nobreakdash}%
 %\newcommand*{\bd}{\hspace{0pt}}%
 %\def\hy{-\penalty0\hskip0pt\relax}
-%\newcommand*{\labelbis}[1]{\tag*{(\ref{#1})$_\text{r}$}}
+\newcommand*{\labelbis}[1]{\tag*{(\ref{#1})$_\text{r}$}}
 %\newcommand*{\mathbox}[2][.8]{\parbox[t]{#1\columnwidth}{#2}}
 %\newcommand*{\zerob}[1]{\makebox[0pt][l]{#1}}
 \newcommand*{\tprod}{\mathop{\textstyle\prod}\nolimits}
@@ -731,16 +741,27 @@ P.G.L. Porta\,Mana\\%
 \newcommand*{\yq}{\bm{\yqq}}
 \newcommand*{\yff}{f}
 \newcommand*{\yf}{\bm{\yff}}
-\newcommand*{\yMJ}{M_{\text{J}}}
+\newcommand*{\yI}{\varIota}
+\newcommand*{\yO}{\varOmicron}
+\newcommand*{\yIp}{\yI_{\textrm{p}}}
+\newcommand*{\yMJ}{\yI_1}
+\newcommand*{\yMc}{\yI_2}
 \newcommand*{\yN}{\varLambda}
+\newcommand*{\yNo}[1]{\yN^{(#1)}}
 \newcommand*{\ynn}{\nu}
 \newcommand*{\yn}{\bm{\nu}}
+\newcommand*{\yno}[1]{\yn^{(#1)}}
+\newcommand*{\ynno}[1]{\ynn^{(#1)}}
 \newcommand*{\yth}{\theta}
 \newcommand*{\yTh}{\varTheta}
 \newcommand*{\ymu}{\mu}
 \newcommand*{\yh}{\chi}
-\newcommand*{\yI}{I}
 \newcommand*{\yrs}{h}
+\newcommand*{\yc}{\gamma}
+\newcommand*{\ycs}{\gamma_{\textrm{v}}}
+\newcommand*{\ycm}{\gamma_{\textrm{m}}}
+%\DeclareMathOperator{\logistic}{logistic}
+\newcommand*{\logistic}{\sigmaup}
 \AtBeginEnvironment{tabularx}{\setlist[enumerate]{wide, leftmargin=*,
     itemsep=0pt%, before=\vspace{-\dimexpr\baselineskip +2 \partopsep},
     % after=\vspace{-\baselineskip}
@@ -811,33 +832,33 @@ participants we can surmise that there's a connection between different
 trials, some sort of \enquote{constant mechanism} at some level. Or we can
 surmise that there's no such connection, hence observation of past trials
 doesn't say anything about the next one. Or we can surmise that the next
-trial is influenced by the participant's own bar-height assignments. And
-many other hypotheses. We can also entertain all these hypotheses at the
-same time, and shift from one to another during the experiment. For
-example, if we suddenly wondered whether the computer program is actually
-using our bar distribution, we could suddenly move all probability to a
-slot at the edge and check if this seems to influence the next outcome
-(\cf\ participant~31).
+trial is influenced by our own past probability assignments, recorded in
+previous observations. And many other hypotheses. We can also entertain all
+these hypotheses at the same time, and shift from one to another during the
+experiment. For example, if we suddenly wondered whether the computer
+program is actually using our past distributions, we could suddenly move
+all probability to a slot at the edge and check if this seems to influence
+the next outcome (\cf\ participant~31).
 
-The same goes for the choice of initial distribution. As
-participants we can say \enquote{alright, there are 40 slots}, and just
-give a uniform distributions to the 40 possibilities. Or we can consider
-the pyramidal mechanism of the game, which leads to a binomial
-distribution. Or we can consider that this is a computerized version of the
-game. The computer could simulate the physics of the actual game; but the
-image of the mechanism could also be just for show, the computer being
-programmed to distribute the outcomes according to a predetermined,
-completely arbitrary distribution. From this point of view we could again
-decide to assign a uniform distribution.
+The same goes for the choice of initial distribution. As participants we
+can say \enquote{alright, there are 40 slots}, and just give a uniform
+distributions to the 40 possibilities. Or we can consider the pyramidal
+mechanism of the game, which leads to a binomial distribution. Or we can
+consider that this is a computerized version of the game. The computer
+could simulate the physics of the actual game; but the image of the
+mechanism could also be deceptive, the computer being programmed to
+distribute the outcomes according to a predetermined, completely arbitrary
+distribution. From this point of view we could again decide to assign a
+uniform distribution.
 
 \subsection{[Luca] Paradigms for judgement and assessment}
 
 The literature I've seen so far explains at length how the data presented
 to participants are generated, and is very succinct in explaining what was
-said to the participants before the experiment. The participant's behaviour
-is the compared against models based on the pseudo-random algorithm that
-generated the data. Nassar \etal's \citey{nassaretal2010} work is an
-example.
+said to the participants before the experiment. The participant's
+inferences are then compared against models based on the pseudo-random
+algorithm that generated the data. Nassar \etal's \citey{nassaretal2010}
+work is an example.
 
 I think that we should use a different paradigm to describe the experiment
 and assess the participants' behaviours.
@@ -856,13 +877,12 @@ instead, is to model the inference, given the same initial knowledge.
 
 A consequence of this point of view is that there isn't just one robot that
 can model the inferences. The information given to the participants is
-never be enough to make numeric inferences and apply the probability
-calculus: it must always be augmented with additional assumptions,
-determined by each participant's previous life experiences. Different
-robots can thus be constructed: they use the same initial information as
-the participants, but each is augmented with different auxiliary
-assumptions. \emph{The} ideal observer doesn't exist. There are several
-ideal observers.
+never enough to make numeric inferences and apply the probability calculus:
+it must always be augmented with additional assumptions, determined by each
+participant's previous life experiences. Different robots can thus be
+constructed: they use the same initial information as the participants, but
+each is augmented with different auxiliary assumptions. \emph{The} ideal
+observer doesn't exist. There are several ideal observers.
 
 Another consequence of this point of view is that the data-generating
 algorithm becomes slightly less important. The robot is constructed based
@@ -883,276 +903,593 @@ ones for example
 \fi
 
 
-\section{First study: exchangeable-model robot}
+\section{The Bayesian robot}
+\label{sec:bayesian_robot}
+
+\subsection{A prosopopoeia of statistical models}
+\label{sec:prosopopoeia}
+
+A \emph{statistical model} can be defined as a set of assumptions that
+allow us to make all possible numeric probabilistic inferences in the
+context of an experiment or of a sequence of observations. These
+assumptions correspond to -- indeed they're the exact generalization of --
+axioms in propositional logic
+\citep{hailperin1996,hailperin2011,jaynes1994_r2003}. Without axioms we
+can't derive theorems with the logical calculus; without initial
+probabilistic assumptions we can't derive or update probabilities with the
+probability calculus.
+
+Consider this context: a set of $M$ observations $1,2,\dotsc,M$, each of
+which can have $N$ possible slot outcomes $\set{1,\dotsc,N}$. Denote
+\enquote{The outcome of the $i$th \textbf{o}bservation is slot $s$} by
+$\yO^i_s$, and logical conjunction (\enquote{$\land$}) by a comma.
+In this context, choosing a statistical model $\yI$ is equivalent to
+choosing the numerical values of the joint distribution
+\begin{multline}
+  \label{eq:distr_statmodel}
+  \p( \yO^M_{s_M}, \yO^{M-1}_{s_{M-1}}, \dotsc,
+  \yO^2_{s_2}, \yO^1_{s_1} \|  \yI)
+  \quad\text{for all $s_1,\dotsc,s_M$}\\\text{(\ie, $N^M-1$ values)}
+\end{multline}
+for all combinations of $s_1,\dotsc,s_M \in \set{1,\dotsc,N}$; or to
+choosing any other probabilistic assignments equivalent to this
+distribution. An equivalent alternative, for example, is to assign the
+distribution for the first observation:
+\begin{subequations}
+  \begin{align}
+    &\p(\yO^1_{s_1} \|\yI)
+    \quad\text{all $s_1$} &&\text{($N-1$ values)},
+\\\intertext{the $N$ distributions for the second
+  observation conditional on all possible first outcomes:}
+    &\p(\yO^2_{s_2} \|\yO^1_{s_1}, \yI)
+    \quad\text{all $s_1,s_2$} &&\text{($(N-1)\times N$ values)},
+    \\
+    \intertext{and so on up to the
+  $N^{M-1}$ distributions for the $M$th observation conditional on all
+  possible previous outcomes:}
+&\p(\yO^M_{s_M} \|
+\yO^{M-1}_{s_{M-1}},\dotsc,\yO^1_{s_1},\yI)
+\quad\text{all $s_1,\dotsc,s_M$} &&\text{($(N-1)\times N^{M-1}$ values)}
+  \end{align}
+\end{subequations}
+The product of these distributions is the joint
+distribution~\eqref{eq:distr_statmodel}, and conversely each of these
+distributions can be obtained from the joint one above by marginalization
+and condizionalization.
+
+Our assumptions can have different natures and motivations, for example
+from symmetry, mechanics, biology. As long as they lead to definite
+numerical values for the distribution above, they constitute a statistical
+model.
+
+The term \enquote{statistical model} is not universally used this way,
+though.\footnote{\enquote{The conflict regarding the existence of a or the
+    true model, model uncertainty, identification, selection,
+    misspecification, etc.\ can be resolved if a clear definition of a
+    model is stated. Models have different meanings in different fields.
+    Once a young woman was interviewed for a data handling job in Unilever.
+    She was puzzled by one of the interviewers who asked her whether she
+    had done any modelling. It was found later that to her the question
+    meant whether she had posed for photographs!} J. R. M. Ameen
+  \citep[p.~453]{copasetal1995}.} It often has a more general meaning --
+what we'd call \enquote{classes of statistical models} in our terminology.
+
+To avoid using this ambiguous term, we'll figuratively speak of a
+\emph{Bayesian robot} instead of a model. Such a robot uses the three,
+five, or six laws of probability for negation, disjunction, conjunction,
+implication:
+\begin{subequations}
+    \label{eq:laws_prob}
+  \begin{gather}
+\p(\neg \varAlpha \| \yI) = 1-\p(\varAlpha \| \yI)\\    
+\p(\varAlpha, \varBeta \| \yI) =\p(\varBeta, \varAlpha \| \yI) = \p(\varAlpha \| \varBeta,\yI)\;\p(\varBeta \| \yI)\\
+\p(\varAlpha \lor \varBeta \| \yI) =\p(\varBeta \lor \varAlpha \| \yI) = \p(\varAlpha \| \yI)+\p(\varBeta \| \yI)-\p(\varAlpha \| \varBeta,\yI)\;\p(\varBeta \| \yI)\\    
+\p(\varAlpha\limplies \varBeta\|I) = \p(\neg \varAlpha \| \yI) +\p(\varAlpha \| \varBeta,\yI)\;\p(\varBeta \| \yI)
+  \end{gather}
+\end{subequations}
+(the last three equalities are unnecessary if we define
+$\varAlpha\lor \varBeta \defd \neg(\neg \varAlpha, \neg \varBeta)$ and
+$\varAlpha \limplies \varBeta \defd \neg(\varAlpha, \neg \varBeta)$) to make numeric probabilistic
+inferences and update them in view of new observations. But to do so it
+first needs to be fully programmed with a complete set of probabilistic
+assumptions, in the form of the joint
+distribution~\eqref{eq:distr_statmodel} or in another equivalent way.
+\emph{A \enquote{Bayesian robot} is thus equivalent to a statistical
+  model.}
+
+In the context of the experiment described above, the set of possible
+robots is a simplex of $N^M-1$ dimensions, since this is the set of all
+possible distributions~\eqref{eq:distr_statmodel} for $M$ joint outcomes,
+each having $N$ possible values.
+
+In this study, the term \enquote{inference} will be synonymous with
+\enquote{assignment of a probability (distribution)}, just to keep
+sentences short. Our statistical terminology and notation follow ISO
+standards \citep{iso1993_r2009,iso2006}, except for the use of a comma to
+denote logical conjunction \enquote{$\land$}, for simplicity.
+
+\subsection{Participants' statistical models in the Plinko experiment}
+\label{sec:plinko_statmodels}
+
+In the Plinko experiments \citep{filipowiczetal2014,filipowiczetal2016} the
+set of possible Bayesian robots is a simplex of
+$40^{200}-1 \approx 3\times10^{320}$ dimensions. The choice of a specific
+robot, or at least the restriction of the set of robots to use, is
+determined by the verbal information given before the Plinko task. In the
+Plinko experiments the participants aren't given any particular information
+about the source or sources of the outcomes \mynote{Luca: as far as I've
+  understood}. Thus no restriction is placed on the choice of robot. We
+could maybe appeal to \enquote{common sense} assumptions, but who's to say
+what's common sense? Each participant could have widely different past
+experiences; what's common sense to us may not be to them and vice versa.
+
+The distributions sequentially constructed by a participant represent the
+$M$ conditional distributions
+\begin{multline}
+  \p(\yO^m_{s_m} \| \yO^{m-1}_{s_{m-1}},\dotsc,\yO^1_{s_1},
+  \text{\footnotesize participant}),
+  \qquad m=1,\dotsc,M,\\
+  \text{conditional on the observed $s_1,\dotsc,s_{m-1}$ only}.
+\label{eq:cond_distribs}
+\end{multline}
+These distributions are not sufficient to define the joint
+distribution~\eqref{eq:distr_statmodel}: they only give us
+$(40-1)\times 200=7\,800$ out of the $3\times 10^{320}$ required numbers. The
+participant's statistical model is thus largely unknown.
+
+The participant's inferences can indeed come from several possible
+statistical models: there are approximately $3\times 10^{320}-7\,800$
+Bayesian robots that make the exact same inferences as the participant. To
+construct such a robot $\yIp$ we just need to
+\begin{enumerate}
+\item set its distribution for the $m$th observation conditional on the
+  observed $s_1,\dotsc,s_{m-1}$, that is,
+  $\p(\yO^m_{s_m} \|
+  \yO^{m-1}_{s_{m-1}},\dotsc,\yO^1_{s_1},\yIp)$, equal to
+  the participant's~\eqref{eq:cond_distribs}, for all $m$;
+\item \emph{arbitrarily} choose the distributions conditional on all other
+  outcome combinations that haven't been observed.
+\end{enumerate}
+By construction these conditional probabilities give a properly normalized
+joint distribution~\eqref{eq:distr_statmodel}. The simplest such robot is
+the one for which
+\begin{subequations}
+  \label{eq:robot_yields_participant}
+  \begin{equation}
+    \p(\yO^m_{s_m} \|
+    \yO^{m-1}_{s_{m-1}},\dotsc,\yO^1_{s_1}, \yIp) = \p(\yO^m_{s_m} \| \yIp) =
+    \text{participant's}
+  \end{equation}
+  which yields a normalized joint distribution
+  \begin{multline}
+    \p( \yO^M_{s_M}, \yO^{M-1}_{s_{M-1}}, \dotsc,  \yO^2_{s_2}, \yO^1_{s_1} \|  \yIp)
+    =
+    \p( \yO^M_{s_M} \|  \yIp) \times \dotsm \times
+    \p(  \yO^1_{s_1} \|  \yIp)  
+    \\
+    \text{for all $s_1,\dotsc,s_M$},
+  \end{multline}
+\end{subequations}
+which completely defines the robot's inferences. This robot assumes the
+probabilities for all observations to be independent of one another, and
+they happen to be equal to the participant's. The other possible robots are
+not so simple, of course.
+
+Since the initial information given to the participants places no
+restrictions on the set of possible statistical models, every robot
+constructed according to the two steps above is legitimate -- and there are
+many complex robots among those. It is therefore impossible to state
+whether a participant is making inferences in a Bayesian way or not.
+
+If the participants were given more detailed information, for example
+\enquote{All outcomes are generated by the same computer algorithm}, or
+\enquote{Two computer algorithms generate the outcomes; one will succeed
+  the other after an unknown number of observations}, or \enquote{The
+  generating algorithm does not use knowledge of previous outcomes}, then
+this information would restrict the set of allowed Bayesian robots, and we
+could check whether each participant behaves in a Bayesian way or not
+(assuming no misunderstanding of the initial information occurred).
+
+Another way to get a glimpse of a participant's statistical model is to let
+him or her do the full Plinko experiment several times, asking to start
+with the same initial distribution and making it very clear that the same
+set-up is used in all repetitions of the experiment.
+
+In the next two sections we consider two sets of robots, programmed with two
+different initial assumptions.
+
+\section{First study: the Johnson-Dirichlet robots}
 \label{sec:first_study}
 
-\subsection{The Bayesian robot}
+\subsection{A first Bayesian robot}
 \label{sec:bayes_robot}
 
-In the context of these notes and of the Plinko experiments
-\citep{filipowiczetal2014,filipowiczetal2016} we call \enquote{model} any
-set of assumptions that allows us to assign a probability to a new
-observation, given a number of observations of a similar kind. Denote such
-assumptions by a proposition $M$ -- a proposition surely very difficult to
-express in writing. Denote the proposition \enquote{The outcome of the
-  $i$th observation is $d$} by $D_{d}^i$, with $d \in \set{1,\dotsc N}$.
-Then $M$ allows us to give a numeric value to
-\begin{equation}
-  \label{eq:general_prediction}
-  \p(D^{m+1}_{d_{m+1}} \|
-  D^m_{d_m} \land \dotsb \land  D^2_{d_2} \land D^1_{d_1} \land  M),
-\end{equation}
+We now build a set of robots programmed with particular initial
+assumptions, denoted $\yMJ$, leading to a specific joint
+distribution~\eqref{eq:distr_statmodel}.
 
-We will abbreviate logical conjunction \enquote{$\land$} with a comma, for
-simplicity. Our statistical terminology and notation follow ISO standards
-\citep{iso1993_r2009,iso2006} otherwise.
-
-We shall consider a robot who uses either of these two equivalent
-assumptions:
+We first require such a joint distribution to satisfy this property:
 \begin{itemize}
-\item the joint distribution for any number of observations is symmetric with
-respect to their order; that is, the order of the observations is
-irrelevant for inferential purposes;
-\item for inferential purposes, only the relative frequencies of past observations
-  are relevant. Any additional data about past observation is irrelevant
-  and can be discarded.
+\item The joint probability distribution~\eqref{eq:distr_statmodel} for
+  \emph{any} number of observations is invariant with respect to exchanges
+  of their order.
 \end{itemize}
-Distributions for different number of observations must of course be
-consistent with one another through marginalization.
+This property corresponds to either of these assumptions:
+\begin{enumerate}[label=(\textit{\alph*})]
+\item\label{item:order}the order of the observations is irrelevant for
+  making inferences;
+\item\label{item:freqs_sufficient}only the relative frequencies of known
+  observations are relevant for making inferences; any additional data
+  about known observations is irrelevant and can be discarded.
+\end{enumerate}
+The equivalence of property~\eqref{eq:exchangeability_form} with
+assumption~\ref{item:order} is evident. Less so the equivalence with
+assumption~\ref{item:freqs_sufficient}; it will be shown in
+\sect~\ref{sec:update_first_robot}.
 
-The two equivalent assumptions are technically called \emph{infinite
+If the participants were initially given either of these pieces of
+information, the joint distribution formed by their sequence of
+distributions would have to satisfy
+property~\eqref{eq:exchangeability_form}.
+
+Property~\eqref{eq:exchangeability_form} above is called \emph{infinite
   exchangeability}. This notion was introduced by de~Finetti
-\parentext{\cite*{definetti1930,definetti1937}; \cite{heathetal1976}}; it
-is described in detail in \textcite[\sect~4.2]{bernardoetal1994_r2000}.
-
-Infinite exchangeability determines this form of the probability above:
+\parentext{\cite*{definetti1930,definetti1937}; \cite{heathetal1976}}.
+Dawid \citey{dawid2013} gives a non-technical, insightful introduction to
+it. It is studied in detail in Bernardo \amp\ Smith
+\citey[\sect~4.2]{bernardoetal1994_r2000}. A theorem by de~Finetti shows
+that infinite exchangeability implies that the probability
+distribution~\eqref{eq:distr_statmodel} must have this mathematical form,
+for any $m$:
 \begin{equation}
   \label{eq:exchangeability_form}
-  \p(D^1_{d_1} , D^2_{d_2} , \dotsc , D^m_{d_m} \| M) =
-  \int_\simpl   \Biggl( \prod_{i=1}^m \yqq_{d_i} \Biggr)\, \pf(\yq \| M)\,\di\yq,
+  \p(\yO^1_{s_1} , \yO^2_{s_2} , \dotsc , \yO^m_{s_m} \| \yMJ) =
+  \int_\simpl   \Biggl( \prod_{i=1}^m \yqq_{s_i} \Biggr)\, \pf(\yq \| \yMJ)\,\di\yq,
 \end{equation}
 where $\yq$ is a normalized $N$-tuple of positive numbers:
-$\simpl \defd \set{\yq \in \RR^N \suchthat \yqq_i\ge0,
-  \sum_{i=1}^N\yqq_i=1}$. This $N$-tuple can be thought of the relative,
-long-run frequencies of the possible outcomes\footnote{\enquote{But this
-    \emph{long run} is a misleading guide to current affairs. \emph{In the
-      long run} we are all dead.} \citep[\sect~3.I,
-  p.~65]{keynes1923_r2013}}, and $\pf(\yq \| M)\,\di\yq$ as their
-probability density. From this point of view it is as if the robot first
-assumes to know the long-run frequencies of the different outcomes and, not
-knowing their particular order in the observation, 
-assigns to the occurrence of each a probability proportional to its
-frequency: this is the term $\prod_{i=1}^m \yqq_{d_i}$ in the integral.
-Then, not being sure about the long-run frequencies, the robot assign to
-them the density $\pf(\yq \| M)\,\di\yq$ -- which is determined by
-additional assumptions besides exchangeability.
+\begin{equation}
+\simpl \defd \set{\yq \in \RR^N \suchthat \yqq_s\ge0,
+  \tsum_{s=1}^N\yqq_s=1},
+\label{eq:simplex}
+\end{equation}
+and $\pf(\yq \| \yMJ)\,\di\yq$ is a normalized density function, called
+\emph{prior parameter density}.
 
-As an explicit example, say with $N=40$,
+The $N$-tuple $\yq$ can be interpreted as the relative long-run frequencies
+of the possible outcomes\footnote{\enquote{But this \emph{long run} is a
+    misleading guide to current affairs. \emph{In the long run} we are all
+    dead.} \citep[\sect~3.I, p.~65]{keynes1923_r2013}}, and
+$\pf(\yq \| \yMJ)\,\di\yq$ as their probability density. From this point of
+view it is as if the robot first assumes to know the long-run frequencies
+of the different $N$ outcomes, and assumes that the outcome sequences
+showing these frequencies are all equally probable. The probability for
+each outcome in the forthcoming observations is thus proportional to its
+frequency:
+\begin{equation}
+  \label{eq:param_conditional_definetti}
+  \pf(\yO^1_{s_1} , \yO^2_{s_2} , \dotsc , \yO^m_{s_m}  \| \yq,\yMJ)
+  = \prod_{i=1}^m \yqq_{s_i}.
+\end{equation}
+Then, being uncertain about the long-run frequencies, the robot assigns to
+them the density $\pf(\yq \| \yMJ)\,\di\yq$. The combined uncertainty about
+the observations is then \eqn~\eqref{eq:exchangeability_form} by the law of
+total probability.
+
+\medskip
+
+The assumption of infinite exchangeability is not enough to have a fully
+programmed robot, because it doesn't determine the parameter density
+$\pf(\yq \| \yMJ)\,\di\yq$. Once this is chosen -- for example, the
+constant density $(N-1)!\,\di\yq$, called Bayes's
+\citey[Scholium]{bayes1763} or Laplace's \citey[p.~xvii]{laplace1814_r1819}
+prior -- the robot is fully programmed. We consider a specific density in
+\sect~\ref{sec:initial_prior}, and consider it as part of the assumptions
+$\yMJ$.
+
+In fact, the robot resulting from the assumptions $\yMJ$ is more powerful
+than necessary, because it can make inferences about \emph{any} number of
+unknown observations, future or past ones, beyond the $M$ considered in our
+context.
+
+An explicit example of formula~\eqref{eq:exchangeability_form} with $N=40$ is
 \begin{equation}
   \label{eq:exchangeability_form_example}
-  \p(D^1_{37} , D^2_{6} , D^3_{25}, D^4_{37} \| M) =
-  \int_\simpl \yqq_{6}\, \yqq_{25} \, {\yqq_{37}}^2\;  \pf(\yq \| M)\,\di\yq.
+  \p(\yO^1_{37} , \yO^2_{6} , \yO^3_{25}, \yO^4_{37} \yO^5_{19}\| \yMJ) =
+  \int_\simpl \yqq_{6}\,\yqq_{19}\, \yqq_{25} \, {\yqq_{37}}^2\;
+  \pf(\yq \| \yMJ)\,\di\yq.
 \end{equation}
 In the following we omit the integration domain $\simpl$.
 
-From Bayes's theorem we obtain the expression for the predictive
-probability~\eqref{eq:general_prediction} of an infinite exchangeable model:
+\subsection{Probability updates from observations}
+\label{sec:update_first_robot}
+
+Using Bayes's theorem the robot can calculate
+from~\eqref{eq:exchangeability_form} the probability distribution for the
+$m$th observation, having observed outcomes $s_1,\dotsc,s_{m-1}$,
+\begin{equation}
+  \label{eq:general_prediction}
+  \p(\yO^{m}_{s_{m}} \|
+  \yO^{m-1}_{s_{m-1}}, \dotsc,  \yO^2_{s_2}, \yO^1_{s_1},  \yMJ),
+\end{equation}
+obtaining
 \begin{subequations}\label{eq:prediction_exchangeability}
   \begin{gather}
-    \p(D^{m+1}_{d_{m+1}}\| D^1_{d_1}, \dotsc , D^m_{d_m} , M)
-    = \int \yqq_{d_{m+1}} \pf(\yq \| D^1_{d_1}, \dotsc, D^m_{d_m}, M)\,\di\yq,
+    \p(\yO^{m}_{s_{m}}\| \yO^{m-1}_{s_{m-1}}, \dotsc,  \yO^2_{s_2}, \yO^1_{s_1}, \yMJ)
+    = \int \yqq_{s_{m}} \pf(\yq \| \yO^1_{s_1}, \dotsc, \yO^{m-1}_{s_{m-1}}, \yMJ)\,\di\yq,
     \\
-    \pf(\yq \| D^1_{d_1}, \dotsc, D^m_{d_m}, M)
-    = \frac{ \bigl( \prod_{i=1}^m \yqq_{d_i} \bigr)\, \pf(\yq \| M)
+    \shortintertext{with}
+    \pf(\yq \| \yO^1_{s_1}, \dotsc, \yO^{m-1}_{s_{m-1}}, \yMJ)
+    = \frac{ \bigl( \prod_{i=1}^{m-1} \yqq_{s_i} \bigr)\, \pf(\yq \| \yMJ)
       }{
-      \int  \bigl( \prod_{i=1}^m \yqq_{d_i}' \bigr)\, \pf(\yq' \| M)\,\di\yq'
+      \int  \bigl( \prod_{i=1}^{m-1} \yqq_{s_i}' \bigr)\, \pf(\yq' \| \yMJ)\,\di\yq'
       }.
 \label{eq:exchang_updated_prior}
   \end{gather}
 \end{subequations}
-Continuing our numeric example~\eqref{eq:exchangeability_form_example} this
-could be
+Once the density $\pf(\yq \| \yMJ)\,\di\yq$ is chosen, the robot can thus perform
+the Plinko task just like all others participants.
+
+For our numeric example~\eqref{eq:exchangeability_form_example} this is
 \begin{subequations}\label{eq:prediction_exchangeability_example}
   \begin{gather}
-    \begin{multlined}[][0.95\linewidth]
-    \p(D^5_{6} \| D^1_{37} , D^2_{6} , D^3_{25}, D^4_{3}, M)
-    ={}\\ \int \yqq_{6}\; \pf(\yq \|  D^1_{37} , D^2_{6} , D^3_{25}, D^4_{3}, M)\,\di\yq,
-  \end{multlined}
+    \p(\yO^5_{19} \| \yO^1_{37} , \yO^2_{6} , \yO^3_{25}, \yO^4_{37}, \yMJ)
+    = \int \yqq_{19}\; \pf(\yq \|  \yO^1_{37} , \yO^2_{6} , \yO^3_{25}, \yO^4_{37}, \yMJ)\,\di\yq,
     \\
-    \pf(\yq \|  D^1_{37} , D^2_{6} , D^3_{25}, D^4_{3}, M)
-    = \frac{ \yqq_{6}\, \yqq_{25} \, {\yqq_{37}}^2\; \pf(\yq \| M)
-      }{
-      \int \yqq_{6}\, \yqq_{25} \, {\yqq_{37}}^2\; \pf(\yq' \| M)\,\di\yq'
-      }.
+    \pf(\yq \|  \yO^1_{37} , \yO^2_{6} , \yO^3_{25}, \yO^4_{37}, \yMJ)
+    = \frac{ \yqq_{6}\, \yqq_{25} \, {\yqq_{37}}^2\; \pf(\yq \| \yMJ)
+    }{
+      \int \yqq_{6}'\, \yqq_{25}' \, {\yqq_{37}'}^2\; \pf(\yq' \| \yMJ)\,\di\yq'
+    }.
   \end{gather}
 \end{subequations}
 
-
-Formula~\eqref{eq:prediction_exchangeability} tell us how our robot would
-update its predictive probabilities at each new observation of a Plinko outcome.
-\textcolor{white}{If you find this you can claim a postcard from me.}
+Formulae~\eqref{eq:exchang_updated_prior} and
+\eqref{eq:prediction_exchangeability_example} show that the updated
+conditional distribution depends only on the number of times each outcome
+appeared in the known observations, that is, on their frequencies. For
+example, in~\eqref{eq:prediction_exchangeability_example} outcomes $6$ and
+$25$ appeared once each (exponent of $\yqq_s$ is $1$), outcome $37$
+appeared twice (exponent is $2$), and the others never appeared (exponent
+is $0$). The order of their appearance does not enter the formula. This
+shows the equivalence of infinite exchangeability with the
+assumption~\ref{item:freqs_sufficient} of the previous section. The reverse
+equivalence can be proved using a series of theorems by Koopman, Pitman,
+Lauritzen\mynote{add refs}. \textcolor{white}{If you find this you can
+  claim a postcard from me.}
 %
 
 
-\subsection{General remarks on the robot's behaviour}
+
+\subsection{General remarks on the Johnson-Dirichlet robot's behaviour}
 \label{sec:remarks}
 
-The exchangeable-model formula~\eqref{eq:prediction_exchangeability} leads
-to some characteristic features of the robot's beliefs and of their
-evolution:
+The infinite-exchangeability formulae~\eqref{eq:exchangeability_form}
+and~\eqref{eq:prediction_exchangeability} lead to peculiar features of the
+robot's inferences and of their updates:
 \begin{itemize}
-\item The robot's predictions can be interpreted in several ways. One is
-  this: the robot believes that there's \enquote{something} constant in all
-  trials; loosely speaking, a \enquote{constant mechanism}. Another, maybe
-  preferable, is this: the robot has memory of past observations, but not
-  of their order; any trends are therefore invisible to it.
-\item As data accumulate, the robot's probabilities for the next outcome
-  approach the observed frequencies. Such approach happens independently of
-  the form of the prior $\pf(\yq \| M)\,\di\yq$ -- unless the latter is
-  zero in peculiar regions of the integration domain -- but the prior
-  determines the celerity of the approach. A prior heavily peaked on a
-  frequency $\yq'$ will require a lot of data to move the predictions to
-  a very different frequency $\yq$.
-\item As data $D$ accumulate, the updated density
-  $\pf(\yq \| D, M)\,\di\yq$ will become more and more peaked at the
-  $N$-tuple of observed frequencies.
-\item Suppose that we first have a long sequence of observations
-  concentrating around frequencies $\yq$ -- say, a very long sequence of
-  $1$s in a row -- and then a shift to other frequencies $\yq'$ -- say,
-  suddenly $2$s only appear. After the shift, the predictive probabilities
-  will eventually become peaked around the new frequencies, but the shift
-  in the peaks will take a larger number of observations around the new
-  frequencies than the number around the old frequencies.
+\item One way to interpret the robot's inferences is this: the robot
+  assumes that there are \enquote{constant conditions} in all trials;
+  loosely speaking, a \enquote{constant mechanism}. The outcome of each
+  observation is therefore not influenced by the outcomes of other
+  observations. Another interpretation is this: the robot does not keep
+  track of the order of the observations, because this information is
+  irrelevant; but keeps track of the outcome frequencies. Trends are
+  therefore invisible to the robot.
+\item As data $\yO$ accumulate, the updated density
+  $\pf(\yq \| \yO, \yMJ)\,\di\yq$ becomes more and more peaked at the
+  $N$-tuple of observed frequencies. The robot's probabilities for the next
+  outcome will therefore approach the frequencies hitherto observed. This
+  approach happens independently of the form of the density
+  $\pf(\yq \| \yMJ)\,\di\yq$ -- unless the latter is zero in peculiar
+  regions of the integration domain -- but this density determines the
+  celerity of the approach. A density heavily peaked on a frequency $\yq'$
+  will require a lot of data to move the predictions to a very different
+  frequency $\yq''$.
+\item Suppose that robot receives a long sequence of observations
+  concentrated around frequencies $\yq'$ -- say, a very long sequence of
+  $3$s in a row -- and then another long sequence concentrated around
+  different frequencies $\yq''$ -- say, suddenly only $5$s appear. After
+  the shift, the robot's probabilities will eventually become peaked around
+  the new frequencies, but the shift in the peaks will take a larger number
+  of observations around the new frequencies than the number around the old
+  frequencies.
 \end{itemize}
 
 
-\subsection{Initial prior}
+\subsection{Prior parameter density}
 \label{sec:initial_prior}
 
-The shape of the initial prior heavily determines the predictions in the
-first observations, so it must be chosen with care. The Plinko data tell us
-the initial predictive probabilities of the participants,
+The shape of the prior parameter density heavily determines the first
+inferences. Note that the Plinko experiment tells us each participant's
+probabilities for the first observation,
 \begin{equation}
   \label{eq:initial_predictive}
-  \pf(D^1_{k} \| M) \equiv \int \yqq_{k}\; \pf(\yq \| M)\,\di\yq,
+  \pf(\yO^1_{s} \| \text{\footnotesize participant}) \equiv \int \yqq_{s}\;
+  \pf(\yq \| \text{\footnotesize participant})\,\di\yq,
 \end{equation}
-but not their prior $\pf(\yq \| M)\,\di\yq$.
+but this does not determine the prior parameter density
+$\pf(\yq \| \text{\footnotesize participant})\,\di\yq$.
 
-As a first study we consider a \emph{Johnson-Dirichlet} prior,
-proportional to a monomial $\prod_i{\yq_i}^{x_i}$ for some values of $x_i$:
+In this first study we consider a \emph{Johnson-Dirichlet} prior density
+\parentext{references below}. This density is proportional to a monomial
+in $(\yqq_i)$:
 \begin{equation}
   \label{eq:JD_prior}
   \pf(\yq \| \yMJ) =
   \frac{\Gamma(\yN)}{\prod_i \Gamma(\yN\ynn_i)}\,
-  \prod_{i=1}^N{\yq_i}^{\yN\ynn_i-1}, \qquad \yN>0, \ynn \in \simpl.
+  \prod_{i=1}^N{\yqq_i}^{\yN\ynn_i-1}, \qquad \yN>0, \ynn \in \simpl.
 \end{equation}
+The $N$ independent parameters $(\yN, \ynn)$ need to be specified by
+additional assumptions.
 
-This prior is determined by the additional assumption -- call it $\yMJ$ --
-that that the frequencies of other outcomes are irrelevant for predicting a
-particular one:
+Such prior density is determined by the assumption that that the
+frequencies of other outcomes are irrelevant for predicting a particular
+one. If $\yf \defd (\yff_{1},\dotsc,\yff_{N})$ are the observed
+outcomes' relative frequencies, this assumption can be mathematically
+expressed as
 \begin{equation}
   \label{eq:sufficientness}
-  \p(D^{m+1}_k \| N\yf, \yMJ) = \p(D^{m+1}_k \| N\yff_{k}, \yMJ)
-  \qquad k\in\set{1,\dotsc, N},
+  \p(\yO^{m+1}_s \| \yf, N, \yMJ) =
+  \p(\yO^{m+1}_{s} \| \yff_{s}, N, \yMJ)
+  \qquad\text{for all } s\in\set{1,\dotsc, N}.
 \end{equation}
-where $\yf$ is the $N$-tuple of observed relative frequencies. This
-assumption is called \enquote{sufficientness}
+It is called \enquote{sufficientness}
 \cites{johnson1924,johnson1932c}[\chap~4]{good1965}{zabell1982,jaynes1986d_r1996}.
 % Asymptotically it leads \citep{jaynes1986d_r1996,portamana2009} to a
 % predictive distribution of a maximum-entropy with Burg's \citey{burg1975} entropy
 % $\tsum\ln\yx$.
-This is a conjugate prior
-\cites[\chap~9]{degroot1970_r2004}{diaconisetal1979b} and it has two convenient
-properties: it updates to a density of the same mathematical form, and its
-corresponding predictive distribution can be calculated analytically using
+We consider this assumption and the specification of the parameters above
+to be contained in $\yMJ$.
+
+
+The density~\eqref{eq:JD_prior} is a conjugate prior
+\cites[\chap~9]{degroot1970_r2004}{diaconisetal1979b}. It has two
+convenient properties: it updates to a density of the same mathematical
+form, and leads to probabilities that can be analytically calculated using
 the formula
 \begin{equation}
   \label{eq:Dirichlet_formula}
   \int_{\simpl} \prod_{i=1}^N {\yqq_{i}}^{x_i-1}\,\di\yq = \frac{\prod_i \Gamma(x_i)}{\Gamma\bigl(\sum_i x_i\bigr)}.
 \end{equation}
+In fact, inserting this prior in the infinite-exchangeability
+formula~\eqref{eq:prediction_exchangeability} we find the joint
+distribution~\eqref{eq:distr_statmodel}, for any $m$:
+\begin{equation}
+  \label{eq:joint_distr_JD}
+\pf( \yO^1_{s_1}, \dotsc, \yO^m_{s_m} \| \yMJ) =
+  \frac{\Gamma(\yN)}{\Gamma(\yN+m)}
+  \prod_{s=1}^{N}\frac{\Gamma(\yN\ynn_s + m\yff_s)}{\Gamma(\yN\ynn_s)},
+\end{equation}
+where $\yff_s$ is the frequency of outcome $s$ in the $m$ observations.
 
-We obtain for the initial distribution:
+In particular, the initial distribution is simply
 \begin{equation}
   \label{eq:initial_predictive_JD}
-  \p(D^1_{k} \| \yMJ) = \int \yqq_{k}\; \pf(\yq \| \yMJ)\,\di\yq
-  = \ynn_k,
+  \p(\yO^1_{s} \| \yMJ)  = \ynn_s,
 \end{equation}
-and for the updated density:
+for this reason we call this parameter the \emph{initial distribution} of
+the robot. This formula says that the Johnson-Dirichlet prior can produce
+any possible initial probability distribution, by appropriately choosing
+$\yn$. This freedom will be used in the next section to mimic the
+participants' behaviours.
+
+We call the parameter $\yN$ \emph{stubbornness} of the robot; here's the
+reason.
+
+From \eqns~\eqref{eq:exchang_updated_prior}, \eqref{eq:JD_prior},
+and~\eqref{eq:Dirichlet_formula} we can calculate the parameter density
+updated after the observations $1,\dotsc,m-1$:
 \begin{multline}
   \label{eq:update_prior_JD}
-  \pf(\yq \| D^1_{d_1}, \dotsc, D^m_{d_m}, \yMJ)
+  \pf(\yq \| \yO^1_{s_1}, \dotsc, \yO^{m-1}_{s_{m-1}}, \yMJ)
   = 
   \frac{\Gamma(\yN')}{\prod_i \Gamma(\yN'\ynn_i')}\,
-  \prod_{i=1}^N{\yq_i}^{\yN'\ynn_i'-1}
-  \\\
-  \text{with}\quad \yN' =\yN+N,\quad
-  \yn'=\frac{\yN\yn+N\yf}{\yN+N}.
+  \prod_{i=1}^{N}{\yqq_i}^{\yN'\ynn_i'-1}
+  \\
+  \text{with}\quad \yN' =\yN+m-1,\quad
+  \yn'=\frac{\yN\yn+(m-1)\yf}{\yN+m-1}
 \end{multline}
+where $\yf$ are the relative frequencies of the outcomes in the $m-1$
+observations. This formula, together
+with~\eqref{eq:prediction_exchangeability} and~\eqref{eq:Dirichlet_formula},
+yields the robot's inference for the $m$th observation conditional on the
+previous ones:
+\begin{equation}
+  \label{eq:predictive_JD_general}
+  \p(\yO^{m}_{s} \| \yO^{m-1}_{s_{m-1}},\dotsc,\yO^1_{s_1}, \yMJ) =
+\frac{\yN\ynn_s + (m-1)\,\yff_s}{\yN+m-1}.
+\end{equation}
 
-Formula~\eqref{eq:initial_predictive_JD} says that the Johnson-Dirichlet
-prior can produce any initial probabilities assigned by the participants,
-just by equalling the parameters $\yn$ to them. The parameter $\yN$ is left
-arbitrary. We can call it the \emph{stubbornness} of the robot, Here's the reason.
+The conditional probability for the $m$th observation has an interesting
+interpretation: it is equal to a weighted sum of the initial
+distribution~\eqref{eq:initial_predictive_JD} and the relative frequency
+distribution $\yf$ in the $m-1$ previous observations. The weight of the
+former is the parameter $\yN$, and of the latter the number $m-1$ of
+observations. If the parameter $\yN$ is very large with respect to the
+number of observations, then the successive conditional distributions
+remain approximately equal to the initial one $\yn$. If $\yN$ is very
+small, the robot quickly changes its initial distribution into the
+distribution of observed frequencies instead. Hence $\yN$ quantifies how
+\enquote{stubborn} the robot is in keeping its initial belief. The robot
+behaves as if it had already made $\yN$ observations with outcome
+frequencies $\yn$. In general it takes $\yN$ observations to make the robot
+appreciably change its initial belief.
 
-Suppose that after some observations the predictive distribution is $\yn$,
-and that the next outcome is $k$. Then the probability distribution for the
-slots is updated to:
-\begin{multline}
-  \label{eq:predictive_JD}
-  \p(D^{m+1}_{j} \| D^{m}_{k}, \yn^{m},\yN^{m}, \yMJ) =
-  \ynn^{m+1}_j \defd
-  \frac{\yN^{m}}{\yN^{m}+1}\ynn^{m}_j +
+Owing to the special mathematical form of update formulae above, it's
+possible to completely characterize the \enquote{beliefs} of our robot
+after each observation with $N$ independent parameters, whose values are
+determined by the values before that observation and the outcome observed.
+Denote the parameter values before the $i$th observation by
+$\bigl( \yNo{i-1}, \yno{i-1} \bigr)$. If the outcome of that observation is
+$s_i$, then the values after the observation are
+\begin{equation}
+  \label{update_params_JD}
+  \begin{gathered}
+  \begin{aligned}
+    \yNo{i} &\defd \yNo{i-1}+1,
+    \\
+    \ynno{i}_s &\defd \frac{\yNo{i-1}}{\yNo{i-1}+1}\ynno{i-1}_s +
     \begin{dcases}
-      \frac{1}{\yN^{m}+1} &\text{if $j=k$},
-      \\[2\jot]
-      0 &\text{if $j\ne k$},
+      \frac{1}{\yNo{i-1}+1} &\text{for $s=s_{i}$},
+      \\
+      0 &\text{for $s\ne s_{i}$}.
     \end{dcases}
-    \\[2\jot]
-    \text{and $\yN^{m+1} \defd \yN^{m}+1$}.
-\end{multline}
-This update corresponds to a participant's raising the bar assignment under
-slot $k$, leaving the others untouched, and/or lowering the bar assignments
-for \emph{all} other slots by the same proportion. The parameter $\yN$ is
-increased by $1$. The larger $\yN$, the more reluctant the robot is in
-revising its guesses in the light of new observations. The update
-formula~\eqref{eq:update_prior_JD} says that the robot behaves as if it had
-already made $\yN$ observations with outcome frequencies $\yn$.
+  \end{aligned}
+  \\\text{with}\qquad
+  \yNo{0}\defd\yN,
+  \quad
+  \yno{0} \defd\yn.
+  \end{gathered}
+\end{equation}
+From~\eqref{update_params_JD}\eqref{eq:update_prior_JD} one can show that
+$\yno{i}$ is also the conditional probability for the $(i+1)$th
+observation, given the previous observations.
 
+This update corresponds to a participant's raising, on the screen, the
+prediction bar under slot $s_{i}$ by a particular amount, leaving the
+others untouched; or to lowering the prediction bar for all other slots in
+the same proportion, leaving the $s_{i}$ untouched.
 
 
 \subsection{Examples: participant vs robot}
 \label{sec:examples_partic_robot}
 
-Let's choose a participant, and use
-formula~\eqref{eq:initial_predictive_JD} to choose the $\yn$ parameters of
-the robot's prior, equating it to the initial predictive distribution of
-the participant. Let's set a value for the robot's stubbornness $\yN$, and
-check how the robot updates its predictive distribution, using
-formula~\eqref{eq:update_prior_JD}, while observing the same outcomes as
-the participant.
+The results of the previous sections show that we can program our robot to
+make the same initial inference as a participant, just by setting its
+parameters $\yno{0}\defd\yn$ equal to the participant's initial
+distribution. We are still free to choose $\yNo{0}\defd\yN$, but it's
+generally impossible to find a value that will lead to the participant's
+following sequence of distributions; already the second will generally be
+different. When this matching is possible it means that the participant is
+behaving according to the model $\yMJ$.
 
 
+Let's choose a participant and set the robot's initial distribution equal
+to his or hers. We can examine how the robot make the following inferences,
+based on the same sequence of outcomes observed by the participant, for
+several values of the stubbornness $\yN$.
 \begin{figure}[p!]
 \centering\includegraphics[width=\linewidth]{{comparisons1/means_12-stub_0.1}.pdf}
 \includegraphics[width=\linewidth]{{comparisons1/stds_12-stub_0.1}.pdf}
 \caption{Comparison of the means and standard deviations of the predictive
-  distributions of participant~12 and of a robot with stubborness
+  distributions of participant~12 and of a robot with stubbornness
   $\yN=0.1$}\label{fig:comparison_12_01}
 \end{figure}% done with exploration1.R
 Figure~\ref{fig:comparison_12_01} shows the means and standard deviations
-of the sequence such predictive distributions, for participant~12 and a
-robot with stubbornness $\yN=0.1$. This low value makes the robot give
-great consideration to the first outcomes, as the initial variability in
-the figure shows. The program generating the outcomes had a change in
-standard deviation, shifting to a narrower distribution at trial~101. The
-robot adapted to this change very slowly.
+of the sequence such distributions, for participant~12 and a robot with
+stubbornness $\yN=0.1$. This low value makes the robot give great
+consideration to the first outcomes, as the initial high variability of the
+robot's means shows. The algorithm generating the Plinko outcomes had a
+change in standard deviation after the $100$th outcome, shifting to a
+narrower distribution. The robot adapted to this change very slowly,
+because it stubbornness at that point was $\yNo{100}\approx 100$.
 
 
 \begin{figure}[p!]
 \centering\includegraphics[width=\linewidth]{{comparisons1/means_12-stub_50}.pdf}
 \includegraphics[width=\linewidth]{{comparisons1/stds_12-stub_50}.pdf}
 \caption{Comparison of the means and standard deviations of the predictive
-  distributions of participant~12 and of a robot with stubborness
+  distributions of participant~12 and of a robot with stubbornness
   $\yN=50$}\label{fig:comparison_12_50}
 \end{figure}% done with exploration1.R
 Figure~\ref{fig:comparison_12_50} is analogous to
@@ -1165,14 +1502,14 @@ standard deviation of the generated outcomes.
 \centering\includegraphics[width=\linewidth]{{comparisons1/means_30-stub_0.1}.pdf}
 \includegraphics[width=\linewidth]{{comparisons1/stds_30-stub_0.1}.pdf}
 \caption{Comparison of the means and standard deviations of the predictive
-  distributions of participant~30 and of a robot with stubborness
+  distributions of participant~30 and of a robot with stubbornness
   $\yN=0.1$}\label{fig:comparison_30_01}
 \end{figure}% done with exploration1.R
 \begin{figure}[p!]
 \centering\includegraphics[width=\linewidth]{{comparisons1/means_30-stub_50}.pdf}
 \includegraphics[width=\linewidth]{{comparisons1/stds_30-stub_50}.pdf}
 \caption{Comparison of the means and standard deviations of the predictive
-  distributions of participant~30 and of a robot with stubborness
+  distributions of participant~30 and of a robot with stubbornness
   $\yN=50$}\label{fig:comparison_30_50}
 \end{figure}% done with exploration1.R
 Figures~\ref{fig:comparison_30_01} and~\ref{fig:comparison_30_50} show
@@ -1188,15 +1525,18 @@ in~\ref{fig:comparison_12_01}.
 
 If we look at the sequence of outcomes of \figs~\ref{fig:comparison_12_01}
 or~\ref{fig:comparison_30_01}, we perceive that something changed around
-trial~100. If we could plot these outcomes while they are generated, we
-would likely notice the change by around trial~25. Our robot, however,
-can't detect this change for the reasons explained in
-\sect~\ref{sec:remarks}; any outcomes from narrow or wide generating
-processes are mingled in the robot's memory.
+the $100$ observation. If we could plot these outcomes while they are
+generated, we would likely notice the change by around the $25$th
+observation. Our robot, however, can't detect this change for the reasons
+explained in \sect~\ref{sec:remarks}; any outcomes from narrow or wide
+generating processes are mixed in the robot's memory.
 
-Only non-exchangeable or hierarchic models can exhibit a short evidence
-memory and be capable of believing that the underlying \enquote{mechanism}
-has changed.
+Only non-exchangeable or hierarchic statistical models, like the one we
+develop in \sect~\ref{sec:second_study}, can exhibit a sort of memory for
+the order and be capable of believing that the underlying
+\enquote{mechanism} has changed.
+
+\bigskip
 
 
 Some conclusions can be drawn from the properties of our model and from the
@@ -1215,29 +1555,30 @@ examples:
   probability for one slot should affect those for nearby slots. The
   Johnson-Dirichlet model does not take this into account. 
 
-\item A participant who, after observing outcome $k$, raises the bar under
-  that slot \emph{and nearby bars} is therefore not acting according to a
-  Johnson-Dirichlet exchangeable model.
+% \item A participant who, after observing outcome $k$, raises the bar under
+%   that slot \emph{and nearby bars} is therefore not acting according to a
+%   Johnson-Dirichlet exchangeable model.
 \item Infinitely exchangeable priors are incapable of quickly adapting to
   changes in the empirical statistics of the outcomes.
 \end{itemize}
 
 
-\subsection{Robot's surprise}
+\subsection{The robot's surprise}
 \label{sec:examples_robot_surprise}
 
 A robot with low stubbornness quickly adapts its predictions to the
 observed outcomes, but as the outcomes accumulate its stubbornness
-increases. If there is a late change in the generation of the outcomes, at
-trial 101 for example, the robot will adapt its predictions more slowly.
+increases. If there is a late change in the generation of the outcomes,
+after the $100$th observation for example, the robot will adapt its
+predictions more slowly.
 
 It is interesting to ask: is this prediction adaptation the same for a
 change from a narrow to a wide distribution, as for a change from a wide to
 a narrow one? or is there a difference in the adaptation speed?
 
 The answer depends on how we measure such speed. One way could be this:
-starting from the trial in which the change occurs, we let a second robot
-with low stubbornness observe the new outcomes and make predictions,
+starting from the observation in which the change occurs, we let a second
+robot with low stubbornness observe the new outcomes and make predictions,
 starting from frequency parameters equal to those reached by the first
 robot. The second robot will quickly adapt to the new observed outcomes,
 and we can use it as a touchstone for the first robot's adaptation speed.
@@ -1282,8 +1623,7 @@ first three measures.
 \end{figure}% done with exploration1.R
 Figure~\ref{fig:avg_comparison_robots_stds} shows that this phenomenon is
 even more striking if we average the sequences of standard deviations over
-100 repetitions of such experiments.\mynote{L: so good?! must recheck the
-  script.}
+100 repetitions of such experiments.
 
 \begin{figure}[b!]
 \centering\includegraphics[width=\linewidth]{{comparisons1/compare_robots_wide2wide-stub_0.1}.pdf}
@@ -1295,324 +1635,507 @@ even more striking if we average the sequences of standard deviations over
 
 \clearpage
 
-\section{Second study: exchangeable model with change-points}
+\section{Second study: Johnson-Dirichlet robots with change-points}
 \label{sec:second_study}
 
-\subsection{The robot looks for change-points}
+\subsection{The robot looks for changepoints}
 \label{sec:changepoints}
 
-The robot of the previous study remembers past observations but not their
+The robot of the previous study remembers past outcomes but not their
 order. Said otherwise, it assumes that past frequencies are all that
-matters for its inference. We now consider a new robot that takes the order
-of observations into account in a simple way.
+matters for its inference. We now consider a new robot that takes the
+outcome order into account in a simple way.
 
-This new robot assumes that the sequence of observations is divided into
-subsequences of contiguous observations. \emph{Within each subsequence} the
-order of the observations doesn't matter: frequencies are sufficient
-statistics, and the robot therefore uses an infinitely exchangeable model
-with a Johnson-Dirichlet parameter density, as in the previous study. Only
-observations within the subsequence contribute to the update of the
-parameter density. Observations from other subsequences are irrelevant to
-inferences within each subsequence, provided that the start point of that
-subsequence is known. The stubbornness and frequency parameters are
-therefore \enquote{reset} at the start of each subsequence.
+This new robot, denoted $\yMc$, is based on this assumption:
+\begin{itemize}
+\item the sequence of observations is divided into subsequences of
+  contiguous observations. These subsequences can have different lengths.
+  Within each subsequence, the order of the observations doesn't matter,
+  and the Johnson-Dirichlet assumptions apply locally.
+\end{itemize}
+This robot therefore uses an infinitely exchangeable model with a
+Johnson-Dirichlet parameter density for each subsequence, as in the
+previous study. Only observations within a subsequence contribute to the
+update of the distributions for the other observations in that subsequence.
+Observations from other subsequences are ignored. As one subsequence ends,
+the robot's initial-distribution parameter $\yn$ and stubbornness $\yN$ are
+reset.
 
-The observations at which the subsequences start, called changepoints, are
-guessed from the whole sequence of observations. The robot is effectively
-considering all possible numbers and positions of changepoints. For
-example, every observation could be a subsequence by itself, or all
-observations could belong to just one subsequence -- which was the
-assumption of the robot of the previous study. According to Bayes's
-theorem, the robot assigns a probability to each possible division
-proportionally to a prior times the product of the probabilities for the
-data in each subsequence determined by that division, calculated with the
-Johnson-Dirichlet model described above:
+The robot doesn't know the changepoints in advance, however. Before each
+observation, the robot first infers whether the observation belongs to a
+new subsequence or it continues the previous one. In the first case, it
+then infers the next outcome using a fresh Johnson-Dirichlet model. In the
+second case, it infers the next outcome updating the parameters of Johnson
+Dirichlet model used thus far. The final inference is a combination of
+these two according to the law of total probability.
+
+To translate these assumptions into probability distributions it's
+convenient to introduce some propositions, denoted $R^{m}_{u}$, defined as
 \begin{multline}
-  \label{eq:explanation_P_group}
-  \p(\ptext{particular division into subsequences} \| \ptext{data}, \yI)
-  \propto{}\\
-  \text{\footnotesize\emph{Johnson-Dirichlet}}\left\{\;
-    \!\begin{aligned}
-        &\quad\p(\ptext{data in 1st subsequence} \| \ptext{particular division}, \yI)
-          \\
-        &{}\times\p(\ptext{data in 2nd subsequence} \| \ptext{particular division}, \yI)
-          \\
-              &{}\times\dotsm
-  \end{aligned}\right.\\
- {}\times \p(\ptext{particular division} \| \yI),
+  \label{eq:def_prop_changepoint}
+  \begin{aligned}
+    R^{m}_{u}
+    &\defd \text{\enquote{Only the previous $u$ outcomes are \textbf{r}elevant for the $m$th one}}
+    \\
+    &\equiv\text{\enquote{Observations $\set{m-u, m-u+1, \dotsc, m}$ form a subsequence}}
+  \end{aligned}
+  \\ \text{with $0\le u \le m-1$}.
 \end{multline}
-where $\yI$ stands for other background assumptions. The final inference is
-a combination of the inferences conditional on each possible division:
-\begin{multline}
-  \label{eq:explanation_group_mixed}
-  \p(\ptext{new observation} \| \ptext{data}, \yI) \propto{}\\[\jot]
-  \sum_{\mathclap{\text{all divisions}}}
-  \p(\ptext{new observation} \| \ptext{division}, \ptext{data}, \yI)
-\times  \p(\ptext{division} \| \ptext{data}, \yI),
-\end{multline}
-where the probability for the new observation given the division is
-determined by the Johnson-Dirichlet model.
+The equivalence of these two propositions should be clear from the
+discussion above.
 
-Adams \amp\ MacKay \citey{adamsetal2007} give an algorithm to do the
-calculations above on-line as new observations are made. Before each
-observation the algorithm saves the probability distribution for the
-divisions~\eqref{eq:explanation_P_group}, which is used to calculate the
-updated distribution with the new observation adjoined to the data.
+The proposition $R^{m}_{0}$, in particular, states that \emph{no} previous
+observations are relevant for inferring the $m$th one; in other words, it
+states that this observation is the start of a new subsequence.
 
-For each observation $i$, consider the proposition \enquote{only the
-  previous $r$ observations are relevant for the $i$th one}, denoted by
-$R^{i}_{r}$. This proposition is equivalent to say that observations
-$\set{i-r, i-r+1, \dotsc, i}$ form a subsequence. Obviously
-$0\le r \le i-1$, where $i-1$ is the total number of observations before
-the $i$th one; if $r=0$ then the $i$th observation is a changepoint,
-starting a new subsequence, and no past data are relevant for its
-inference. In symbols
+For fixed $m$, the propositions $R^{m}_{u}$, $0\le u \le m-1$, are
+obviously exhaustive (their probabilities sum to unity) and mutually
+exclusive. The assumptions $\yMc$ made thus far imply that some
+propositions for different $m$ are also exclusive:
+\begin{gather}
+  \label{eq:exclusive_across_m}
+  \p(R^{m}_{u_{m}}, R^{m-1}_{u_{m-1}} \| \yMc) = 0
+  \quad\text{if $u_{m}\ne 0$ and $u_{m} \ne u_{m-1}+1$},
+\\\intertext{and therefore}
+  \label{eq:exhaustive_R_from_previous}
+  \p(R^{m}_{0} \| R^{m-1}_{v},\yMc) +
+  \p(R^{m}_{v+1} \| R^{m-1}_{v},\yMc) = 1.
+\end{gather}
+The reason is that the $m$th outcome either starts a new subsequence, hence
+$u_{m}=0$; or continues the current subsequence, which according to
+$R^{m-1}_{u_{m-1}}$ contains the $(m-1)$th outcome and the previous
+$u_{m-1}$ ones, and therefore $u_{m}=u_{m+1}+1$. All other cases are
+impossible. Note that these other cases might be possible under assumptions
+different from $\yMc$; they would represent a robot with a sort of
+moving-window memory.
+
+With these propositions about the changepoints, the reset rules described
+above correspond to the following equalities, for all $m$:
 \begin{multline}
   \label{eq:irrelevant_data_conditional_R}
-  \p(D^{m+1}_{d_{m+1}} \|
-  R^{m+1}_{r},  D^{m}_{d_{m}}, \dotsc, D^{1}_{d_{1}}, \yI)
+  \p(\yO^{m}_{s_{m}} \|
+  R^{m}_{u},  \yO^{m-1}_{s_{m-1}}, \dotsc, \yO^{1}_{s_{1}}, \yMc)
   ={}\\
-  \shoveright{\begin{cases}
-  \p(D^{m+1}_{d_{m+1}} \|
-    R^{m+1}_{r},  D^{m}_{d_{m}}, \dotsc, D^{m+1-r}_{d_{m+1-r}}, \yI)
-    &\text{if $1\le r\le m$},
-      \\[2\jot]
-  \p(D^{m+1}_{d_{m+1}} \|
-    R^{m+1}_{r}, \yI)
-    &\text{if $r=0$},
-  \end{cases}}
-  \\
-  \text{with probabilities given by the Johnson-Dirichlet
-model~\eqref{eq:prediction_exchangeability}, \eqref{eq:JD_prior},
-\eqref{eq:predictive_JD}.}
+  \begin{cases}
+  \p(\yO^{m}_{s_{m}} \|
+    R^{m}_{u},  \yO^{m-1}_{s_{m-1}}, \dotsc, \yO^{m-u}_{s_{m-u}}, \yMc)
+    &\text{for $1\le u\le m-1$},
+      \\
+  \p(\yO^{m}_{s_{m}} \|
+    R^{m}_{u}, \yMc)
+    &\text{for $u=0$},
+  \end{cases}
 \end{multline}
+Where the probabilities on the right side are given by the
+Johnson-Dirichlet formulae~\eqref{eq:predictive_JD_general}
+or~\eqref{update_params_JD}.
 
-The probability for the $(m+1)$th observation given the data can be thus
-decomposed 
+The formulae above lead to a conditional distribution for the $m$th outcome
+given the previous ones only if the robot has been programmed with the
+probabilities
+\begin{equation}
+  \label{eq:prob_R_conditional_only_data_before}
+  \p(R^{m}_{u_{m}} \| \yO^{m-1}_{s_{m-1}},\dotsc, \yO^{1}_{s_{1}}, \yMc),
+\end{equation}
+which in turn can be obtained by marginalization and condizionalization
+from the probabilities
+\begin{equation}
+  \label{eq:prob_R_conditional_before}
+  \p(R^{m}_{u_{m}} \| \yO^{m-1}_{s_{m-1}}, R^{m-1}_{u_{m-1}},\dotsc,
+  R^{2}_{u_{2}}, \yO^{1}_{s_{1}}, \yMc)
+\end{equation}
+for all legitimate $m$, $u_i$, and outcomes $s_i$. Additional assumptions
+are necessary to determine the latter probabilities. For example, the
+particular order of all past outcomes, the lengths of the previous
+subsequences, or even the robot's previous distributions, and other factors
+external to the experiment might all be relevant. The robot is programmed
+with this assumption:
+\begin{itemize}
+\item only two quantities are relevant to infer whether the next
+  observation starts a new subsequence: the total number $m-1$ of
+  observations made so far, and the current length $v$ of the present
+  subsequence.
+\end{itemize}
+In formulae this assumption is equivalent to a Markov property:
+\begin{equation}
+  \label{eq:prob_R_markov}
+  \p(R^{m}_{u_{m}} \| \yO^{m-1}_{s_{m-1}}, R^{m-1}_{u_{m-1}},\dotsc,
+  R^{2}_{u_{2}}, \yO^{1}_{s_{1}}, \yMc) =
+  \p(R^{m}_{u_{m}} \|  R^{m-1}_{u_{m-1}}, \yMc).
+\end{equation}
+Recalling, \eqn~\eqref{eq:exhaustive_R_from_previous}, that only the values
+$u_{m}=0$ and $u_{m}= u_{m-1}+1$ are possible, the conditional
+probabilities above are summarized in the \emph{changepoint function}
+\begin{equation}\label{eq:def_changepoint_function}
+  \yrs(v,m)  \defd \p(R^{m}_{0} \|  R^{m-1}_{v}, \yMc),
+  \qquad m \in\set{2,3,\dotsc}, \quad v\in\set{1,\dotsc,m-1}.
+\end{equation}
+It is the probability that the $m$th observation starts a new subsequence,
+given that the previous subsequence had length $v$, including the $(m-1)$th
+outcome (that's the reason for $v-1$ in the definition). Note that
+from~\eqref{eq:exclusive_across_m}
+\begin{equation}\label{eq:one_minus_h}
+  \p(R^{m}_{v} \|  R^{m-1}_{v-1}, \yMc)  = 1-\yrs(v,m),\qquad v\ne 0.
+\end{equation}
+A little counting shows that the set of the possible changepoint functions,
+for an experiment with $M$ observations, is $\clcl{0,1}^{(M^2-M)/2}$.
+
+\medskip
+
+Once we specify:
+\begin{itemize}
+\item the stubbornness $\yN$ and initial distribution $\yn$ to be used at
+  each reset,
+\item the changepoint function $\yrs(v,m)$,
+\end{itemize}
+our new robot $\yMc$ is completely programmed and can face the Plinko task.
+Note that these specifications determine the joint
+distribution~\eqref{eq:distr_statmodel}, through the assumptions made so
+far.
+
+\subsection{Online belief update}
+\label{sec:online_update_2}
+
+The beliefs of the Johnson-Dirichlet robot of \sect~\ref{sec:first_study}
+during the Plinko task were fully summarized by $N$ independent parameters,
+recursively updated online after each observation.
+
+An analogous online update is possible for this robot, with some
+differences: first, the number of parameters required increases linearly
+with the observations; second, the updated parameter values depend on the
+last outcome, on the parameter values before the last observation,
+\emph{and} on some of the parameter values before the last but one
+observation. The online-update algorithm we now develop follows closely
+Adams \amp\ MacKay's \citey{adamsetal2007} but departs from it in some
+important respects.
+
+
+We first write probability for the $m$th observation given the previous
+outcomes can be written
 \begin{multline}
   \label{eq:prob_new_cond_R}
-  \p(D^{m+1}_{d_{m+1}} \|
-  D^{m}_{d_{m}}, \dotsc, D^{1}_{d_{1}}, \yI)
+  \p(\yO^{m}_{s_{m}} \|
+  \yO^{m-1}_{s_{m-1}}, \dotsc, \yO^{1}_{s_{1}}, \yMc)
   =
-  \frac{\p(D^{m+1}_{d_{m+1}}, D^{m}_{d_{m}} \|
-    D^{m-1}_{d_{m-1}},\dotsc, D^{1}_{d_{1}}, \yI)}{
-    \p(D^{m}_{d_{m}} \| D^{m-1}_{d_{m-1}}, \dotsc, D^{1}_{d_{1}}, \yI)}
-=  {}\\[2\jot]
-  \frac{\sum\limits_{r=0}^m
-  \p(D^{m+1}_{d_{m+1}} \|
-  R^{m+1}_{r},  D^{m}_{d_{m}}, \dotsc, D^{m+1-r}_{d_{m+1-r}}, \yI)
+  \frac{\p(\yO^{m}_{s_{m}}, \yO^{m-1}_{s_{m-1}} \|
+    \yO^{m-2}_{s_{m-2}},\dotsc, \yO^{1}_{s_{1}}, \yMc)}{
+    \p(\yO^{m-1}_{s_{m-1}} \| \yO^{m-2}_{s_{m-2}}, \dotsc, \yO^{1}_{s_{1}}, \yMc)}
+=  {}\\
+  \frac{\sum\limits_{u=0}^{m-1}
+  \p(\yO^{m}_{s_{m}} \|
+  R^{m}_{u},  \yO^{m-1}_{s_{m-1}}, \dotsc, \yO^{m-u}_{s_{m-u}}, \yMc)
   \times
-  \p(R^{m+1}_{r}, D^{m}_{d_{m}} \| D^{m-1}_{d_{m-1}} \dotsc, D^{1}_{d_{1}}, \yI)}{
-\p(D^{m}_{d_{m}} \| D^{m-1}_{d_{m-1}} \dotsc, D^{1}_{d_{1}}, \yI)
+  \p(R^{m}_{u}, \yO^{m-1}_{s_{m-1}} \| \yO^{m-2}_{s_{m-2}} \dotsc, \yO^{1}_{s_{1}}, \yMc)}{
+\p(\yO^{m-1}_{s_{m-1}} \| \yO^{m-2}_{s_{m-2}} \dotsc, \yO^{1}_{s_{1}}, \yMc)
 }.
 \end{multline}
-The reason for this taking $D^{m}_{d_{m}}$ out of the conditional will be
-apparent in a moment. Note that the denominator is the probability of the
-previous observation given the previous data: in a recursive computation
-this would have been computed in the preceding step.
+The reason for taking $\yO^{m-1}_{s_{m-1}}$ out of the conditional argument
+will be apparent in a moment. Note that the denominator is the probability
+of the previous observation given the previous data: in a recursive
+computation this would have been computed in the preceding step.
 
-The products in the sum contain the term given
-by~\eqref{eq:irrelevant_data_conditional_R} and the joint probability for
-$R^{m+1}_{r}, D^{m}_{d_{m}}$  given the previous data. This joint probability
- can be decomposed introducing $R^{m}_{s}$ for the previous observation:
+The products in the $u$ sum contain the term given
+by~\eqref{eq:irrelevant_data_conditional_R}, which is just the
+Johnson-Dirichlet conditional probability~\eqref{eq:predictive_JD_general},
+and the joint probability for $(R^{m}_{u}, \yO^{m-1}_{s_{m-1}})$ given the
+previous data. This joint probability can be decomposed introducing
+$R^{m-1}_{v}$ for the previous observation:
 \begin{multline}
   \label{eq:prob_R_and_last_decompose}
-  \p(R^{m+1}_{r}, D^{m}_{d_{m}} \| D^{m-1}_{d_{m-1}}, \dotsc, D^{1}_{d_{1}}, \yI) 
- ={} \\[2\jot]
-  \frac{\sum_{s=0}^{m-1}
-    \p(R^{m+1}_{r}, D^{m}_{d_{m}}, R^{m}_{s}, D^{m-1}_{d_{m-1}}
-    \| D^{m-2}_{d_{m-2}}, \dotsc, D^{1}_{d_{1}}, \yI)}{
-\p(D^{m-1}_{d_{m-1}} \| D^{m-2}_{d_{m-2}}, \dotsc, D^{1}_{d_{1}}, \yI)}
-  ={}\\[2\jot]
-  % \begin{multlined}[b][0.9\textwidth]
-  \begin{aligned}
-    \frac{1}{\p(D^{m-1}_{d_{m-1}} \| D^{m-2}_{d_{m-2}}, \dotsc, D^{1}_{d_{1}}, \yI)}
-  \sum_{s=0}^{m-1} \p(R^{m+1}_{r} \| R^{m}_{s}, \yI)
-  \times{}\qquad\qquad&\\[\jot]
-  \p(D^{m}_{d_{m}} \|
-    R^{m}_{s}, D^{m-1}_{d_{m-1}} \dotsc, D^{m-s}_{d_{m-s}}, \yI)
-    \times{}\qquad&\\[\jot]
- \p(R^{m}_{s}, D^{m-1}_{d_{m-1}} \|
-  D^{m-2}_{d_{m-2}},\dotsc, D^{1}_{d_{1}}, \yI).&
-  \end{aligned}
+  \p(R^{m}_{u}, \yO^{m-1}_{s_{m-1}} \| \yO^{m-2}_{s_{m-2}}, \dotsc, \yO^{1}_{s_{1}}, \yMc) 
+ ={} \\
+  \frac{\sum_{v=1}^{m-1}
+    \p(R^{m}_{u}, \yO^{m-1}_{s_{m-1}}, R^{m-1}_{v-1}, \yO^{m-2}_{s_{m-2}}
+    \| \yO^{m-3}_{s_{m-3}}, \dotsc, \yO^{1}_{s_{1}}, \yMc)}{
+\p(\yO^{m-2}_{s_{m-2}} \| \yO^{m-3}_{s_{m-3}}, \dotsc, \yO^{1}_{s_{1}}, \yMc)}
+  ={}\\
+    \frac{1}{\p(\yO^{m-2}_{s_{m-2}} \| \yO^{m-3}_{s_{m-3}}, \dotsc, \yO^{1}_{s_{1}}, \yMc)}
+  \sum_{v=1}^{m-1} \p(R^{m}_{u} \| R^{m-1}_{v-1}, \yMc)
+  \times{}\\
+  \p(\yO^{m-1}_{s_{m-1}} \|
+    R^{m-1}_{v-1}, \yO^{m-2}_{s_{m-2}} \dotsc, \yO^{m-v}_{s_{m-v}}, \yMc)
+    \times{}\\
+ \p(R^{m-1}_{v-1}, \yO^{m-2}_{s_{m-2}} \|
+  \yO^{m-3}_{s_{m-3}},\dotsc, \yO^{1}_{s_{1}}, \yMc).
 \end{multline}
-The last expression contains four kinds of term. Let's analyse them.
+The last expression contains four kinds of terms. Let's analyse them.
 
-1. The denominator is the probability for the $(m-1)$th observation given the
-previous data. In a recursive algorithm this has been calculated in a
-previous step.
+\begin{itemize}
+\item The denominator is the probability for the $(m-2)$th observation
+  given the previous data. In a recursive algorithm this is known from two
+  previous steps.
 
-2. The first factor within the sum was simplified using this assumption:
-\begin{equation}
-  \label{eq:prob_R_and_last_decompose}
-  \p(R^{m+1}_{r} \|
-  R^{m}_{s},  D^{m}_{d_{m}} \dotsc, D^{1}_{d_{1}}, \yI)
-  = \p(R^{m+1}_{r} \|  R^{m}_{s},  \yI),
-\end{equation}
-which in words states that past data are irrelevant for guessing whether
-the next observation starts a new subsequence or not, given that we know
-how many data belong to the current subsequence, and given that we
-\emph{don't} yet know the value of the next observation.
+\item The first factor within the $v$ sum was simplified using the Markov
+  property~\eqref{eq:prob_R_markov}.
 
-According to this assumption, past observations help us guessing whether
-the next observation starts a new subsequence only if we can compare them
-with it. If we don't know it, past data can't help us. This assumption
-discards the possibility that particular values of past observations may
-trigger the start of a new sequence. The length of the current subsequence,
-$R^{m}_{s}$, is relevant in any case, because the next observation can only
-start a new subsequence or continue the previous one, so that either $r=0$
-or $r=s+1$:
-\begin{equation}
-  \label{eq:R_cond_R_simple}
-  \p(R^{m+1}_{r} \| R^{m}_{s}, \yI) =
-  \yrs(s,m)\,\delt_{r,0} + [1-\yrs(s,m)]\,\delt_{r,s+1} =
-  \begin{cases}
-    \yrs(s,m) & \text{for $r=0$},
+\item The second factor within the $v$ sum is given by the
+  Johnson-Dirichlet model, according to discussion of
+  \eqn~\eqref{eq:irrelevant_data_conditional_R}.
+
+\item The last factor within the $v$ sum is analogous to the joint
+  probability for $R^{m}_{u}, \yO^{m-1}_{s_{m-1}}$, which we are now
+  calculating, but for the previous observation. In a recursive scheme it
+  is known from the preceding step.
+\end{itemize}
+
+Combining formulae~\eqref{eq:prob_new_cond_R},
+\eqref{eq:prob_R_and_last_decompose}, \eqref{eq:recursive_formula_2},
+\eqref{eq:def_changepoint_function}, \eqref{eq:predictive_JD_general}, and
+defining
+\begin{subequations}\label{eq:definitions_ABC}
+  \begin{align}
+    \label{eq:def_A}
+    A_{m}(s_{m}) &\defs
+    \p(\yO^{m}_{s_{m}} \| \yO^{m-1}_{s_{m-1}}, \dotsc, \yO^{1}_{s_{1}}, \yMc),
     \\
-    1-\yrs(s,m) &\text{for $r=s+1$},
+    B_{m}(u,s_{m})
+                 &\defd \p(\yO^{m}_{s_{m}} \| R^{m}_{u}, \yO^{m-1}_{s_{m-1}},
+                   \dotsc, \yO^{m-u}_{s_{m-u}}, \yMc),
     \\
-    0 & \text{otherwise},
-  \end{cases}
-\end{equation}
-which simplifies our calculations: in the
-sum~\eqref{eq:prob_R_and_last_decompose} when $r\ge 1$ only the term
-$s=r-1$ survives. In our study we assume that $\yrs(s,m)$ either is
-independent of $s$ or increases with $s$, expressing our expectation that
-subsequences shouldn't be too long. This last option is reasonable if the
-participants were warned about the possibility of changepoints before the
-experiment.
-
-3. The second factor within the sum is given by the Johnson-Dirichlet
-model, according to discussion of
-\eqn~\eqref{eq:irrelevant_data_conditional_R}.
-
-4. The last factor within the sum is analogous to the joint probability for
-$R^{m+1}_{r}, D^{m}_{d_{m}}$, but calculated for the previous observation.
-In a recursive scheme it would have been computed in the preceding step.
-
+    C_{m}(u) &\defd
+            \p(R^{m}_{u} , \yO^{m-1}_{s_{m-1}} \| \yO^{m-2}_{s_{m-2}}, \dotsc,
+            \yO^{1}_{s_{1}}, \yMc),
+  \end{align}
+\end{subequations}
+we find that the conditional probability we're seeking, $A_{m}(s_{m})$, is
+given recursively by
+\newlength{\myl}\settowidth{\myl}{\footnotesize the past $u$ observations}
+\begin{subequations}\label{eq:recursive_formula_2}
+\begin{align}
+  A_{m}(s_{m})
+  &= \frac{\sum_{u=0}^{m-1} B_{m}(u,s_{m}) \; C_{m}(u)}{A_{m-1}(s_{m-1})}
+  \\
+  B_{m}(u,s_{m})
+  &= \frac{\yN\ynn_{s_{m}}+u\yff_{s_{m}}}{\yN + u},
+    \qquad
+    \yff_{s_{m}} \defd\Bigl\{
+    \parbox[c]{\the\myl}{\footnotesize rel. frequency of $s_m$ in\\
+  the past $u$ observations}
+  \\
+  C_{m}(u)
+  &=   \!\begin{multlined}[t][0.6\linewidth]
+    \frac{1}{A_{m-2}(s_{m-2})} \times{}\\[\jot]
+    \begin{cases}
+      \sum_{v=1}^{m-1} \yrs(v,m) \; B_{m-1}(v-1,s_{m-1}) \;
+      C_{m-1}(v-1)
+      & \text{if $u=0$}
+      \\[\jot]
+      [1-\yrs(u,m)]  \; B_{m-1}(u-1,s_{m-1}) \; C_{m-1}(u-1)
+      & \text{if $u\ge 1$}
+    \end{cases}
+  \end{multlined}
+\end{align}
+\end{subequations}
+for all $s_{m} \in\set{1,\dotsc,N}$, $u\in\set{0,\dotsc,m-1}$. This recursive
+algorithm is summarized in table~\ref{tab:adamsetal_algorithm}.
 
 \bigskip
 
-In a recursive scheme we also need some initial values.
-
-For $m=0$ we have that $\p(D^{1}_{d_1} \| \yI)$ is given by the
-Johnson-Dirichlet model, and $\p(R^{1}_{0} \| \yI)=1$ because the first
-observation is trivially a changepoint. Owing to the certainty of $R^1_0$,
-for $m=1$ we have
+Some initial values are necessary for this recursive scheme. For $m=1$, the
+first observation, the distribution is $\p(\yO^{1}_{s_1} \| \yMc)=\ynn_{s_1}$
+by the Johnson-Dirichlet model, and trivially $\p(R^{1}_{0} \| \yMc)=1$.
+Owing to the certainty of $R^1_0$, for $m=2$ we have
 \begin{equation}
   \label{eq:initial_R2}
-  \p(R^{2}_{r}, D^{1}_{d_{1}} \|  \yI)
-  = \p(R^{2}_{r},R^{1}_{0}, D^{1}_{d_{1}} \|  \yI)
-  = \p(R^{2}_{r} \| R^{1}_{0},  \yI) \times
-  \p( D^{1}_{d_{1}} \|  \yI).
+  \p(R^{2}_{u}, \yO^{1}_{s_{1}} \|  \yMc)
+  = \p(R^{2}_{u},R^{1}_{0}, \yO^{1}_{s_{1}} \|  \yMc)
+  = \p(R^{2}_{u} \| R^{1}_{0},  \yMc) \times
+  \p( \yO^{1}_{s_{1}} \|  \yMc).
 \end{equation}
-With the probabilities above, from $m=2$ onward the recursion can be
-calculated with
-\eqns~\eqref{eq:irrelevant_data_conditional_R}--\eqref{eq:R_cond_R_simple}.
+With the probabilities above from $m=3$ onward the recursion can be
+calculated with \eqns~\eqref{eq:recursive_formula_2}. These initialization
+steps are summarized in table~\ref{tab:adamsetal_initial}.
 
-
-\subsection{The recursive algorithm}
-\label{sec:adamsetal_algorithm}
-
-The recursive algorithm to calculate
-$\p(D^{m+1}_{d_{m+1}} \| D^{m}_{d_{m}}, \dotsc, D^{1}_{d_{1}}, \yI)$ is
-shown in table~\ref{tab:adamsetal_algorithm}. For $m=0$ some initialization
-steps are necessary.
-\begin{table}[!b]
+\begin{table}[!p]
   \centering
   \caption{Initial steps of predictive algorithm}
   \label{tab:adamsetal_initial}
   \begin{tabularx}{\textwidth}{X}\hline
     \begin{enumerate}%[label=0.\arabic*.,start=0]
-    \item Set $\yN=0.01$, $\ynn_d=1/N$, $d\in\set{1,\dotsc,N}$
-    \item For $d_1 \in \set{1,\dotsc,N}$ calculate
-      \[A_1(d_1)\defd \p(D^{1}_{d_{1}} \|  \yI) =\ynn_{d_1} \]
-    \item Observe $d_1$
-    \item Keep  $A_1(d_1)$ for the next two steps and $B_1(0)\equiv 1$ for
+    \item Assign numerical values to $\yN$, $\ynn$
+    \item For $s_1 \in \set{1,\dotsc,N}$ calculate
+      \[A_1(s_1)\defd \p(\yO^{1}_{s_{1}} \|  \yMc) =\ynn_{s_1} \]
+    \item Observe $s_1$
+    \item Keep  $A_1(s_1)$ for the next two steps and $B_1(0)\equiv 1$ for
       the next step
 
       \bigskip
-    \item For $r \in\set{0,1}$:
+    \item For $u \in\set{0,1}$:
       \begin{enumerate}[label*=\arabic*.]
    \item Calculate
       \[
-        C_2(r) \defd \p(R^{2}_{r}, D^{1}_{d_1} \| \yI)
+        C_2(u) \defd \p(R^{2}_{u}, \yO^{1}_{s_1} \| \yMc)
         =
-A_1(d_1) \times \begin{cases}
-          \yrs(0,1) &\text{for $r=0$},\\ 1-\yrs(0,1)&\text{for $r=1$}
+A_1(s_1) \times \begin{cases}
+          \yrs(0,1) &\text{for $u=0$},\\ 1-\yrs(0,1)&\text{for $u=1$}
         \end{cases}
       \]
-      \item For $d_{2} \in \set{1,\dotsc,N}$, calculate
+      \item For $s_{2} \in \set{1,\dotsc,N}$, calculate
         \[ 
-          B_{2}(r,d_{2}) \defd
-          \p(D^{2}_{d_{2}} \| R^{2}_{r}, D^{1}_{d_{1}}, \yI) =
-         \frac{\yN\ynn_{d_{2}}+r\yff_{d_{2}}}{\yN + r},
+          B_{2}(u,s_{2}) \defd
+          \p(\yO^{2}_{s_{2}} \| R^{2}_{u}, \yO^{1}_{s_{1}}, \yMc) =
+         \frac{\yN\ynn_{s_{2}}+u\yff_{s_{2}}}{\yN + u},
         \]
-     where $\yff_{d_{2}}$ is the relative frequency of outcome $d_{3}$ in
-     the previous $r$ observations
+     where $\yff_{s_{2}}$ is the relative frequency of outcome $s_{3}$ in
+     the previous $u$ observations
     \end{enumerate}
-  \item  For $d_2 \in \set{1,\dotsc,N}$ calculate
-      \[A_2(d_2) \defd
-        \p(D^{2}_{d_{12}} \| D^{1}_{d_{1}}, \yI) =
-\frac{\sum_{r=0}^{1} B_{2}(r,d_{2}) \times C_{2}(r)}{A_{1}(d_{1})} \]
-\item Observe $d_2$
-\item Keep $A_{2}(d_{2})$ for the next two steps, and
-  $B_{2}(r,d_{2})$, $C_{2}(r)$, $r\in\set{0,1}$, for the next step
+  \item  For $s_2 \in \set{1,\dotsc,N}$ calculate
+      \[A_2(s_2) \defd
+        \p(\yO^{2}_{s_{2}} \| \yO^{1}_{s_{1}}, \yMc) =
+\frac{\sum_{u=0}^{1} B_{2}(u,s_{2}) \times C_{2}(u)}{A_{1}(s_{1})} \]
+\item Observe $s_2$
+\item Keep $A_{2}(s_{2})$ for the next two steps, and
+  $B_{2}(u,s_{2})$, $C_{2}(u)$, $u\in\set{0,1}$, for the next step
 \item Set $m=2$, go to step~\ref{item:first_step} of table~\ref{tab:adamsetal_algorithm}
 \end{enumerate}
 \\\hline
   \end{tabularx}
 \end{table}
 
-\begin{table}[!b]
+\begin{table}[!p]
   \centering
   \caption{Predictive algorithm}
   \label{tab:adamsetal_algorithm}
   \begin{tabularx}{\textwidth}{X}\hline
     \begin{enumerate}
       % \item Retrieve from memory
-      %   \[ B_m(s) \defd \p(R^{m}_{s} \| D^{m-1}_{d_{m-1}} \dotsc,
-      %     D^{1}_{d_{1}}, \yI),\qquad 0\le s \le m-1 \]
-    \item\label{item:first_step}For $r \in \set{0,\dotsc, m}$:
+      %   \[ B_m(v) \defd \p(R^{m}_{v} \| \yO^{m-1}_{s_{m-1}} \dotsc,
+      %     \yO^{1}_{s_{1}}, \yMc),\qquad 0\le v \le m-1 \]
+    \item\label{item:first_step}For $u \in \set{0,\dotsc, m}$:
       \begin{enumerate}[label*=\arabic*.]
       \item Calculate
-        \[ \begin{multlined}[t][0.85\textwidth] C_{m+1}(r) \defd
-            \p(R^{m+1}_{r} , D^{m}_{d_{m}} \| D^{m-1}_{d_{m-1}}, \dotsc,
-            D^{1}_{d_{1}}, \yI) ={}\\[\jot]
-       \shoveleft{\frac{1}{A_{m-1}(d_{m-1})} \times{}}\\\begin{cases}
-          \sum_{s=0}^{m-1} \yrs(s,m) \times B_m(s,d_m) \times C_m(s) & \text{if $r=0$},
+        \[ \begin{multlined}[t][0.85\textwidth]
+            C_{m+1}(u) \defd
+            \p(R^{m+1}_{u} , \yO^{m}_{s_{m}} \| \yO^{m-1}_{s_{m-1}}, \dotsc,
+            \yO^{1}_{s_{1}}, \yMc) ={}\\[\jot]
+       \shoveleft{\frac{1}{A_{m-1}(s_{m-1})} \times{}}\\\begin{cases}
+          \sum_{v=0}^{m-1} \yrs(v,m) \times B_m(v,s_m) \times C_m(v) & \text{if $u=0$},
           \\[\jot]
-          [1-\yrs(r-1,m)]  \times B_m(r-1,d_m) \times C_m(r-1)& \text{if $r\ge 1$}    
+          [1-\yrs(u-1,m)]  \times B_m(u-1,s_m) \times C_m(u-1)& \text{if $u\ge 1$}    
         \end{cases}
       \end{multlined}
     \]
-      \item For $d_{m+1} \in \set{1,\dotsc,N}$, calculate
+      \item For $s_{m+1} \in \set{1,\dotsc,N}$, calculate
         \[ \begin{multlined}[][0.85\textwidth]
-B_{m+1}(r,d_{m+1}) \defd \p(D^{m+1}_{d_{m+1}} \| R^{m+1}_{r}, D^{m}_{d_{m}},
-          \dotsc, D^{m+1-r}_{d_{m+1-r}}, \yI) ={}\\[\jot]
-         \frac{\yN\ynn_{d_{m+1}}+r\yff_{d_{m+1}}}{\yN + r},
+B_{m+1}(u,s_{m+1}) \defd \p(\yO^{m+1}_{s_{m+1}} \| R^{m+1}_{u}, \yO^{m}_{s_{m}},
+          \dotsc, \yO^{m+1-u}_{s_{m+1-u}}, \yMc) ={}\\[\jot]
+         \frac{\yN\ynn_{s_{m+1}}+u\yff_{s_{m+1}}}{\yN + u},
        \end{multlined} \]
-     where $\yff_{d_{m+1}}$ is the relative frequency of outcome $d_{m+1}$ in the previous $r$ observations
+     where $\yff_{s_{m+1}}$ is the relative frequency of outcome $s_{m+1}$ in the previous $u$ observations
       % \item using the Johnson-Dirichlet model calculate (or retrieve from memory)
-      %   \[ A_m(s) \defd \p(D^{m}_{d_{m}} \| R^{m}_{s}, D^{m-1}_{d_{m-1}}
-      %     \dotsc, D^{m-s}_{d_{m-s}}, \yI)
+      %   \[ A_m(v) \defd \p(\yO^{m}_{s_{m}} \| R^{m}_{v}, \yO^{m-1}_{s_{m-1}}
+      %     \dotsc, \yO^{m-v}_{s_{m-v}}, \yMc)
       %   \]
   \end{enumerate}
-\item For $d_{m+1} \in \set{1,\dotsc,N}$, calculate
+\item For $s_{m+1} \in \set{1,\dotsc,N}$, calculate
   \[ \begin{multlined}[][0.85\textwidth]
-      A_{m+1}(d_{m+1}) \defd \p(D^{m+1}_{d_{m+1}} \| D^{m}_{d_{m}}, \dotsc, D^{1}_{d_{1}}, \yI) ={}\\[\jot]
-    \frac{\sum_{r=0}^{m} B_{m+1}(r,d_{m+1}) \times
-      C_{m+1}(r)}{A_{m}(d_{m})}
+      A_{m+1}(s_{m+1}) \defd \p(\yO^{m+1}_{s_{m+1}} \| \yO^{m}_{s_{m}}, \dotsc, \yO^{1}_{s_{1}}, \yMc) ={}\\[\jot]
+    \frac{\sum_{u=0}^{m} B_{m+1}(u,s_{m+1}) \times
+      C_{m+1}(u)}{A_{m}(s_{m})}
   \end{multlined}
 \]
-\item Observe $d_{m+1}$, 
-\item Keep $A_{m+1}(d_{m+1})$ for the next two steps, and
-  $B_{m+1}(r,d_{m+1})$, $C_{m+1}(r)$, $r\in\set{0,\dotsc,m}$ for the next step
+\item Observe $s_{m+1}$, 
+\item Keep $A_{m+1}(s_{m+1})$ for the next two steps, and
+  $B_{m+1}(u,s_{m+1})$, $C_{m+1}(u)$, $u\in\set{0,\dotsc,m}$ for the next step
 \item Increase $m$ by $1$, go to step~\ref{item:first_step}
   \end{enumerate}
   \\\hline
 \end{tabularx}
 \end{table}
+
+\subsection{Changepoint function and its uses}
+\label{sec:changepoint_choice}
+
+The changepoint function~\eqref{eq:def_changepoint_function},
+\begin{equation}\labelbis{eq:def_changepoint_function}
+  \yrs(v,m)  \defd \p(R^{m}_{0} \|  R^{m-1}_{v}, \yMc),
+  \qquad m \in\set{2,3,\dotsc}, \quad v\in\set{1,\dotsc,m-1}
+\end{equation}
+determines the robot's inference about the appearance of changepoints, or
+changes in the source of the data. It can represent a great
+variety of changepoint assumptions or beliefs.
+
+For example, the belief that the data source is the more likely to change
+the longer it's been operative corresponds to a $\yrs$ that increases as
+$v$ increases. The belief that the longer a data source operates the more
+likely it will persist corresponds to a $\yrs$ that decreases as $v$
+increases. Even more complex beliefs can be represented with the dependence
+on $m$. For example, we can have a shift from the first to the second
+belief above as $m$ increases.
+
+Our new robot $\yMc$, thanks to this function, can reproduce a great
+variety of human inferential behaviours. How well can such robots mimic
+reproduce the inferential behaviour of the Plinko participants?
+
+One way to assess this is to tune the stubbornness parameter $\yN$ and the
+changepoint function $\yrs$ so that the robot's sequence of predictive
+distributions is as close to a specific participant's as possible. The
+reset-distribution parameter $\yn$ can be set equal to the participant's
+initial distribution -- thus assuming that the participant would again
+choose that distribution if he or she were informed about a change in the
+algorithm determining the outcomes.
+
+This optimization leads to a possibly unique set of parameters
+$\bigl(\yN, \yrs(v,m)\bigr)$ associated to a participant. We could then
+explore the distribution of these parameters across all participants, for
+example examining whether they cluster into few groups, and so on.
+
+For such a study we need to choose a measure of discrepancy between two
+sequences of distributions, and to restrict our choice of changepoint
+functions, to make the study computationally feasible. We now explore these
+two necessities.
+
+\subsection{Discrepancy between sequences of inferences}
+\label{sec:discrepancy_measure}
+
+There are many measures of the discrepancy between two distributions: the
+relative entropy (also called Kullback-Leibler divergence or information
+discrimination) of the first distribution with respect to the second; or of
+the second with respect to the first; or the symmetrized version, namely the
+Shannon-Jansen discrepancy; or the Hellinger distance; and many others.
+
+Given such a discrepancy for each of the $M$ observations, we could define
+the total discrepancy as the average of these ($L^1$ norm), or the maximum
+among them ($L^{\infty}$ norm), or other similar measures.
+
+\subsection{Restrictions on the changepoint function}
+\label{sec:restrictions_h}
+
+With $M$ observations, choosing a changepoint function corresponds to
+choosing $(M^2-M)/2$ parameters with values in $\clcl{0,1}$. We try to
+restrict this choice to make the optimization computationally feasible
+while maintaining an enough wide range of changepoint beliefs.
+
+One restriction is to specify a logistic-polynomial changepoint function
+like this:
+\begin{gather}
+  \label{eq:changepoint_logistic_general}
+  \yrs(v,m ; \gamma_0,\dotsc) =
+  \logistic(\gamma_0 + \gamma_1 v + \gamma_2 m +
+  \gamma_3 v^2 + \gamma_4  v m + \gamma_5 m^2 + \dotsb)
+  \\
+  \shortintertext{where the logistic function}
+  \label{eq:logistic_def}
+  \logistic(x) \defd \frac{1}{1+\e^{-x}} 
+\end{gather}
+maps real numbers to $\clcl{0,1}$.
+
+In the rest of this study we choose a logistic-linear function:
+\begin{equation}
+  \label{eq:logistic_linear}
+  \yrs(v,m; \yc,\ycs,\ycm) = \logistic\biggl( \yc +
+  \ycs \frac{2 v-M}{M} + \ycm \frac{2 m-M}{M}\biggr) 
+\end{equation}
+thus reducing our choice to a three-parameter family of changepoint
+functions. This family can reproduce, for example, the two simple kinds of
+changepoint beliefs mentioned in \sect~\ref{sec:changepoint_choice}, but
+not an $m$-dependent shift between them. Examples are shown in \fig***
+
+
+
+
+\bigskip\mynote{Luca: work in progress in the rest of this subsection}
+
 
 \clearpage
 
@@ -1635,23 +2158,23 @@ $\yth$ -- which could be the value of a parameter identifying the model --
 and by $\yI$ all other knowledge or assumptions besides this model, we have
 \begin{equation}
   \label{eq:indep_model}
-  \pf(d_1,d_2 \| \yth, \yI) = \pf(d_1 \|\yth,\yI) \, \pf(d_2 \|\yth,\yI)
+  \pf(s_1,s_2 \| \yth, \yI) = \pf(s_1 \|\yth,\yI) \, \pf(s_2 \|\yth,\yI)
 \end{equation}
-for any two data $d_1$, $d_2$. This model does not learn because
+for any two data $s_1$, $s_2$. This model does not learn because
 \begin{equation}
   \label{eq:indep_model_nolearn}
-  \pf(d_2\| d_1, \yth, \yI) = \pf(d_2 \|\yth,\yI),
+  \pf(s_2\| s_1, \yth, \yI) = \pf(s_2 \|\yth,\yI),
 \end{equation}
 that is, under this model one set of data is always irrelevant for the
 prediction of another set. The probability of an independent model given
-data $d$ is
+data $s$ is
 \begin{equation}
   \label{eq:prob_indep_model}
-  \pf(\yth \| d, \yI)
+  \pf(\yth \| s, \yI)
   = \frac{
-    \pf(d \|\yth,\yI) \, \pf(\yth \| \yI)
+    \pf(s \|\yth,\yI) \, \pf(\yth \| \yI)
   }{
-    \sum_{\yth}\pf(d \|\yth,\yI) \, \pf(\yth \| \yI)
+    \sum_{\yth}\pf(s \|\yth,\yI) \, \pf(\yth \| \yI)
   },
   % \equiv \frac{
   %   \pf(d \|\yth,\yI) \, \pf(\yth \| \yI)
@@ -1660,7 +2183,7 @@ data $d$ is
   % },
 \end{equation}
 where $\pf(\yth \|\yI)$ is the probability over a range of such models
-based only on knowledge $\yI$, and $\pf(d \|\yth,\yI)$ is the
+based only on knowledge $\yI$, and $\pf(s \|\yth,\yI)$ is the
 \emph{likelihood} of the independent model given the data.
 
 \medskip
@@ -1676,12 +2199,12 @@ parametric model by $\ymu$. It is not independent because
 \begin{equation}
   \label{eq:param_model}
   \begin{aligned}
-  \pf(d_1,d_2 \| \ymu, \yI) &=
+  \pf(s_1,s_2 \| \ymu, \yI) &=
 \sum_{\yth}
-\pf(d_1,d_2 \|\yth,\ymu,\yI) \, \pf(\yth \| \ymu,\yI)
+\pf(s_1,s_2 \|\yth,\ymu,\yI) \, \pf(\yth \| \ymu,\yI)
 \\&\equiv
 \sum_{\yth}
-\pf(d_1 \|\yth,\ymu,\yI) \, \pf(d_2 \|\yth,\ymu,\yI)
+\pf(s_1 \|\yth,\ymu,\yI) \, \pf(s_2 \|\yth,\ymu,\yI)
  \, \pf(\yth \| \ymu,\yI),
   \end{aligned}
 \end{equation}
@@ -1691,38 +2214,38 @@ because
 \begin{subequations}
     \label{eq:param_model_learn}
   \begin{align}
-    \pf(d_2 \| d_1, \ymu, \yI) &=
+    \pf(s_2 \| s_1, \ymu, \yI) &=
     \sum_{\yth}
-    \pf(d_2 \|\yth,\ymu,\yI) \, \pf(\yth \| d_1, \ymu,\yI)
+    \pf(s_2 \|\yth,\ymu,\yI) \, \pf(\yth \| s_1, \ymu,\yI)
     \\
     \shortintertext{with}
-    \pf(\yth \| d_1, \ymu,\yI)
+    \pf(\yth \| s_1, \ymu,\yI)
     &= \frac{
-      \pf(d_1 \|\yth,\ymu,\yI) \, \pf(\yth \| \ymu,\yI)
+      \pf(s_1 \|\yth,\ymu,\yI) \, \pf(\yth \| \ymu,\yI)
       }{
-      \sum_{\yth} \pf(d_1 \|\yth,\ymu,\yI) \, \pf(\yth \| \ymu,\yI)
+      \sum_{\yth} \pf(s_1 \|\yth,\ymu,\yI) \, \pf(\yth \| \ymu,\yI)
       },
   \end{align}
 \end{subequations}
-where we see that data $d_1$ affect not the probability of $d_2$ directly,
+where we see that data $s_1$ affect not the probability of $s_2$ directly,
 but the probability distribution for the various independent models. The
-probability of a parametric model given data $d$ is
+probability of a parametric model given data $s$ is
 \begin{subequations}
   \label{eq:prob_indep_model}
   \begin{align}
-    \pf(\ymu \| d, \yI)
+    \pf(\ymu \| s, \yI)
     &= \frac{
-      \pf(d \|\yth,\yI) \, \pf(\ymu \| \yI)
+      \pf(s \|\yth,\yI) \, \pf(\ymu \| \yI)
       }{
-      \sum_{\ymu}\pf(d \|\ymu,\yI) \, \pf(\ymu \| \yI)
+      \sum_{\ymu}\pf(s \|\ymu,\yI) \, \pf(\ymu \| \yI)
       }
     \\
     \shortintertext{with}
     \label{eq:param_model_likelihood}
-    \pf(d \|\ymu,\yI)
+    \pf(s \|\ymu,\yI)
     & =  
       \sum_{\yth}
-      \pf(d \|\yth,\ymu,\yI) \, \pf(\yth \| \ymu,\yI).
+      \pf(s \|\yth,\ymu,\yI) \, \pf(\yth \| \ymu,\yI).
   \end{align}
 \end{subequations}
 where $\pf(\ymu \|\yI)$ is the probability over a range of parametric
@@ -1751,13 +2274,13 @@ a model by $\yh$. The probability of the data is
 \begin{equation}
   \label{eq:hier_model}
   \begin{aligned}
-  \pf(d_1,d_2 \| \yh, \yI) &=
+  \pf(s_1,s_2 \| \yh, \yI) &=
 \sum_{\ymu}
-\pf(d_1,d_2 \|\ymu,\yh,\yI) \, \pf(\ymu \| \yh,\yI)
+\pf(s_1,s_2 \|\ymu,\yh,\yI) \, \pf(\ymu \| \yh,\yI)
 \\&\equiv
     \!\!\begin{multlined}[t][0.5\linewidth]
 \sum_\ymu\biggl\{ \sum_{\yth}
-\Bigl[ \prod_i\pf(d_i \|\yth,\ymu,\yh,\yI)\Bigr]\,
+\Bigl[ \prod_i\pf(s_i \|\yth,\ymu,\yh,\yI)\Bigr]\,
      \pf(\yth \| \ymu,\yh, \yI)\biggr\}\times{}\\
      \pf(\ymu \| \yh,\yI).
    \end{multlined}
@@ -1767,31 +2290,31 @@ Learning takes place this way:
 \begin{subequations}
     \label{eq:hier_model_learn}
   \begin{align}
-    \pf(d_2 \| d_1, \yh, \yI)
+    \pf(s_2 \| s_1, \yh, \yI)
     &= \sum_{\ymu} \Bigl[\sum_{\yth}
-      \pf(d_2 \|\yth,\ymu,\yh,\yI) \, \pf(\yth \| d_1, \ymu,\yh,\yI)
+      \pf(s_2 \|\yth,\ymu,\yh,\yI) \, \pf(\yth \| s_1, \ymu,\yh,\yI)
       \Bigr]\,
-      \pf(\ymu \| d_1, \yh,\yI)
+      \pf(\ymu \| s_1, \yh,\yI)
     \\
     \intertext{with}
       \begin{split}%[t][0.5\linewidth]
-    \pf(\yth \| d_1, \ymu,\yh,\yI)
+    \pf(\yth \| s_1, \ymu,\yh,\yI)
     &=\frac{
-      \pf(d_1 \|\yth,\ymu,\yh,\yI) \, \pf(\yth \| \ymu,\yh,\yI)
+      \pf(s_1 \|\yth,\ymu,\yh,\yI) \, \pf(\yth \| \ymu,\yh,\yI)
       }{
-      \sum_{\yth} \pf(d_1 \|\yth,\ymu,\yh,\yI) \, \pf(\yth \| \ymu,\yh,\yI)
+      \sum_{\yth} \pf(s_1 \|\yth,\ymu,\yh,\yI) \, \pf(\yth \| \ymu,\yh,\yI)
     }
         \\[2\jot]
     &=\frac{
-      \pf(d_1 \|\yth,\ymu,\yh,\yI) \, \pf(\yth \| \ymu,\yh,\yI)
-      }{\pf(d_1 \| \ymu,\yh,\yI) },
+      \pf(s_1 \|\yth,\ymu,\yh,\yI) \, \pf(\yth \| \ymu,\yh,\yI)
+      }{\pf(s_1 \| \ymu,\yh,\yI) },
     \end{split}\label{eq:update_h1}
       \\[3\jot]
-    \pf(\ymu \| d_1, \yh,\yI)
+    \pf(\ymu \| s_1, \yh,\yI)
     &= \frac{
-      \pf(d_1 \|\ymu,\yh,\yI) \, \pf(\ymu \| \yh,\yI)
+      \pf(s_1 \|\ymu,\yh,\yI) \, \pf(\ymu \| \yh,\yI)
       }{
-      \sum_{\ymu} \pf(d_1 \|\ymu,\yh,\yI) \, \pf(\ymu \| \yh,\yI)
+      \sum_{\ymu} \pf(s_1 \|\ymu,\yh,\yI) \, \pf(\ymu \| \yh,\yI)
       }.\label{eq:update_h2}
   \end{align}
 \end{subequations}
@@ -1841,39 +2364,39 @@ Now consider the predictive probability~\eqref{eq:hier_model} for the
 hierarchic model:
 \begin{equation}
   \label{eq:hier_model_simple}
-  \pf(d \| \yh, \yI) =
+  \pf(s \| \yh, \yI) =
 \sum_\ymu\biggl[ \sum_{\yth}
-\pf(d \|\yth,\ymu,\yh,\yI)\,
+\pf(s \|\yth,\ymu,\yh,\yI)\,
      \pf(\yth \| \ymu,\yh, \yI)\biggr]\,
      \pf(\ymu \| \yh,\yI).
 \end{equation}
 If we decree that $\pf(\yTh \| \ymu,\yh,\yI) = 0$ if $\yTh \notin
 \set{\yth}_{\ymu}$, we can extend the sum over $\yth$ (for fixed $\ymu$)
 over all $\yTh$. Moreover, since $\yTh$ contains information about $\ymu$,
-the latter becomes irrelevant in the conditional of the probability $\pf(d
+the latter becomes irrelevant in the conditional of the probability $\pf(s
 \|\yth,\ymu,\yh,\yI)$. The predictive probability above then becomes
 \begin{equation}
   \label{eq:hier_model_Theta}
   \begin{split}
-  \pf(d \| \yh, \yI) &=
+  \pf(s \| \yh, \yI) &=
 \sum_{\yTh}
-\pf(d \|\yTh,\yh,\yI)\, \sum_\ymu 
+\pf(s \|\yTh,\yh,\yI)\, \sum_\ymu 
      \pf(\yTh \| \ymu,\yh, \yI)\,
      \pf(\ymu \| \yh,\yI),
 \\ &= \sum_{\yTh}
-\pf(d \|\yTh,\yh,\yI)\,
+\pf(s \|\yTh,\yh,\yI)\,
      \pf(\yTh \| \yh, \yI),
    \end{split}
 \end{equation}
 where the last equality follows from the law of total probability. What's
 important in the last formula is that the probability
-$\pf(d \|\yTh,\yh,\yI)$ factorizes over conjunctions of data; that is, it
+$\pf(s \|\yTh,\yh,\yI)$ factorizes over conjunctions of data; that is, it
 is an independent model. The model above is therefore just a parametric
 model.
 
 The last step consists in joining together into a single value all those
 values of $\yTh$ which lead to identical predictive distributions
-$\pf(d \|\yTh,\yh,\yI)$. The probability $\pf(\yTh \| \yh, \yI)$  for such
+$\pf(s \|\yTh,\yh,\yI)$. The probability $\pf(\yTh \| \yh, \yI)$  for such
 a value will be the sum of the probability for the various equivalent values.
 
 \mynote{to be cont'd}
@@ -1913,35 +2436,104 @@ a value will be the sum of the probability for the various equivalent values.
 \printbibliography[prenote=prenote%,postnote=postnote
 ]
 
-
 \end{document}
 ---------- cut text ----------------
 
 
-% This distribution for $R^{m+1}_r$ represents the robot's guess of whether
+
+
+The observations at which the subsequences start, called changepoints, are
+guessed from the whole sequence of observations. The robot is effectively
+considering all possible numbers and positions of changepoints. For
+example, every observation could be a subsequence by itself, or all
+observations could belong to just one subsequence -- which was the
+assumption of the robot of the previous study. According to Bayes's
+theorem, the robot assigns a probability to each possible division
+proportionally to a prior times the product of the probabilities for the
+data in each subsequence determined by that division, calculated with the
+Johnson-Dirichlet model described above:
+\begin{multline}
+  \label{eq:explanation_P_group}
+  \p(\ptext{particular division into subsequences} \| \ptext{data}, \yMc)
+  \propto{}\\
+\colorlet{savedcolor}{.}
+\color{gray}
+\protect\parbox[c][][u]{0.2\linewidth}{\footnotesize each is a\\[0.5\jot]Johnson-Dirichlet\\[0.5\jot]model}\color{gray}\left\{\color{savedcolor}\;
+    \!\begin{aligned}
+        &\p(\ptext{data in 1st subsequence} \|
+          \ptext{particular division}, \yMc)\times{}
+          \\
+        &\p(\ptext{data in 2nd subsequence} \|
+          \ptext{particular division}, \yMc)\times{}
+          \\
+              &\dotsm\times{}
+  \end{aligned}\right.\\
+ \p(\ptext{particular division} \| \yMc),
+\end{multline}
+where $\yMc$ stands for other background assumptions. The final inference is
+a combination of the inferences conditional on each possible division:
+\begin{multline}
+  \label{eq:explanation_group_mixed}
+  \p(\ptext{new observation} \| \ptext{data}, \yMc) \propto{}\\[\jot]
+  \sum_{\mathclap{\text{all divisions}}}
+  \p(\ptext{new observation} \| \ptext{division}, \ptext{data}, \yMc)
+\times  \p(\ptext{division} \| \ptext{data}, \yMc),
+\end{multline}
+where the probability for the new observation given the division is
+determined by the Johnson-Dirichlet model.
+
+According to this assumption, past observations help us guessing whether
+the next observation starts a new subsequence only if we can compare them
+with it. If we don't know it, past data can't help us. This assumption
+discards the possibility that particular values of past observations may
+trigger the start of a new sequence. The length of the current subsequence,
+$R^{m}_{v}$, is relevant in any case, because the next observation can only
+start a new subsequence or continue the previous one, so that either $u=0$
+or $u=v+1$:
+\begin{equation}
+  \label{eq:R_cond_R_simple}
+  \p(R^{m+1}_{u} \| R^{m}_{v}, \yMc) =
+  \yrs(v,m)\,\delt_{u,0} + [1-\yrs(v,m)]\,\delt_{u,v+1} =
+  \begin{cases}
+    \yrs(v,m) & \text{for $u=0$},
+    \\
+    1-\yrs(v,m) &\text{for $u=v+1$},
+    \\
+    0 & \text{otherwise},
+  \end{cases}
+\end{equation}
+which simplifies our calculations: in the
+sum~\eqref{eq:prob_R_and_last_decompose} when $u\ge 1$ only the term
+$v=u-1$ survives. In our study we assume that $\yrs(v,m)$ either is
+independent of $v$ or increases with $v$, expressing our expectation that
+subsequences shouldn't be too long. This last option is reasonable if the
+participants were warned about the possibility of changepoints before the
+experiment.
+
+% This distribution for $R^{m+1}_u$ represents the robot's guess of whether
 % the new observation starts a new subsequence or whether it is part of the
 % previous subsequence, and of how long that subsequence is. It can be
-% calculated recursively by introducing $R^{m}_{s}$ for the previous
+% calculated recursively by introducing $R^{m}_{v}$ for the previous
 % observation:
 % \begin{equation}
 %   \label{eq:prob_R_and_last_decompose2}
-%     \p(R^{m+1}_{r}\| D^{m}_{d_{m}}, \dotsc, D^{1}_{d_{1}}, \yI) 
-%   % &=\sum_{s=0}^{m-1}
-%   % \p(R^{m+1}_{r},R^{m}_{s},\|
-%   % D^{m}_{d_{m}}, \dotsc, D^{1}_{d_{1}}, \yI)
+%     \p(R^{m+1}_{u}\| \yO^{m}_{s_{m}}, \dotsc, \yO^{1}_{s_{1}}, \yI) 
+%   % &=\sum_{v=0}^{m-1}
+%   % \p(R^{m+1}_{u},R^{m}_{v},\|
+%   % \yO^{m}_{s_{m}}, \dotsc, \yO^{1}_{s_{1}}, \yI)
 %   % \\
-% =\sum_{s=0}^{m-1}\p(R^{m+1}_{r} \| R^{m}_{s}, \yI)
+% =\sum_{v=0}^{m-1}\p(R^{m+1}_{u} \| R^{m}_{v}, \yI)
 %   \times
-%   \p(R^{m}_{s} \|
-%   D^{m-1}_{d_{m-1}} \dotsc, D^{1}_{d_{1}}, \yI).
+%   \p(R^{m}_{v} \|
+%   \yO^{m-1}_{s_{m-1}} \dotsc, \yO^{1}_{s_{1}}, \yI).
 % % &\!\begin{multlined}[b][0.7\textwidth]
-% %   =\sum_{s=0}^{m-1}\p(R^{m+1}_{r} \| R^{m}_{s}, \yI)
+% %   =\sum_{v=0}^{m-1}\p(R^{m+1}_{u} \| R^{m}_{v}, \yI)
 % %   \times{}\\
-% %   \p(D^{m}_{d_{m}} \| R^{m}_{s},
-% %   D^{m-1}_{d_{m-1}} \dotsc, D^{m-s}_{d_{m-s}}, \yI)
+% %   \p(\yO^{m}_{s_{m}} \| R^{m}_{v},
+% %   \yO^{m-1}_{s_{m-1}} \dotsc, \yO^{m-v}_{s_{m-v}}, \yI)
 % %   \times{}\\
-% %   \p(R^{m}_{s} \|
-% %   D^{m-1}_{d_{m-1}} \dotsc, D^{1}_{d_{1}}, \yI).
+% %   \p(R^{m}_{v} \|
+% %   \yO^{m-1}_{s_{m-1}} \dotsc, \yO^{1}_{s_{1}}, \yI).
 % %           \end{multlined}
 % %   \end{aligned}
 % \end{equation}

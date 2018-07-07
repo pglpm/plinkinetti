@@ -59,10 +59,16 @@ lkd <- function(a,b){
     temp[is.nan(temp)] <- 0
     apply(temp,1,sum)}
 jsd <- function(a,b){
+<<<<<<< HEAD
     c <- (a+b)/2
     temp1 <-  a * log(a/c)
     temp1[is.nan(temp1)] <- 0
     temp2 <-  b * log(b/c)
+=======
+    temp1 <-  a * log(a/b)
+    temp1[is.nan(temp1)] <- 0
+	temp2 <-  b * log(b/a)
+>>>>>>> 08b4f6396a8648ac81bb0870add3122bd853476c
 	temp2[is.nan(temp2)] <- 0
     sum(temp1+temp2)/2}
 
@@ -186,7 +192,11 @@ robotdistribution <- function(priorfrequencies,allparams,obs){
 ## minimization of discrepancy between robot and participant
 
 ## eliminate zero-probabilities from distributions
+<<<<<<< HEAD
 regularizedistr <- function(tdistr,n=NULL,fraction=1000000){
+=======
+regularizedistr <- function(tdistr,n=NULL,fraction=1000){
+>>>>>>> 08b4f6396a8648ac81bb0870add3122bd853476c
     if(length(tdistr)==1){tdistr <- distribution(tdistr,n)}
     if(is.vector(tdistr)){dim(tdistr) <- c(1,length(tdistr))}
     n <- dim(tdistr)[1]-1
@@ -347,7 +357,11 @@ plotdiscrseq <- function(rdistr,pdistr,label=''){
 ## - sequences of overlap, relative entropies, means, stds
 ## - histograms for a selected set of trials
 ## and that outputs the final distributions, rel-entropies, overlaps, means, stds
+<<<<<<< HEAD
 comparison <- function(participant,maxtrials=200,trialstoshow=c(1:4, 99:102, 197:200),label='',params=rep(0.5,4),initial.distr=NULL,graphs=TRUE){
+=======
+comparison <- function(participant,maxtrials=200,trialstoshow=c(1:4, 99:102, 197:200),label='',params=rep(0.5,4),initial.distr=NULL){
+>>>>>>> 08b4f6396a8648ac81bb0870add3122bd853476c
     obs <- observations(participant,maxtrials)
 
     ## sequence of frequency parameters of the changepoint-JD model. At
@@ -407,7 +421,10 @@ comparison <- function(participant,maxtrials=200,trialstoshow=c(1:4, 99:102, 197
 ## dev.off()
 
     ## plots
+<<<<<<< HEAD
 if(graphs==TRUE){
+=======
+>>>>>>> 08b4f6396a8648ac81bb0870add3122bd853476c
     slabel <- substring(label,1,1)
     if(slabel!='' & slabel!='_'){label <- paste0('_',label)}
     pdfname <- paste0(plotsdir,'p',participant,label,'.pdf')
@@ -486,7 +503,10 @@ g <- g + geom_rect(aes(xmax=maxtrials+1-robotwidth,xmin=maxtrials+1-2*robotwidth
 
     ## plot the relative entropy and Jansen-Shannon
     cols <- c('rel. entropy'=mygreen,'Jansen-Shannon'=myyellow)
+<<<<<<< HEAD
     maxjs <- max(c(jsseq))
+=======
+>>>>>>> 08b4f6396a8648ac81bb0870add3122bd853476c
 df <- data.frame(x=1:(maxtrials+1), y1=klseq, y2=jsseq)
 g <- ggplot() + theme_classic() 
 g <- g + #geom_point(data=df, aes(x,y), colour=myyellow) +
@@ -494,7 +514,11 @@ g <- g + #geom_point(data=df, aes(x,y), colour=myyellow) +
 g <- g + #geom_point(data=df, aes(x,y), colour=myyellow) +
     geom_line(data=df, aes(x,y2, colour='Jansen-Shannon'), alpha=0.75)
 g <- g + scale_color_manual(values=cols) +
+<<<<<<< HEAD
     xlim(1,maxtrials+1) + ylim(0,maxjs) +
+=======
+    xlim(1,maxtrials+1) +
+>>>>>>> 08b4f6396a8648ac81bb0870add3122bd853476c
     theme(aspect.ratio=0.5, legend.title=element_blank(),
                    legend.background=element_blank(),
                    legend.justification=c(0,1),
@@ -553,13 +577,21 @@ g <- g + geom_rect(aes(xmax=N-robotwidth,xmin=N-2*robotwidth,
                           ymax=maxy*0.99-iconheight,ymin = maxy*0.99-2*iconheight),
                           color=NA, fill=myblue, alpha=0.5)
 print(g)
+<<<<<<< HEAD
 }}
+=======
+}
+>>>>>>> 08b4f6396a8648ac81bb0870add3122bd853476c
 dev.off()}
 
     return(list(distr=pdistr,robotdistr=rdistr,rentropy=klseq,js=jsseq,meanperson=meanperson,meanrobot=meanrobot,stdperson=stdperson,stdrobot=stdrobot))
 }
 
+<<<<<<< HEAD
 comparisonall <- function(participant,maxtrials=200,trialstoshow=c(1:4, 99:102, 197:200),savedir='./',label='',params=rep(0.5,4),maxes,initial.distr=NULL){
+=======
+comparisonall <- function(participant,maxtrials=200,trialstoshow=c(1:4, 99:102, 197:200),label='',params=rep(0.5,4),maxes,initial.distr=NULL){
+>>>>>>> 08b4f6396a8648ac81bb0870add3122bd853476c
     obs <- observations(participant,maxtrials)
     maxstd <- maxes[1] # max for std graph
     maxent <- maxes[2] # max for entopies graph
@@ -625,7 +657,11 @@ comparisonall <- function(participant,maxtrials=200,trialstoshow=c(1:4, 99:102, 
     ## plots
     slabel <- substring(label,1,1)
     if(slabel!='' & slabel!='_'){label <- paste0('_',label)}
+<<<<<<< HEAD
     pdfname <- paste0(savedir,'p',participant,label,'.pdf')
+=======
+    pdfname <- paste0(plotsdir,'p',participant,label,'.pdf')
+>>>>>>> 08b4f6396a8648ac81bb0870add3122bd853476c
     pdf(pdfname, width = 148*mmtoin, height=148*0.6*mmtoin)
     
     ## plot sequence of means
@@ -871,7 +907,11 @@ summaryparticipants <- function(participants=(1:40),maxtrials=200,label='',seed=
     message('finished')
 }
 
+<<<<<<< HEAD
 generategraphsummary <- function(participants,dir,savedir,label){
+=======
+generategraphsummary <- function(participants,dir,label){
+>>>>>>> 08b4f6396a8648ac81bb0870add3122bd853476c
     mat <- matrix(NA,length(participants),5)
     maxes <- matrix(-Inf,length(participants),4)
     j <- 0
@@ -885,8 +925,12 @@ generategraphsummary <- function(participants,dir,savedir,label){
             summary <- c(i,readRDS(filename)$compres)
             maxes <- c(
                 max(c(maxes[1], summary$stdperson,summary$stdrobot)),
+<<<<<<< HEAD
                 max(c(maxes[2], ##if(length(c(summary$rentropy[summary$rentropy==Inf]))>0){-Inf}else{summary$rentropy},
                       summary$js)),
+=======
+                max(c(maxes[2], summary$rentropy,summary$js)),
+>>>>>>> 08b4f6396a8648ac81bb0870add3122bd853476c
                 max(c(maxes[3], max(abs(summary$robotdistr-summary$distr)))),
                 max(c(maxes[4], summary$distr,summary$robotdistr))
             )
@@ -906,7 +950,11 @@ generategraphsummary <- function(participants,dir,savedir,label){
 
             optp <- c(i,readRDS(filename)$optres)
             if(optp$convergence > 0){warnlabel='_NOTCONVERGED'}
+<<<<<<< HEAD
             compres <- comparisonall(i,200,savedir=savedir,label=paste0(warnlabel,label),params=optp$par,maxes=maxes)
+=======
+            compres <- comparisonall(i,200,label=paste0(warnlabel,label),params=optp$par,maxes=maxes)
+>>>>>>> 08b4f6396a8648ac81bb0870add3122bd853476c
         }}
 }
 

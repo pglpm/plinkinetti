@@ -203,12 +203,15 @@ regularizedistr <- function(tdistr,n=200){
 ## max + js: 500
 ## mean + kl: 370
 ## mean + js: 360
-reducediscrepancy <- function(participant,maxtrials,nregions=2,startpoints=10,seed=999){
+reducediscrepancy <- function(participant,maxtrials,nregions=2,startpoints=10,seed=999,initial.distr=NULL){
     set.seed(seed)
     n <- maxtrials
     nparams <- ((nregions+1)^2+nregions+1)/2
     obs <- observations(participant,n)
     tdistr <- distribution(participant,n)
+    if(length(initial.distr)==length(tdistr)){
+        tdistr <- initial.distr
+    }
 
     ## sequence of frequency parameters of the JD model. At every "reset"
     ## we set the first equal to the participant's initial distribution
