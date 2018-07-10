@@ -207,7 +207,7 @@ regularizedistr <- function(tdistr,n=NULL,fraction=1000000){
 discrepancy <- function(allparams,pdistr,obs,maxtrials=200,initial.distr=NULL){
     ##iparams <- logistic(params) ## convert from (-inf,+inf) to (0,1)
     ## check if pdistr is a participant's ID
-    if(length(pdistr)==1){pdistr <- distribution(pdistr,maxtrials)}
+    if(length(pdistr)==1){pdistr <- regularizedistr(pdistr,maxtrials)}
     ## check if obs is a participant's ID
     if(length(obs)==1){obs <- observations(obs,maxtrials)}
 
@@ -216,7 +216,7 @@ discrepancy <- function(allparams,pdistr,obs,maxtrials=200,initial.distr=NULL){
         initial.distr <- pdistr[1,]
     }
     else{## use another participant's or custom
-        initial.distr <- distribution(initial.distr,maxtrials)[1,]
+        initial.distr <- regularizedistr(initial.distr,maxtrials)[1,]
     }
 
     rdistr <- robotdistribution(initial.distr,allparams,obs)
@@ -244,7 +244,7 @@ discrepancyfast <- function(allparams,pdistr,obs){
 reducediscrepancy <- function(participant,maxtrials,startpoints=4,seed=999){
     set.seed(seed)
     obs <- observations(participant,maxtrials)
-    pdistr <- distribution(participant,maxtrials)
+    pdistr <- regularizedistr(participant,maxtrials)
     startstub <- c(log(0.1),log(10),log(1),rnorm(startpoints,0,2)) 
 
     maxval <- Inf
@@ -285,7 +285,7 @@ reducediscrepancyhjk <- function(participant,maxtrials,nregions=1,startpoints=10
     n <- maxtrials
     nparams <- ((nregions+1)^2+nregions+1)/2
     obs <- observations(participant,n)
-    pdistr <- distribution(participant,n)
+    pdistr <- regularizedistr(participant,n)
 
     maxval <- Inf
     maxpars <- NA
@@ -357,14 +357,14 @@ comparison <- function(participant,maxtrials=200,trialstoshow=c(1:4, 99:102, 197
     ## every "reset" we set the first equal to the participant's initial
     ## distribution plus a value equal to 1/1000 of the minimum nonzero value
     ## ever assigned
-    pdistr <- distribution(participant,maxtrials)
+    pdistr <- regularizedistr(participant,maxtrials)
 
     ## robot's reset distribution
     if(length(initial.distr)==0){## use this participant's
         initial.distr <- pdistr[1,]
     }
     else{## use another participant's or custom
-        initial.distr <- distribution(initial.distr,maxtrials)[1,]
+        initial.distr <- regularizedistr(initial.distr,maxtrials)[1,]
     }
     
     rdistr <- robotdistribution(initial.distr,params,obs)
@@ -573,14 +573,14 @@ comparisonall <- function(participant,maxtrials=200,trialstoshow=c(1:4, 99:102, 
     ## every "reset" we set the first equal to the participant's initial
     ## distribution plus a value equal to 1/1000 of the minimum nonzero value
     ## ever assigned
-    pdistr <- distribution(participant,maxtrials)
+    pdistr <- regularizedistr(participant,maxtrials)
 
     ## robot's reset distribution
     if(length(initial.distr)==0){## use this participant's
         initial.distr <- pdistr[1,]
     }
     else{## use another participant's or custom
-        initial.distr <- distribution(initial.distr,maxtrials)[1,]
+        initial.distr <- regularizedistr(initial.distr,maxtrials)[1,]
     }
     
     rdistr <- robotdistribution(initial.distr,params,obs)
@@ -785,7 +785,7 @@ arraydiscrepancy <- function(participant,border=1e-6,gridpoints=11,label='',maxt
     n <- maxtrials
     nparams <- 3 ##((nregions+1)^2+nregions+1)/2
     obs <- observations(participant,n)
-    tdistr <- distribution(participant,n)
+    tdistr <- regularizedistr(participant,n)
     ## we modify the participant's distributions adding plus a value equal
     ## to 1/100 of the minimum nonzero value ever assigned (to avoid zero
     ## probabilities in the robot)
@@ -866,7 +866,7 @@ summaryparticipants <- function(participants=(1:40),maxtrials=200,label='',seed=
         warnlabel <- ''
         if(optres$convergence > 0){warnlabel='_NOTCONVERGED'}
         
-        compres <- comparison(i,200,label=paste0(warnlabel,label),params=optres$par)
+        compres <- comparison(i,200,label=paste0(warnlabel,label),params=optres$par,graphs=FALSE)
         
         saveRDS(list(optres=optres,compres=compres),paste0(plotsdir,'summary_p',i,warnlabel,label,'.rds'))
         message(' ')
