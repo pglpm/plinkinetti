@@ -1,6 +1,7 @@
 ## Johnson;Dirichlet robot with changepoints:
 ## optimization with 4 variables:
 ## stubbornness and logistic-linear changepoint function
+## using Kantorovich distance
 
 
 ## libraries and colour-blind palette from http://www.sron.nl/~pault/
@@ -23,7 +24,7 @@ barpalette <- colorRampPalette(c(mypurpleblue,'white',myredpurple),space='Lab')
 barpalettepos <- colorRampPalette(c('white','black'),space='Lab')
 dev.off()
 mmtoin <- 0.0393701
-plotsdir <- './comparisons7c/'
+plotsdir <- './comparisons8/'
 
 ## load all data
 dpath = "./_data/"
@@ -65,6 +66,8 @@ jsd <- function(a,b){
     temp2 <-  b * log(b/c)
 	temp2[is.nan(temp2)] <- 0
     sum(temp1+temp2)/2}
+kam <- function(a,b){sum(abs(cumsum(a)-cumsum(b)))}
+
 
 ## sequence of observations for a participant
 observations <- function(participant, maxtrials=200){c(d[d$Participant==participant & d$Slot.Number==1,'Ball.Position'])[1:maxtrials]}
@@ -204,7 +207,7 @@ regularizedistr <- function(tdistr,n=NULL,fraction=1000000){
 discrepancy <- function(allparams,pdistr,obs,maxtrials=200,initial.distr=NULL){
     ##iparams <- logistic(params) ## convert from (-inf,+inf) to (0,1)
     ## check if pdistr is a participant's ID
-    if(length(pdistr)==1){pdistr <- regularizedistr(pdistr,maxtrials)}
+    if(length(pdistr)==1){pdistr <- distribution(pdistr,maxtrials)}
     ## check if obs is a participant's ID
     if(length(obs)==1){obs <- observations(obs,maxtrials)}
 
@@ -213,14 +216,14 @@ discrepancy <- function(allparams,pdistr,obs,maxtrials=200,initial.distr=NULL){
         initial.distr <- pdistr[1,]
     }
     else{## use another participant's or custom
-        initial.distr <- regularizedistr(initial.distr,maxtrials)[1,]
+        initial.distr <- distribution(initial.distr,maxtrials)[1,]
     }
 
     rdistr <- robotdistribution(initial.distr,allparams,obs)
     if(anyNA(rdistr)){return(NA)}
 
     ## calculate total discrepancy
-    mean(sapply(1:(maxtrials+1),function(i){jsd(rdistr[i,],pdistr[i,])}))
+    mean(sapply(1:(maxtrials+1),function(i){kam(rdistr[i,],pdistr[i,])}))
 }
 
 ## fast version, assumes pdistr, obs, and initial.distr are vectors
@@ -230,7 +233,7 @@ discrepancyfast <- function(allparams,pdistr,obs){
     if(anyNA(rdistr)){return(NA)}
     
     ## calculate total discrepancy
-    mean(sapply(1:(length(obs)+1),function(i){jsd(rdistr[i,],pdistr[i,])}))
+    mean(sapply(1:(length(obs)+1),function(i){kam(rdistr[i,],pdistr[i,])}))
 }
 
 ## Algorithm to seek discrepancy minimum using optim
@@ -241,7 +244,7 @@ discrepancyfast <- function(allparams,pdistr,obs){
 reducediscrepancy <- function(participant,maxtrials,startpoints=4,seed=999){
     set.seed(seed)
     obs <- observations(participant,maxtrials)
-    pdistr <- regularizedistr(participant,maxtrials)
+    pdistr <- distribution(participant,maxtrials)
     startstub <- c(log(0.1),log(10),log(1),rnorm(startpoints,0,2)) 
 
     maxval <- Inf
@@ -282,7 +285,7 @@ reducediscrepancyhjk <- function(participant,maxtrials,nregions=1,startpoints=10
     n <- maxtrials
     nparams <- ((nregions+1)^2+nregions+1)/2
     obs <- observations(participant,n)
-    pdistr <- regularizedistr(participant,n)
+    pdistr <- distribution(participant,n)
 
     maxval <- Inf
     maxpars <- NA
@@ -354,21 +357,21 @@ comparison <- function(participant,maxtrials=200,trialstoshow=c(1:4, 99:102, 197
     ## every "reset" we set the first equal to the participant's initial
     ## distribution plus a value equal to 1/1000 of the minimum nonzero value
     ## ever assigned
-    pdistr <- regularizedistr(participant,maxtrials)
+    pdistr <- distribution(participant,maxtrials)
 
     ## robot's reset distribution
     if(length(initial.distr)==0){## use this participant's
         initial.distr <- pdistr[1,]
     }
     else{## use another participant's or custom
-        initial.distr <- regularizedistr(initial.distr,maxtrials)[1,]
+        initial.distr <- distribution(initial.distr,maxtrials)[1,]
     }
     
     rdistr <- robotdistribution(initial.distr,params,obs)
 
     ## calculate the overlap and relative entropy of the participant's distr.
     jsseq <- sapply(1:(maxtrials+1),function(i){jsd(rdistr[i,],pdistr[i,])})
-    klseq <- sapply(1:(maxtrials+1),function(i){kld(rdistr[i,],pdistr[i,])})
+    kamseq <- sapply(1:(maxtrials+1),function(i){kam(rdistr[i,],pdistr[i,])})
 
     ## sequence of means and stds
     meanperson <- allmeans(pdistr)
@@ -484,13 +487,13 @@ g <- g + geom_rect(aes(xmax=maxtrials+1-robotwidth,xmin=maxtrials+1-2*robotwidth
     title(paste0("part. #", participant, ", stub. = ", sprintf("%.3g",exp(params[1])),", changepoint:"))
 
 
-    ## plot the relative entropy and Jansen-Shannon
-    cols <- c('rel. entropy'=mygreen,'Jansen-Shannon'=myyellow)
-    maxjs <- max(c(jsseq))
-df <- data.frame(x=1:(maxtrials+1), y1=klseq, y2=jsseq)
+    ## plot the Kantorovich and Jansen-Shannon
+    cols <- c('Kantorovich'=mygreen,'Jansen-Shannon'=myyellow)
+    maxjs <- max(c(jsseq,kamseq))
+df <- data.frame(x=1:(maxtrials+1), y1=kamseq, y2=jsseq)
 g <- ggplot() + theme_classic() 
 g <- g + #geom_point(data=df, aes(x,y), colour=myyellow) +
-    geom_line(data=df, aes(x,y1, colour='rel. entropy'), alpha=0.75)
+    geom_line(data=df, aes(x,y1, colour='Kantorovich'), alpha=0.75)
 g <- g + #geom_point(data=df, aes(x,y), colour=myyellow) +
     geom_line(data=df, aes(x,y2, colour='Jansen-Shannon'), alpha=0.75)
 g <- g + scale_color_manual(values=cols) +
@@ -545,7 +548,7 @@ g <- g + scale_color_manual(values=cols) +
                   legend.position='none',
                   ) +
         labs(x='slot',y='probability',
-             title=paste0('participant #', participant,', observation ',i,', rel-entr. = ',signif(klseq[i],2),', JS = ',signif(jsseq[i],2)))
+             title=paste0('participant #', participant,', observation ',i,', KM = ',signif(kamseq[i],2),', JS = ',signif(jsseq[i],2)))
 g <- g + geom_rect(aes(xmax=N-robotwidth,xmin=N-2*robotwidth,
                           ymax=maxy,ymin = maxy-iconheight),
                           color=NA, fill=myred, alpha=0.5, stat='identity', position='identity') +
@@ -556,7 +559,7 @@ print(g)
 }}
 dev.off()}
 
-    return(list(distr=pdistr,robotdistr=rdistr,rentropy=klseq,js=jsseq,meanperson=meanperson,meanrobot=meanrobot,stdperson=stdperson,stdrobot=stdrobot))
+    return(list(distr=pdistr,robotdistr=rdistr,km=kamseq,js=jsseq,meanperson=meanperson,meanrobot=meanrobot,stdperson=stdperson,stdrobot=stdrobot))
 }
 
 comparisonall <- function(participant,maxtrials=200,trialstoshow=c(1:4, 99:102, 197:200),savedir='./',label='',params=rep(0.5,4),maxes,initial.distr=NULL){
@@ -570,21 +573,21 @@ comparisonall <- function(participant,maxtrials=200,trialstoshow=c(1:4, 99:102, 
     ## every "reset" we set the first equal to the participant's initial
     ## distribution plus a value equal to 1/1000 of the minimum nonzero value
     ## ever assigned
-    pdistr <- regularizedistr(participant,maxtrials)
+    pdistr <- distribution(participant,maxtrials)
 
     ## robot's reset distribution
     if(length(initial.distr)==0){## use this participant's
         initial.distr <- pdistr[1,]
     }
     else{## use another participant's or custom
-        initial.distr <- regularizedistr(initial.distr,maxtrials)[1,]
+        initial.distr <- distribution(initial.distr,maxtrials)[1,]
     }
     
     rdistr <- robotdistribution(initial.distr,params,obs)
 
     ## calculate the overlap and relative entropy of the participant's distr.
     jsseq <- sapply(1:(maxtrials+1),function(i){jsd(rdistr[i,],pdistr[i,])})
-    klseq <- sapply(1:(maxtrials+1),function(i){kld(rdistr[i,],pdistr[i,])})
+    kamseq <- sapply(1:(maxtrials+1),function(i){kld(rdistr[i,],pdistr[i,])})
 
     ## sequence of means and stds
     meanperson <- allmeans(pdistr)
@@ -700,11 +703,11 @@ g <- g + geom_rect(aes(xmax=maxtrials+1-robotwidth,xmin=maxtrials+1-2*robotwidth
 
 
     ## plot the relative entropy and Jansen-Shannon
-    cols <- c('rel. entropy'=mygreen,'Jansen-Shannon'=myyellow)
-df <- data.frame(x=1:(maxtrials+1), y1=klseq, y2=jsseq)
+    cols <- c('Kantorovich'=mygreen,'Jansen-Shannon'=myyellow)
+df <- data.frame(x=1:(maxtrials+1), y1=kamseq, y2=jsseq)
 g <- ggplot() + theme_classic() 
 g <- g + #geom_point(data=df, aes(x,y), colour=myyellow) +
-    geom_line(data=df, aes(x,y1, colour='rel. entropy'), alpha=0.75)
+    geom_line(data=df, aes(x,y1, colour='Kantorovich'), alpha=0.75)
 g <- g + #geom_point(data=df, aes(x,y), colour=myyellow) +
     geom_line(data=df, aes(x,y2, colour='Jansen-Shannon'), alpha=0.75)
 g <- g + scale_color_manual(values=cols) +
@@ -760,7 +763,7 @@ g <- g + scale_color_manual(values=cols) +
                   legend.position='none',
                   ) +
         labs(x='slot',y='probability',
-             title=paste0('participant #', participant,', observation ',i,', rel-entr. = ',signif(klseq[i],2),', JS = ',signif(jsseq[i],2)))
+             title=paste0('participant #', participant,', observation ',i,', KM = ',signif(kamseq[i],2),', JS = ',signif(jsseq[i],2)))
 g <- g + geom_rect(aes(xmax=N-robotwidth,xmin=N-2*robotwidth,
                           ymax=maxy,ymin = maxy-iconheight),
                           color=NA, fill=myred, alpha=0.5, stat='identity', position='identity') +
@@ -771,7 +774,7 @@ print(g)
 }
 dev.off()}
 
-    return(list(distr=pdistr,robotdistr=rdistr,rentropy=klseq,js=jsseq,meanperson=meanperson,meanrobot=meanrobot,stdperson=stdperson,stdrobot=stdrobot))
+    return(list(distr=pdistr,robotdistr=rdistr,km=kamseq,js=jsseq,meanperson=meanperson,meanrobot=meanrobot,stdperson=stdperson,stdrobot=stdrobot))
 }
 
 
@@ -859,7 +862,7 @@ summaryparticipants <- function(participants=(1:40),maxtrials=200,label='',seed=
     reslist <- list()
     for(i in participants){
         message('participant ',i)
-        optres <- reducediscrepancy(i,maxtrials,3,seed)
+        optres <- reducediscrepancy(i,maxtrials,5,seed)
         warnlabel <- ''
         if(optres$convergence > 0){warnlabel='_NOTCONVERGED'}
         
@@ -885,8 +888,7 @@ generategraphsummary <- function(participants,dir,savedir,label){
             summary <- c(i,readRDS(filename)$compres)
             maxes <- c(
                 max(c(maxes[1], summary$stdperson,summary$stdrobot)),
-                max(c(maxes[2], ##if(length(c(summary$rentropy[summary$rentropy==Inf]))>0){-Inf}else{summary$rentropy},
-                      summary$js)),
+                max(c(maxes[2], summary$km, summary$js)),
                 max(c(maxes[3], max(abs(summary$robotdistr-summary$distr)))),
                 max(c(maxes[4], summary$distr,summary$robotdistr))
             )
