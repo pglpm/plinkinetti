@@ -233,7 +233,7 @@ discrepancyfast <- function(allparams,pdistr,obs){
     if(anyNA(rdistr)){return(NA)}
     
     ## calculate total discrepancy
-    mean(sapply(1:(length(obs)+1),function(i){kam(rdistr[i,],pdistr[i,])}))
+    mean(sapply(1:(length(obs)+1),function(i){kam(rdistr[i,],pdistr[i,])})^2)
 }
 
 ## Algorithm to seek discrepancy minimum using optim
@@ -587,7 +587,7 @@ comparisonall <- function(participant,maxtrials=200,trialstoshow=c(1:4, 99:102, 
 
     ## calculate the overlap and relative entropy of the participant's distr.
     jsseq <- sapply(1:(maxtrials+1),function(i){jsd(rdistr[i,],pdistr[i,])})
-    kamseq <- sapply(1:(maxtrials+1),function(i){kld(rdistr[i,],pdistr[i,])})
+    kamseq <- sapply(1:(maxtrials+1),function(i){kam(rdistr[i,],pdistr[i,])})
 
     ## sequence of means and stds
     meanperson <- allmeans(pdistr)
@@ -702,7 +702,7 @@ g <- g + geom_rect(aes(xmax=maxtrials+1-robotwidth,xmin=maxtrials+1-2*robotwidth
     title(paste0("h for part. #", participant, ", stubbornness = ", sprintf("%.3g",exp(params[1]))))
 
 
-    ## plot the relative entropy and Jansen-Shannon
+    ## plot the Kantorovich and Jansen-Shannon
     cols <- c('Kantorovich'=mygreen,'Jansen-Shannon'=myyellow)
 df <- data.frame(x=1:(maxtrials+1), y1=kamseq, y2=jsseq)
 g <- ggplot() + theme_classic() 
@@ -862,7 +862,7 @@ summaryparticipants <- function(participants=(1:40),maxtrials=200,label='',seed=
     reslist <- list()
     for(i in participants){
         message('participant ',i)
-        optres <- reducediscrepancy(i,maxtrials,5,seed)
+        optres <- reducediscrepancy(i,maxtrials,3,seed)
         warnlabel <- ''
         if(optres$convergence > 0){warnlabel='_NOTCONVERGED'}
         
