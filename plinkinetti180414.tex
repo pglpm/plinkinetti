@@ -1,7 +1,7 @@
 \pdfoutput=1
 %% Author: PGL  Porta Mana, ALS Filipowicz
 %% Created: 2018-04-08T16:54:19+0200
-%% Last-Updated: 2018-07-05T20:01:50+0200
+%% Last-Updated: 2018-07-10T16:20:21+0200
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Report-no: ***
 \newif\ifarxiv
@@ -2088,15 +2088,22 @@ two necessities.
 \subsection{Discrepancy between sequences of inferences}
 \label{sec:discrepancy_measure}
 
-There are many measures of the discrepancy between two distributions: the
+There are many measures of discrepancy between two distributions: the
 relative entropy (also called Kullback-Leibler divergence or information
 discrimination) of the first distribution with respect to the second; or of
-the second with respect to the first; or the symmetrized version, namely the
-Shannon-Jansen discrepancy; or the Hellinger distance; and many others.
+the second with respect to the first; the Shannon-Jansen distance; the
+Hellinger distance; the Kantorovich distance
+\citep{kantorovich1939_r1960,vasershtejn1969,dobrushin1970,vallender1972};
+and many others.
 
-Given such a discrepancy for each of the $M$ observations, we could define
+Among those mentioned the Kantorovich one seems most appropriate, because
+it also takes into account the natural ordering of the outcomes.
+\mynote{add explanatory figure}
+
+Given such a discrepancy for each of the $M$ observations, we can define
 the total discrepancy as the average of these ($L^1$ norm), or the maximum
-among them ($L^{\infty}$ norm), or other similar measures.
+among them ($L^{\infty}$ norm, \enquote{total variation}), or the
+root-mean-square, or other similar measures.
 
 \subsection{Restrictions on the changepoint function}
 \label{sec:restrictions_h}
