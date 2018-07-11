@@ -1,7 +1,7 @@
 \pdfoutput=1
 %% Author: PGL  Porta Mana, ALS Filipowicz
 %% Created: 2018-04-08T16:54:19+0200
-%% Last-Updated: 2018-07-11T16:44:27+0200
+%% Last-Updated: 2018-07-11T23:51:09+0200
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Report-no: ***
 \newif\ifarxiv
@@ -2095,16 +2095,16 @@ the second with respect to the first; the Shannon-Jansen distance; the
 Hellinger distance; the Kantorovich distance
 \citep{kantorovich1939_r1960,vasershtejn1969,dobrushin1970,vallender1972};
 and many others. Among those just mentioned, the Kantorovich one seems most
-appropriate, because it takes into account the natural ordering of the
-possible outcomes. Consider \fig~\ref{fig:whykantorovich} for example: in
-the Shannon-Jansen metric, the blue, dashed-edged distribution in the
-middle and the yellow, dotted-edged distribution on the right are equally
-distant ($0.69$) from the red, solid-edged distribution on the left. In the
-Kantorovich metric, instead, the middle distribution is closer (distance
-$5$) to the left one than the right one (distance $37$). Suppose that the
-left distribution belongs to a participant; intuitively we would say that
-the middle distribution captures the participant's beliefs better than the
-right one.
+appropriate because it takes into account the natural ordering of the
+possible outcomes. Consider the three distributions in
+\fig~\ref{fig:whykantorovich} for example: red, solid-edged on the left;
+yellow, dotted-edged on the right; blue, dashed-edged in the middle. In the
+Shannon-Jansen metric, the middle and right distributions have the same
+discrepancy, $0.69$, from the left one. In the Kantorovich metric instead,
+the discrepancy of the middle distribution, $5$, is less than that of the
+right distribution, $37$. If the left distribution belonged to a
+participant, we would intuitively say that the middle distribution captures
+the participant's beliefs better than the right one.
 \begin{figure}[b!]
 \centering\includegraphics[width=0.75\linewidth]{whykantorovich.pdf}
 \caption{}\label{fig:whykantorovich}
