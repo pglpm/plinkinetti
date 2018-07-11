@@ -27,7 +27,7 @@ barpalette <- colorRampPalette(c(mypurpleblue,'white',myredpurple),space='Lab')
 barpalettepos <- colorRampPalette(c('white','black'),space='Lab')
 dev.off()
 mmtoin <- 0.0393701
-plotsdir <- './comparisons10/'
+plotsdir <- './comparisons9/'
 
 ## load all data
 dpath = "./_data/"
@@ -69,7 +69,7 @@ jsd <- function(a,b){
     temp2 <-  b * log(b/c)
 	temp2[is.nan(temp2)] <- 0
     sum(temp1+temp2)/2}
-kam <- function(a,b){sum(abs(cumsum(a-b)))}
+kam <- function(a,b){sum(abs(cumsum(a)-cumsum(b)))}
 
 
 ## sequence of observations for a participant
@@ -281,7 +281,7 @@ reducediscrepancy <- function(participant,maxtrials,popSize=50,maxiter=500,run=1
     obs <- observations(participant,maxtrials)
     pdistr <- regularizedistr(participant,maxtrials)
 
-    optrobot <- ga(type='real-valued', fitness=function(x){-discrepancyfast(x,pdistr=pdistr,obs=obs)}, lower=c(log(0.001),rep(-500,3)),upper=c(log(200),rep(500,3)),popSize = popSize, maxiter = maxiter, run = run,parallel=cores,optim=TRUE,optimArgs=list(gr=NULL,control=list(maxit=2500)))
+    optrobot <- ga(type='real-valued', fitness=function(x){-discrepancyfast(x,pdistr=pdistr,obs=obs)}, lower=c(log(0.001),rep(-500,3)),upper=c(log(200),rep(500,3)),popSize = popSize, maxiter = maxiter, run = run,parallel=cores)
     maxpars <- optrobot@solution
     maxval <- -optrobot@fitnessValue
     
@@ -826,7 +826,7 @@ arraydiscrepancy <- function(participant,border=1e-6,gridpoints=11,label='',maxt
 ##     tarray}
 ##  a<-testarray(100,100,1e-6,3,'test')
 
-summaryparticipants <- function(participants=(1:40),savedir,maxtrials=200,label='',popSize=50,maxiter=500,run=100,cores=4){
+summaryparticipants <- function(participants=(1:40),maxtrials=200,label='',popSize=50,maxiter=500,run=100,cores=4){
     slabel <- substring(label,1,1)
     if(slabel!='' & slabel!='_'){label <- paste0('_',label)}
     
@@ -838,22 +838,18 @@ summaryparticipants <- function(participants=(1:40),savedir,maxtrials=200,label=
         
         compres <- comparison(i,200,label=label,params=optres$par,graphs=FALSE)
         
-        saveRDS(list(optres=optres,compres=compres),paste0(savedir,'summary_p',i,label,'.rds'))
+        saveRDS(list(optres=optres,compres=compres),paste0(plotsdir,'summary_p',i,label,'.rds'))
         message(' ')
     }
-    message('finished. Generating graphs...')
-
-    generategraphsummary(participants,savedir,label)
+    message('finished')
 }
 
-generategraphsummary <- function(participants,savedir,label){
-     slabel <- substring(label,1,1)
-    if(slabel!='' & slabel!='_'){label <- paste0('_',label)}
+generategraphsummary <- function(participants,dir,savedir,label){
     mat <- matrix(NA,length(participants),5)
     maxes <- matrix(-Inf,length(participants),4)
     j <- 0
     for(i in participants){j <- j+1
-        filename <- paste0(savedir,'summary_p',i,label,'.rds')
+        filename <- paste0(dir,'summary_p',i,'_',label,'.rds')
         if(file.exists(filename)){
             contents <- readRDS(filename)
             mat[j,] <- c(i,contents$par)
@@ -867,13 +863,13 @@ generategraphsummary <- function(participants,savedir,label){
             )
         }}
 
-    write.table(mat,paste0(savedir,'points',label,'.csv'),sep=',',row.names=F,col.names=F,na='Infinity')
-    write.table(maxes,paste0(savedir,'maxima',label,'.csv'),sep=',',row.names=F,col.names=F,na='Infinity')
+    write.table(mat,paste0(plotsdir,'points_',label,'.csv'),sep=',',row.names=F,col.names=F,na='Infinity')
+    write.table(maxes,paste0(plotsdir,'maxima_',label,'.csv'),sep=',',row.names=F,col.names=F,na='Infinity')
 
     cat('maxima: ',maxes,'\n')
     
     for(i in participants){j <- j+1
-        filename <- paste0(savedir,'summary_p',i,label,'.rds')
+        filename <- paste0(dir,'summary_p',i,'_',label,'.rds')
         if(file.exists(filename)){
             optp <- c(i,readRDS(filename)$optres)
             compres <- comparisonall(i,200,savedir=savedir,label=label,params=optp$par,maxes=maxes)

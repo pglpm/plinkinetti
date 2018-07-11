@@ -1,7 +1,7 @@
 \pdfoutput=1
 %% Author: PGL  Porta Mana, ALS Filipowicz
 %% Created: 2018-04-08T16:54:19+0200
-%% Last-Updated: 2018-07-10T16:20:21+0200
+%% Last-Updated: 2018-07-11T16:09:26+0200
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Report-no: ***
 \newif\ifarxiv
@@ -2094,11 +2094,19 @@ discrimination) of the first distribution with respect to the second; or of
 the second with respect to the first; the Shannon-Jansen distance; the
 Hellinger distance; the Kantorovich distance
 \citep{kantorovich1939_r1960,vasershtejn1969,dobrushin1970,vallender1972};
-and many others.
-
-Among those mentioned the Kantorovich one seems most appropriate, because
-it also takes into account the natural ordering of the outcomes.
-\mynote{add explanatory figure}
+and many others. Among those just mentioned, the Kantorovich one seems most
+appropriate, because it takes into account the natural ordering of the
+possible outcomes. Consider \fig~\ref{fig:whykantorovich} for example: the
+distribution in red with solid edges has equal Shannon-Jansen distance
+$0.69$ from the other two distributions, but has Kantorovich distance $5$
+from the blue, dashed-edged distribution and Kantorovich distance $37$ from
+the yellow, dotted-edged distribution.
+\begin{figure}[b!]
+\centering\includegraphics[width=0.75\linewidth]{whykantorovich.pdf}
+\caption{}\label{fig:whykantorovich}
+\end{figure}% done with whykantorovich.nb
+%% distances to 1: 5, 0.693
+%% distances to 2: 37, 0.693
 
 Given such a discrepancy for each of the $M$ observations, we can define
 the total discrepancy as the average of these ($L^1$ norm), or the maximum
