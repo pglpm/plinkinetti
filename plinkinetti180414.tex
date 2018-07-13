@@ -1,7 +1,7 @@
 \pdfoutput=1
 %% Author: PGL  Porta Mana, ALS Filipowicz
 %% Created: 2018-04-08T16:54:19+0200
-%% Last-Updated: 2018-07-11T23:51:09+0200
+%% Last-Updated: 2018-07-13T16:30:52+0200
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Report-no: ***
 \newif\ifarxiv
@@ -665,7 +665,7 @@ P.G.L. Porta\,Mana\\%
 \DeclarePairedDelimiter\clop{[}{[}
 %\DeclarePairedDelimiter\opcl{]}{]}
 %\DeclarePairedDelimiter\opop{]}{[}
-%\DeclarePairedDelimiter\abs{\lvert}{\rvert}
+\DeclarePairedDelimiter\abs{\lvert}{\rvert}
 %\DeclarePairedDelimiter\norm{\lVert}{\rVert}
 \DeclarePairedDelimiter\set{\{}{\}}
 %\DeclareMathOperator{\pr}{P}%probability
@@ -2111,6 +2111,19 @@ the participant's beliefs better than the right one.
 \end{figure}% done with whykantorovich.nb
 %% distances to 1: 5, 0.693
 %% distances to 2: 37, 0.693
+
+The Kantorovich distance is a distance in the strict sense
+\citep[\sect~I.C.11]{choquetbruhatetal1977_r1996}[\chap~2]{rudin1953_r1976}.
+It is equivalent to the 
+\begin{multline}
+  \label{eq:kantorovich_simple_formula}
+  \sum_{s=1}^N \abs{\pf(\yO_{\le s} \|\yI')-
+    \pf(\yO_{\le s}\|\yI'')}
+  \equiv{}  \\
+  \sum_{s=1}^N \abs{\pf(\yO_{1}\lor\dotsb\lor\yO_{s}\|\yI')-
+    \pf(\yO_{1}\lor\dotsb\lor\yO_{s}\|\yI'')} 
+\end{multline}
+
 
 Given such a discrepancy for each of the $M$ observations, we can define
 the total discrepancy as the average of these ($L^1$ norm), or the maximum

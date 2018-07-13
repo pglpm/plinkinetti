@@ -27,7 +27,7 @@ barpalette <- colorRampPalette(c(mypurpleblue,'white',myredpurple),space='Lab')
 barpalettepos <- colorRampPalette(c('white','black'),space='Lab')
 dev.off()
 mmtoin <- 0.0393701
-plotsdir <- './comparisons10/'
+plotsdir <- './comparisons11/'
 
 ## load all data
 dpath = "./_data/"
@@ -826,7 +826,7 @@ arraydiscrepancy <- function(participant,border=1e-6,gridpoints=11,label='',maxt
 ##     tarray}
 ##  a<-testarray(100,100,1e-6,3,'test')
 
-summaryparticipants <- function(participants=(1:40),savedir,maxtrials=200,label='',popSize=50,maxiter=500,run=100,cores=4){
+summaryparticipants <- function(participants=(1:40),savedir,maxtrials=200,label='',popSize=100,maxiter=1000,run=100,cores=10){
     slabel <- substring(label,1,1)
     if(slabel!='' & slabel!='_'){label <- paste0('_',label)}
     
