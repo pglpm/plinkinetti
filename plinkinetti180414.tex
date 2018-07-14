@@ -1,7 +1,7 @@
 \pdfoutput=1
 %% Author: PGL  Porta Mana, ALS Filipowicz
 %% Created: 2018-04-08T16:54:19+0200
-%% Last-Updated: 2018-07-14T13:32:31+0200
+%% Last-Updated: 2018-07-14T15:39:18+0200
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Report-no: ***
 \newif\ifarxiv
@@ -1769,7 +1769,7 @@ $u_{m}=0$ and $u_{m}= u_{m-1}+1$ are possible, the conditional
 probabilities above are summarized in the \emph{changepoint function}
 \begin{equation}\label{eq:def_changepoint_function}
   \yrs(v,m)  \defd \p(R^{m}_{0} \|  R^{m-1}_{v}, \yMc),
-  \qquad m \in\set{2,3,\dotsc}, \quad v\in\set{1,\dotsc,m-1}.
+  \qquad m \in\set{2,3,\dotsc,M}, \quad v\in\set{1,\dotsc,m-1}.
 \end{equation}
 It is the probability that the $m$th observation starts a new subsequence,
 given that the previous subsequence had length $v$, including the $(m-1)$th
@@ -2050,11 +2050,12 @@ B_{m+1}(u,s_{m+1}) \defd \p(\yO^{m+1}_{s_{m+1}} \| R^{m+1}_{u}, \yO^{m}_{s_{m}},
 The changepoint function~\eqref{eq:def_changepoint_function},
 \begin{equation}\labelbis{eq:def_changepoint_function}
   \yrs(v,m)  \defd \p(R^{m}_{0} \|  R^{m-1}_{v}, \yMc),
-  \qquad m \in\set{2,3,\dotsc}, \quad v\in\set{1,\dotsc,m-1}
+  \qquad m \in\set{2,3,\dotsc, M}, \quad v\in\set{1,\dotsc,m-1}
 \end{equation}
 determines the robot's inference about the appearance of changepoints, or
-changes in the source of the data. It can represent a great
-variety of changepoint assumptions or beliefs.
+changes in the source of the data. The space of these functions is
+$\clcl{0,1}^{(M^2-M)/2}$. They can represent a great variety of changepoint
+assumptions or beliefs.
 
 For example, the belief that the data source is the more likely to change
 the longer it's been operative corresponds to a $\yrs$ that increases as
@@ -2070,10 +2071,10 @@ variety of human inferential behaviours.
 \subsection{What to do with the new robot?}
 \label{sec:uses_new_robot}
 
-Our new robot and its flexibility in representing beliefs can be used in
-many different and for different purposes. What to do with them?
+Our new robots and their flexibility in representing beliefs can be used in
+different ways, for different purposes. What to do with them?
 
-A first question is whether the new robot can reproduce some of the
+A first question is whether a new robot can reproduce some of the
 participants' more \enquote{quirky} updates, such as sudden changes in the
 mean or standard deviation of their beliefs, as in \figs***. We can also
 ask how much of its flexibility is needed to achieve this. The first robot
@@ -2081,8 +2082,8 @@ was unable to represent such sudden changes.
 
 To answer these questions we can proceed as follows. First we choose a
 subset of possible changepoint functions, parametrized by few parameters;
-this defines a subset of possible robots. Among this subset we then find
-the robots that best mimic a particular participant's behaviour. Let's
+this choice defines a subset of possible robots. Among this subset we then
+find the robots that best mimic a particular participant's behaviour. Let's
 emphasize some points about this procedure:
 \begin{itemize}
 \item The choice of a low-dimensional subset of changepoint function is
@@ -2096,36 +2097,64 @@ emphasize some points about this procedure:
  \item For each chosen participant, the measured discrepancy only refers to
    \emph{one} sequence of observations. The \enquote{optimal} robot we find
    is not guaranteed to behave similarly to the participant if the
-   experiment were repeated, with a new sequence of observations. This is a
-   cause of the multi-optimality just mentioned. In fact it would be
+   experiment were repeated, with a new sequence of observations. This is
+   one cause of the multi-optimality mentioned above. It would be
    interesting to let a participant repeat the Plinko experiment several
    times -- warning him or her that the two experiments are unrelated --
    and find the optimal robot for several sequences of observations rather
    than just one.
-\end{itemize}
+ \end{itemize}
 
-\mynote{Luca: to be finished}
+ In the next two sections we examine the first two choices above.
 
-to tune the stubbornness parameter $\yN$ and the
-changepoint function $\yrs$ so that the robot's sequence of predictive
-distributions is as close to a specific participant's as possible. The
-reset-distribution parameter $\yn$ can be set equal to the participant's
-initial distribution -- thus assuming that the participant would again
-choose that distribution if he or she were informed about a change in the
-algorithm determining the outcomes.
+ \subsection{Subset of changepoint functions}
+\label{sec:restrictions_h}
 
-This optimization leads to a possibly unique set of parameters
-$\bigl(\yN, \yrs(v,m)\bigr)$ associated to a participant. We could then
-explore the distribution of these parameters across all participants, for
-example examining whether they cluster into few groups, and so on.
+The changepoint functions assume values in the unit interval $\clcl{0,1}$.
+One way to construct such function is to consider a real-valued linear
+function in $v,m$ and then apply a logistic transformation, which maps the
+reals to the unit interval. We call this a logistic-linear function; it
+depends on three parameters:
+\begin{equation}
+  \label{eq:logistic_linear}
+  \yrs(v,m; \yc,\ycs,\ycm) = \logistic\biggl( \yc +
+  \ycs \frac{2 v-M}{M} + \ycm \frac{2 m-M}{M}\biggr).
+\end{equation}
+It is constructed in such a way that $(2 m - M)/M$ ranges roughly between
+$-1$ and $1$ as $m$ ranges between $2$ and $M$, and similarly for $v$.
 
-For such a study we need to choose a measure of discrepancy between two
-sequences of distributions, and to restrict our choice of changepoint
-functions, to make the study computationally feasible. We now explore these
-two necessities.
+Higher polynomials can also be considered, of course. The three-parameter
+family above can reproduce, for example, the two simple kinds of
+changepoint beliefs mentioned in \sect~\ref{sec:changepoint_choice}, but
+not an $m$-dependent shift between them. Examples are shown in \fig***
+
+The subset of robots we are considering is thus parametrized by
+$(\yn,\yN,\yc,\ycs,\ycm)$. The reset-distribution parameter $\yn$ can be
+set equal to the participant's initial distribution -- thus assuming that
+the participant would again choose that distribution if he or she were
+informed about a change in the algorithm determining the outcomes.
+
+
+\mynote{Add comment about realistic bounds for the three coefficients}
+
 
 \subsection{Discrepancy between sequences of inferences}
 \label{sec:discrepancy_measure}
+
+The discrepancy between two robots, \ie\ between two full statistical
+models, should be based on their joint
+distributions~\eqref{eq:distr_statmodel}. We don't have such distributions
+for the participants; in fact, they may not exist. What we want to match is
+the particular sequence of beliefs of the robot with the \emph{particular
+  sequence} of a participant, \emph{given the sequence of observations}
+made by that participant.
+
+A discrepancy measure between two such sequences can be constructed by
+first measuring the discrepancy between the individual distributions in the
+sequence and then combining the individual discrepancies.
+
+
+\medskip
 
 There are many measures of discrepancy between two distributions: the
 relative entropy (also called Kullback-Leibler divergence or information
@@ -2153,21 +2182,21 @@ the participant's beliefs better than the right one.
 
 The Kantorovich distance -- in the strict sense of \enquote{distance}
 \citep[\sect~I.C.11]{choquetbruhatetal1977_r1996}[\chap~2]{rudin1953_r1976}
--- makes the space of probability distributions into a metric space. Given
-two probability distributions $\pf(\yO_{s'} \|\yI')=f(s')$,
-$\pf(\yO_{s''} \|\yI'')=g(s'')$ and a distance $d(s'-s'')$ in the $s$
-space, their distance $K(f,g)$ is defined as follows:
+-- makes the space of probability distributions into a metric space. The
+Kantorovich distance $K(f,g)$ between two probability distributions
+$\pf(\yO_{s'} \|\yI')=f(s')$, $\pf(\yO_{s''} \|\yI'')=g(s'')$, given a
+distance $d(s'-s'')$ in the $\set{s}$ space, is defined as follows:
 \begin{enumerate*}[label=(\emph{\arabic*})]
-\item consider all possible joint distributions $j(s',s'')$ having the two
-  distributions as marginals;
-\item calculate the expected value of the distance $d(s'-s'')$
-  according to all joint distributions from the previous step;
+\item consider all possible joint distributions $j(s',s'')$ having $f$ and
+  $g$ as marginals;
+\item calculate the expected values of the distance $d(s'-s'')$ according
+  to all joint distributions $j$ from the previous step;
 \item take the minimum of the expected values thus found.
 \end{enumerate*}
 For real-value quantities and for our slot outcomes
 $s \in \set{1,\dotsc, N}$ with the natural distance $\abs{s'-s''}$, the
-Kantorovich distance $K(f,g)$has a simple expression \citep{vallender1972}
-in terms of cumulative distributions:
+Kantorovich distance $K(f,g)$ has a simple expression in terms of
+cumulative distributions \citep{vallender1972}:
 \begin{equation}
   \label{eq:kantorovich_simple_formula}
 K(f,g) =  \sum_{s=1}^N \abs{F(s)-G(s)}
@@ -2188,48 +2217,18 @@ $G$.
 %% check 33
 
 Given such a discrepancy for each of the $M$ observations, we can define
-the total discrepancy as the average of these ($L^1$ norm), or the maximum
-among them ($L^{\infty}$ norm, \enquote{total variation}), or the
-root-mean-square, or other similar measures.
+the total discrepancy of their sequence as the average of these ($L^1$
+norm), or the maximum among them ($L^{\infty}$ norm, \enquote{total
+  variation}), or the root mean square, or other similar measures. In the
+rest of this study we choose the root mean square, which penalizes high
+discrepancy more than low ones.
 
-\subsection{Restrictions on the changepoint function}
-\label{sec:restrictions_h}
+\medskip
 
-With $M$ observations, choosing a changepoint function corresponds to
-choosing $(M^2-M)/2$ parameters with values in $\clcl{0,1}$. We try to
-restrict this choice to make the optimization computationally feasible
-while maintaining an enough wide range of changepoint beliefs.
+Luckily, different ways of measuring the discrepancy lead to qualitatively
+similar results, as fig. *** shows.
 
-One restriction is to specify a logistic-polynomial changepoint function
-like this:
-\begin{gather}
-  \label{eq:changepoint_logistic_general}
-  \yrs(v,m ; \gamma_0,\dotsc) =
-  \logistic(\gamma_0 + \gamma_1 v + \gamma_2 m +
-  \gamma_3 v^2 + \gamma_4  v m + \gamma_5 m^2 + \dotsb)
-  \\
-  \shortintertext{where the logistic function}
-  \label{eq:logistic_def}
-  \logistic(x) \defd \frac{1}{1+\e^{-x}} 
-\end{gather}
-maps real numbers to $\clcl{0,1}$.
-
-In the rest of this study we choose a logistic-linear function:
-\begin{equation}
-  \label{eq:logistic_linear}
-  \yrs(v,m; \yc,\ycs,\ycm) = \logistic\biggl( \yc +
-  \ycs \frac{2 v-M}{M} + \ycm \frac{2 m-M}{M}\biggr) 
-\end{equation}
-thus reducing our choice to a three-parameter family of changepoint
-functions. This family can reproduce, for example, the two simple kinds of
-changepoint beliefs mentioned in \sect~\ref{sec:changepoint_choice}, but
-not an $m$-dependent shift between them. Examples are shown in \fig***
-
-
-
-
-\bigskip\mynote{Luca: work in progress in the rest of this subsection}
-
+\mynote{Luca: work in progress}
 
 \clearpage
 
