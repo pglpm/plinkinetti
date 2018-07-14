@@ -1,7 +1,7 @@
 \pdfoutput=1
 %% Author: PGL  Porta Mana, ALS Filipowicz
 %% Created: 2018-04-08T16:54:19+0200
-%% Last-Updated: 2018-07-13T16:30:52+0200
+%% Last-Updated: 2018-07-13T23:45:23+0200
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Report-no: ***
 \newif\ifarxiv
@@ -2112,9 +2112,11 @@ the participant's beliefs better than the right one.
 %% distances to 1: 5, 0.693
 %% distances to 2: 37, 0.693
 
-The Kantorovich distance is a distance in the strict sense
+The Kantorovich distance is a distance in the strict sense of the term
 \citep[\sect~I.C.11]{choquetbruhatetal1977_r1996}[\chap~2]{rudin1953_r1976}.
-It is equivalent to the 
+in the space of probability distributions. For two probability
+distributions $\pf(\yO_{s} \|\yI')$, $\pf(\yO_{s} \|\yI'')$ it is defined
+as the smallest expected value of the distance *** It is equivalent to the
 \begin{multline}
   \label{eq:kantorovich_simple_formula}
   \sum_{s=1}^N \abs{\pf(\yO_{\le s} \|\yI')-

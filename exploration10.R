@@ -128,9 +128,15 @@ distribution <- function(participant, maxtrials=200){matrix(d[d$Participant == p
 ##     logistic(sum(unlist(lapply(0:nregions, function(i){lapply(0:i, function(j){params[choose(i+1,2)+1+j]*(((2*s-n)/n)^j)*(((2*m-n)/n)^(i-j))})}))))
 ## }
 
-probchangepoint <- function(s,m,n,params){
+probchangepointold <- function(s,m,n,params){
     ##if(s>m | m<0 | s<0){return(NA)}
     logistic(params[1] + params[2]*(2*m-n)/n + params[3]*(2*s-n)/n)
+}
+
+probchangepoint <- function(s,m,n,params){
+    ##if(s>m | m<0 | s<0){return(NA)}
+    ex <- exp(params[1] + params[2]*(2*m-n)/n + params[3]*(2*s-n)/n)
+    return(if(ex < Inf){ex/(1+ex)}else{1})
 }
 
 ## sequences of means and stds
@@ -281,7 +287,7 @@ reducediscrepancy <- function(participant,maxtrials,popSize=50,maxiter=500,run=1
     obs <- observations(participant,maxtrials)
     pdistr <- regularizedistr(participant,maxtrials)
 
-    optrobot <- ga(type='real-valued', fitness=function(x){-discrepancyfast(x,pdistr=pdistr,obs=obs)}, lower=c(log(1e-3),rep(-maxtrials*14,3)),upper=c(log(1e3),rep(maxtrials*14,3)),popSize = popSize, maxiter = maxiter, run = run,parallel=cores,optim=TRUE,optimArgs=list(gr=NULL,control=list(maxit=2500)))
+    optrobot <- ga(type='real-valued', fitness=function(x){-discrepancyfast(x,pdistr=pdistr,obs=obs)}, lower=c(log(1e-3),rep(-maxtrials*10,3)),upper=c(log(1e3),rep(maxtrials*10,3)),popSize = popSize, maxiter = maxiter, run = run,parallel=cores,optim=TRUE,optimArgs=list(gr=NULL,control=list(maxit=2500)))
     maxpars <- optrobot@solution
     maxval <- -optrobot@fitnessValue
     
