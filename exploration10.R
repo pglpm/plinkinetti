@@ -855,6 +855,8 @@ summaryparticipants <- function(participants=(1:40),savedir,maxtrials=200,label=
 generategraphsummary <- function(participants,savedir,label){
      slabel <- substring(label,1,1)
     if(slabel!='' & slabel!='_'){label <- paste0('_',label)}
+	slabel <- substring(savedir,nchar(savedir))
+    if(slabel!='/'){savedir <- paste0(savedir,'/')}
     mat <- matrix(NA,length(participants),5)
     maxes <- matrix(-Inf,length(participants),4)
     j <- 0
@@ -889,15 +891,40 @@ generategraphsummary <- function(participants,savedir,label){
 }
 
 saveparams <- function(participants,dir,label){
-    setwd(dir)
-    mat <- matrix(NA,length(participants),4)
+    slabel <- substring(label,1,1)
+    if(slabel!='' & slabel!='_'){label <- paste0('_',label)}
+	slabel <- substring(dir,nchar(dir))
+    if(slabel!='/'){dir <- paste0(dir,'/')}
+	mat <- matrix(NA,length(participants),4)
     j <- 0
     for(i in participants){j <- j+1
-        filename <- paste0('summary_p',i,'_',label,'.rds')
+        filename <- paste0(dir,'summary_p',i,label,'.rds')
         if(!file.exists(filename)){
-        filename <- paste0('summary_p',i,'_NOTCONVERGED_',label,'.rds')}
+        filename <- paste0(dir,'summary_p',i,'_NOTCONVERGED',label,'.rds')}
         if(file.exists(filename)){
         mat[j,] <- c(i,readRDS(filename)$optres$par)
         }}
-    write.table(mat,paste0('points_',label,'.csv'),sep=',',row.names=F,col.names=F,na='Infinity')
+    write.table(mat,paste0(dir,'points',label,'.csv'),sep=',',row.names=F,col.names=F,na='Infinity')
+}
+
+savedistr <- function(participants,dir,label){
+    slabel <- substring(label,1,1)
+    if(slabel!='' & slabel!='_'){label <- paste0('_',label)}
+	slabel <- substring(dir,nchar(dir))
+    if(slabel!='/'){dir <- paste0(dir,'/')}
+	
+    j <- 0
+    for(i in participants){j <- j+1
+        filename <- paste0(dir,'summary_p',i,label,'.rds')
+        if(!file.exists(filename)){
+        filename <- paste0(dir,'summary_p',i,'_NOTCONVERGED',label,'.rds')}
+        if(file.exists(filename)){
+			
+		contents <- readRDS(filename)
+		summary <- c(i,contents$compres)
+		
+		write.table(summary$distr,paste0(dir,'pdistr',i,label,'.csv'),sep=',',row.names=F,col.names=F,na='Infinity')
+			
+		write.table(summary$robotdistr,paste0(dir,'rdistr',i,label,'.csv'),sep=',',row.names=F,col.names=F,na='Infinity')
+        }}
 }
