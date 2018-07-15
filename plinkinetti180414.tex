@@ -1,7 +1,7 @@
 \pdfoutput=1
 %% Author: PGL  Porta Mana, ALS Filipowicz
 %% Created: 2018-04-08T16:54:19+0200
-%% Last-Updated: 2018-07-14T16:03:46+0200
+%% Last-Updated: 2018-07-15T10:07:17+0200
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Report-no: ***
 \newif\ifarxiv
@@ -110,9 +110,9 @@ british%
 % \begin{asparaenum} = \begin{enumerate}[para]
 % \begin{inparaenum} = \begin{enumerate*}
 \setlist[enumerate,2]{label=\alph*.}
-\setlist[enumerate]{leftmargin=\parindent}
-\setlist[itemize]{leftmargin=\parindent}
-\setlist[description]{leftmargin=\parindent}
+\setlist[enumerate]{leftmargin=1.5\parindent}
+\setlist[itemize]{leftmargin=1.5\parindent}
+\setlist[description]{leftmargin=1.5\parindent}
 
 \usepackage[babel,theoremfont]{newpxtext}
 \usepackage[bigdelims,nosymbolsc%,smallerops % probably arXiv doesn't have it
@@ -2085,7 +2085,7 @@ subset of possible changepoint functions, parametrized by few parameters;
 this choice defines a subset of possible robots. Among this subset we then
 find the robots that best mimic a particular participant's behaviour. Let's
 emphasize some points about this procedure:
-\begin{itemize}
+\begin{enumerate}
 \item The choice of a low-dimensional subset of changepoint function is
    arbitrary.
  \item There are many quantitative measures of the discrepancy between a
@@ -2094,7 +2094,7 @@ emphasize some points about this procedure:
  \item There may be several robots, having very different parameters, that
    optimally mimic a participant according to some discrepancy measure.
    Thus we cannot associate one set of parameters with each participant.
- \item For each chosen participant, the measured discrepancy only refers to
+ \item For each participant, the measured discrepancy only refers to
    \emph{one} sequence of observations. The \enquote{optimal} robot we find
    is not guaranteed to behave similarly to the participant if the
    experiment were repeated, with a new sequence of observations. This is
@@ -2103,7 +2103,7 @@ emphasize some points about this procedure:
    times -- warning him or her that the two experiments are unrelated --
    and find the optimal robot for several sequences of observations rather
    than just one.
- \end{itemize}
+ \end{enumerate}
 
  In the next two sections we examine the first two choices above.
 
@@ -2232,6 +2232,10 @@ similar results, as fig. *** shows.
 % 2 very diff values h
 
 %% 40, 8, 12 for mean/std?
+
+
+%% mean-js: js=0.0731+0.0502 (0.0392-0.101), km=4.83+4.72 (1.59-5.37)
+%% mean-km2: js=0.0949+0.0750 (0.0481-0.122), km=3.66+3.89 (1.18-4.88)
 
 \mynote{Luca: work in progress}
 
