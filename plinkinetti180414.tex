@@ -1,7 +1,7 @@
 \pdfoutput=1
 %% Author: PGL  Porta Mana, ALS Filipowicz
 %% Created: 2018-04-08T16:54:19+0200
-%% Last-Updated: 2018-07-15T10:07:17+0200
+%% Last-Updated: 2018-07-15T22:16:09+0200
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Report-no: ***
 \newif\ifarxiv
@@ -109,8 +109,8 @@ british%
 \SetEnumitemKey{para}{itemindent=\parindent,leftmargin=0pt,listparindent=\parindent,parsep=0pt,itemsep=\topsep}
 % \begin{asparaenum} = \begin{enumerate}[para]
 % \begin{inparaenum} = \begin{enumerate*}
-\setlist[enumerate,2]{label=\alph*.}
-\setlist[enumerate]{leftmargin=1.5\parindent}
+\setlist[enumerate,2]{label=\alph*}
+\setlist[enumerate]{label=\arabic*,leftmargin=1.5\parindent}
 \setlist[itemize]{leftmargin=1.5\parindent}
 \setlist[description]{leftmargin=1.5\parindent}
 
@@ -1952,7 +1952,7 @@ steps are summarized in table~\ref{tab:adamsetal_initial}.
   \caption{Initial steps of predictive algorithm}
   \label{tab:adamsetal_initial}
   \begin{tabularx}{\textwidth}{X}\hline
-    \begin{enumerate}%[label=0.\arabic*.,start=0]
+    \begin{enumerate}[label=\arabic*]
     \item Assign numerical values to $\yN$, $\ynn$
     \item For $s_1 \in \set{1,\dotsc,N}$ calculate
       \[A_1(s_1)\defd \p(\yO^{1}_{s_{1}} \|  \yMc) =\ynn_{s_1} \]
@@ -1962,7 +1962,7 @@ steps are summarized in table~\ref{tab:adamsetal_initial}.
 
       \bigskip
     \item For $u \in\set{0,1}$:
-      \begin{enumerate}[label*=\arabic*.]
+      \begin{enumerate}[label*=.\arabic*]
    \item Calculate
       \[
         C_2(u) \defd \p(R^{2}_{u}, \yO^{1}_{s_1} \| \yMc)
@@ -1998,12 +1998,12 @@ A_1(s_1) \times \begin{cases}
   \caption{Predictive algorithm}
   \label{tab:adamsetal_algorithm}
   \begin{tabularx}{\textwidth}{X}\hline
-    \begin{enumerate}
+    \begin{enumerate}[label=\arabic*]
       % \item Retrieve from memory
       %   \[ B_m(v) \defd \p(R^{m}_{v} \| \yO^{m-1}_{s_{m-1}} \dotsc,
       %     \yO^{1}_{s_{1}}, \yMc),\qquad 0\le v \le m-1 \]
     \item\label{item:first_step}For $u \in \set{0,\dotsc, m}$:
-      \begin{enumerate}[label*=\arabic*.]
+      \begin{enumerate}[label*=.\arabic*]
       \item Calculate
         \[ \begin{multlined}[t][0.85\textwidth]
             C_{m+1}(u) \defd
@@ -2221,11 +2221,17 @@ discrepancy more than low ones.
 \medskip
 
 Luckily, different ways of measuring the discrepancy lead to qualitatively
-similar results, as fig. *** shows.
+similar results, as discussed in the next section.
 
 
 \subsection{Results with the second robot}
 \label{sec:results_2nd_robot}
+%% relation between old (s',m') and new (v,m):
+%% m' = 1,...,M-1; s' = 0,...,m'-1
+%% m = 2,...,M; v = 1,...,m-1
+%% m=m'+1, v=s'+1
+
+
 
 % 24
 % 31 robot jumps

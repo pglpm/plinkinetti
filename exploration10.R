@@ -928,3 +928,13 @@ savedistr <- function(participants,dir,label){
 		write.table(summary$robotdistr,paste0(dir,'rdistr',i,label,'.csv'),sep=',',row.names=F,col.names=F,na='Infinity')
         }}
 }
+
+saveobs <- function(participants=c(1:40),maxtrials=200){
+    mat <- matrix(NA,length(participants),maxtrials+1)
+    j <- 0
+    for(i in participants){ j <- j+1
+        mat[j,] <- c(i,observations(i,maxtrials))
+        }
+    
+    write.table(mat,paste0('observation_seqs.csv'),sep=',',row.names=F,col.names=F,na='Infinity')
+}
