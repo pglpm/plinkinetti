@@ -1,7 +1,7 @@
 \pdfoutput=1
 %% Author: PGL  Porta Mana, ALS Filipowicz
 %% Created: 2018-04-08T16:54:19+0200
-%% Last-Updated: 2018-07-16T14:40:07+0200
+%% Last-Updated: 2018-07-16T22:15:29+0200
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Report-no: ***
 \newif\ifarxiv
@@ -1957,42 +1957,58 @@ steps are summarized in table~\ref{tab:adamsetal_initial}.
   \begin{tabularx}{\textwidth}{X}\hline
     \begin{enumerate}[label=\arabic*]
     \item Assign numerical values to $\yN$, $\ynn$
-    \item For $s_1 \in \set{1,\dotsc,N}$ calculate
-      \[A_1(s_1)\defd \p(\yO^{1}_{s_{1}} \|  \yMc) =\ynn_{s_1} \]
-    \item Observe $s_1$
-    \item Keep  $A_1(s_1)$ for the next two steps and $B_1(0)\equiv 1$ for
+    \item Set $m=1$. For $s_1 \in \set{1,\dotsc,N}$ set
+      \[A_1(s_1) %\defd \p(\yO^{1}_{s_{1}} \| \yMc)
+        =\ynn_{s_1}, \qquad C_1(0) = 1 \]
+      $A_1(s_1)$ is the probability distribution for the $1$st outcome
+    \item Observe the $1$th outcome: $s_{1}$
+    \item Keep  $A_1(s_1)$ for the next two steps and $C_1(0)$ for
       the next step
 
+    \item Increase $m$ by $1$: $m=2$
       \bigskip
+
     \item For $u \in\set{0,1}$:
       \begin{enumerate}[label*=.\arabic*]
    \item Calculate
       \[
-        C_2(u) \defd \p(R^{2}_{u}, \yO^{1}_{s_1} \| \yMc)
+        C_2(u) %\defd \p(R^{2}_{u}, \yO^{1}_{s_1} \| \yMc)
         =
 A_1(s_1) \times \begin{cases}
-          \yrs(0,1) &\text{for $u=0$},\\ 1-\yrs(0,1)&\text{for $u=1$}
+          \yrs(1,2) &\text{for $u=0$},\\ 1-\yrs(1,2)&\text{for $u=1$}
         \end{cases}
       \]
       \item For $s_{2} \in \set{1,\dotsc,N}$, calculate
         \[ 
-          B_{2}(u,s_{2}) \defd
-          \p(\yO^{2}_{s_{2}} \| R^{2}_{u}, \yO^{1}_{s_{1}}, \yMc) =
-         \frac{\yN\ynn_{s_{2}}+u\yff_{s_{2}}}{\yN + u},
-        \]
-     where $\yff_{s_{2}}$ is the relative frequency of outcome $s_{3}$ in
-     the previous $u$ observations
+          B_{2}(u,s_{2})
+          % \defd \p(\yO^{2}_{s_{2}} \| R^{2}_{u}, \yO^{1}_{s_{1}}, \yMc)
+          = \frac{\yN\ynn_{s_{2}}+u\yff_{s_{2}}}{\yN + u},
+                \qquad
+    \yff_{s_{2}} \defd\Bigl\{
+    \parbox[c]{\the\myl}{\footnotesize rel. frequency of $s_2$ in\\
+  the past $u$ observations}
+          \]
     \end{enumerate}
   \item  For $s_2 \in \set{1,\dotsc,N}$ calculate
-      \[A_2(s_2) \defd
-        \p(\yO^{2}_{s_{2}} \| \yO^{1}_{s_{1}}, \yMc) =
-\frac{\sum_{u=0}^{1} B_{2}(u,s_{2}) \times C_{2}(u)}{A_{1}(s_{1})} \]
-\item Observe $s_2$
-\item Keep $A_{2}(s_{2})$ for the next two steps, and
-  $B_{2}(u,s_{2})$, $C_{2}(u)$, $u\in\set{0,1}$, for the next step
-\item Set $m=2$, go to step~\ref{item:first_step} of table~\ref{tab:adamsetal_algorithm}
+    \[A_2(s_2)
+%      \defd  \p(\yO^{2}_{s_{2}} \| \yO^{1}_{s_{1}}, \yMc) =
+      = \frac{\sum_{u=0}^{1} B_{2}(u,s_{2}) \; C_{2}(u)}{A_{1}(s_{1})} \]
+          this is the probability distribution for the $2$nd outcome
+    \item Observe the $2$nd outcome: $s_{2}$
+    \item Keep $A_{2}(s_{2})$ for the next two steps, and $B_{2}(u,s_{2})$,
+      $C_{2}(u)$, $u\in\set{0,1}$, for the next step
+    \item Increase $m$ by $1$: $m=3$
+\item Go to step~\ref{item:first_step} of table~\ref{tab:adamsetal_algorithm}
 \end{enumerate}
-\\\hline
+
+\bigskip
+These initial steps are equivalent to formally setting
+\[ B_1(0,s_1)= \ynn_{s_1},\quad
+  C_1(0) = 1,\quad
+  A_0(s_0) =1
+\]
+and proceeding for $m=1$ from step~\ref{item:predictive_step} of
+table~\ref{tab:adamsetal_algorithm} \\\hline
   \end{tabularx}
 \end{table}
 
@@ -2005,42 +2021,52 @@ A_1(s_1) \times \begin{cases}
       % \item Retrieve from memory
       %   \[ B_m(v) \defd \p(R^{m}_{v} \| \yO^{m-1}_{s_{m-1}} \dotsc,
       %     \yO^{1}_{s_{1}}, \yMc),\qquad 0\le v \le m-1 \]
-    \item\label{item:first_step}For $u \in \set{0,\dotsc, m}$:
+    \item\label{item:first_step}For $u \in \set{0,\dotsc, m-1}$:
       \begin{enumerate}[label*=.\arabic*]
       \item Calculate
         \[ \begin{multlined}[t][0.85\textwidth]
-            C_{m+1}(u) \defd
-            \p(R^{m+1}_{u} , \yO^{m}_{s_{m}} \| \yO^{m-1}_{s_{m-1}}, \dotsc,
-            \yO^{1}_{s_{1}}, \yMc) ={}\\[\jot]
-       \shoveleft{\frac{1}{A_{m-1}(s_{m-1})} \times{}}\\\begin{cases}
-          \sum_{v=0}^{m-1} \yrs(v,m) \times B_m(v,s_m) \times C_m(v) & \text{if $u=0$},
+            C_{m}(u)
+            % \defd \p(R^{m+1}_{u} , \yO^{m}_{s_{m}} \| \yO^{m-1}_{s_{m-1}}, \dotsc,
+            % \yO^{1}_{s_{1}}, \yMc) ={}\\[\jot]
+            \frac{1}{A_{m-1}(s_{m-1})} \times{}\\
+            \begin{cases}
+          \sum_{v=1}^{m-1} \yrs(v,m) \; B_{m-1}(v-1,s_{m-1}) \; C_{m-1}(v-1)
+              & \text{if $u=0$},
           \\[\jot]
-          [1-\yrs(u-1,m)]  \times B_m(u-1,s_m) \times C_m(u-1)& \text{if $u\ge 1$}    
+              [1-\yrs(u,m)]  \; B_{m-1}(u-1,s_{m-1}) \; C_{m-1}(u-1)
+              & \text{if $u\ge 1$}    
         \end{cases}
       \end{multlined}
     \]
-      \item For $s_{m+1} \in \set{1,\dotsc,N}$, calculate
-        \[ \begin{multlined}[][0.85\textwidth]
-B_{m+1}(u,s_{m+1}) \defd \p(\yO^{m+1}_{s_{m+1}} \| R^{m+1}_{u}, \yO^{m}_{s_{m}},
-          \dotsc, \yO^{m+1-u}_{s_{m+1-u}}, \yMc) ={}\\[\jot]
-         \frac{\yN\ynn_{s_{m+1}}+u\yff_{s_{m+1}}}{\yN + u},
-       \end{multlined} \]
-     where $\yff_{s_{m+1}}$ is the relative frequency of outcome $s_{m+1}$ in the previous $u$ observations
+      \item For $s_{m} \in \set{1,\dotsc,N}$, calculate
+        \[ %[][0.85\textwidth]
+            B_{m}(u,s_{m})
+            % \defd \p(\yO^{m+1}_{s_{m+1}} \| R^{m+1}_{u}, \yO^{m}_{s_{m}},
+            % \dotsc, \yO^{m+1-u}_{s_{m+1-u}}, \yMc)
+            = \frac{\yN\ynn_{s_{m}}+u\yff_{s_{m}}}{\yN + u},
+                \qquad
+    \yff_{s_{m}} \defd\Bigl\{
+    \parbox[c]{\the\myl}{\footnotesize rel. frequency of $s_m$ in\\
+  the past $u$ observations}
+      \]
       % \item using the Johnson-Dirichlet model calculate (or retrieve from memory)
       %   \[ A_m(v) \defd \p(\yO^{m}_{s_{m}} \| R^{m}_{v}, \yO^{m-1}_{s_{m-1}}
       %     \dotsc, \yO^{m-v}_{s_{m-v}}, \yMc)
       %   \]
   \end{enumerate}
-\item For $s_{m+1} \in \set{1,\dotsc,N}$, calculate
-  \[ \begin{multlined}[][0.85\textwidth]
-      A_{m+1}(s_{m+1}) \defd \p(\yO^{m+1}_{s_{m+1}} \| \yO^{m}_{s_{m}}, \dotsc, \yO^{1}_{s_{1}}, \yMc) ={}\\[\jot]
-    \frac{\sum_{u=0}^{m} B_{m+1}(u,s_{m+1}) \times
-      C_{m+1}(u)}{A_{m}(s_{m})}
-  \end{multlined}
-\]
-\item Observe $s_{m+1}$, 
-\item Keep $A_{m+1}(s_{m+1})$ for the next two steps, and
-  $B_{m+1}(u,s_{m+1})$, $C_{m+1}(u)$, $u\in\set{0,\dotsc,m}$ for the next step
+\item\label{item:predictive_step}
+  For $s_{m} \in \set{1,\dotsc,N}$, calculate
+  \[ %[][0.85\textwidth]
+    A_{m}(s_{m})
+    % \defd \p(\yO^{m+1}_{s_{m+1}} \|
+    % \yO^{m}_{s_{m}}, \dotsc, \yO^{1}_{s_{1}}, \yMc) ={}\\[\jot]
+=    \frac{\sum_{u=0}^{m-1} B_{m}(u,s_{m}) \;
+      C_{m}(u)}{A_{m-1}(s_{m-1})}
+  \]
+  this is the probability distribution for the $m$th outcome
+\item Observe the $m$th outcome: $s_{m}$
+\item Keep $A_{m}(s_{m})$ for the next two steps, and
+  $B_{m}(u,s_{m})$, $C_{m}(u)$, $u\in\set{0,\dotsc,m-1}$ for the next step
 \item Increase $m$ by $1$, go to step~\ref{item:first_step}
   \end{enumerate}
   \\\hline
