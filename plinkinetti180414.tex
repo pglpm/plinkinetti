@@ -1,7 +1,7 @@
 \pdfoutput=1
 %% Author: PGL  Porta Mana, ALS Filipowicz
 %% Created: 2018-04-08T16:54:19+0200
-%% Last-Updated: 2018-07-15T22:16:09+0200
+%% Last-Updated: 2018-07-16T14:40:07+0200
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Report-no: ***
 \newif\ifarxiv
@@ -1687,21 +1687,22 @@ discussion above.
 
 The proposition $R^{m}_{0}$, in particular, states that \emph{no} previous
 observations are relevant for inferring the $m$th one; in other words, it
-states that this observation is the start of a new subsequence.
+states that the $m$th observation is the start of a new subsequence.
 
 For fixed $m$, the propositions $R^{m}_{u}$, $0\le u \le m-1$, are
 obviously exhaustive (their probabilities sum to unity) and mutually
-exclusive. The assumptions $\yMc$ made thus far imply that some
-propositions for different $m$ are also exclusive:
-\begin{gather}
-  \label{eq:exclusive_across_m}
-  \p(R^{m}_{u_{m}}, R^{m-1}_{u_{m-1}} \| \yMc) = 0
-  \quad\text{if $u_{m}\ne 0$ and $u_{m} \ne u_{m-1}+1$},
-\\\intertext{and therefore}
+exclusive. The assumptions $\yMc$ made thus far imply that two propositions
+for consecutive $m$ are also exclusive and exhaustive:
+\begin{subequations}
   \label{eq:exhaustive_R_from_previous}
-  \p(R^{m}_{0} \| R^{m-1}_{v},\yMc) +
-  \p(R^{m}_{v+1} \| R^{m-1}_{v},\yMc) = 1.
-\end{gather}
+  \begin{gather}
+    \p(R^{m}_{u_{m}}, R^{m-1}_{u_{m-1}} \| \yMc) = 0
+    \text{\quad if\quad$u_{m}\ne 0$ and $u_{m} \ne u_{m-1}+1$},
+    \\\intertext{and therefore}
+    \p(R^{m}_{0} \| R^{m-1}_{v-1},\yMc) +
+    \p(R^{m}_{v} \| R^{m-1}_{v-1},\yMc) = 1.
+  \end{gather}
+\end{subequations}
 The reason is that the $m$th outcome either starts a new subsequence, hence
 $u_{m}=0$; or continues the current subsequence, which according to
 $R^{m-1}_{u_{m-1}}$ contains the $(m-1)$th outcome and the previous
@@ -1719,15 +1720,15 @@ above correspond to the following equalities, for all $m$:
   ={}\\
   \begin{cases}
   \p(\yO^{m}_{s_{m}} \|
-    R^{m}_{u},  \yO^{m-1}_{s_{m-1}}, \dotsc, \yO^{m-u}_{s_{m-u}}, \yMc)
-    &\text{for $1\le u\le m-1$},
-      \\
-  \p(\yO^{m}_{s_{m}} \|
     R^{m}_{u}, \yMc)
     &\text{for $u=0$},
+      \\
+  \p(\yO^{m}_{s_{m}} \|
+    R^{m}_{u},  \yO^{m-1}_{s_{m-1}}, \dotsc, \yO^{m-u}_{s_{m-u}}, \yMc)
+    &\text{for $1\le u\le m-1$},
   \end{cases}
 \end{multline}
-Where the probabilities on the right side are given by the
+where the probabilities on the right side are given by the
 Johnson-Dirichlet formulae~\eqref{eq:predictive_JD_general}
 or~\eqref{update_params_JD}.
 
@@ -1742,15 +1743,15 @@ which in turn can be obtained by marginalization and condizionalization
 from the probabilities
 \begin{equation}
   \label{eq:prob_R_conditional_before}
-  \p(R^{m}_{u_{m}} \| \yO^{m-1}_{s_{m-1}}, R^{m-1}_{u_{m-1}},\dotsc,
-  R^{2}_{u_{2}}, \yO^{1}_{s_{1}}, \yMc)
+  \p(R^{m}_{u_{m}} \|  R^{m-1}_{u_{m-1}},\yO^{m-1}_{s_{m-1}},\dotsc,
+  R^{2}_{u_{2}}, \yO^{2}_{s_{2}},\yO^{1}_{s_{1}}, \yMc)
 \end{equation}
 for all legitimate $m$, $u_i$, and outcomes $s_i$. Additional assumptions
-are necessary to determine the latter probabilities. For example, the
-particular order of all past outcomes, the lengths of the previous
-subsequences, or even the robot's previous distributions, and other factors
-external to the experiment might all be relevant. The robot is programmed
-with this assumption:
+are necessary to determine these probabilities. For example, the particular
+order of all past outcomes, the lengths of the previous subsequences, the
+robot's previous distributions, and other factors external to the
+experiment might all be relevant for these probabilities. Our robot is
+programmed with this simpler assumption:
 \begin{itemize}
 \item only two quantities are relevant to infer whether the next
   observation starts a new subsequence: the total number $m-1$ of
@@ -1760,24 +1761,23 @@ with this assumption:
 In formulae this assumption is equivalent to a Markov property:
 \begin{equation}
   \label{eq:prob_R_markov}
-  \p(R^{m}_{u_{m}} \| \yO^{m-1}_{s_{m-1}}, R^{m-1}_{u_{m-1}},\dotsc,
-  R^{2}_{u_{2}}, \yO^{1}_{s_{1}}, \yMc) =
+  \p(R^{m}_{u_{m}} \|  R^{m-1}_{u_{m-1}},\yO^{m-1}_{s_{m-1}},\dotsc,
+  R^{2}_{u_{2}}, \yO^{2}_{s_{2}},\yO^{1}_{s_{1}}, \yMc) =
   \p(R^{m}_{u_{m}} \|  R^{m-1}_{u_{m-1}}, \yMc).
 \end{equation}
 Recalling, \eqn~\eqref{eq:exhaustive_R_from_previous}, that only the values
 $u_{m}=0$ and $u_{m}= u_{m-1}+1$ are possible, the conditional
 probabilities above are summarized in the \emph{changepoint function}
-\begin{equation}\label{eq:def_changepoint_function}
-  \yrs(v,m)  \defd \p(R^{m}_{0} \|  R^{m-1}_{v}, \yMc),
-  \qquad m \in\set{2,3,\dotsc,M}, \quad v\in\set{1,\dotsc,m-1}.
-\end{equation}
-It is the probability that the $m$th observation starts a new subsequence,
-given that the previous subsequence had length $v$, including the $(m-1)$th
-outcome (that's the reason for $v-1$ in the definition). Note that
-from~\eqref{eq:exclusive_across_m}
-\begin{equation}\label{eq:one_minus_h}
-  \p(R^{m}_{v} \|  R^{m-1}_{v-1}, \yMc)  = 1-\yrs(v,m),\qquad v\ne 0.
-\end{equation}
+\begin{multline}\label{eq:def_changepoint_function}
+  \yrs(v,m)  \defd \p(R^{m}_{0} \|  R^{m-1}_{v-1}, \yMc),
+  \qquad 1-\yrs(v,m) \equiv  \p(R^{m}_{v} \|  R^{m-1}_{v-1}, \yMc),
+  \\
+  m \in\set{2,3,\dotsc,M}, \quad v\in\set{1,\dotsc,m-1}.
+\end{multline}
+The value $\yrs(v,m)$ is the probability that the $m$th observation starts
+a new subsequence given that the previous subsequence, including the
+$(m-1)$th outcome, has reached length $v$.
+
 A little counting shows that the set of the possible changepoint functions,
 for an experiment with $M$ observations, is $\clcl{0,1}^{(M^2-M)/2}$.
 
@@ -1812,7 +1812,7 @@ important respects.
 
 
 We first write probability for the $m$th observation given the previous
-outcomes can be written
+outcomes this way:
 \begin{multline}
   \label{eq:prob_new_cond_R}
   \p(\yO^{m}_{s_{m}} \|
@@ -1839,23 +1839,24 @@ The products in the $u$ sum contain the term given
 by~\eqref{eq:irrelevant_data_conditional_R}, which is just the
 Johnson-Dirichlet conditional probability~\eqref{eq:predictive_JD_general},
 and the joint probability for $(R^{m}_{u}, \yO^{m-1}_{s_{m-1}})$ given the
-previous data. This joint probability can be decomposed introducing
+previous outcomes. This joint probability can be decomposed introducing
 $R^{m-1}_{v}$ for the previous observation:
 \begin{multline}
   \label{eq:prob_R_and_last_decompose}
-  \p(R^{m}_{u}, \yO^{m-1}_{s_{m-1}} \| \yO^{m-2}_{s_{m-2}}, \dotsc, \yO^{1}_{s_{1}}, \yMc) 
+  \p(R^{m}_{u}, \yO^{m-1}_{s_{m-1}} \|
+  \yO^{m-2}_{s_{m-2}}, \dotsc, \yO^{1}_{s_{1}}, \yMc) 
  ={} \\
   \frac{\sum_{v=1}^{m-1}
-    \p(R^{m}_{u}, \yO^{m-1}_{s_{m-1}}, R^{m-1}_{v-1}, \yO^{m-2}_{s_{m-2}}
+    \p(R^{m}_{u},  \yO^{m-1}_{s_{m-1}}, R^{m-1}_{v-1}, \yO^{m-2}_{s_{m-2}}
     \| \yO^{m-3}_{s_{m-3}}, \dotsc, \yO^{1}_{s_{1}}, \yMc)}{
 \p(\yO^{m-2}_{s_{m-2}} \| \yO^{m-3}_{s_{m-3}}, \dotsc, \yO^{1}_{s_{1}}, \yMc)}
   ={}\\
-    \frac{1}{\p(\yO^{m-2}_{s_{m-2}} \| \yO^{m-3}_{s_{m-3}}, \dotsc, \yO^{1}_{s_{1}}, \yMc)}
+    \frac{1}{\p(\yO^{m-2}_{s_{m-2}} \| \yO^{m-3}_{s_{m-3}}, \dotsc, \yO^{1}_{s_{1}}, \yMc)} \times
   \sum_{v=1}^{m-1} \p(R^{m}_{u} \| R^{m-1}_{v-1}, \yMc)
   \times{}\\
   \p(\yO^{m-1}_{s_{m-1}} \|
     R^{m-1}_{v-1}, \yO^{m-2}_{s_{m-2}} \dotsc, \yO^{m-v}_{s_{m-v}}, \yMc)
-    \times{}\\
+    \times
  \p(R^{m-1}_{v-1}, \yO^{m-2}_{s_{m-2}} \|
   \yO^{m-3}_{s_{m-3}},\dotsc, \yO^{1}_{s_{1}}, \yMc).
 \end{multline}
@@ -1867,14 +1868,16 @@ The last expression contains four kinds of terms. Let's analyse them.
   previous steps.
 
 \item The first factor within the $v$ sum was simplified using the Markov
-  property~\eqref{eq:prob_R_markov}.
+  property~\eqref{eq:prob_R_markov}. It is given by the changepoint
+  function~\eqref{eq:def_changepoint_function}.
 
 \item The second factor within the $v$ sum is given by the
   Johnson-Dirichlet model, according to discussion of
   \eqn~\eqref{eq:irrelevant_data_conditional_R}.
 
-\item The last factor within the $v$ sum is analogous to the joint
-  probability for $R^{m}_{u}, \yO^{m-1}_{s_{m-1}}$, which we are now
+\item The last factor within the $v$ sum, the joint probability for
+  $(R^{m-1}_{v-1}, \yO^{m-2}_{s_{m-2}})$, is analogous to the joint
+  probability for $(R^{m}_{u}, \yO^{m-1}_{s_{m-1}})$ which we are now
   calculating, but for the previous observation. In a recursive scheme it
   is known from the preceding step.
 \end{itemize}
