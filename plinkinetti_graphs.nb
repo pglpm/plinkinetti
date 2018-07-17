@@ -10,10 +10,10 @@
 NotebookFileLineBreakTest
 NotebookFileLineBreakTest
 NotebookDataPosition[       158,          7]
-NotebookDataLength[   1020292,      20013]
-NotebookOptionsPosition[   1008926,      19832]
-NotebookOutlinePosition[   1009264,      19847]
-CellTagsIndexPosition[   1009221,      19844]
+NotebookDataLength[    928616,      18461]
+NotebookOptionsPosition[    918764,      18307]
+NotebookOutlinePosition[    919110,      18322]
+CellTagsIndexPosition[    919067,      18319]
 WindowFrame->Normal*)
 
 (* Beginning of Notebook Content *)
@@ -17161,102 +17161,6 @@ Cell[BoxData[
   3.740674820959405*^9}},ExpressionUUID->"43c9ab4c-e4f5-4c9b-89d2-\
 806e200c2977"],
 
-Cell[CellGroupData[{
-
-Cell[BoxData[
- RowBox[{
-  RowBox[{"test", "=", 
-   RowBox[{"Table", "[", 
-    RowBox[{
-     RowBox[{"{", 
-      RowBox[{"m", ",", "s", ",", 
-       RowBox[{"cp", "[", 
-        RowBox[{"s", ",", "m", ",", 
-         RowBox[{"params", "[", 
-          RowBox[{"[", 
-           RowBox[{"1", ",", 
-            RowBox[{"3", ";;", "5"}]}], "]"}], "]"}]}], "]"}]}], "}"}], ",", 
-     RowBox[{"{", 
-      RowBox[{"m", ",", "1", ",", "199"}], "}"}], ",", 
-     RowBox[{"{", 
-      RowBox[{"s", ",", "0", ",", 
-       RowBox[{"m", "-", "1"}]}], "}"}]}], "]"}]}], ";"}]], "Input",
- CellChangeTimes->{{3.740674836637432*^9, 
-  3.740674881362711*^9}},ExpressionUUID->"fcf559c9-b3aa-49ce-ac26-\
-1efd5d9790eb"],
-
-Cell[BoxData["$Aborted"], "Output",
- CellChangeTimes->{
-  3.740674914684369*^9},ExpressionUUID->"4dcb39d8-c29c-4153-a774-\
-c1917dbf3088"]
-}, Open  ]],
-
-Cell[CellGroupData[{
-
-Cell[BoxData[
- RowBox[{"cp", "[", 
-  RowBox[{"5", ",", "198", ",", 
-   RowBox[{"params", "[", 
-    RowBox[{"[", 
-     RowBox[{"12", ",", 
-      RowBox[{"3", ";;", "5"}]}], "]"}], "]"}]}], "]"}]], "Input",
- CellChangeTimes->{{3.7406752827056155`*^9, 3.7406753062304573`*^9}, {
-  3.740676041209549*^9, 3.740676087838031*^9}, {3.740676240126498*^9, 
-  3.7406762425445023`*^9}},ExpressionUUID->"831d6560-d71e-4e32-8ba7-\
-8d0e3b7adbd2"],
-
-Cell[BoxData["3.7274673827683715`*^-180"], "Output",
- CellChangeTimes->{{3.7406752942964363`*^9, 3.740675306636058*^9}, {
-   3.7406760461391573`*^9, 3.7406760882592316`*^9}, 
-   3.740676243636504*^9},ExpressionUUID->"fe1f66be-8d23-49d4-ae8e-\
-1f73368ee927"]
-}, Open  ]],
-
-Cell[BoxData[
- RowBox[{
-  RowBox[{"ClearAll", "[", "m", "]"}], ";", 
-  RowBox[{"minh", "=", 
-   RowBox[{"Maximize", "[", 
-    RowBox[{
-     RowBox[{"{", 
-      RowBox[{
-       RowBox[{"cpl", "[", 
-        RowBox[{
-         RowBox[{"s", "-", "1"}], ",", 
-         RowBox[{"m", "-", "1"}], ",", 
-         RowBox[{"params", "[", 
-          RowBox[{"[", 
-           RowBox[{"12", ",", 
-            RowBox[{"3", ";;", "5"}]}], "]"}], "]"}]}], "]"}], ",", 
-       RowBox[{"2", "\[LessEqual]", "m", "\[LessEqual]", "200"}], ",", 
-       RowBox[{"1", "\[LessEqual]", "s", "\[LessEqual]", " ", 
-        RowBox[{"m", "-", "1"}]}]}], "}"}], ",", 
-     RowBox[{"{", 
-      RowBox[{"s", ",", "m"}], "}"}]}], "]"}]}], ";"}]], "Input",
- CellChangeTimes->{{3.740677141904682*^9, 3.740677142793884*^9}, {
-  3.7408185173063374`*^9, 
-  3.7408185514391975`*^9}},ExpressionUUID->"9bde8f3e-2c06-4909-9c17-\
-d571a6fd854e"],
-
-Cell[CellGroupData[{
-
-Cell[BoxData["minh"], "Input",
- CellChangeTimes->{{3.7408185249815507`*^9, 
-  3.740818525558752*^9}},ExpressionUUID->"29b3782f-6dfb-44c4-9b72-\
-c2601cf51530"],
-
-Cell[BoxData[
- RowBox[{"{", 
-  RowBox[{"1540.1308482771299`", ",", 
-   RowBox[{"{", 
-    RowBox[{
-     RowBox[{"s", "\[Rule]", "1.`"}], ",", 
-     RowBox[{"m", "\[Rule]", "2.`"}]}], "}"}]}], "}"}]], "Output",
- CellChangeTimes->{{3.7408185259175525`*^9, 
-  3.7408185544032025`*^9}},ExpressionUUID->"a90ea96b-4644-48f4-9d15-\
-59f0bc9c7ecd"]
-}, Open  ]],
-
 Cell[BoxData[
  RowBox[{"(*", " ", 
   RowBox[{"Plot", " ", "changepoint", " ", "function"}], " ", "*)"}]], "Input",
@@ -17314,23 +17218,6 @@ Cell[BoxData[
       RowBox[{"Abs", "@", 
        RowBox[{"{", 
         RowBox[{"maxh", ",", "minh"}], "}"}]}]}]}], ";", 
-    "\[IndentingNewLine]", 
-    RowBox[{
-     RowBox[{"colfunct", "[", "z_", "]"}], ":=", 
-     RowBox[{"If", "[", 
-      RowBox[{
-       RowBox[{"z", "\[GreaterEqual]", "0"}], ",", 
-       RowBox[{"Blend", "[", 
-        RowBox[{
-         RowBox[{"{", 
-          RowBox[{"White", ",", "red"}], "}"}], ",", 
-         RowBox[{"z", "/", "suph"}]}], "]"}], ",", 
-       RowBox[{"Blend", "[", 
-        RowBox[{
-         RowBox[{"{", 
-          RowBox[{"White", ",", "blue"}], "}"}], ",", 
-         RowBox[{
-          RowBox[{"-", "z"}], "/", "suph"}]}], "]"}]}], "]"}]}], ";", 
     "\[IndentingNewLine]", "\[IndentingNewLine]", 
     RowBox[{"plot", "=", 
      RowBox[{"ContourPlot", "[", 
@@ -17373,7 +17260,11 @@ Cell[BoxData[
            RowBox[{"False", ",", "True"}], "}"}], ",", 
           RowBox[{"{", 
            RowBox[{"True", ",", "False"}], "}"}]}], "}"}]}], ",", 
-       RowBox[{"ColorFunction", "\[Rule]", "colfunct"}], ",", 
+       RowBox[{"ColorFunction", "\[Rule]", 
+        RowBox[{"(", 
+         RowBox[{
+          RowBox[{"mycolorfunction", "[", 
+           RowBox[{"#", ",", "suph"}], "]"}], "&"}], ")"}]}], ",", 
        RowBox[{"ColorFunctionScaling", "\[Rule]", "False"}], ",", 
        RowBox[{"PlotRangeClipping", "\[Rule]", "False"}], ",", 
        RowBox[{"PlotPoints", "\[Rule]", "100"}], ",", 
@@ -17466,8 +17357,9 @@ Cell[BoxData[
    3.7408206004658117`*^9, 3.740820664753525*^9}, 3.7408207311316414`*^9, {
    3.7408207638760986`*^9, 3.7408207647809005`*^9}, {3.7408207972767577`*^9, 
    3.7408207975263577`*^9}, {3.7408208432812386`*^9, 
-   3.7408208448724413`*^9}, {3.7408208826557074`*^9, 
-   3.740820883560509*^9}},ExpressionUUID->"0a121017-a9e9-44cb-a069-\
+   3.7408208448724413`*^9}, {3.7408208826557074`*^9, 3.740820883560509*^9}, {
+   3.740824305592849*^9, 
+   3.7408243349989004`*^9}},ExpressionUUID->"0a121017-a9e9-44cb-a069-\
 e06fadb52e44"],
 
 Cell[BoxData[
@@ -17581,6 +17473,131 @@ Cell[BoxData[
     RowBox[{"i", ",", "parts"}], "}"}]}], "]"}]], "Input",ExpressionUUID->\
 "5b2424c1-566a-41a3-b866-a83b69916196"],
 
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"allcpfs", "=", 
+   RowBox[{"Table", "[", 
+    RowBox[{
+     RowBox[{"DensityPlot", "[", 
+      RowBox[{
+       RowBox[{"cp", "[", 
+        RowBox[{
+         RowBox[{"s", "-", "1"}], ",", 
+         RowBox[{"m", "-", "1"}], ",", 
+         RowBox[{"params", "[", 
+          RowBox[{"[", 
+           RowBox[{"i", ",", 
+            RowBox[{"3", ";;", "5"}]}], "]"}], "]"}]}], "]"}], ",", 
+       RowBox[{"{", 
+        RowBox[{"m", ",", "2", ",", "200"}], "}"}], ",", 
+       RowBox[{"{", 
+        RowBox[{"s", ",", "1", ",", "199"}], "}"}], ",", 
+       RowBox[{"PlotRange", "\[Rule]", 
+        RowBox[{"{", 
+         RowBox[{
+          RowBox[{"{", 
+           RowBox[{"0", ",", "201"}], "}"}], ",", 
+          RowBox[{"{", 
+           RowBox[{
+            RowBox[{"-", "1"}], ",", "201"}], "}"}], ",", 
+          RowBox[{"{", 
+           RowBox[{"0", ",", "1"}], "}"}]}], "}"}]}], ",", 
+       RowBox[{"RegionFunction", "\[Rule]", 
+        RowBox[{"Function", "[", 
+         RowBox[{
+          RowBox[{"{", 
+           RowBox[{"x", ",", "y"}], "}"}], ",", 
+          RowBox[{
+           RowBox[{"2", "\[LessEqual]", "x", "\[LessEqual]", "200"}], "&&", 
+           RowBox[{"1", "\[LessEqual]", "y", "\[LessEqual]", 
+            RowBox[{"x", "-", "1"}]}]}]}], "]"}]}], ",", 
+       RowBox[{"BoundaryStyle", "\[Rule]", "red"}], ",", 
+       RowBox[{"Frame", "\[Rule]", 
+        RowBox[{"{", 
+         RowBox[{
+          RowBox[{"{", 
+           RowBox[{"False", ",", "True"}], "}"}], ",", 
+          RowBox[{"{", 
+           RowBox[{"True", ",", "False"}], "}"}]}], "}"}]}], ",", 
+       RowBox[{"ColorFunction", "\[Rule]", 
+        RowBox[{"(", 
+         RowBox[{
+          RowBox[{"GrayLevel", "[", 
+           RowBox[{"1", "-", "#"}], "]"}], "&"}], ")"}]}], ",", 
+       RowBox[{"ColorFunctionScaling", "\[Rule]", "False"}], ",", 
+       RowBox[{"PlotRangeClipping", "\[Rule]", "False"}], ",", 
+       RowBox[{"PlotPoints", "\[Rule]", "100"}], ",", 
+       RowBox[{"FrameTicks", "\[Rule]", "All"}], ",", "\[IndentingNewLine]", 
+       RowBox[{"PlotLabel", "\[Rule]", 
+        RowBox[{"mystyle", "[", 
+         RowBox[{"\"\<participant \>\"", "<>", 
+          RowBox[{"ToString", "[", "i", "]"}]}], "]"}]}], ",", 
+       RowBox[{"PlotLegends", "\[Rule]", 
+        RowBox[{"Placed", "[", 
+         RowBox[{"All", ",", "Left"}], "]"}]}], ",", 
+       RowBox[{"AspectRatio", "\[Rule]", 
+        RowBox[{"1", "/", "2"}]}], ",", 
+       RowBox[{"FrameLabel", "\[Rule]", 
+        RowBox[{"{", 
+         RowBox[{
+          RowBox[{"{", 
+           RowBox[{"None", ",", 
+            RowBox[{"Style", "[", 
+             RowBox[{"v", ",", "Black", ",", "myfontsize", ",", 
+              RowBox[{"Thickness", "[", 
+               RowBox[{"1", "/", "50"}], "]"}], ",", 
+              RowBox[{"FontFamily", "\[Rule]", "Auto"}]}], "]"}]}], "}"}], 
+          ",", 
+          RowBox[{"{", 
+           RowBox[{
+            RowBox[{"Style", "[", 
+             RowBox[{"m", ",", "Black", ",", "myfontsize", ",", 
+              RowBox[{"Thickness", "[", 
+               RowBox[{"1", "/", "50"}], "]"}], ",", 
+              RowBox[{"FontFamily", "\[Rule]", "Auto"}]}], "]"}], ",", 
+            "None"}], "}"}]}], "}"}]}], ",", 
+       RowBox[{"Epilog", "\[Rule]", 
+        RowBox[{"Text", "[", 
+         RowBox[{
+          RowBox[{"mystyle", "[", 
+           RowBox[{
+            RowBox[{"Style", "[", 
+             RowBox[{"\[CapitalLambda]", ",", "Italic"}], "]"}], " ", 
+            "\[Equal]", 
+            RowBox[{"Exp", "@", " ", 
+             RowBox[{"params", "[", 
+              RowBox[{"[", 
+               RowBox[{"i", ",", "2"}], "]"}], "]"}]}]}], "]"}], ",", 
+          RowBox[{"Scaled", "[", 
+           RowBox[{"{", 
+            RowBox[{"0.1", ",", "0.9"}], "}"}], "]"}], ",", 
+          RowBox[{"{", 
+           RowBox[{
+            RowBox[{"-", "1"}], ",", "0"}], "}"}]}], "]"}]}]}], "]"}], ",", 
+     RowBox[{"{", 
+      RowBox[{"i", ",", "parts"}], "}"}]}], "]"}]}], ";"}]], "Input",
+ CellChangeTimes->{{3.740845708290304*^9, 
+  3.7408457399427595`*^9}},ExpressionUUID->"c099c8f7-8430-4e6f-a730-\
+64a8904ba998"],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"Export", "[", 
+   RowBox[{"\"\<allcpfs.pdf\>\"", ",", 
+    RowBox[{"Grid", "[", 
+     RowBox[{
+      RowBox[{"ArrayReshape", "[", 
+       RowBox[{"allcpfs", ",", 
+        RowBox[{"{", 
+         RowBox[{"8", ",", "5"}], "}"}]}], "]"}], ",", 
+      RowBox[{"Spacings", "\[Rule]", 
+       RowBox[{"{", 
+        RowBox[{"0", ",", "0"}], "}"}]}]}], "]"}]}], "]"}], ";"}]], "Input",
+ CellChangeTimes->{{3.740846034066676*^9, 3.7408460933311806`*^9}, {
+  3.74084614421847*^9, 3.7408461463088737`*^9}, {3.7408461918141537`*^9, 
+  3.7408461929217553`*^9}},ExpressionUUID->"6819a2f4-dcc0-4a47-83cb-\
+2a0de3e94997"],
+
 Cell[CellGroupData[{
 
 Cell[BoxData[
@@ -17593,901 +17610,6 @@ Cell[BoxData["\<\"testme.png\"\>"], "Output",
  CellChangeTimes->{3.7406775237485533`*^9, 3.740677554340207*^9, 
   3.740677586211063*^9},ExpressionUUID->"7906f0d8-7139-4df8-918b-\
 04cea80182f0"]
-}, Open  ]],
-
-Cell[CellGroupData[{
-
-Cell[BoxData[
- RowBox[{"ContourPlot", "[", 
-  RowBox[{
-   RowBox[{"cpl", "[", 
-    RowBox[{
-     RowBox[{"s", "-", "1"}], ",", 
-     RowBox[{"m", "-", "1"}], ",", 
-     RowBox[{"params", "[", 
-      RowBox[{"[", 
-       RowBox[{"6", ",", 
-        RowBox[{"3", ";;", "5"}]}], "]"}], "]"}]}], "]"}], ",", 
-   RowBox[{"{", 
-    RowBox[{"m", ",", "2", ",", "200"}], "}"}], ",", 
-   RowBox[{"{", 
-    RowBox[{"s", ",", "1", ",", "199"}], "}"}], ",", 
-   RowBox[{"PlotRange", "\[Rule]", 
-    RowBox[{"{", 
-     RowBox[{
-      RowBox[{"{", 
-       RowBox[{"0", ",", "201"}], "}"}], ",", 
-      RowBox[{"{", 
-       RowBox[{
-        RowBox[{"-", "1"}], ",", "201"}], "}"}], ",", "All"}], "}"}]}], ",", 
-   RowBox[{"RegionFunction", "\[Rule]", 
-    RowBox[{"Function", "[", 
-     RowBox[{
-      RowBox[{"{", 
-       RowBox[{"x", ",", "y"}], "}"}], ",", 
-      RowBox[{
-       RowBox[{"2", "\[LessEqual]", "x", "\[LessEqual]", "200"}], "&&", 
-       RowBox[{"1", "\[LessEqual]", "y", "\[LessEqual]", 
-        RowBox[{"x", "-", "1"}]}]}]}], "]"}]}], ",", 
-   RowBox[{"BoundaryStyle", "\[Rule]", "red"}], ",", 
-   RowBox[{"Frame", "\[Rule]", 
-    RowBox[{"{", 
-     RowBox[{
-      RowBox[{"{", 
-       RowBox[{"False", ",", "True"}], "}"}], ",", 
-      RowBox[{"{", 
-       RowBox[{"True", ",", "False"}], "}"}]}], "}"}]}], ",", 
-   RowBox[{"ColorFunction", "\[Rule]", "GrayLevel"}], 
-   RowBox[{"(*", 
-    RowBox[{"(", 
-     RowBox[{
-      RowBox[{"GrayLevel", "[", 
-       RowBox[{"1", "-", "#"}], "]"}], "&"}], ")"}], "*)"}], ",", 
-   RowBox[{"ColorFunctionScaling", "\[Rule]", "True"}], ",", 
-   RowBox[{"PlotRangeClipping", "\[Rule]", "False"}], ",", 
-   RowBox[{"PlotPoints", "\[Rule]", "Auto"}], ",", 
-   RowBox[{"FrameTicks", "\[Rule]", "All"}], ",", "\[IndentingNewLine]", 
-   RowBox[{"PlotLabel", "\[Rule]", 
-    RowBox[{"mystyle", "[", 
-     RowBox[{"\"\<changepoint function participant \>\"", "<>", 
-      RowBox[{"ToString", "[", "i", "]"}]}], "]"}]}], ",", 
-   RowBox[{"PlotLegends", "\[Rule]", 
-    RowBox[{"Placed", "[", 
-     RowBox[{"All", ",", "Left"}], "]"}]}], ",", 
-   RowBox[{"AspectRatio", "\[Rule]", 
-    RowBox[{"1", "/", "2"}]}], ",", 
-   RowBox[{"FrameLabel", "\[Rule]", 
-    RowBox[{"{", 
-     RowBox[{
-      RowBox[{"{", 
-       RowBox[{"None", ",", 
-        RowBox[{"Style", "[", 
-         RowBox[{"v", ",", "Black", ",", "myfontsize", ",", 
-          RowBox[{"Thickness", "[", 
-           RowBox[{"1", "/", "50"}], "]"}], ",", 
-          RowBox[{"FontFamily", "\[Rule]", "Auto"}]}], "]"}]}], "}"}], ",", 
-      RowBox[{"{", 
-       RowBox[{
-        RowBox[{"Style", "[", 
-         RowBox[{"m", ",", "Black", ",", "myfontsize", ",", 
-          RowBox[{"Thickness", "[", 
-           RowBox[{"1", "/", "50"}], "]"}], ",", 
-          RowBox[{"FontFamily", "\[Rule]", "Auto"}]}], "]"}], ",", "None"}], 
-       "}"}]}], "}"}]}], ",", 
-   RowBox[{"Epilog", "\[Rule]", 
-    RowBox[{"Text", "[", 
-     RowBox[{
-      RowBox[{"mystyle", "[", 
-       RowBox[{
-        RowBox[{"Style", "[", 
-         RowBox[{"\[CapitalLambda]", ",", "Italic"}], "]"}], " ", "\[Equal]", 
-        " ", 
-        RowBox[{"params", "[", 
-         RowBox[{"[", 
-          RowBox[{"3", ",", "2"}], "]"}], "]"}]}], "]"}], ",", 
-      RowBox[{"Scaled", "[", 
-       RowBox[{"{", 
-        RowBox[{"0.1", ",", "0.9"}], "}"}], "]"}], ",", 
-      RowBox[{"{", 
-       RowBox[{
-        RowBox[{"-", "1"}], ",", "0"}], "}"}]}], "]"}]}]}], "]"}]], "Input",
- CellChangeTimes->{{3.7406784398953624`*^9, 3.7406784849014416`*^9}, {
-  3.740678772833147*^9, 3.740678773925149*^9}, {3.740678985461521*^9, 
-  3.7406790372224116`*^9}, {3.740679087845501*^9, 3.740679148717808*^9}, {
-  3.740718106726886*^9, 3.740718185943825*^9}, {3.7407182197646837`*^9, 
-  3.7407182414955225`*^9}, {3.740718295970818*^9, 3.7407183277948737`*^9}, {
-  3.7407183693377466`*^9, 3.740718415624028*^9}, {3.740718515716804*^9, 
-  3.7407185317380323`*^9}, {3.7407186700800753`*^9, 3.7407186771312876`*^9}, {
-  3.740718719766163*^9, 
-  3.7407187419338017`*^9}},ExpressionUUID->"945abbad-4555-45df-a744-\
-1aae34d67869"],
-
-Cell[BoxData[
- TemplateBox[{GraphicsBox[
-    GraphicsComplexBox[CompressedData["
-1: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
-uWLEy6H/tXj3JJf5CzLmB/pQG3+5Ee/V90dtF9xE7QfiQSP+g/0D+Rfr4BT/
-wX6BvAvsFP9xvW8gxucU/8F+gDy7xn8g/5BfgZ3iP5B3yKvATvEfyDfkU2Cn
-+I8mz6Xm5+I/kF/In8BO8R/IK+RNrI9T/AfyCfkS2Cn+A3kU9ssY4Sc1nBuT
-S/YD3XfvcYb8tVNdxpBesnJ/SMRLztA9zT3kz0xx4/6DhyM+wf0Nx6+N2/si
-HlASQfetmkTTfSuy78c/XhxH96vS4she9Ewie5Hs58Vh64Wdu27IG6lkP/fJ
-JPv5fgbZT1lmsp+4/Sj662Gh/pL9dye/Kofsyf05ZP+ts5H9J+2r3osprj2k
-T0Py1zKJt/vubi3k6511dO54c93LVL6f9Fel/1m3qr28z+ou74sSj38WR+eG
-t2f1ovjP7J7yfmdfut/J/TnHO+DpA4LJv9oeRPGYlCCKx1Qyuv/4Wgj5R0sp
-37GocMIHB1P5EYOp/PVBNP+vR9D8fyny7Z7pYyJ8fhiVf2cYlX8q4lAxm/8j
-0nO2mU2Ev44l/HYslR8szvWOzqsbS+vXKY7W75rEwYmEayRS+SMJVL44gdZ3
-cyKt79hEwgdSCM9IofIpKVT+1RRaf/9UWv8nEsdnEH5Zvq+9mE7ll6eTfPyQ
-QfLxQQbZxzezyD4+JN/PlmWRPT5ffG9e6m2m96rcnxD2/eZsxzg/21oi38cW
-ZlP51GySr+vZJF8/Slwg7fUk+f41MIfqayO+rzq5Mcdxv7PHGW7vC3kcIO3v
-1vJ9ay35vvWSleRznI3kM95GuLqMX5y3U3377FR+pd3RX1vxcbEPO5eU0r3v
-ZI/mFE+V9sh4j3ZCftfL96HL5PlPsz4tqf2EXGrfN1e+h/eU7+HbU/xBvpev
-kufbfmN6i++JXN84vmc+Iru6kO5/7d9A7+dv7KDz6+W2A8JO2T+W6yMRD5gV
-QvGAxiGEd4UTZuFU/sxgKp8+mOR/WQTJf7sI8vfpfUCrDnRf58aDm8Oo/JvD
-yF+vNJG/vshE+E4s4U2xVH5qLJUPiiX+sMQRf7SPI1yYSNgvkcrXT6Ty5Qnk
-T19PJH96bSLhWtK//j6FypekUPnYFPKPx6WSf9w7lfDHGYTp/HfXzNYZVJ7r
-U+HfP80g/57ur93JbyD9X7q/t+rk0Sxa/03i3pDf0xAz8Y+HmfjoUDZhei96
-J39BNr2HmpBN8l/XQnx+VeK50j8dm0P1peZQ+QHie0W7ihyS/3U5tB+Spb/Z
-z0bl29qovmo2kv9iG+2f0RK7yXgdvZeqaHfZTuX32B3r/XfpRaFfdmz5TvDo
-sesPhJ5Z+McJiuP1ftRJyNsX0t+JPkD3aj46QO8GuizzE3rLKv3V2xPofKD1
-rUA21yGfF+n9SaH0X/0+Ir2fWH8Q6au79P5kzzjyf4qWRAk9/lnrKLqf/R7F
-0euEUpzd9ksMyfOCGHEP3K0hxcU7k7/rOz0rgfi3bYK41x08n+LcJvJ/92+o
-Sib5XpXM2jnqa0Nx67FnUyn+NSad+LgH3fuevjKT4t3c3xHx4H9mUTw4I4v4
-8hMz8SX5y7tnBmcTP7fLJnlMt5A8+ltI/uvkkPz/ZiH+dLcSf9awEl8fsBJf
-r5Hx4is2ks8fbLQfZttpP7xpJ/74WvLHQoqnbv5XTbEenZveF+c/jxfVF/P/
-6+IarPLsb5dmd5L3+h1/b+pqZfqQ8cb7TNjDa5ctrZ+4rAE7u9z906Qtxvu6
-xaf/aPPhUeP9JJXLY5tK/7ZXZL2u7PVGj3dN3vlyMNs+e9QnfZYa7yVhn2+5
-3uS7Zw24/xN6q/HVPOM9JNrf+EeP99pWN7F/bfn8m9/u29mED5eHFU1tx5Z2
-n/WPBctN7OhbVz99XNyaXXhvyuIDveLY2FtPio906c0GPrzl7mXLZCdvNOvk
-898mLMz7dnzXQjO716jeuF+39mBeJ0Z7VtuTyB6dZ0+LFwWxhEkjC/pnZrPt
-DyJW19nRj+V3sWzoFZ/Kth14t+c3SwezAi/bjjjvHNbKZq+/7kII2zAlrl/e
-5Qw2sfT73EvLhrHFhzNqjLppZWeGrQr8+UoEm3ht2fmD/c3s02E1D30QG8u2
-T0wcNG2LnR1cMm7b5LsmtmTuYq+qGhb2TujyvMXHE9jOgLn5NQ/ksPR+YbU2
-Jqawc1dnbHQrsbGAbleWfn8yndUsef9un9RcNqv4uyXX1xnvLaN9zkzwNplZ
-hxXVNm1caLzfJbvbxHYtqP1sZlUL5V/26tqxdoS5E2u0/K9rD84Z78G7Jo2z
-rFpr/L0w8cP5OuRD+8ArXr3U/ZqvhjT7Y/h3d9X73T+H5166ubwtyz/YNf9p
-W+M9b2GHN1b8XNt4z0txCzMLHNIof0xxN/aPCxeH/JGXy/qOvjJx3fsdlT97
-bcK2ad5ufizqxXunkgviDP979/i4+qEJSt5EfVw/RHz1ge2rekHKnyxvXlnw
-MMCXTX93/cX1159/71tYp+t2v97Ge9+lXXzqHi8KZTPH3v9x20tJyn9f36Eg
-LP+U8fe4cF/pzvKTq+4+G8TW+nZPy9z6/HvgrLF57mdnG++BB7q9F9m8MJId
-Ov1gR6sVxnv0m7Pf9v1xTLqSd8zv4nldbvjei2I/Xttw7KWi598LN7Zuz2n7
-ofFe+O/a+XvX9I1mL4U9XD8pAOdqJrZg0o6S5u8bf98K89/uu8AWA+7FsOtL
-fYbuHvb8e+LTq+sc27jTeE8cNblZ3o+b49jKn58c+mO48b54q0/Ai3tNxvti
-zG+BX9XXaaMT1P5fdn9H/Rvdkti+j94Z/G9f4/3xiUs7iya0Nt4fY/4ObJ6T
-+s/ryYof7o+yr224OpX9FvBs97Aaxvvk+58EPvG+avw9KMxPuy4DnnxqT1f8
-EXm1cVQ3z0xW98/J/aodNN6/txi6e9yJzcbfd8L4/Y6OGZY5Okudd/134mcz
-kg90ZrtPfpjw5QjuZzYs+NoU3YX1Ojq2Z9sFPF/EzMnD87zZhOyOCyub2tnh
-Q++O2HupOqvV7e1zlx/HM9/KwL0PfQaw1l89KhjYnduxe7xSkkL6MvuRqkWD
-QixswOgfRn2SxfXku8OHv/pxMjv18/lPvmgdxqYVXjhrbmBlD1Pqfv5tziD2
-8c+pf0W5pbNFu9sfPNR2CFvrecpj0k82tj00ovJabhTLm+e169uELNbt+Kap
-k+ZEs4OHfsqbvziXBb7yQ52PymLY9MA2tU6/ls0alce2Lm4Wz9ZVvRJ+74qF
-3dj5V9nnXC8eKmk8s/EGKzu4eV70thZp7LZ/vZ86TbCz9St9rx9clKnmp8ZH
-Q8NbHPdgJyZUnzwi1Hhfu+vWZx4rfzfe1y58sd2vf53KZZO7Nkv6PdSHPZth
-73T+fTsz++1pW/awueKvOvbTHkGTYlktr+IVRSuN98OHIs5nTTlivK/F/Yf1
-Pe42WL+jFdvn9m3w3AzjfW3Y5/NOzOqYy+pUup2v9XM0e/zgzWmf9Dbe02I9
-79Qd87jg0xj25wFT/tr/Gu+XXy31/LXp1GFsJdtvi2vakPX+fOyzFu9mMFNe
-6NPxv90JPPvFmnpBR7LZ4hu/h7YO9Ge3Hnl3iSq1sLW/N9+xzD2YVY9eHpW6
-MIdNP7clccv/hbEmX7QdnftPKxtxPOnOAc9w1v7RkpJxZhuLKv97xrkVQ1gv
-U8uyd8PsbH5mRcnDZiZ2pFutt3eaYtn8R2n3t69+nW1/vOl7r3pm1qXX4a9K
-RnZjL793t8af5xJY80PnzC9tDmQpv1yZ4T06hUVG97iy8cxAtrTzieZp1TNY
-A7+xrSrPD2W3d+WY9u3LYtYmqSurvxXDmg1Pn3dhdjYbWOdxcPO78ax3s4TK
-x9xP8ny85EynCcksaWdUm1fcbaz2bf+CwL/T2MTcQTmvV9nZn2NG1Vvtn8Wm
-7/jug4CKXNZ54ys+3V8zsw1FDXot/1c0W9net8h7qCdbu8J3WUvPLLYha0hE
-kLUt+/PE4x0nWsSz+MtLu1xZ35cdjO7+W0/OJ7/UXP3Sn/19WZ+ufwxquCqJ
-DU8rjlySGsImTT17JKhfGus08KcpezIj2O7jh1PH789kdxfUT73/pYnVePn8
-mONrzez4jDV3G3A977Hr5JabYy2sdOqQ2W3LEtnAvKOP6/lb2bzxNzr17pvK
-cpseCPJ4wc7G58/cE74tg/0/nRwy3Q==
-     "], {{{
-        EdgeForm[], 
-        GrayLevel[0.], 
-        GraphicsGroupBox[{
-          
-          PolygonBox[{{1307, 14, 1291}, {242, 243, 15}, {242, 244, 240}, {
-           1291, 14, 1208}, {1314, 360, 1309}, {243, 242, 241}, {241, 242, 
-           239}, {244, 242, 15}, {240, 289, 239}, {1309, 360, 1313}, {1209, 
-           29, 1308}, {242, 240, 239}, {1246, 289, 1288}, {289, 240, 29}, {
-           241, 360, 14}, {1306, 289, 1246}, {1312, 239, 1217}, {360, 241, 
-           239}, {1217, 239, 1305}, {1308, 29, 1211}}], 
-          
-          PolygonBox[{{1288, 289, 29, 1209}, {1305, 239, 289, 1306}, {1313, 
-           360, 239, 1312}, {1208, 14, 360, 1314}}]}]}, {
-        EdgeForm[], 
-        GrayLevel[0.23565545518937447`], 
-        GraphicsGroupBox[{
-          PolygonBox[CompressedData["
-1:eJxVVE1PU1EQve/5bqJAjTExTSmW0oi2rliIG2NSAwvFVbuhfBRaqBpB4Ifg
-HzDgqiCrIq5ajV87Y4w/wK8VutGNbjRNbeI5mdMEF5O5b97cuTNnzszI0kZx
-PXTOPYAcg3yKnEsFzl3xzj3D+QJsJ3F2sI1CEji+gj0PfRr2q97sh7C9gFyC
-/RRsf6HzsA9BJ6AzkC7OaeibkA7ObyKL+w36LcTj/AN6E3olsBj0vacz82A+
-z+GzAds6YznTazpnvPm3IrPxXwwyDPtd6BT0KnQtsPyGITcgbdxtQj+GXMP5
-CfRBYHXuQjcCq60amn1c/i358I2m7vI/758QZlPC7RH0GdzPOou3r5jE+zqk
-zxlOk5AwsLcqoeV0GzIRGJZ1xSFet4RnWjnGQ3uXvneEO/vBd14Ck3eR/f8F
-PQ3fAdgHndXf7yzPWdhj0ElIDedlSEF5XHZWY1w4MNYizhed/TvnrTej3vJi
-39jrtLeejkBvBRabOMzg7nZgPMio7q7u0CemfJgjc2XOCeW6oh7yjTX1mbk9
-jaz+495yY69ykN+R+byHHvTGgYQ3DrRVe01YE2fym719HVmtccXKiz8JcSel
-+9/FYXL5p3Am3sSvqxwK6n9SfNgVB4gBcSG/2Vv+8+JjUxw70HePk4w3rjh7
-8meODfGTuM0JO/KoqvwXFJ958P+8fPg+v5lbMbTeFxRjNvy/HwPKmXe3VEc5
-tJxKofWVPeU7fI//+8Uz8py+C8KCb5R1Zp7sGblETi0qJuOVlOfXyOaKu2dH
-8+DFw4pqnNJsJ4R7V/E4Z2c1a9xx7N1HxMt6s3/AeSk0TnF3NSOz839bs9qn
-Gp3it9SjmLhLDvOtQ+UZ88YZ8qW3D7uKv6+5JVeIOd+mnX2uCIeCZjAnzB9q
-XhrCnfV+jqzeMW+4loU562BMzhPvbYtjtBVl577clC/35X3Vsqf+kZ/zmlPi
-T7x3FKcu3mblMyc+nPcW509ku6kj7pDbdflPaOZ7eCyrdr4zo16PaT6/RIb5
-9BGu1pVDWTzNaT+UtCOKsieP7A5ykHtxUm9zpqrabdwnq9opNeEzpLxqOncU
-lzH/AaU7roY=
-           "]], 
-          PolygonBox[CompressedData["
-1:eJwlkTlKA0AYhWdkBlxIZ+MSNXHDLZUHELTQpPMI4oILyUH0CnaCnWAXdwXF
-ygO4pdLGNNpo6/d4xQfvnzfzb1Naa6zWO0IIZUhQyiHsxBD2oYi+5XCB8yZx
-hbgP1tG7cIf3AkPoFejGG4Qt9CKcJZ/JG4Y34s5sbxNayUgrZz/ep5pAH8IU
-cS/UONpWDvQcnEb3dMPdH+iKPpM3DUfoDF94o8R1dAPG0OPZWjmVWzNoFs08
-kl1TtSfxz/F6VJ94AwbQs3ASXfM7eSfaTQF+iWeIj9HzvL8ivk7WeqO3TeK9
-6JzK/Z68myo8oC+Ta2sGzVJQz9E7ecRrJ8+mGqr1TFxEL8M9+im5lwOYwP9L
-1tqBdqE/1d+qh3L2G73VH76iL2Ap+g/1l+pJvamHD/Q/pnA5dw==
-           "]]}]}, {
-        EdgeForm[], 
-        GrayLevel[0.5415307548407677], 
-        GraphicsGroupBox[{
-          PolygonBox[CompressedData["
-1:eJxNVllzlEUU/Tpze0ZCiQUVBwqpsqxMdpbMJCSYSoI7CYXiBBwhCSCZJ1/0
-xyB/xQfL7QHKJ1/c13JfsrgENSJq9BzPmcKHW/dOf92373Lu6blv5fmF57qK
-ovgKUoIsQPakomhCvwB9E3ovZBF2A3IS9sFcFIdgvxrayzOLkB7Yk0n2I9hz
-P+yAribZK1i/C3oMcgJ2OcnPcdgPZ50toNvQU5Bn8fMy9DGfvQQ9Yf9PQR+E
-TMNectxnIEeSvnGd389CKpBhyJmkO3t5P+Ru7DkA/RhkC/Y90I9yD+wHsnzd
-QI47k2z6bEEfdsyHsacO+3XsOQ896ry6k9ZZK+bX8v4L0OOuLet21HYLDbgB
-u79QHJVCsVVt3wFZxfd1SF+hnqwl9aXmb31eW/X6M+4Fe8I+XnUvbxW6i/v7
-unRmH+wN+6f9UFZsfyGvTdYT+xpY/zp0/jr0cewZwbeN0N4LzoUYWYLscu1H
-XP86vs0UquHHoViuhfp5MakejGfdOVx13DucY9U45NoVr297vbdQT55Oqj3x
-dd69uDcrnh7oz0O9n87Cy5JxS9ws+/fb2LOPeMWeX0M9HYf9XggfU7DnfYY+
-5qybzo+/ee+y4yDe3w/h7AjOnjL+GHtXFrYnoV/Cnn7YQ1m1o/+TnpFZ6DHI
-jyFMj2HPHyH/D8J+JYTvEdhbIewRm9uu70SWj3nHt+J55Fz+HMIoZ/oL2DX2
-CvY5Y57Y/x7rg5x/rL8Iez/sAdjfwR5gfFl9qLkX19zfD0N5zDuX68bPp9Dd
-WVj7KNSf3cYM73kSUjJ2mpwr7OvP4qA343bd6Ze5LnrWhqAXkmrFvp1z/OzB
-nHvEGp+GJM/isr+vhc4P454fQncT47+E6kA+uOiZ3WOM1oxJYptzwhkhfpkj
-54u/Z40L1vWU+/5aCK+Hsur3eFLdqGu2b4XiO5o1r5ue2eR5JFdc8Yzs9dzt
-ch2SuZScOmhuYUw9noU+92u7wzNYaxfi2yeSakT/xDox/25orlhv8tis4/7W
-/FB3vowruQ5/mxfIJTXzDDFB3BA/74Tqx7Ojnqf/OMOcRx4su27bxhVru+Fc
-mHvV3Mi54nx9EOJyxtzh0apzfCOU251Z+KbfL7H2SQiHxCMxN+D6jxsXTdd8
-yLhiP/jtz1C8ux1z09gdNY+Qd8ktU54z1pazznW+ZZOe/VJW7ateP5Z1ppKd
-d1L8E8YdfZKbyFFvxe13i7Xim3bA+4l3xn/CsTAm+icX0Nc/IR6k/89gl30v
-7+cMMN+XQ7M44Hnk27jfd7WdJ3mTnEXMfGOe23LNiW/ifDP8dnWp1sRJyxiu
-mzeIn9OuM+vN79xHfBE7NZ9dsx/OH3E9aD+8hxglPmtZ89CbxY/kyZuh/S37
-rJhf2K+SZ5l2562a9uw2zL1znmOukVNmzPN8c+q+u2pcch532CY++b+DHFv2
-DM16jtjDtrFBPr7cwUDS+935P3Xpf1haMZ5mXLuGdcW5kP+GjdVlz9VZ96pt
-DDSMae7J/p/G/2t8V/i+/BR6S+hn3W8O/bMmfAvJrb+F8ii75lzbabz1uv6/
-+01L5pNB44hx8i3h71XzQMlzN+w6MTbWqtucNuO6M4Z/AShW3+w=
-           "]], 
-          PolygonBox[CompressedData["
-1:eJwlk2lvTWEUhc977Zc0aVFSblSIuK3Smoei0W/4glKzGus7v8ZvkYgiJIYa
-G0NrinmqmqcqWs/K+vDcrH33Oe/ZZ6195nQf7zxWKoqiHQI+8dOSimIn9KLH
-5aJYjT4Ct6hfQSN6C1xCn4f16Hq4h/4Fy9D7oJF7h6mXo/dDHfUY9Sr0IbiJ
-/gKL0LvgKrqaazahK/CM+g+sQB+AG+jn4d5muIiexfW16C6Yja6CDeiZ0E9/
-IKw3wgX0BPpr0UehL/yfenPhKfoHLEHvhWvod9CE3gaX0e9hAboTrqBfyA98
-a8LEdZw9RN1MbwfUUk+FPclnfqc3hXp38jufDb+z3n0hfA4/Q8/SGR/QE7m+
-I9nzU9STqLcmz/Q27IG8mAdvwpkpu8XwLTyDZlGmH8Mza/b5MIieRv9gciaj
-4UyUTSuk7MyV/RrI1NPhcPJOlNBl6E72dHx2xspamY1w72Tq7cme9YQ9l/dl
-uB3OVNmuhH9hz+W9duY3+np4l5bCT/TX8LvJU3l7N7x7ylzZnwtfK4/ldZH9
-LppZs78OeyUP5eWZsPeaUbP+Dc8iT+TNk/BuaCe1m6fD3ikTZXOHekbyN6Bv
-4T4M89gTyih7J7QbI/z3kt7jsB7STtBrg0rJ9zwM/6demfpR+AydVUV9krom
-+9vTzmn3GrJ3X99cBf0gfK/O1NmRnZ0yUlb/ATbTbn4=
-           "]]}]}, {
-        EdgeForm[], 
-        GrayLevel[0.8474060544921611], 
-        GraphicsGroupBox[{
-          PolygonBox[CompressedData["
-1:eJxN3Af4/+XUB/DP7/v9NNBDQ1FoeqyWGVmlhVT2fFA8KCQaqLR32qk0NP5E
-SUu0lcoI7aG9dySRyig95/U/7//lua7ffd3nc+5z7/s+91nf31Kf/vL7NpkM
-w3Dk3MMwrXyj+liogA0rv7fSYYVbr9Ktld5d6cOV/lj471W+fqX5x2F4vOi3
-nRmGVxZ+ptLTBT9V+Pkrv7zyBSs9WTQ71vcDVX5U2lmg8P8o/PaFv7u+N6j0
-uUorFM1ThftXpdcW/IxK81R6sMq+VGnTSgtV3aer7s5F83CVHZ+691XasNLG
-lVYq/H9VelalueYahoWL9sqqd02l5xV8VeUfqLL3V7q7vheu77kq7V7wXwp3
-Utp5buEmlXYt/Ey1s1DlV9T3HVX2kazDq/VRaVrpD5V+WbhZleapMf626H9T
-6a76vnPotftFfV9Q6TsF71k0e1T6StV7rPJbCnd4pdsr3Tb0es1V+F/OdL37
-i+4XQ9d9RuEvL9xllf5c+B8NvRbPLPyL6vvKwv+74HsL98NKpxTu5Eq7FP77
-lR9baYeCt6uyfSr/RuUHF/1BlTarsn/UPOcr/KWV/2vaczh26P5+V+kHQ7d9
-T/r9U9X51dD4hyadm++8VfeF9X1J1bmpvtfMuXqo0maVvlrpjurjCWsz9n5/
-LmfCeXM+PlvpHQW/fdJ929eNs9/O3IdzRp0H5+CLlY4p+OhK21X52pW/s9IV
-M32mnAd17Zs91ddaBa9pDjmr9viTQ+/r+tnvvQveq9LXimanynestNlMn6FN
-c0aPKNzhlbYp3CI1n3kr7VnwIYU7uNLWBe9e+W6Vtpjpc+pMqrtOwe+qdG3O
-oXP/lUoHFLx/pS0L/+Ckz5ez8beCT8u9uNb9qbRypWdVn/fXum9e9NcV/Fjh
-LnL+J73P7vt19r/yBStd7l5VWrLSjYXfNfAyBd9fbdxbab6q/4eq+FXnufAH
-VfkalS6pNKadA6ps/0p1VYarKi1VaflKLy36Pxf+T+ZbxH+qdr7uu+DRHan8
-lqL5ZuifXd+PFM1WVfYKd6PyRytdX2VvTL+PWltn0VzxhML9uvLbi36/rMNy
-znHRPFHpOVX2aLX5DWe98F+vtErupz23pvtV+b6VNq2yv1Z+oztR6e76/vbQ
-c9628NtUwjzvqXTR0GXnVxvnzjS8c5XvVOnLk17s51d+unta8HWF2r/SpOBF
-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
-wVe2rrYuxFeDd9fPx0+qbOnK78uduXPa8h/Zj77AFnFy7pF75U6dSg4kf8/0
-vSNX7hg+vn9o5grsmByYunDWzh3dofLnR5Y5JOUHZgxHjC2zav/KKr+i0oun
-zSvou/RTNpjjw+sWZ++atqx/ORmbDlBpJTritO1mbC1HZe/UwW/IieotNu2y
-Zbyd09Zpjxxbx/5uwT+mj0wbXjpt6/vSyi9JfXagQ8L/F5323Mj9y1e+XPT2
-a+k+lVaYtmyEx3hv2XVOy5l8aebq++ixddQTI6t5K7yfV1f5VZVeXull065D
-F72u8t9nzqdXem2li2aaD9PV2BW/P7b+Bo8X0X3pwvrGk7zpbGbWjGz/qoyX
-fvH6rClb5PfGtl+cN9O2rvMj76mD35ODXj3t+vSTn1a+YujxWDYPdpVlcvac
-dToWPY+c/O6iXWfa3+yUbDSzCv+mwr1h2t/Hja1zXlzwm6ddxt7KTsjWeGzR
-n124d1S6LjyF7fB7ld9UuBsrvaXSmZXeWunS9MEWxLZ2RuFWTvtsg/Raeu4P
-x7Zpov/R2PbWq/CRyledtk2WvZH9ld2VzfXq8Ksbqvz6zAFfo7fSwdeq7zWn
-rRuvmnGxs9LzLsvYla827bZuq/zWSm+395VeUemMmbYf0vvd2Q8W7gPT1u2t
-Kd2OLsnGcH346ruqfO1p66LnVL5upZtnWh+kQ7MnnDK2Xg3/nmnvDZ38pLFt
-Ddb2rmnzjvdWuqPS7dk/sile4q0+t77fp3ymeQz9nj3hnpnWRdk/P5A22B7o
-2XJt/Hhsu4C6a2fe5sDuqS4dFu+4L/yHzHJP2oS7d+Y/9k3wUkPbltCwL91i
-fllfNtqzc+eWyz3z/fBMv+XqLp933bvv7f1bYHLLAzP9pkoPh579E+xtJtOR
-7chIj8y0DLF02vtz2mHz1Ka3/8mZllfWTL3HUvefMy2LeMv/PtOyF/wzJ23j
-/tTQue+FU+/xmZYJyGhPpM3HU6Yv7Wl33rT3j9Co8/e0z6b69/RrjI9mzMZu
-PtaDbGXMZCry1b9n+t2Ceyr4fwcml1Dynp75j58JTN5TRxk8HxPYGz+ZtFwI
-NtYnM064SeTFcdK2+zl+GvAG6CftY9gguLkCzx3YO80P9WTGxr8zBm9v7w+/
-mtOH9vkrtMmnQNaYN23yYc2bvZgn+zLH76A/tD+ctm1vjs1L7l7sNW07NJsL
-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
-X632tMuuckvavzLtfDf0ct/i9rTH56fNc9P+nHjgU8dem6OzZ+6U+OvnTTsG
-W0wB//v8Q+eLBj59bF721tAvHPwhqcNmJcZSGR74vMBo+PhflLPxk7F5KP4p
-DmKx4I0DzGa5UORabwdei54PAm8ypkPCh7XFX4NPnja2r1a8vLj5AmfzWmMW
-1/HCafenr0sDH5YxKBMvgdY8xYLwe/OTfnnoM37i2P5lPg7+6+8P7WPiQz9m
-aH/33Nlr/hHn/oTwW+NzBs8K3t5pb3a7Q98nfmL3C595Ts7tqeFZeA59/Adj
-xw/QZ32LM4AD02HFJohROGLoMfK1G6ffUh2fM3Vmxn9J9Et6C35wWt4b7wLc
-CWPzG/ED8+QciovQB1+WuYohMHdto/nu0PXUp/u4E2vlLli7NcMr3Ll3ZW3J
-iTdGVhQ/JRZ8icgy+Cd9WTw2/M5D59eH5rrAO4QWz2VDvjxlC6budaEXSyhO
-XVyZ/NrA4oOuyLt8TfBstmLQfNdQZ+OuCT3di05Fn3o8/W4RGu2ylYkdujqy
-hNw3u+WVgdn9/FbAd/3Nlg2MgU1wq9RF7/dY9DQ+UmWXp6636bK8cfRpOjbd
-mY7MpkD3N67H816LH7TOSw6tz6LfJbqh94j+KK5crPnu4UO/DT9ZMfM0x9PS
-PvsD+wnbEBvUUYHZXdhS2GvYZ9hw2N3YlA4KzP7GpsW2xSZG36J3bRk5wby8
-1/uFhu2LDZCdlP3vsLTP5sOmxIbFfrV7aNgJ9w6erclvE8X/8hHsmjPsjojN
-EWOzztBxQ2KBXj90PMiy0/bDsgV4N9kH+EhfMm0/qdgq3/Qa76fYJm+oeG1x
-23iyeCrv66y8s951cVBsKPpiexGPpD+2l2UDe6P1583mF3rntPmR+3JbYO+m
-dwuPujb52qEhixgP+QSt+uJM3GHvKF+bfl6evozlZZm7GCWxSh8cur658VuJ
-P3rltGOQzPvFoX9J1gGMZoWsJ/uFtWXrwBvwEfzBWi6ffp2v7+eMHRsYjX5W
-TDvXBmYD0Zb2z817ai7eaDxxpfDDOW3NGjqG63XTjtfyPv4gb6XfaILpQfbA
-XE7I+ff7CmOwfstkT7Xx2qyJ/DWB5SsFvi40F2ber874jQkd3yYdlO5JD+Xn
-pd/Ru/lAb8jbga96Sy6OjEHeIm88O/DNmfsZoXeWT88cyU5nhrd7Z7w3ZIZ5
-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
-           "]], 
-          PolygonBox[CompressedData["
-1:eJwlkckuRFEURe997isiIhLEuGqgiUiFUvroYyxmhoyM+Bcf40P0M82Akuii
-VyjWtgc776xzzjvdLW7urG1nIYR+lFDIQ9jgU8G5hD2OWjP7MuwxVIDX4QY/
-DMOPMYQSfAGPwg14BX6Bq3BG/ipch+fhIbiFnGd4BH7DLhOvwb+oM7qHen3B
-HdE1VKsJdUfPpNk+kmuX4QX4Kbm3eqjXK9wWPZNmK6Madhc5J8RO0XuwT7E+
-tBv/zxD2iB2i12CfYpeaMXhn7X4Dp+gdtMtD8m51VIG/k281zDyLuX2KTeO7
-J3abbA8SnyN2lnzLXngGnkKlzDMcJ9dQLd3kJ3ln7a4dP+FluJr5Rjn2JCrC
-PfBB8pvqbXXjmLunemuHO+Kz8EDmHa/h5tz/tuObwN7Htx1cU7WPkm+pGTWr
-cpS7ha+Qewftohufk3uV/NbqoV4pd65m1ux/mMVDww==
-           "]]}]}}, {{
-        RGBColor[
-         NCache[
-          Rational[14, 15], 0.9333333333333333], 
-         NCache[
-          Rational[2, 5], 0.4], 
-         NCache[
-          Rational[7, 15], 0.4666666666666667]], 
-        LineBox[CompressedData["
-1:eJwl1FdrFWEUheEx9q54YQ+KIKII9hpLYjf2GHvX2E2sib333kuixhaNvSsq
-IogggogFRBBB/AWKgrc+Gy/eWXvtWXvmzDfznaYz8kbllkmSJMOhTtkkifpB
-uSSZm5IkD2lPjd50ITKQi3QsQl8sxmxz7elMus78KfUBc3X5Wnx9eoIv1N/A
-96dL0Q9LMADL4h5yHeg8ulmuSF1orhGfyqfSYv60/lZ+EF2BgViOwciPa8t1
-pHl0h9wZ9QVzTflWfDN6lT+rv4sfQlciEwUYilXRk+sU96B75YrVN8w15zvz
-Leh9/pz+fn44XYNhWI0RWIv1kY9z9JDcefUjc634DL41fcpf0D/Cj4oZjMQ6
-ZMW6xTPLdaGb6HG5i+rn5trwQ/h29AV/Sf8knx1ZjMZGjMFm7JbrSnfQIrkS
-9UtzHflsvjN9xV/WP8OPi3tjLLZgPLbhoFw3uo+ek7uifm2uGz+ZT6Nv+NJY
-f35i3BMTsB2TsBPH5brHs9MSuavqt+Z68bP4dPqOv6Z/hZ8Sz4DJ8f4wFXtw
-Wi6NnqLX5K6rP5jry8+P745+4m/Ee+Snx2/HNOzFjHiP8VvletBielvupvqz
-uUF8Hp9Jv/C39O/ys2It4vuP7x45OIRSuZ60hD6Qu63+am4Yv4wfQb/xd+J7
-4OfEGsR+wuHYgziKW3K96HX6RO6u+ru5LD4/3jP9wd/Tf8bPjzWNfYRj6BN7
-IdZLrm2sP21Hx9Ha9vl9dZr5BfRErIf+bP2TsQdc7686B4tlumOVXgFWYCmy
-nMulH+XrOT9PPROTMBq19VLL69NMfhFNp53QEinxjvDMfGP+J/6gJn7jF2qg
-oWvkyDVBdb4aqqIKGus9Nl9ZXQkVUQEN9B/pG01I4tGSN3FPvHdYTd/RHnJz
-Uv7/B/4D+ASS6A==
-         "]]}, 
-       TagBox[
-        TooltipBox[{
-          Directive[{
-            Opacity[0.4], 
-            GrayLevel[0]}], 
-          LineBox[CompressedData["
-1:eJwNyUtKAmAYhtHf0iIIIsJs6qihZDcNKcvmQUtwAbo7F6AQEdHFTJtpDbqA
-FWiCWmpn8HC+ly9ZLJ+XIiGEM1WiIWzGQmiwqqYO7EcuscUUn1hTRzm7zWU+
-c4svvNCbDu1XrvCdaX7wUp86srtc5Re3+c0r9ZW3e1zjD3c44LVGOraHjHPM
-Xf7yRhOd2H9c55R7nPFWEXdBQQnNaV/zuvOP8VRRbWhBGS3q3v9BWXed/0YU
-LYI=
-           "]]}, 
-         RowBox[{"-", "500.`"}]], Annotation[#, -500., "Tooltip"]& ], 
-       TagBox[
-        TooltipBox[{
-          Directive[{
-            Opacity[0.4], 
-            GrayLevel[0]}], 
-          
-          LineBox[{1207, 1320, 1241, 1220, 1243, 1339, 1242, 1290, 1244, 1328,
-            1245, 1221, 1252, 1341, 1251, 1293, 1223, 1253, 1321, 1210, 1294, 
-           1212, 1322, 1258, 1225, 1259, 1323, 1213, 1296, 1214, 1324, 1264, 
-           1227, 1265, 1325, 1215, 1298, 1216, 1326, 1270, 1229, 1318, 1271, 
-           1315, 1316, 1317, 1300, 1311, 1310}]}, 
-         RowBox[{"-", "1000.`"}]], Annotation[#, -1000., "Tooltip"]& ], 
-       TagBox[
-        TooltipBox[{
-          Directive[{
-            Opacity[0.4], 
-            GrayLevel[0]}], 
-          
-          LineBox[{1211, 1308, 1209, 1288, 1246, 1306, 1305, 1217, 1312, 1313,
-            1309, 1314, 1208, 1291, 1307}]}, 
-         RowBox[{"-", "1500.`"}]], 
-        Annotation[#, -1500., "Tooltip"]& ], {}, {}}}], {
-    DisplayFunction -> Identity, Ticks -> {Automatic, Automatic}, 
-     AxesOrigin -> {0., 0.}, FrameTicks -> {{All, All}, {All, All}}, 
-     GridLines -> {None, None}, AxesLabel -> {None, None}, 
-     FrameLabel -> {{None, 
-        FormBox[
-         StyleBox["v", 
-          GrayLevel[0], 15, 
-          Thickness[
-           Rational[1, 50]], FontFamily -> Automatic, StripOnInput -> False], 
-         TraditionalForm]}, {
-        FormBox[
-         StyleBox[
-          TagBox["m", HoldForm], 
-          GrayLevel[0], 15, 
-          Thickness[
-           Rational[1, 50]], FontFamily -> Automatic, StripOnInput -> False], 
-         TraditionalForm], None}}, DisplayFunction -> Identity, AspectRatio -> 
-     NCache[
-       Rational[1, 2], 0.5], AxesLabel -> {None, None}, AxesStyle -> Directive[
-       GrayLevel[0], 21, 
-       Thickness[
-        NCache[
-         Rational[1, 500], 0.002]], FontFamily -> Automatic], DisplayFunction :> 
-     Identity, Epilog -> InsetBox[
-       FormBox[
-        StyleBox[
-         RowBox[{
-           StyleBox["\[CapitalLambda]", Italic, StripOnInput -> False], 
-           "\[LongEqual]", 
-           RowBox[{"-", "6.90775528550148`"}]}], 
-         GrayLevel[0], 15, 
-         Thickness[
-          Rational[1, 50]], FontFamily -> Automatic, StripOnInput -> False], 
-        TraditionalForm], 
-       Scaled[{0.1, 0.9}], {-1, 0}], Frame -> {{False, True}, {True, False}}, 
-     FrameLabel -> {{None, 
-        FormBox[
-         StyleBox["v", 
-          GrayLevel[0], 15, 
-          Thickness[
-           Rational[1, 50]], FontFamily -> Automatic, StripOnInput -> False], 
-         TraditionalForm]}, {
-        FormBox[
-         StyleBox[
-          TagBox["m", HoldForm], 
-          GrayLevel[0], 15, 
-          Thickness[
-           Rational[1, 50]], FontFamily -> Automatic, StripOnInput -> False], 
-         TraditionalForm], None}}, FrameStyle -> Directive[
-       GrayLevel[0], 21, 
-       Thickness[
-        Rational[1, 500]], FontFamily -> Automatic], 
-     FrameTicks -> {{All, All}, {All, All}}, 
-     Method -> {"GridLinesInFront" -> True}, PlotLabel -> FormBox[
-       StyleBox["\"changepoint function participant i\"", 
-        GrayLevel[0], 15, 
-        Thickness[
-         Rational[1, 50]], FontFamily -> Automatic, StripOnInput -> False], 
-       TraditionalForm], PlotRange -> {{0, 201}, {-1, 201}}, 
-     PlotRangePadding -> {{0, 0}, {0, 0}}, Ticks -> {Automatic, Automatic}}],
-   FormBox[
-    FormBox[
-     TemplateBox[{
-       FormBox[
-        StyleBox[
-         StyleBox[
-          PaneBox[
-           GraphicsBox[{{}, {}, 
-             RasterBox[
-             SparseArray[
-              Automatic, {4, 1}, 0., {
-               1, {{0, 0, 1, 2, 3}, {{1}, {1}, {1}}}, {0.23565545518937447`, 
-                0.5415307548407677, 0.8474060544921611}}], {{
-                Rational[-15, 2], -50}, {
-                Rational[15, 2], 50}}], {Antialiasing -> False, 
-              AbsoluteThickness[0.1], 
-              Directive[
-               Opacity[0.3], 
-               GrayLevel[0]], 
-              LineBox[
-               NCache[{{
-                  Rational[15, 2], -50}, {
-                  Rational[-15, 2], -50}, {
-                  Rational[-15, 2], 50}, {
-                  Rational[15, 2], 50}, {
-                  Rational[15, 2], -50}}, {{
-                 7.5, -50}, {-7.5, -50}, {-7.5, 50}, {7.5, 50}, {
-                 7.5, -50}}]]}, {
-              CapForm[None], {}}, {Antialiasing -> False, 
-              StyleBox[
-               
-               LineBox[{{-7.500000000000001, -50.}, {-7.500000000000001, 
-                50.}}], 
-               Directive[
-                AbsoluteThickness[0.2], 
-                Opacity[0.3], 
-                GrayLevel[0]], StripOnInput -> False], 
-              StyleBox[
-               StyleBox[{{
-                  StyleBox[
-                   LineBox[{{{-7.500000000000001, -25.}, 
-                    
-                    Offset[{-4., 
-                    0}, {-7.500000000000001, -25.}]}, {{-7.500000000000001, 
-                    0.}, 
-                    
-                    Offset[{-4., 0}, {-7.500000000000001, 
-                    0.}]}, {{-7.500000000000001, 25.}, 
-                    Offset[{-4., 0}, {-7.500000000000001, 25.}]}}], 
-                   Directive[
-                    AbsoluteThickness[0.2], 
-                    GrayLevel[0.4]], StripOnInput -> False]}, 
-                 StyleBox[
-                  StyleBox[{{
-                    StyleBox[{
-                    InsetBox[
-                    FormBox[
-                    RowBox[{"-", "1500"}], TraditionalForm], 
-                    Offset[{-7., 0.}, {-7.500000000000001, -25.}], {1, 0.}, 
-                    Automatic, {1, 0}], 
-                    InsetBox[
-                    FormBox[
-                    RowBox[{"-", "1000"}], TraditionalForm], 
-                    Offset[{-7., 0.}, {-7.500000000000001, 0.}], {1, 0.}, 
-                    Automatic, {1, 0}], 
-                    InsetBox[
-                    FormBox[
-                    RowBox[{"-", "500"}], TraditionalForm], 
-                    Offset[{-7., 0.}, {-7.500000000000001, 25.}], {1, 0.}, 
-                    Automatic, {1, 0}]}, 
-                    Directive[
-                    AbsoluteThickness[0.2], 
-                    GrayLevel[0.4]], {
-                    Directive[
-                    Opacity[1]]}, StripOnInput -> False]}, {}}, {
-                    Directive[
-                    Opacity[1]]}, StripOnInput -> False], "GraphicsLabel", 
-                  StripOnInput -> False]}, "GraphicsTicks", StripOnInput -> 
-                False], 
-               Directive[
-                AbsoluteThickness[0.2], 
-                Opacity[0.3], 
-                GrayLevel[0]], StripOnInput -> False]}}, PlotRangePadding -> 
-            Scaled[0.02], PlotRange -> All, Frame -> True, 
-            FrameTicks -> {{False, False}, {True, False}}, FrameStyle -> 
-            Opacity[0], FrameTicksStyle -> Opacity[0], 
-            ImageSize -> {Automatic, 100}, BaseStyle -> {}], Alignment -> 
-           Left, AppearanceElements -> None, ImageMargins -> {{5, 5}, {5, 5}},
-            ImageSizeAction -> "ResizeToFit"], LineIndent -> 0, StripOnInput -> 
-          False], {FontFamily -> "Arial"}, Background -> Automatic, 
-         StripOnInput -> False], TraditionalForm]}, "BarLegend", 
-      DisplayFunction -> (#& ), 
-      InterpretationFunction :> (RowBox[{"BarLegend", "[", 
-         RowBox[{
-           RowBox[{"{", 
-             RowBox[{
-               RowBox[{
-                 RowBox[{"GrayLevel", "[", "#1", "]"}], "&"}], ",", 
-               RowBox[{"{", 
-                 RowBox[{
-                   RowBox[{"-", "1635.2149151270985`"}], ",", 
-                   RowBox[{"-", "0.5618373210416423`"}]}], "}"}]}], "}"}], 
-           ",", 
-           RowBox[{"{", 
-             RowBox[{
-               RowBox[{"-", "1500.`"}], ",", 
-               RowBox[{"-", "1000.`"}], ",", 
-               RowBox[{"-", "500.`"}], ",", "0.`", ",", "500.`", ",", 
-               "1000.`", ",", "1500.`"}], "}"}], ",", 
-           RowBox[{"LabelStyle", "\[Rule]", 
-             RowBox[{"{", "}"}]}], ",", 
-           RowBox[{"LegendLayout", "\[Rule]", "\"Column\""}], ",", 
-           RowBox[{"Charting`TickAnnotations", "\[Rule]", "None"}], ",", 
-           RowBox[{"ScalingFunctions", "\[Rule]", 
-             RowBox[{"{", 
-               RowBox[{"Identity", ",", "Identity"}], "}"}]}], ",", 
-           RowBox[{"Charting`TickSide", "\[Rule]", "Left"}], ",", 
-           RowBox[{"ColorFunctionScaling", "\[Rule]", "True"}]}], "]"}]& )], 
-     TraditionalForm], TraditionalForm]},
-  "Legended",
-  DisplayFunction->(GridBox[{{
-      ItemBox[#2, DefaultBaseStyle -> "LabeledLabel"], 
-      TagBox[
-       ItemBox[
-        PaneBox[
-         TagBox[#, "SkipImageSizeLevel"], Alignment -> {Center, Baseline}, 
-         BaselinePosition -> Baseline], DefaultBaseStyle -> "Labeled"], 
-       "SkipImageSizeLevel"]}}, 
-    GridBoxAlignment -> {"Columns" -> {{Center}}, "Rows" -> {{Center}}}, 
-    AutoDelete -> False, GridBoxItemSize -> Automatic, 
-    BaselinePosition -> {1, 2}]& ),
-  Editable->True,
-  InterpretationFunction->(RowBox[{"Legended", "[", 
-     RowBox[{#, ",", 
-       RowBox[{"Placed", "[", 
-         RowBox[{#2, ",", "Before"}], "]"}]}], "]"}]& )]], "Output",
- CellChangeTimes->{
-  3.7407186463212337`*^9, 3.740718678847291*^9, {3.740718723276169*^9, 
-   3.740718744086605*^9}},ExpressionUUID->"60dc4edf-a139-4e46-864a-\
-81ee358c2ba5"]
-}, Open  ]],
-
-Cell[CellGroupData[{
-
-Cell[BoxData[
- RowBox[{
-  RowBox[{
-   RowBox[{"logistic", "[", 
-    RowBox[{"-", "1500"}], "]"}], "-", 
-   RowBox[{"logistic", "[", 
-    RowBox[{"-", "500"}], "]"}]}], "//", "N"}]], "Input",
- CellChangeTimes->{{3.740718768547448*^9, 
-  3.7407187834454746`*^9}},ExpressionUUID->"33d7d473-494e-4c39-bd49-\
-ea469785107a"],
-
-Cell[BoxData[
- RowBox[{"-", "7.124576406741285`*^-218"}]], "Output",
- CellChangeTimes->{{3.7407187802942686`*^9, 
-  3.7407187839290752`*^9}},ExpressionUUID->"cd124546-00ba-4859-b52d-\
-0e619e5f42b1"]
 }, Open  ]],
 
 Cell[BoxData[
@@ -18531,653 +17653,6 @@ Cell[BoxData[{
   3.7407193377396483`*^9, 3.74071937815932*^9}, {3.7407194387654257`*^9, 
   3.7407194799806986`*^9}},ExpressionUUID->"1e9bcfb9-d955-40b1-a224-\
 d0aab64ff834"],
-
-Cell[CellGroupData[{
-
-Cell[BoxData[
- RowBox[{"cumf", "//", "MF"}]], "Input",
- CellChangeTimes->{{3.7407193860373335`*^9, 3.7407193867705345`*^9}, {
-  3.740719485924309*^9, 
-  3.74071948668871*^9}},ExpressionUUID->"89d6c928-0fba-44b5-b1ee-\
-d3b7fd7c21e4"],
-
-Cell[BoxData[
- TagBox[
-  RowBox[{"(", "\[NoBreak]", GridBox[{
-     {"0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", 
-      "1", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", 
-      "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0"},
-     {"0", "0", "0", "0", "0", "0", "0", "0", "1", "0", "0", "0", "0", "0", 
-      "1", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", 
-      "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0"},
-     {"0", "0", "0", "0", "0", "0", "1", "0", "1", "0", "0", "0", "0", "0", 
-      "1", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", 
-      "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0"},
-     {"0", "0", "0", "0", "0", "0", "1", "0", "1", "0", "0", "0", "1", "0", 
-      "1", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", 
-      "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0"},
-     {"0", "0", "0", "0", "0", "0", "1", "0", "1", "0", "1", "0", "1", "0", 
-      "1", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", 
-      "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0"},
-     {"0", "0", "0", "0", "0", "0", "1", "0", "1", "0", "1", "0", "1", "0", 
-      "1", "0", "0", "0", "0", "1", "0", "0", "0", "0", "0", "0", "0", "0", 
-      "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0"},
-     {"0", "0", "0", "0", "0", "0", "1", "0", "1", "0", "1", "0", "1", "0", 
-      "1", "1", "0", "0", "0", "1", "0", "0", "0", "0", "0", "0", "0", "0", 
-      "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0"},
-     {"0", "0", "0", "0", "0", "0", "1", "0", "1", "0", "1", "0", "1", "0", 
-      "1", "1", "0", "0", "0", "1", "0", "0", "0", "0", "0", "0", "0", "1", 
-      "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0"},
-     {"0", "0", "0", "0", "0", "0", "1", "0", "1", "0", "1", "0", "1", "1", 
-      "1", "1", "0", "0", "0", "1", "0", "0", "0", "0", "0", "0", "0", "1", 
-      "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0"},
-     {"0", "0", "0", "0", "0", "0", "1", "0", "1", "0", "1", "0", "1", "1", 
-      "1", "1", "0", "0", "0", "1", "0", "1", "0", "0", "0", "0", "0", "1", 
-      "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0"},
-     {"0", "0", "0", "0", "0", "0", "1", "0", "1", "0", "2", "0", "1", "1", 
-      "1", "1", "0", "0", "0", "1", "0", "1", "0", "0", "0", "0", "0", "1", 
-      "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0"},
-     {"0", "0", "0", "0", "0", "0", "1", "0", "1", "0", "2", "0", "2", "1", 
-      "1", "1", "0", "0", "0", "1", "0", "1", "0", "0", "0", "0", "0", "1", 
-      "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0"},
-     {"0", "0", "0", "0", "0", "0", "1", "0", "1", "0", "2", "0", "2", "1", 
-      "1", "1", "0", "0", "0", "2", "0", "1", "0", "0", "0", "0", "0", "1", 
-      "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0"},
-     {"0", "0", "0", "0", "0", "0", "1", "0", "1", "0", "2", "0", "2", "1", 
-      "1", "1", "0", "0", "1", "2", "0", "1", "0", "0", "0", "0", "0", "1", 
-      "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0"},
-     {"0", "0", "1", "0", "0", "0", "1", "0", "1", "0", "2", "0", "2", "1", 
-      "1", "1", "0", "0", "1", "2", "0", "1", "0", "0", "0", "0", "0", "1", 
-      "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0"},
-     {"0", "0", "1", "0", "0", "0", "1", "0", "1", "0", "2", "0", "2", "1", 
-      "1", "1", "0", "0", "2", "2", "0", "1", "0", "0", "0", "0", "0", "1", 
-      "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0"},
-     {"0", "0", "1", "0", "0", "0", "1", "0", "1", "0", "2", "0", "2", "1", 
-      "1", "1", "0", "0", "2", "3", "0", "1", "0", "0", "0", "0", "0", "1", 
-      "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0"},
-     {"0", "0", "1", "0", "0", "0", "1", "0", "1", "0", "2", "0", "2", "1", 
-      "1", "1", "1", "0", "2", "3", "0", "1", "0", "0", "0", "0", "0", "1", 
-      "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0"},
-     {"0", "0", "1", "0", "1", "0", "1", "0", "1", "0", "2", "0", "2", "1", 
-      "1", "1", "1", "0", "2", "3", "0", "1", "0", "0", "0", "0", "0", "1", 
-      "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0"},
-     {"0", "0", "1", "0", "1", "0", "1", "0", "1", "0", "2", "0", "3", "1", 
-      "1", "1", "1", "0", "2", "3", "0", "1", "0", "0", "0", "0", "0", "1", 
-      "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0"},
-     {"0", "0", "1", "0", "1", "0", "1", "0", "1", "0", "2", "0", "3", "1", 
-      "1", "1", "1", "0", "2", "3", "0", "2", "0", "0", "0", "0", "0", "1", 
-      "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0"},
-     {"0", "0", "2", "0", "1", "0", "1", "0", "1", "0", "2", "0", "3", "1", 
-      "1", "1", "1", "0", "2", "3", "0", "2", "0", "0", "0", "0", "0", "1", 
-      "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0"},
-     {"0", "0", "2", "0", "1", "0", "1", "0", "1", "0", "2", "0", "3", "1", 
-      "1", "1", "1", "0", "2", "4", "0", "2", "0", "0", "0", "0", "0", "1", 
-      "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0"},
-     {"0", "0", "2", "0", "1", "0", "1", "0", "1", "0", "2", "0", "3", "1", 
-      "1", "1", "2", "0", "2", "4", "0", "2", "0", "0", "0", "0", "0", "1", 
-      "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0"},
-     {"0", "0", "2", "0", "1", "0", "1", "0", "1", "0", "2", "0", "3", "1", 
-      "1", "1", "2", "0", "2", "4", "0", "2", "1", "0", "0", "0", "0", "1", 
-      "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0"},
-     {"0", "0", "2", "0", "1", "0", "1", "0", "1", "0", "2", "1", "3", "1", 
-      "1", "1", "2", "0", "2", "4", "0", "2", "1", "0", "0", "0", "0", "1", 
-      "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0"},
-     {"0", "0", "2", "0", "1", "0", "1", "0", "1", "0", "2", "1", "3", "1", 
-      "1", "1", "2", "0", "2", "4", "0", "2", "1", "1", "0", "0", "0", "1", 
-      "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0"},
-     {"0", "0", "2", "0", "1", "0", "1", "0", "1", "0", "2", "1", "3", "1", 
-      "1", "1", "2", "0", "2", "4", "0", "3", "1", "1", "0", "0", "0", "1", 
-      "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0"},
-     {"0", "0", "2", "0", "1", "0", "1", "0", "1", "0", "2", "1", "4", "1", 
-      "1", "1", "2", "0", "2", "4", "0", "3", "1", "1", "0", "0", "0", "1", 
-      "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0"},
-     {"0", "0", "2", "0", "1", "0", "1", "0", "1", "0", "2", "1", "4", "2", 
-      "1", "1", "2", "0", "2", "4", "0", "3", "1", "1", "0", "0", "0", "1", 
-      "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0"},
-     {"0", "0", "2", "0", "1", "0", "1", "0", "1", "0", "2", "1", "4", "2", 
-      "1", "1", "2", "0", "2", "4", "1", "3", "1", "1", "0", "0", "0", "1", 
-      "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0"},
-     {"0", "0", "2", "0", "1", "0", "1", "0", "1", "0", "2", "2", "4", "2", 
-      "1", "1", "2", "0", "2", "4", "1", "3", "1", "1", "0", "0", "0", "1", 
-      "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0"},
-     {"0", "0", "2", "0", "1", "0", "1", "0", "1", "0", "2", "2", "4", "2", 
-      "1", "1", "3", "0", "2", "4", "1", "3", "1", "1", "0", "0", "0", "1", 
-      "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0"},
-     {"0", "0", "2", "0", "1", "0", "1", "0", "1", "0", "2", "2", "4", "2", 
-      "1", "1", "4", "0", "2", "4", "1", "3", "1", "1", "0", "0", "0", "1", 
-      "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0"},
-     {"0", "0", "2", "0", "1", "0", "2", "0", "1", "0", "2", "2", "4", "2", 
-      "1", "1", "4", "0", "2", "4", "1", "3", "1", "1", "0", "0", "0", "1", 
-      "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0"},
-     {"0", "0", "2", "0", "1", "0", "2", "0", "1", "0", "2", "2", "5", "2", 
-      "1", "1", "4", "0", "2", "4", "1", "3", "1", "1", "0", "0", "0", "1", 
-      "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0"},
-     {"0", "0", "2", "0", "1", "0", "3", "0", "1", "0", "2", "2", "5", "2", 
-      "1", "1", "4", "0", "2", "4", "1", "3", "1", "1", "0", "0", "0", "1", 
-      "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0"},
-     {"0", "0", "2", "0", "1", "0", "3", "0", "1", "0", "2", "2", "5", "2", 
-      "1", "1", "4", "0", "2", "4", "1", "3", "1", "1", "0", "0", "0", "1", 
-      "0", "0", "0", "0", "0", "0", "0", "1", "0", "0", "0", "0"},
-     {"0", "0", "2", "0", "1", "0", "3", "0", "1", "1", "2", "2", "5", "2", 
-      "1", "1", "4", "0", "2", "4", "1", "3", "1", "1", "0", "0", "0", "1", 
-      "0", "0", "0", "0", "0", "0", "0", "1", "0", "0", "0", "0"},
-     {"0", "0", "2", "0", "1", "0", "3", "0", "1", "1", "2", "2", "5", "2", 
-      "1", "1", "4", "0", "2", "4", "1", "4", "1", "1", "0", "0", "0", "1", 
-      "0", "0", "0", "0", "0", "0", "0", "1", "0", "0", "0", "0"},
-     {"0", "0", "2", "0", "1", "0", "3", "0", "1", "1", "2", "2", "6", "2", 
-      "1", "1", "4", "0", "2", "4", "1", "4", "1", "1", "0", "0", "0", "1", 
-      "0", "0", "0", "0", "0", "0", "0", "1", "0", "0", "0", "0"},
-     {"0", "0", "2", "0", "1", "0", "3", "0", "1", "1", "2", "2", "6", "3", 
-      "1", "1", "4", "0", "2", "4", "1", "4", "1", "1", "0", "0", "0", "1", 
-      "0", "0", "0", "0", "0", "0", "0", "1", "0", "0", "0", "0"},
-     {"0", "0", "2", "0", "1", "0", "3", "0", "1", "1", "2", "2", "7", "3", 
-      "1", "1", "4", "0", "2", "4", "1", "4", "1", "1", "0", "0", "0", "1", 
-      "0", "0", "0", "0", "0", "0", "0", "1", "0", "0", "0", "0"},
-     {"0", "0", "2", "0", "1", "0", "3", "0", "1", "1", "2", "2", "7", "3", 
-      "1", "1", "4", "0", "2", "4", "1", "4", "1", "1", "1", "0", "0", "1", 
-      "0", "0", "0", "0", "0", "0", "0", "1", "0", "0", "0", "0"},
-     {"0", "0", "2", "0", "1", "0", "3", "0", "1", "1", "2", "2", "7", "3", 
-      "1", "1", "4", "0", "3", "4", "1", "4", "1", "1", "1", "0", "0", "1", 
-      "0", "0", "0", "0", "0", "0", "0", "1", "0", "0", "0", "0"},
-     {"0", "0", "2", "0", "1", "0", "3", "0", "1", "1", "2", "2", "7", "3", 
-      "1", "1", "4", "0", "3", "4", "1", "4", "1", "1", "1", "0", "0", "1", 
-      "0", "0", "0", "1", "0", "0", "0", "1", "0", "0", "0", "0"},
-     {"0", "0", "2", "0", "1", "0", "3", "0", "2", "1", "2", "2", "7", "3", 
-      "1", "1", "4", "0", "3", "4", "1", "4", "1", "1", "1", "0", "0", "1", 
-      "0", "0", "0", "1", "0", "0", "0", "1", "0", "0", "0", "0"},
-     {"0", "0", "2", "0", "1", "0", "3", "0", "2", "1", "2", "2", "7", "3", 
-      "1", "1", "4", "1", "3", "4", "1", "4", "1", "1", "1", "0", "0", "1", 
-      "0", "0", "0", "1", "0", "0", "0", "1", "0", "0", "0", "0"},
-     {"0", "0", "2", "0", "1", "0", "3", "0", "2", "1", "2", "2", "7", "3", 
-      "2", "1", "4", "1", "3", "4", "1", "4", "1", "1", "1", "0", "0", "1", 
-      "0", "0", "0", "1", "0", "0", "0", "1", "0", "0", "0", "0"},
-     {"0", "0", "2", "0", "1", "0", "3", "0", "2", "1", "2", "2", "7", "3", 
-      "2", "1", "4", "1", "3", "4", "1", "4", "1", "1", "1", "0", "0", "1", 
-      "0", "0", "1", "1", "0", "0", "0", "1", "0", "0", "0", "0"},
-     {"0", "0", "2", "0", "1", "0", "3", "0", "2", "1", "2", "2", "7", "3", 
-      "2", "1", "4", "1", "4", "4", "1", "4", "1", "1", "1", "0", "0", "1", 
-      "0", "0", "1", "1", "0", "0", "0", "1", "0", "0", "0", "0"},
-     {"0", "0", "2", "0", "1", "0", "3", "0", "2", "1", "2", "2", "7", "3", 
-      "3", "1", "4", "1", "4", "4", "1", "4", "1", "1", "1", "0", "0", "1", 
-      "0", "0", "1", "1", "0", "0", "0", "1", "0", "0", "0", "0"},
-     {"0", "0", "2", "0", "1", "1", "3", "0", "2", "1", "2", "2", "7", "3", 
-      "3", "1", "4", "1", "4", "4", "1", "4", "1", "1", "1", "0", "0", "1", 
-      "0", "0", "1", "1", "0", "0", "0", "1", "0", "0", "0", "0"},
-     {"0", "0", "2", "0", "1", "1", "4", "0", "2", "1", "2", "2", "7", "3", 
-      "3", "1", "4", "1", "4", "4", "1", "4", "1", "1", "1", "0", "0", "1", 
-      "0", "0", "1", "1", "0", "0", "0", "1", "0", "0", "0", "0"},
-     {"0", "0", "2", "0", "1", "1", "4", "0", "2", "1", "2", "2", "7", "3", 
-      "3", "1", "4", "1", "4", "4", "1", "4", "1", "1", "1", "0", "0", "1", 
-      "0", "1", "1", "1", "0", "0", "0", "1", "0", "0", "0", "0"},
-     {"0", "0", "2", "0", "1", "1", "4", "1", "2", "1", "2", "2", "7", "3", 
-      "3", "1", "4", "1", "4", "4", "1", "4", "1", "1", "1", "0", "0", "1", 
-      "0", "1", "1", "1", "0", "0", "0", "1", "0", "0", "0", "0"},
-     {"0", "0", "2", "0", "1", "1", "4", "1", "2", "1", "2", "2", "7", "3", 
-      "3", "1", "4", "1", "4", "4", "2", "4", "1", "1", "1", "0", "0", "1", 
-      "0", "1", "1", "1", "0", "0", "0", "1", "0", "0", "0", "0"},
-     {"0", "0", "2", "0", "1", "1", "4", "1", "2", "1", "2", "2", "7", "3", 
-      "3", "1", "4", "1", "4", "4", "3", "4", "1", "1", "1", "0", "0", "1", 
-      "0", "1", "1", "1", "0", "0", "0", "1", "0", "0", "0", "0"},
-     {"0", "0", "2", "0", "1", "1", "4", "1", "2", "1", "2", "2", "7", "3", 
-      "3", "1", "4", "1", "4", "4", "3", "5", "1", "1", "1", "0", "0", "1", 
-      "0", "1", "1", "1", "0", "0", "0", "1", "0", "0", "0", "0"},
-     {"0", "0", "2", "0", "1", "1", "5", "1", "2", "1", "2", "2", "7", "3", 
-      "3", "1", "4", "1", "4", "4", "3", "5", "1", "1", "1", "0", "0", "1", 
-      "0", "1", "1", "1", "0", "0", "0", "1", "0", "0", "0", "0"},
-     {"0", "1", "2", "0", "1", "1", "5", "1", "2", "1", "2", "2", "7", "3", 
-      "3", "1", "4", "1", "4", "4", "3", "5", "1", "1", "1", "0", "0", "1", 
-      "0", "1", "1", "1", "0", "0", "0", "1", "0", "0", "0", "0"},
-     {"0", "1", "2", "0", "1", "1", "6", "1", "2", "1", "2", "2", "7", "3", 
-      "3", "1", "4", "1", "4", "4", "3", "5", "1", "1", "1", "0", "0", "1", 
-      "0", "1", "1", "1", "0", "0", "0", "1", "0", "0", "0", "0"},
-     {"0", "1", "2", "0", "1", "1", "6", "1", "2", "1", "2", "2", "7", "3", 
-      "4", "1", "4", "1", "4", "4", "3", "5", "1", "1", "1", "0", "0", "1", 
-      "0", "1", "1", "1", "0", "0", "0", "1", "0", "0", "0", "0"},
-     {"0", "1", "2", "0", "1", "1", "6", "1", "2", "1", "2", "3", "7", "3", 
-      "4", "1", "4", "1", "4", "4", "3", "5", "1", "1", "1", "0", "0", "1", 
-      "0", "1", "1", "1", "0", "0", "0", "1", "0", "0", "0", "0"},
-     {"0", "1", "2", "0", "1", "1", "6", "1", "2", "1", "3", "3", "7", "3", 
-      "4", "1", "4", "1", "4", "4", "3", "5", "1", "1", "1", "0", "0", "1", 
-      "0", "1", "1", "1", "0", "0", "0", "1", "0", "0", "0", "0"},
-     {"0", "1", "2", "0", "1", "1", "6", "1", "2", "2", "3", "3", "7", "3", 
-      "4", "1", "4", "1", "4", "4", "3", "5", "1", "1", "1", "0", "0", "1", 
-      "0", "1", "1", "1", "0", "0", "0", "1", "0", "0", "0", "0"},
-     {"0", "1", "2", "0", "1", "1", "6", "1", "2", "2", "3", "3", "7", "3", 
-      "4", "1", "4", "1", "4", "4", "3", "6", "1", "1", "1", "0", "0", "1", 
-      "0", "1", "1", "1", "0", "0", "0", "1", "0", "0", "0", "0"},
-     {"0", "1", "2", "0", "1", "1", "6", "1", "2", "2", "3", "3", "7", "3", 
-      "4", "1", "4", "1", "4", "4", "3", "6", "1", "2", "1", "0", "0", "1", 
-      "0", "1", "1", "1", "0", "0", "0", "1", "0", "0", "0", "0"},
-     {"0", "1", "2", "0", "1", "1", "6", "1", "2", "2", "3", "3", "7", "3", 
-      "4", "2", "4", "1", "4", "4", "3", "6", "1", "2", "1", "0", "0", "1", 
-      "0", "1", "1", "1", "0", "0", "0", "1", "0", "0", "0", "0"},
-     {"0", "1", "2", "0", "1", "1", "6", "1", "2", "2", "4", "3", "7", "3", 
-      "4", "2", "4", "1", "4", "4", "3", "6", "1", "2", "1", "0", "0", "1", 
-      "0", "1", "1", "1", "0", "0", "0", "1", "0", "0", "0", "0"},
-     {"0", "1", "2", "0", "1", "1", "6", "1", "2", "2", "4", "3", "7", "3", 
-      "4", "2", "4", "1", "4", "4", "3", "6", "1", "2", "1", "1", "0", "1", 
-      "0", "1", "1", "1", "0", "0", "0", "1", "0", "0", "0", "0"},
-     {"0", "1", "2", "0", "1", "1", "6", "1", "2", "2", "4", "3", "7", "3", 
-      "4", "2", "4", "1", "5", "4", "3", "6", "1", "2", "1", "1", "0", "1", 
-      "0", "1", "1", "1", "0", "0", "0", "1", "0", "0", "0", "0"},
-     {"0", "1", "2", "0", "1", "1", "6", "1", "2", "2", "4", "3", "7", "3", 
-      "4", "2", "5", "1", "5", "4", "3", "6", "1", "2", "1", "1", "0", "1", 
-      "0", "1", "1", "1", "0", "0", "0", "1", "0", "0", "0", "0"},
-     {"0", "1", "2", "0", "1", "1", "6", "1", "2", "2", "4", "3", "7", "3", 
-      "4", "2", "5", "1", "5", "4", "3", "6", "1", "2", "1", "1", "1", "1", 
-      "0", "1", "1", "1", "0", "0", "0", "1", "0", "0", "0", "0"},
-     {"0", "1", "2", "0", "1", "1", "6", "1", "2", "2", "4", "3", "7", "3", 
-      "4", "2", "5", "1", "5", "4", "3", "6", "1", "3", "1", "1", "1", "1", 
-      "0", "1", "1", "1", "0", "0", "0", "1", "0", "0", "0", "0"},
-     {"0", "1", "2", "0", "1", "1", "6", "1", "2", "2", "4", "3", "7", "3", 
-      "4", "2", "6", "1", "5", "4", "3", "6", "1", "3", "1", "1", "1", "1", 
-      "0", "1", "1", "1", "0", "0", "0", "1", "0", "0", "0", "0"},
-     {"0", "1", "2", "0", "1", "1", "6", "1", "2", "2", "4", "3", "7", "3", 
-      "4", "2", "6", "1", "5", "4", "4", "6", "1", "3", "1", "1", "1", "1", 
-      "0", "1", "1", "1", "0", "0", "0", "1", "0", "0", "0", "0"},
-     {"0", "1", "2", "0", "1", "1", "6", "1", "2", "2", "4", "3", "7", "3", 
-      "4", "2", "6", "1", "5", "4", "5", "6", "1", "3", "1", "1", "1", "1", 
-      "0", "1", "1", "1", "0", "0", "0", "1", "0", "0", "0", "0"},
-     {"0", "1", "2", "0", "1", "1", "6", "1", "2", "2", "4", "3", "7", "3", 
-      "4", "2", "6", "1", "6", "4", "5", "6", "1", "3", "1", "1", "1", "1", 
-      "0", "1", "1", "1", "0", "0", "0", "1", "0", "0", "0", "0"},
-     {"0", "1", "2", "0", "1", "1", "6", "1", "2", "2", "4", "3", "7", "3", 
-      "4", "2", "6", "2", "6", "4", "5", "6", "1", "3", "1", "1", "1", "1", 
-      "0", "1", "1", "1", "0", "0", "0", "1", "0", "0", "0", "0"},
-     {"0", "1", "2", "0", "1", "1", "6", "1", "2", "2", "4", "3", "7", "4", 
-      "4", "2", "6", "2", "6", "4", "5", "6", "1", "3", "1", "1", "1", "1", 
-      "0", "1", "1", "1", "0", "0", "0", "1", "0", "0", "0", "0"},
-     {"0", "1", "2", "0", "1", "1", "6", "1", "2", "2", "4", "3", "7", "4", 
-      "4", "2", "6", "2", "6", "4", "5", "6", "1", "3", "1", "1", "1", "1", 
-      "1", "1", "1", "1", "0", "0", "0", "1", "0", "0", "0", "0"},
-     {"0", "1", "2", "0", "1", "1", "6", "1", "2", "3", "4", "3", "7", "4", 
-      "4", "2", "6", "2", "6", "4", "5", "6", "1", "3", "1", "1", "1", "1", 
-      "1", "1", "1", "1", "0", "0", "0", "1", "0", "0", "0", "0"},
-     {"0", "1", "2", "0", "1", "1", "6", "1", "2", "3", "4", "3", "7", "4", 
-      "4", "3", "6", "2", "6", "4", "5", "6", "1", "3", "1", "1", "1", "1", 
-      "1", "1", "1", "1", "0", "0", "0", "1", "0", "0", "0", "0"},
-     {"0", "1", "2", "0", "1", "1", "6", "1", "2", "3", "4", "3", "7", "5", 
-      "4", "3", "6", "2", "6", "4", "5", "6", "1", "3", "1", "1", "1", "1", 
-      "1", "1", "1", "1", "0", "0", "0", "1", "0", "0", "0", "0"},
-     {"0", "1", "2", "0", "1", "1", "6", "1", "2", "3", "4", "3", "8", "5", 
-      "4", "3", "6", "2", "6", "4", "5", "6", "1", "3", "1", "1", "1", "1", 
-      "1", "1", "1", "1", "0", "0", "0", "1", "0", "0", "0", "0"},
-     {"0", "1", "2", "0", "1", "1", "6", "1", "2", "3", "4", "3", "8", "5", 
-      "4", "3", "6", "2", "6", "4", "5", "6", "1", "4", "1", "1", "1", "1", 
-      "1", "1", "1", "1", "0", "0", "0", "1", "0", "0", "0", "0"},
-     {"0", "1", "2", "0", "1", "1", "6", "1", "2", "3", "4", "3", "8", "5", 
-      "4", "3", "7", "2", "6", "4", "5", "6", "1", "4", "1", "1", "1", "1", 
-      "1", "1", "1", "1", "0", "0", "0", "1", "0", "0", "0", "0"},
-     {"0", "1", "2", "0", "1", "1", "6", "1", "2", "3", "4", "3", "8", "5", 
-      "4", "3", "8", "2", "6", "4", "5", "6", "1", "4", "1", "1", "1", "1", 
-      "1", "1", "1", "1", "0", "0", "0", "1", "0", "0", "0", "0"},
-     {"0", "1", "2", "0", "1", "1", "6", "1", "2", "3", "4", "3", "8", "5", 
-      "4", "3", "8", "2", "7", "4", "5", "6", "1", "4", "1", "1", "1", "1", 
-      "1", "1", "1", "1", "0", "0", "0", "1", "0", "0", "0", "0"},
-     {"0", "1", "2", "0", "1", "1", "6", "1", "2", "4", "4", "3", "8", "5", 
-      "4", "3", "8", "2", "7", "4", "5", "6", "1", "4", "1", "1", "1", "1", 
-      "1", "1", "1", "1", "0", "0", "0", "1", "0", "0", "0", "0"},
-     {"0", "1", "2", "0", "1", "1", "6", "2", "2", "4", "4", "3", "8", "5", 
-      "4", "3", "8", "2", "7", "4", "5", "6", "1", "4", "1", "1", "1", "1", 
-      "1", "1", "1", "1", "0", "0", "0", "1", "0", "0", "0", "0"},
-     {"0", "1", "2", "0", "1", "1", "6", "2", "2", "4", "4", "3", "8", "5", 
-      "4", "4", "8", "2", "7", "4", "5", "6", "1", "4", "1", "1", "1", "1", 
-      "1", "1", "1", "1", "0", "0", "0", "1", "0", "0", "0", "0"},
-     {"0", "1", "2", "0", "1", "1", "6", "2", "2", "4", "4", "3", "8", "5", 
-      "4", "4", "8", "2", "7", "4", "5", "6", "2", "4", "1", "1", "1", "1", 
-      "1", "1", "1", "1", "0", "0", "0", "1", "0", "0", "0", "0"},
-     {"0", "1", "2", "0", "1", "1", "6", "2", "2", "4", "4", "3", "8", "5", 
-      "4", "4", "8", "2", "7", "5", "5", "6", "2", "4", "1", "1", "1", "1", 
-      "1", "1", "1", "1", "0", "0", "0", "1", "0", "0", "0", "0"},
-     {"0", "2", "2", "0", "1", "1", "6", "2", "2", "4", "4", "3", "8", "5", 
-      "4", "4", "8", "2", "7", "5", "5", "6", "2", "4", "1", "1", "1", "1", 
-      "1", "1", "1", "1", "0", "0", "0", "1", "0", "0", "0", "0"},
-     {"0", "2", "2", "0", "1", "1", "6", "2", "2", "4", "4", "3", "8", "5", 
-      "5", "4", "8", "2", "7", "5", "5", "6", "2", "4", "1", "1", "1", "1", 
-      "1", "1", "1", "1", "0", "0", "0", "1", "0", "0", "0", "0"},
-     {"0", "2", "2", "0", "1", "1", "6", "2", "2", "4", "4", "3", "8", "5", 
-      "5", "4", "8", "2", "7", "5", "5", "6", "2", "4", "1", "1", "1", "1", 
-      "1", "1", "1", "2", "0", "0", "0", "1", "0", "0", "0", "0"},
-     {"0", "2", "2", "0", "1", "1", "6", "2", "2", "4", "4", "3", "8", "5", 
-      "5", "4", "9", "2", "7", "5", "5", "6", "2", "4", "1", "1", "1", "1", 
-      "1", "1", "1", "2", "0", "0", "0", "1", "0", "0", "0", "0"},
-     {"0", "2", "2", "0", "1", "1", "6", "2", "2", "4", "4", "3", "8", "5", 
-      "5", "4", "9", "2", "8", "5", "5", "6", "2", "4", "1", "1", "1", "1", 
-      "1", "1", "1", "2", "0", "0", "0", "1", "0", "0", "0", "0"},
-     {"0", "2", "2", "0", "1", "1", "6", "2", "2", "4", "4", "3", "8", "5", 
-      "5", "4", "9", "2", "9", "5", "5", "6", "2", "4", "1", "1", "1", "1", 
-      "1", "1", "1", "2", "0", "0", "0", "1", "0", "0", "0", "0"},
-     {"0", "2", "2", "0", "1", "1", "6", "2", "2", "4", "4", "3", "8", "5", 
-      "5", "5", "9", "2", "9", "5", "5", "6", "2", "4", "1", "1", "1", "1", 
-      "1", "1", "1", "2", "0", "0", "0", "1", "0", "0", "0", "0"},
-     {"0", "2", "2", "0", "1", "1", "6", "2", "2", "4", "4", "3", "8", "5", 
-      "5", "5", "9", "3", "9", "5", "5", "6", "2", "4", "1", "1", "1", "1", 
-      "1", "1", "1", "2", "0", "0", "0", "1", "0", "0", "0", "0"},
-     {"0", "2", "2", "0", "1", "1", "6", "2", "2", "4", "4", "3", "8", "5", 
-      "5", "5", "10", "3", "9", "5", "5", "6", "2", "4", "1", "1", "1", "1", 
-      "1", "1", "1", "2", "0", "0", "0", "1", "0", "0", "0", "0"},
-     {"0", "2", "2", "0", "1", "1", "6", "2", "2", "4", "4", "3", "8", "5", 
-      "5", "5", "10", "4", "9", "5", "5", "6", "2", "4", "1", "1", "1", "1", 
-      "1", "1", "1", "2", "0", "0", "0", "1", "0", "0", "0", "0"},
-     {"0", "2", "2", "0", "1", "1", "6", "2", "2", "4", "4", "3", "8", "5", 
-      "5", "6", "10", "4", "9", "5", "5", "6", "2", "4", "1", "1", "1", "1", 
-      "1", "1", "1", "2", "0", "0", "0", "1", "0", "0", "0", "0"},
-     {"0", "2", "2", "0", "1", "1", "6", "2", "2", "4", "4", "3", "8", "5", 
-      "5", "6", "10", "5", "9", "5", "5", "6", "2", "4", "1", "1", "1", "1", 
-      "1", "1", "1", "2", "0", "0", "0", "1", "0", "0", "0", "0"},
-     {"0", "2", "2", "0", "1", "1", "6", "2", "2", "4", "4", "3", "8", "5", 
-      "5", "6", "10", "5", "9", "5", "5", "6", "3", "4", "1", "1", "1", "1", 
-      "1", "1", "1", "2", "0", "0", "0", "1", "0", "0", "0", "0"},
-     {"0", "2", "2", "0", "1", "1", "6", "2", "2", "4", "4", "3", "8", "5", 
-      "5", "7", "10", "5", "9", "5", "5", "6", "3", "4", "1", "1", "1", "1", 
-      "1", "1", "1", "2", "0", "0", "0", "1", "0", "0", "0", "0"},
-     {"0", "2", "2", "0", "1", "1", "6", "2", "2", "4", "4", "3", "8", "5", 
-      "5", "7", "10", "5", "9", "5", "5", "7", "3", "4", "1", "1", "1", "1", 
-      "1", "1", "1", "2", "0", "0", "0", "1", "0", "0", "0", "0"},
-     {"0", "2", "2", "0", "1", "1", "6", "2", "2", "4", "4", "3", "8", "5", 
-      "5", "7", "11", "5", "9", "5", "5", "7", "3", "4", "1", "1", "1", "1", 
-      "1", "1", "1", "2", "0", "0", "0", "1", "0", "0", "0", "0"},
-     {"0", "2", "2", "0", "1", "1", "6", "2", "2", "4", "4", "3", "8", "5", 
-      "6", "7", "11", "5", "9", "5", "5", "7", "3", "4", "1", "1", "1", "1", 
-      "1", "1", "1", "2", "0", "0", "0", "1", "0", "0", "0", "0"},
-     {"0", "2", "2", "0", "1", "1", "6", "2", "2", "4", "4", "3", "8", "5", 
-      "6", "7", "12", "5", "9", "5", "5", "7", "3", "4", "1", "1", "1", "1", 
-      "1", "1", "1", "2", "0", "0", "0", "1", "0", "0", "0", "0"},
-     {"0", "2", "2", "0", "1", "1", "6", "2", "2", "4", "4", "3", "8", "5", 
-      "6", "7", "13", "5", "9", "5", "5", "7", "3", "4", "1", "1", "1", "1", 
-      "1", "1", "1", "2", "0", "0", "0", "1", "0", "0", "0", "0"},
-     {"0", "2", "2", "0", "1", "1", "6", "2", "2", "4", "4", "3", "8", "5", 
-      "6", "7", "13", "6", "9", "5", "5", "7", "3", "4", "1", "1", "1", "1", 
-      "1", "1", "1", "2", "0", "0", "0", "1", "0", "0", "0", "0"},
-     {"0", "2", "2", "0", "1", "1", "6", "2", "2", "4", "4", "3", "8", "5", 
-      "6", "7", "13", "6", "10", "5", "5", "7", "3", "4", "1", "1", "1", "1", 
-      "1", "1", "1", "2", "0", "0", "0", "1", "0", "0", "0", "0"},
-     {"0", "2", "2", "0", "1", "1", "6", "2", "2", "4", "4", "3", "8", "5", 
-      "6", "8", "13", "6", "10", "5", "5", "7", "3", "4", "1", "1", "1", "1", 
-      "1", "1", "1", "2", "0", "0", "0", "1", "0", "0", "0", "0"},
-     {"0", "2", "2", "0", "1", "1", "6", "2", "2", "4", "4", "3", "8", "5", 
-      "7", "8", "13", "6", "10", "5", "5", "7", "3", "4", "1", "1", "1", "1", 
-      "1", "1", "1", "2", "0", "0", "0", "1", "0", "0", "0", "0"},
-     {"0", "2", "2", "0", "1", "1", "6", "2", "2", "4", "4", "3", "8", "6", 
-      "7", "8", "13", "6", "10", "5", "5", "7", "3", "4", "1", "1", "1", "1", 
-      "1", "1", "1", "2", "0", "0", "0", "1", "0", "0", "0", "0"},
-     {"0", "2", "2", "0", "1", "1", "6", "2", "2", "4", "4", "3", "8", "6", 
-      "7", "8", "13", "7", "10", "5", "5", "7", "3", "4", "1", "1", "1", "1", 
-      "1", "1", "1", "2", "0", "0", "0", "1", "0", "0", "0", "0"},
-     {"0", "2", "2", "0", "1", "1", "6", "2", "2", "4", "4", "3", "8", "6", 
-      "7", "9", "13", "7", "10", "5", "5", "7", "3", "4", "1", "1", "1", "1", 
-      "1", "1", "1", "2", "0", "0", "0", "1", "0", "0", "0", "0"},
-     {"0", "2", "2", "0", "1", "1", "6", "2", "2", "4", "4", "3", "8", "6", 
-      "7", "9", "13", "8", "10", "5", "5", "7", "3", "4", "1", "1", "1", "1", 
-      "1", "1", "1", "2", "0", "0", "0", "1", "0", "0", "0", "0"},
-     {"0", "2", "2", "0", "1", "1", "6", "2", "2", "4", "4", "3", "8", "6", 
-      "7", "9", "13", "9", "10", "5", "5", "7", "3", "4", "1", "1", "1", "1", 
-      "1", "1", "1", "2", "0", "0", "0", "1", "0", "0", "0", "0"},
-     {"0", "2", "2", "0", "1", "1", "6", "2", "2", "4", "5", "3", "8", "6", 
-      "7", "9", "13", "9", "10", "5", "5", "7", "3", "4", "1", "1", "1", "1", 
-      "1", "1", "1", "2", "0", "0", "0", "1", "0", "0", "0", "0"},
-     {"0", "2", "2", "0", "1", "1", "6", "2", "2", "4", "5", "3", "8", "6", 
-      "7", "9", "13", "9", "10", "5", "6", "7", "3", "4", "1", "1", "1", "1", 
-      "1", "1", "1", "2", "0", "0", "0", "1", "0", "0", "0", "0"},
-     {"0", "2", "2", "0", "1", "1", "6", "2", "2", "4", "5", "3", "8", "6", 
-      "8", "9", "13", "9", "10", "5", "6", "7", "3", "4", "1", "1", "1", "1", 
-      "1", "1", "1", "2", "0", "0", "0", "1", "0", "0", "0", "0"},
-     {"0", "2", "2", "0", "1", "1", "6", "2", "2", "4", "5", "3", "8", "6", 
-      "8", "9", "13", "9", "10", "5", "7", "7", "3", "4", "1", "1", "1", "1", 
-      "1", "1", "1", "2", "0", "0", "0", "1", "0", "0", "0", "0"},
-     {"0", "2", "2", "0", "1", "1", "6", "2", "2", "4", "5", "3", "8", "6", 
-      "8", "9", "13", "10", "10", "5", "7", "7", "3", "4", "1", "1", "1", "1",
-       "1", "1", "1", "2", "0", "0", "0", "1", "0", "0", "0", "0"},
-     {"0", "2", "2", "0", "1", "1", "6", "2", "2", "4", "5", "4", "8", "6", 
-      "8", "9", "13", "10", "10", "5", "7", "7", "3", "4", "1", "1", "1", "1",
-       "1", "1", "1", "2", "0", "0", "0", "1", "0", "0", "0", "0"},
-     {"0", "2", "2", "0", "1", "1", "6", "2", "2", "4", "5", "4", "8", "6", 
-      "8", "9", "14", "10", "10", "5", "7", "7", "3", "4", "1", "1", "1", "1",
-       "1", "1", "1", "2", "0", "0", "0", "1", "0", "0", "0", "0"},
-     {"0", "2", "2", "0", "1", "1", "6", "2", "2", "4", "5", "4", "8", "6", 
-      "8", "9", "15", "10", "10", "5", "7", "7", "3", "4", "1", "1", "1", "1",
-       "1", "1", "1", "2", "0", "0", "0", "1", "0", "0", "0", "0"},
-     {"0", "2", "2", "0", "1", "1", "6", "2", "2", "4", "5", "4", "8", "6", 
-      "8", "9", "15", "11", "10", "5", "7", "7", "3", "4", "1", "1", "1", "1",
-       "1", "1", "1", "2", "0", "0", "0", "1", "0", "0", "0", "0"},
-     {"0", "2", "2", "0", "1", "1", "6", "2", "2", "4", "5", "4", "8", "6", 
-      "8", "9", "15", "11", "10", "6", "7", "7", "3", "4", "1", "1", "1", "1",
-       "1", "1", "1", "2", "0", "0", "0", "1", "0", "0", "0", "0"},
-     {"0", "2", "2", "0", "1", "1", "6", "2", "2", "4", "5", "4", "8", "6", 
-      "8", "9", "15", "12", "10", "6", "7", "7", "3", "4", "1", "1", "1", "1",
-       "1", "1", "1", "2", "0", "0", "0", "1", "0", "0", "0", "0"},
-     {"0", "2", "2", "0", "1", "1", "6", "2", "2", "4", "5", "4", "8", "6", 
-      "8", "10", "15", "12", "10", "6", "7", "7", "3", "4", "1", "1", "1", 
-      "1", "1", "1", "1", "2", "0", "0", "0", "1", "0", "0", "0", "0"},
-     {"0", "2", "2", "0", "1", "1", "6", "2", "2", "4", "5", "4", "8", "6", 
-      "8", "11", "15", "12", "10", "6", "7", "7", "3", "4", "1", "1", "1", 
-      "1", "1", "1", "1", "2", "0", "0", "0", "1", "0", "0", "0", "0"},
-     {"0", "2", "2", "0", "1", "1", "6", "2", "2", "4", "5", "4", "8", "6", 
-      "8", "11", "16", "12", "10", "6", "7", "7", "3", "4", "1", "1", "1", 
-      "1", "1", "1", "1", "2", "0", "0", "0", "1", "0", "0", "0", "0"},
-     {"0", "2", "2", "0", "1", "1", "6", "2", "2", "4", "5", "4", "8", "6", 
-      "8", "11", "16", "12", "11", "6", "7", "7", "3", "4", "1", "1", "1", 
-      "1", "1", "1", "1", "2", "0", "0", "0", "1", "0", "0", "0", "0"},
-     {"0", "2", "2", "0", "1", "1", "6", "2", "2", "4", "5", "4", "8", "6", 
-      "8", "12", "16", "12", "11", "6", "7", "7", "3", "4", "1", "1", "1", 
-      "1", "1", "1", "1", "2", "0", "0", "0", "1", "0", "0", "0", "0"},
-     {"0", "2", "2", "0", "1", "1", "6", "2", "2", "4", "5", "4", "8", "6", 
-      "8", "13", "16", "12", "11", "6", "7", "7", "3", "4", "1", "1", "1", 
-      "1", "1", "1", "1", "2", "0", "0", "0", "1", "0", "0", "0", "0"},
-     {"0", "2", "2", "0", "1", "1", "6", "2", "2", "4", "5", "4", "8", "6", 
-      "8", "13", "16", "12", "12", "6", "7", "7", "3", "4", "1", "1", "1", 
-      "1", "1", "1", "1", "2", "0", "0", "0", "1", "0", "0", "0", "0"},
-     {"0", "2", "2", "0", "1", "1", "6", "2", "2", "4", "5", "4", "8", "6", 
-      "8", "13", "17", "12", "12", "6", "7", "7", "3", "4", "1", "1", "1", 
-      "1", "1", "1", "1", "2", "0", "0", "0", "1", "0", "0", "0", "0"},
-     {"0", "2", "2", "0", "1", "1", "6", "2", "2", "4", "5", "4", "8", "6", 
-      "8", "13", "18", "12", "12", "6", "7", "7", "3", "4", "1", "1", "1", 
-      "1", "1", "1", "1", "2", "0", "0", "0", "1", "0", "0", "0", "0"},
-     {"0", "2", "2", "0", "1", "1", "6", "2", "2", "4", "5", "4", "8", "6", 
-      "8", "14", "18", "12", "12", "6", "7", "7", "3", "4", "1", "1", "1", 
-      "1", "1", "1", "1", "2", "0", "0", "0", "1", "0", "0", "0", "0"},
-     {"0", "2", "2", "0", "1", "1", "6", "2", "2", "4", "5", "4", "8", "6", 
-      "8", "15", "18", "12", "12", "6", "7", "7", "3", "4", "1", "1", "1", 
-      "1", "1", "1", "1", "2", "0", "0", "0", "1", "0", "0", "0", "0"},
-     {"0", "2", "2", "0", "1", "1", "6", "2", "2", "4", "5", "4", "8", "6", 
-      "8", "15", "19", "12", "12", "6", "7", "7", "3", "4", "1", "1", "1", 
-      "1", "1", "1", "1", "2", "0", "0", "0", "1", "0", "0", "0", "0"},
-     {"0", "2", "2", "0", "1", "1", "6", "2", "2", "4", "5", "4", "8", "7", 
-      "8", "15", "19", "12", "12", "6", "7", "7", "3", "4", "1", "1", "1", 
-      "1", "1", "1", "1", "2", "0", "0", "0", "1", "0", "0", "0", "0"},
-     {"0", "2", "2", "0", "1", "1", "6", "2", "2", "4", "5", "4", "8", "7", 
-      "8", "15", "20", "12", "12", "6", "7", "7", "3", "4", "1", "1", "1", 
-      "1", "1", "1", "1", "2", "0", "0", "0", "1", "0", "0", "0", "0"},
-     {"0", "2", "2", "0", "1", "1", "6", "2", "2", "4", "5", "4", "8", "7", 
-      "8", "15", "20", "12", "13", "6", "7", "7", "3", "4", "1", "1", "1", 
-      "1", "1", "1", "1", "2", "0", "0", "0", "1", "0", "0", "0", "0"},
-     {"0", "2", "2", "0", "1", "1", "6", "2", "2", "4", "5", "4", "8", "7", 
-      "8", "15", "20", "13", "13", "6", "7", "7", "3", "4", "1", "1", "1", 
-      "1", "1", "1", "1", "2", "0", "0", "0", "1", "0", "0", "0", "0"},
-     {"0", "2", "2", "0", "1", "1", "6", "2", "2", "4", "5", "4", "8", "7", 
-      "8", "16", "20", "13", "13", "6", "7", "7", "3", "4", "1", "1", "1", 
-      "1", "1", "1", "1", "2", "0", "0", "0", "1", "0", "0", "0", "0"},
-     {"0", "2", "2", "0", "1", "1", "6", "2", "2", "4", "5", "4", "8", "7", 
-      "9", "16", "20", "13", "13", "6", "7", "7", "3", "4", "1", "1", "1", 
-      "1", "1", "1", "1", "2", "0", "0", "0", "1", "0", "0", "0", "0"},
-     {"0", "2", "2", "0", "1", "1", "6", "2", "2", "4", "5", "4", "8", "7", 
-      "9", "16", "20", "14", "13", "6", "7", "7", "3", "4", "1", "1", "1", 
-      "1", "1", "1", "1", "2", "0", "0", "0", "1", "0", "0", "0", "0"},
-     {"0", "2", "2", "0", "1", "1", "6", "2", "2", "4", "5", "4", "9", "7", 
-      "9", "16", "20", "14", "13", "6", "7", "7", "3", "4", "1", "1", "1", 
-      "1", "1", "1", "1", "2", "0", "0", "0", "1", "0", "0", "0", "0"},
-     {"0", "2", "2", "0", "1", "1", "6", "2", "2", "4", "5", "4", "9", "7", 
-      "9", "16", "20", "14", "13", "6", "8", "7", "3", "4", "1", "1", "1", 
-      "1", "1", "1", "1", "2", "0", "0", "0", "1", "0", "0", "0", "0"},
-     {"0", "2", "2", "0", "1", "1", "6", "2", "2", "4", "5", "4", "9", "7", 
-      "9", "17", "20", "14", "13", "6", "8", "7", "3", "4", "1", "1", "1", 
-      "1", "1", "1", "1", "2", "0", "0", "0", "1", "0", "0", "0", "0"},
-     {"0", "2", "2", "0", "1", "1", "6", "2", "2", "4", "5", "4", "9", "7", 
-      "9", "17", "21", "14", "13", "6", "8", "7", "3", "4", "1", "1", "1", 
-      "1", "1", "1", "1", "2", "0", "0", "0", "1", "0", "0", "0", "0"},
-     {"0", "2", "2", "0", "1", "1", "6", "2", "2", "4", "5", "4", "9", "7", 
-      "10", "17", "21", "14", "13", "6", "8", "7", "3", "4", "1", "1", "1", 
-      "1", "1", "1", "1", "2", "0", "0", "0", "1", "0", "0", "0", "0"},
-     {"0", "2", "2", "0", "1", "1", "6", "2", "2", "4", "5", "4", "9", "7", 
-      "11", "17", "21", "14", "13", "6", "8", "7", "3", "4", "1", "1", "1", 
-      "1", "1", "1", "1", "2", "0", "0", "0", "1", "0", "0", "0", "0"},
-     {"0", "2", "2", "0", "1", "1", "6", "2", "2", "4", "5", "4", "9", "7", 
-      "11", "17", "21", "14", "14", "6", "8", "7", "3", "4", "1", "1", "1", 
-      "1", "1", "1", "1", "2", "0", "0", "0", "1", "0", "0", "0", "0"},
-     {"0", "2", "2", "0", "1", "1", "6", "2", "2", "4", "5", "4", "9", "7", 
-      "11", "17", "21", "15", "14", "6", "8", "7", "3", "4", "1", "1", "1", 
-      "1", "1", "1", "1", "2", "0", "0", "0", "1", "0", "0", "0", "0"},
-     {"0", "2", "2", "0", "1", "1", "6", "2", "2", "4", "5", "4", "9", "7", 
-      "11", "17", "21", "15", "14", "7", "8", "7", "3", "4", "1", "1", "1", 
-      "1", "1", "1", "1", "2", "0", "0", "0", "1", "0", "0", "0", "0"},
-     {"0", "2", "2", "0", "1", "1", "6", "2", "2", "4", "5", "4", "9", "7", 
-      "11", "17", "22", "15", "14", "7", "8", "7", "3", "4", "1", "1", "1", 
-      "1", "1", "1", "1", "2", "0", "0", "0", "1", "0", "0", "0", "0"},
-     {"0", "2", "2", "0", "1", "1", "6", "2", "2", "4", "5", "4", "9", "7", 
-      "11", "17", "23", "15", "14", "7", "8", "7", "3", "4", "1", "1", "1", 
-      "1", "1", "1", "1", "2", "0", "0", "0", "1", "0", "0", "0", "0"},
-     {"0", "2", "2", "0", "1", "1", "6", "2", "2", "4", "5", "4", "9", "7", 
-      "11", "17", "23", "16", "14", "7", "8", "7", "3", "4", "1", "1", "1", 
-      "1", "1", "1", "1", "2", "0", "0", "0", "1", "0", "0", "0", "0"},
-     {"0", "2", "2", "0", "1", "1", "6", "2", "2", "4", "5", "4", "9", "7", 
-      "11", "18", "23", "16", "14", "7", "8", "7", "3", "4", "1", "1", "1", 
-      "1", "1", "1", "1", "2", "0", "0", "0", "1", "0", "0", "0", "0"},
-     {"0", "2", "2", "0", "1", "1", "6", "2", "2", "4", "5", "4", "9", "8", 
-      "11", "18", "23", "16", "14", "7", "8", "7", "3", "4", "1", "1", "1", 
-      "1", "1", "1", "1", "2", "0", "0", "0", "1", "0", "0", "0", "0"},
-     {"0", "2", "2", "0", "1", "1", "6", "2", "2", "4", "5", "4", "9", "8", 
-      "11", "18", "23", "17", "14", "7", "8", "7", "3", "4", "1", "1", "1", 
-      "1", "1", "1", "1", "2", "0", "0", "0", "1", "0", "0", "0", "0"},
-     {"0", "2", "2", "0", "1", "1", "6", "2", "2", "4", "5", "4", "9", "8", 
-      "11", "18", "23", "18", "14", "7", "8", "7", "3", "4", "1", "1", "1", 
-      "1", "1", "1", "1", "2", "0", "0", "0", "1", "0", "0", "0", "0"},
-     {"0", "2", "2", "0", "1", "1", "6", "2", "2", "4", "5", "4", "9", "8", 
-      "11", "18", "24", "18", "14", "7", "8", "7", "3", "4", "1", "1", "1", 
-      "1", "1", "1", "1", "2", "0", "0", "0", "1", "0", "0", "0", "0"},
-     {"0", "2", "2", "0", "1", "1", "6", "2", "2", "4", "5", "4", "9", "8", 
-      "11", "19", "24", "18", "14", "7", "8", "7", "3", "4", "1", "1", "1", 
-      "1", "1", "1", "1", "2", "0", "0", "0", "1", "0", "0", "0", "0"},
-     {"0", "2", "2", "0", "1", "1", "6", "2", "2", "4", "5", "4", "9", "8", 
-      "12", "19", "24", "18", "14", "7", "8", "7", "3", "4", "1", "1", "1", 
-      "1", "1", "1", "1", "2", "0", "0", "0", "1", "0", "0", "0", "0"},
-     {"0", "2", "2", "0", "1", "1", "6", "2", "2", "4", "5", "4", "9", "8", 
-      "12", "19", "24", "19", "14", "7", "8", "7", "3", "4", "1", "1", "1", 
-      "1", "1", "1", "1", "2", "0", "0", "0", "1", "0", "0", "0", "0"},
-     {"0", "2", "2", "0", "1", "1", "6", "2", "2", "4", "5", "4", "9", "8", 
-      "13", "19", "24", "19", "14", "7", "8", "7", "3", "4", "1", "1", "1", 
-      "1", "1", "1", "1", "2", "0", "0", "0", "1", "0", "0", "0", "0"},
-     {"0", "2", "2", "0", "1", "1", "6", "2", "2", "4", "5", "4", "9", "8", 
-      "13", "19", "25", "19", "14", "7", "8", "7", "3", "4", "1", "1", "1", 
-      "1", "1", "1", "1", "2", "0", "0", "0", "1", "0", "0", "0", "0"},
-     {"0", "2", "2", "0", "1", "1", "6", "2", "2", "4", "5", "4", "9", "8", 
-      "13", "19", "26", "19", "14", "7", "8", "7", "3", "4", "1", "1", "1", 
-      "1", "1", "1", "1", "2", "0", "0", "0", "1", "0", "0", "0", "0"},
-     {"0", "2", "2", "0", "1", "1", "6", "2", "2", "4", "5", "4", "9", "8", 
-      "13", "19", "26", "20", "14", "7", "8", "7", "3", "4", "1", "1", "1", 
-      "1", "1", "1", "1", "2", "0", "0", "0", "1", "0", "0", "0", "0"},
-     {"0", "2", "2", "0", "1", "1", "6", "2", "2", "4", "5", "4", "9", "8", 
-      "13", "19", "27", "20", "14", "7", "8", "7", "3", "4", "1", "1", "1", 
-      "1", "1", "1", "1", "2", "0", "0", "0", "1", "0", "0", "0", "0"},
-     {"0", "2", "2", "0", "1", "1", "6", "2", "2", "4", "5", "4", "9", "8", 
-      "13", "19", "27", "20", "14", "8", "8", "7", "3", "4", "1", "1", "1", 
-      "1", "1", "1", "1", "2", "0", "0", "0", "1", "0", "0", "0", "0"},
-     {"0", "2", "2", "0", "1", "1", "6", "2", "2", "4", "5", "4", "9", "8", 
-      "13", "19", "27", "20", "15", "8", "8", "7", "3", "4", "1", "1", "1", 
-      "1", "1", "1", "1", "2", "0", "0", "0", "1", "0", "0", "0", "0"},
-     {"0", "2", "2", "0", "1", "1", "6", "2", "2", "4", "5", "4", "9", "8", 
-      "13", "19", "27", "20", "16", "8", "8", "7", "3", "4", "1", "1", "1", 
-      "1", "1", "1", "1", "2", "0", "0", "0", "1", "0", "0", "0", "0"},
-     {"0", "2", "2", "0", "1", "1", "6", "2", "2", "4", "5", "4", "9", "8", 
-      "13", "20", "27", "20", "16", "8", "8", "7", "3", "4", "1", "1", "1", 
-      "1", "1", "1", "1", "2", "0", "0", "0", "1", "0", "0", "0", "0"},
-     {"0", "2", "2", "0", "1", "1", "6", "2", "2", "4", "5", "4", "9", "8", 
-      "14", "20", "27", "20", "16", "8", "8", "7", "3", "4", "1", "1", "1", 
-      "1", "1", "1", "1", "2", "0", "0", "0", "1", "0", "0", "0", "0"},
-     {"0", "2", "2", "0", "1", "1", "6", "2", "2", "4", "5", "4", "9", "8", 
-      "14", "20", "28", "20", "16", "8", "8", "7", "3", "4", "1", "1", "1", 
-      "1", "1", "1", "1", "2", "0", "0", "0", "1", "0", "0", "0", "0"},
-     {"0", "2", "2", "0", "1", "1", "6", "2", "2", "4", "5", "4", "9", "8", 
-      "14", "21", "28", "20", "16", "8", "8", "7", "3", "4", "1", "1", "1", 
-      "1", "1", "1", "1", "2", "0", "0", "0", "1", "0", "0", "0", "0"},
-     {"0", "2", "2", "0", "1", "1", "6", "2", "2", "4", "5", "4", "9", "8", 
-      "14", "21", "29", "20", "16", "8", "8", "7", "3", "4", "1", "1", "1", 
-      "1", "1", "1", "1", "2", "0", "0", "0", "1", "0", "0", "0", "0"},
-     {"0", "2", "2", "0", "1", "1", "6", "2", "2", "4", "5", "4", "9", "8", 
-      "15", "21", "29", "20", "16", "8", "8", "7", "3", "4", "1", "1", "1", 
-      "1", "1", "1", "1", "2", "0", "0", "0", "1", "0", "0", "0", "0"},
-     {"0", "2", "2", "0", "1", "1", "6", "2", "2", "4", "5", "4", "9", "8", 
-      "15", "22", "29", "20", "16", "8", "8", "7", "3", "4", "1", "1", "1", 
-      "1", "1", "1", "1", "2", "0", "0", "0", "1", "0", "0", "0", "0"},
-     {"0", "2", "2", "0", "1", "1", "6", "2", "2", "4", "5", "4", "9", "8", 
-      "15", "22", "29", "20", "17", "8", "8", "7", "3", "4", "1", "1", "1", 
-      "1", "1", "1", "1", "2", "0", "0", "0", "1", "0", "0", "0", "0"},
-     {"0", "2", "2", "0", "1", "1", "6", "2", "2", "4", "5", "4", "9", "8", 
-      "15", "23", "29", "20", "17", "8", "8", "7", "3", "4", "1", "1", "1", 
-      "1", "1", "1", "1", "2", "0", "0", "0", "1", "0", "0", "0", "0"},
-     {"0", "2", "2", "0", "1", "1", "6", "2", "2", "4", "5", "4", "9", "9", 
-      "15", "23", "29", "20", "17", "8", "8", "7", "3", "4", "1", "1", "1", 
-      "1", "1", "1", "1", "2", "0", "0", "0", "1", "0", "0", "0", "0"},
-     {"0", "2", "2", "0", "1", "1", "6", "2", "2", "4", "5", "4", "9", "9", 
-      "15", "23", "29", "20", "18", "8", "8", "7", "3", "4", "1", "1", "1", 
-      "1", "1", "1", "1", "2", "0", "0", "0", "1", "0", "0", "0", "0"},
-     {"0", "2", "2", "0", "1", "1", "6", "2", "2", "4", "5", "4", "9", "9", 
-      "15", "24", "29", "20", "18", "8", "8", "7", "3", "4", "1", "1", "1", 
-      "1", "1", "1", "1", "2", "0", "0", "0", "1", "0", "0", "0", "0"},
-     {"0", "2", "2", "0", "1", "1", "6", "2", "2", "4", "5", "4", "9", "9", 
-      "15", "24", "29", "20", "19", "8", "8", "7", "3", "4", "1", "1", "1", 
-      "1", "1", "1", "1", "2", "0", "0", "0", "1", "0", "0", "0", "0"},
-     {"0", "2", "2", "0", "1", "1", "6", "2", "2", "4", "5", "4", "9", "9", 
-      "15", "24", "29", "20", "19", "9", "8", "7", "3", "4", "1", "1", "1", 
-      "1", "1", "1", "1", "2", "0", "0", "0", "1", "0", "0", "0", "0"},
-     {"0", "2", "2", "0", "1", "1", "6", "2", "2", "4", "5", "4", "9", "9", 
-      "15", "24", "29", "21", "19", "9", "8", "7", "3", "4", "1", "1", "1", 
-      "1", "1", "1", "1", "2", "0", "0", "0", "1", "0", "0", "0", "0"},
-     {"0", "2", "2", "0", "1", "1", "6", "2", "2", "4", "5", "4", "9", "9", 
-      "15", "24", "29", "22", "19", "9", "8", "7", "3", "4", "1", "1", "1", 
-      "1", "1", "1", "1", "2", "0", "0", "0", "1", "0", "0", "0", "0"},
-     {"0", "2", "2", "0", "1", "1", "6", "2", "2", "4", "5", "4", "9", "9", 
-      "15", "25", "29", "22", "19", "9", "8", "7", "3", "4", "1", "1", "1", 
-      "1", "1", "1", "1", "2", "0", "0", "0", "1", "0", "0", "0", "0"},
-     {"0", "2", "2", "0", "1", "1", "6", "2", "2", "4", "5", "4", "9", "9", 
-      "15", "25", "29", "23", "19", "9", "8", "7", "3", "4", "1", "1", "1", 
-      "1", "1", "1", "1", "2", "0", "0", "0", "1", "0", "0", "0", "0"},
-     {"0", "2", "2", "0", "1", "1", "6", "2", "2", "4", "5", "4", "9", "9", 
-      "15", "25", "30", "23", "19", "9", "8", "7", "3", "4", "1", "1", "1", 
-      "1", "1", "1", "1", "2", "0", "0", "0", "1", "0", "0", "0", "0"}
-    },
-    GridBoxAlignment->{
-     "Columns" -> {{Center}}, "ColumnsIndexed" -> {}, "Rows" -> {{Baseline}}, 
-      "RowsIndexed" -> {}},
-    GridBoxSpacings->{"Columns" -> {
-        Offset[0.27999999999999997`], {
-         Offset[0.7]}, 
-        Offset[0.27999999999999997`]}, "ColumnsIndexed" -> {}, "Rows" -> {
-        Offset[0.2], {
-         Offset[0.4]}, 
-        Offset[0.2]}, "RowsIndexed" -> {}}], "\[NoBreak]", ")"}],
-  Function[BoxForm`e$, 
-   MatrixForm[BoxForm`e$]]]], "Output",
- CellChangeTimes->{
-  3.7407193872385354`*^9, {3.740719482648303*^9, 
-   3.7407194872971115`*^9}},ExpressionUUID->"cb9f7689-d9aa-4aa8-a74f-\
-0e3ee94d040c"]
-}, Open  ]],
-
-Cell[CellGroupData[{
-
-Cell[BoxData[
- RowBox[{"Length", "@", 
-  RowBox[{"obs", "[", 
-   RowBox[{"[", "6", "]"}], "]"}]}]], "Input",
- CellChangeTimes->{{3.740719396021351*^9, 
-  3.7407194326970153`*^9}},ExpressionUUID->"b4fcb000-f033-48e2-a9fe-\
-a203efd20f77"],
-
-Cell[BoxData["201"], "Output",
- CellChangeTimes->{{3.740719398330155*^9, 
-  3.7407194331026163`*^9}},ExpressionUUID->"8818f3c8-a917-4dfc-8a83-\
-a0d9f4918c02"]
-}, Open  ]],
 
 Cell[BoxData[
  RowBox[{"Do", "[", 
@@ -19830,8 +18305,8 @@ Cell[BoxData[
 56221751f9a9"]
 }, Open  ]]
 },
-WindowSize->{640, Automatic},
-WindowMargins->{{52, 580}, {0, 0}},
+WindowSize->{640, 755},
+WindowMargins->{{52, Automatic}, {Automatic, 0}},
 FrontEndVersion->"11.2 for Microsoft Windows (32-bit) (September 10, 2017)",
 StyleDefinitions->"Default.nb"
 ]
@@ -19936,84 +18411,57 @@ Cell[864491, 16913, 229, 5, 28, "Input",ExpressionUUID->"33785c38-7aa1-434c-a1a0
 Cell[864723, 16920, 7201, 167, 849, "Input",ExpressionUUID->"19b9077a-9e02-4e4c-b775-88b0a55ff99e"],
 Cell[871927, 17089, 1487, 47, 86, "Input",ExpressionUUID->"b39b3b70-afbe-41f5-8d63-4e8e19e5b9e8"],
 Cell[873417, 17138, 810, 23, 75, "Input",ExpressionUUID->"43c9ab4c-e4f5-4c9b-89d2-806e200c2977"],
+Cell[874230, 17163, 244, 5, 28, "Input",ExpressionUUID->"f417e9da-ace0-4c13-9b07-a83f3e54054b"],
+Cell[874477, 17170, 8734, 192, 632, "Input",ExpressionUUID->"0a121017-a9e9-44cb-a069-e06fadb52e44"],
+Cell[883214, 17364, 4323, 109, 387, "Input",ExpressionUUID->"5b2424c1-566a-41a3-b866-a83b69916196"],
+Cell[887540, 17475, 4140, 105, 362, "Input",ExpressionUUID->"c099c8f7-8430-4e6f-a730-64a8904ba998"],
+Cell[891683, 17582, 639, 16, 53, "Input",ExpressionUUID->"6819a2f4-dcc0-4a47-83cb-2a0de3e94997"],
 Cell[CellGroupData[{
-Cell[874252, 17165, 693, 20, 48, "Input",ExpressionUUID->"fcf559c9-b3aa-49ce-ac26-1efd5d9790eb"],
-Cell[874948, 17187, 137, 3, 32, "Output",ExpressionUUID->"4dcb39d8-c29c-4153-a774-c1917dbf3088"]
+Cell[892347, 17602, 199, 4, 28, "Input",ExpressionUUID->"05777e1c-cc50-47a6-ab34-77c0180ea44c"],
+Cell[892549, 17608, 193, 3, 32, "Output",ExpressionUUID->"7906f0d8-7139-4df8-918b-04cea80182f0"]
+}, Open  ]],
+Cell[892757, 17614, 179, 4, 28, "Input",ExpressionUUID->"e8505ca2-cab8-4c31-918b-ff23596d43c6"],
+Cell[892939, 17620, 1087, 34, 93, "Input",ExpressionUUID->"1e9bcfb9-d955-40b1-a224-d0aab64ff834"],
+Cell[894029, 17656, 3907, 103, 371, "Input",ExpressionUUID->"3de5c412-53d8-4c8e-b6bd-1933551cdad6"],
+Cell[CellGroupData[{
+Cell[897961, 17763, 301, 5, 31, "Input",ExpressionUUID->"1abdb478-b28a-44f9-b147-d233e96e53a9"],
+Cell[898265, 17770, 349, 6, 32, "Output",ExpressionUUID->"45de4f8a-9410-4aec-9027-aa9db1caf498"]
+}, Open  ]],
+Cell[898629, 17779, 3879, 105, 331, "Input",ExpressionUUID->"43e9132e-981d-4aa2-9459-60d1a6f7d853"],
+Cell[CellGroupData[{
+Cell[902533, 17888, 820, 23, 75, "Input",ExpressionUUID->"04c6f04f-d180-40a2-bb64-150fe34bda17"],
+Cell[903356, 17913, 1516, 27, 147, "Output",ExpressionUUID->"f68a6dfe-5271-4ee7-8751-e06a9d77ccd6"]
 }, Open  ]],
 Cell[CellGroupData[{
-Cell[875122, 17195, 431, 10, 28, "Input",ExpressionUUID->"831d6560-d71e-4e32-8ba7-8d0e3b7adbd2"],
-Cell[875556, 17207, 257, 4, 35, "Output",ExpressionUUID->"fe1f66be-8d23-49d4-ae8e-1f73368ee927"]
-}, Open  ]],
-Cell[875828, 17214, 899, 24, 72, "Input",ExpressionUUID->"9bde8f3e-2c06-4909-9c17-d571a6fd854e"],
-Cell[CellGroupData[{
-Cell[876752, 17242, 158, 3, 28, "Input",ExpressionUUID->"29b3782f-6dfb-44c4-9b72-c2601cf51530"],
-Cell[876913, 17247, 338, 9, 32, "Output",ExpressionUUID->"a90ea96b-4644-48f4-9d15-59f0bc9c7ecd"]
-}, Open  ]],
-Cell[877266, 17259, 244, 5, 28, "Input",ExpressionUUID->"f417e9da-ace0-4c13-9b07-a83f3e54054b"],
-Cell[877513, 17266, 9123, 204, 673, "Input",ExpressionUUID->"0a121017-a9e9-44cb-a069-e06fadb52e44"],
-Cell[886639, 17472, 4323, 109, 387, "Input",ExpressionUUID->"5b2424c1-566a-41a3-b866-a83b69916196"],
-Cell[CellGroupData[{
-Cell[890987, 17585, 199, 4, 28, "Input",ExpressionUUID->"05777e1c-cc50-47a6-ab34-77c0180ea44c"],
-Cell[891189, 17591, 193, 3, 32, "Output",ExpressionUUID->"7906f0d8-7139-4df8-918b-04cea80182f0"]
+Cell[904909, 17945, 693, 18, 53, "Input",ExpressionUUID->"396137f7-3abf-48bf-89ef-10f69f3f2c19"],
+Cell[905605, 17965, 507, 11, 32, "Output",ExpressionUUID->"7b52e5bc-4046-4931-956f-009731d54c9c"]
 }, Open  ]],
 Cell[CellGroupData[{
-Cell[891419, 17599, 4062, 103, 365, "Input",ExpressionUUID->"945abbad-4555-45df-a744-1aae34d67869"],
-Cell[895484, 17704, 40887, 765, 347, "Output",ExpressionUUID->"60dc4edf-a139-4e46-864a-81ee358c2ba5"]
+Cell[906149, 17981, 911, 24, 75, "Input",ExpressionUUID->"e060e49b-a060-496a-b1e0-3245c774986b"],
+Cell[907063, 18007, 1493, 28, 128, "Output",ExpressionUUID->"2fecc906-47b2-4b1c-99c1-b9cd7d5be4bf"]
 }, Open  ]],
 Cell[CellGroupData[{
-Cell[936408, 18474, 318, 9, 28, "Input",ExpressionUUID->"33d7d473-494e-4c39-bd49-ea469785107a"],
-Cell[936729, 18485, 198, 4, 35, "Output",ExpressionUUID->"cd124546-00ba-4859-b52d-0e619e5f42b1"]
+Cell[908593, 18040, 645, 17, 53, "Input",ExpressionUUID->"84fd848d-4298-46d2-b404-4dd7c84121bc"],
+Cell[909241, 18059, 500, 10, 32, "Output",ExpressionUUID->"72a6b496-294e-4ce8-bb1c-a5369fd00f86"]
 }, Open  ]],
-Cell[936942, 18492, 179, 4, 28, "Input",ExpressionUUID->"e8505ca2-cab8-4c31-918b-ff23596d43c6"],
-Cell[937124, 18498, 1087, 34, 93, "Input",ExpressionUUID->"1e9bcfb9-d955-40b1-a224-d0aab64ff834"],
+Cell[909756, 18072, 255, 5, 105, "Input",ExpressionUUID->"c3a61733-399d-4cf3-bc21-4f90cd3ab7d6"],
+Cell[910014, 18079, 927, 22, 86, "Input",ExpressionUUID->"78dddf86-f9bd-48c6-9602-873c15bdb2b2"],
+Cell[910944, 18103, 897, 22, 160, "Input",ExpressionUUID->"bccedfa3-2ca4-4af0-9e5f-e02d64a3b80e"],
 Cell[CellGroupData[{
-Cell[938236, 18536, 232, 5, 28, "Input",ExpressionUUID->"89d6c928-0fba-44b5-b1ee-d3b7fd7c21e4"],
-Cell[938471, 18543, 45271, 619, 3814, "Output",ExpressionUUID->"cb9f7689-d9aa-4aa8-a74f-0e3ee94d040c"]
-}, Open  ]],
-Cell[CellGroupData[{
-Cell[983779, 19167, 236, 6, 28, "Input",ExpressionUUID->"b4fcb000-f033-48e2-a9fe-a203efd20f77"],
-Cell[984018, 19175, 158, 3, 32, "Output",ExpressionUUID->"8818f3c8-a917-4dfc-8a83-a0d9f4918c02"]
-}, Open  ]],
-Cell[984191, 19181, 3907, 103, 371, "Input",ExpressionUUID->"3de5c412-53d8-4c8e-b6bd-1933551cdad6"],
-Cell[CellGroupData[{
-Cell[988123, 19288, 301, 5, 31, "Input",ExpressionUUID->"1abdb478-b28a-44f9-b147-d233e96e53a9"],
-Cell[988427, 19295, 349, 6, 32, "Output",ExpressionUUID->"45de4f8a-9410-4aec-9027-aa9db1caf498"]
-}, Open  ]],
-Cell[988791, 19304, 3879, 105, 331, "Input",ExpressionUUID->"43e9132e-981d-4aa2-9459-60d1a6f7d853"],
-Cell[CellGroupData[{
-Cell[992695, 19413, 820, 23, 75, "Input",ExpressionUUID->"04c6f04f-d180-40a2-bb64-150fe34bda17"],
-Cell[993518, 19438, 1516, 27, 147, "Output",ExpressionUUID->"f68a6dfe-5271-4ee7-8751-e06a9d77ccd6"]
+Cell[911866, 18129, 822, 23, 75, "Input",ExpressionUUID->"f8393e9e-23f0-490f-96cf-9cda94535a91"],
+Cell[912691, 18154, 1475, 27, 147, "Output",ExpressionUUID->"aa50dd27-7ab4-47d4-a201-f3ee9d3d3dba"]
 }, Open  ]],
 Cell[CellGroupData[{
-Cell[995071, 19470, 693, 18, 53, "Input",ExpressionUUID->"396137f7-3abf-48bf-89ef-10f69f3f2c19"],
-Cell[995767, 19490, 507, 11, 32, "Output",ExpressionUUID->"7b52e5bc-4046-4931-956f-009731d54c9c"]
+Cell[914203, 18186, 693, 18, 53, "Input",ExpressionUUID->"dafde40d-231c-4454-b52c-dea8a3f001ba"],
+Cell[914899, 18206, 459, 10, 32, "Output",ExpressionUUID->"21d26591-b531-4368-b104-67de1f870800"]
 }, Open  ]],
 Cell[CellGroupData[{
-Cell[996311, 19506, 911, 24, 75, "Input",ExpressionUUID->"e060e49b-a060-496a-b1e0-3245c774986b"],
-Cell[997225, 19532, 1493, 28, 128, "Output",ExpressionUUID->"2fecc906-47b2-4b1c-99c1-b9cd7d5be4bf"]
+Cell[915395, 18221, 911, 24, 75, "Input",ExpressionUUID->"48c04f4f-8e64-480c-a519-7f52db405035"],
+Cell[916309, 18247, 1412, 26, 128, "Output",ExpressionUUID->"0152eb4b-0a32-46b3-8406-09d6654b282d"]
 }, Open  ]],
 Cell[CellGroupData[{
-Cell[998755, 19565, 645, 17, 53, "Input",ExpressionUUID->"84fd848d-4298-46d2-b404-4dd7c84121bc"],
-Cell[999403, 19584, 500, 10, 32, "Output",ExpressionUUID->"72a6b496-294e-4ce8-bb1c-a5369fd00f86"]
-}, Open  ]],
-Cell[999918, 19597, 255, 5, 105, "Input",ExpressionUUID->"c3a61733-399d-4cf3-bc21-4f90cd3ab7d6"],
-Cell[1000176, 19604, 927, 22, 86, "Input",ExpressionUUID->"78dddf86-f9bd-48c6-9602-873c15bdb2b2"],
-Cell[1001106, 19628, 897, 22, 160, "Input",ExpressionUUID->"bccedfa3-2ca4-4af0-9e5f-e02d64a3b80e"],
-Cell[CellGroupData[{
-Cell[1002028, 19654, 822, 23, 75, "Input",ExpressionUUID->"f8393e9e-23f0-490f-96cf-9cda94535a91"],
-Cell[1002853, 19679, 1475, 27, 147, "Output",ExpressionUUID->"aa50dd27-7ab4-47d4-a201-f3ee9d3d3dba"]
-}, Open  ]],
-Cell[CellGroupData[{
-Cell[1004365, 19711, 693, 18, 53, "Input",ExpressionUUID->"dafde40d-231c-4454-b52c-dea8a3f001ba"],
-Cell[1005061, 19731, 459, 10, 32, "Output",ExpressionUUID->"21d26591-b531-4368-b104-67de1f870800"]
-}, Open  ]],
-Cell[CellGroupData[{
-Cell[1005557, 19746, 911, 24, 75, "Input",ExpressionUUID->"48c04f4f-8e64-480c-a519-7f52db405035"],
-Cell[1006471, 19772, 1412, 26, 128, "Output",ExpressionUUID->"0152eb4b-0a32-46b3-8406-09d6654b282d"]
-}, Open  ]],
-Cell[CellGroupData[{
-Cell[1007920, 19803, 591, 16, 53, "Input",ExpressionUUID->"0ee00b99-c976-4a96-95c3-b496b67d7221"],
-Cell[1008514, 19821, 396, 8, 32, "Output",ExpressionUUID->"898f7250-56df-4d07-8437-56221751f9a9"]
+Cell[917758, 18278, 591, 16, 53, "Input",ExpressionUUID->"0ee00b99-c976-4a96-95c3-b496b67d7221"],
+Cell[918352, 18296, 396, 8, 32, "Output",ExpressionUUID->"898f7250-56df-4d07-8437-56221751f9a9"]
 }, Open  ]]
 }
 ]

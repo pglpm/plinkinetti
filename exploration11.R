@@ -3,6 +3,7 @@
 ## stubbornness and logistic-linear changepoint function
 ## using Kantorovich distance
 ## using genetic algorithm to optimize
+## new notation
 
 
 ## libraries and colour-blind palette from http://www.sron.nl/~pault/
@@ -49,8 +50,8 @@ slots <- integer(N)
 maxstd <- sqrt((1+N^2)*0.5-(N+1)*0.5)
 
 ## Definitions of various functions
-logit <- function(a){log(a/(1-a))}
-logistic <- function(a){exp(a)/(1+exp(a))}
+logit <- function(a){-log(1/a - 1)}
+logistic <- function(a){1/(1+exp(-a))}
 
 ## probability-discrepancy measures
 hellingerd <- function(a,b){sqrt(1-sum(sqrt(a*b)))}
@@ -84,59 +85,9 @@ distribution <- function(participant, maxtrials=200){matrix(d[d$Participant == p
 
 ## sequence of robot distributions: uses the changepoint & Johnson-Dirichlet model
 
-## Define the probability of new changepoint, h(s,m)
-#probchangepoint <- function(s){20^s*exp(-20)/factorial(s)}
-#probchangepoint <- function(s,m){0.9-s/m}
-#probchangepoint <- function(s){1}
-
-## This gave results very close to participant 12
-#probchangepoint <- function(s,m,n,params){1-dnorm(m-s-1,0,75)*sqrt(2*pi)*75*0.9}
-
-
-## probchangepoint <- function(s,m,n,params){
-##     if(s>m | m<0 | s<0){return(NA)}
-##     if(s+m>=2*n/sqrt(3)){return(params[3])}
-##     if(s+m>=sqrt(2/3)*n){return(params[2])}
-##     return(params[1])
-## }
-
-## probchangepoint <- function(s,m,n,params){
-##     ##if(s>m | m<0 | s<0){return(NA)}
-##     if(s>=n/2){return(params[3])}
-##     if(m>=n/2){return(params[2])}
-##     return(params[1])
-## }
-
-## probchangepoint <- function(s,m,n,params){
-##     if(s>m | m<0 | s<0){return(NA)}
-##     if(m-s >=2*n/3){return(params[3])}
-##     if(m-s >= n/3){return(params[2])}
-##     return(params[1])
-## }
-
-## This defines h region-wise
-## probchangepoint <- function(s,m,n,nregions,params){
-##     ##if(s>m | m<0 | s<0){return(NA)}
-##     params[choose(floor(nregions*m/(n+1))+1,2)+1+nregions*s/(n+1)]
-## }
-
-## note for the case nregions=1:
-## = logistic(param[1] + m*param[2] + s*param[3]),
-## where m and s range from -1 to 1 inclusive
-## probchangepoint <- function(s,m,n,nregions,params){
-##     ##if(s>m | m<0 | s<0){return(NA)}
-##     logistic(sum(unlist(lapply(0:nregions, function(i){lapply(0:i, function(j){params[choose(i+1,2)+1+j]*(((2*s-n)/n)^j)*(((2*m-n)/n)^(i-j))})}))))
-## }
-
-probchangepointold <- function(s,m,n,params){
-    ##if(s>m | m<0 | s<0){return(NA)}
-    logistic(params[1] + params[2]*(2*m-n)/n + params[3]*(2*s-n)/n)
-}
-
 probchangepoint <- function(s,m,n,params){
     ##if(s>m | m<0 | s<0){return(NA)}
-    ex <- exp(params[1] + params[2]*(2*m-n)/n + params[3]*(2*s-n)/n)
-    return(if(ex < Inf){ex/(1+ex)}else{1})
+    1/(1+exp(-params[1] - params[2]*m - params[3]*s))
 }
 
 ## sequences of means and stds
@@ -171,7 +122,7 @@ robotdistribution <- function(priorfrequencies,allparams,obs){
         B1 <- B[,res]
 
         ## calculate h(s)
-        h <- sapply(1:(m-1),function(i){probchangepoint(i-1,m-1,n,params)})
+        h <- sapply(1:(m-1),function(i){probchangepoint(i,m,n,params)})
 
         C <- c(sum(h * B1 * C), (1-h) * B1 * C)/A2
 
@@ -277,10 +228,8 @@ discrepancy <- function(allparams,pdistr,obs,maxtrials=200,initial.distr=NULL){
 
 ## fast version, assumes pdistr, obs, and initial.distr are vectors
 discrepancyfast <- function(allparams,pdistr,obs){
-    
     rdistr <- robotdistribution(pdistr[1,],allparams,obs)
     if(anyNA(rdistr)){return(NA)}
-    
     ## calculate total discrepancy
     mean(sapply(1:(length(obs)+1),function(i){kam(rdistr[i,],pdistr[i,])})^2)
 }
@@ -325,13 +274,37 @@ reducediscrepancyold <- function(participant,maxtrials,startpoints=4,seed=999){
 ## Genetic algorithm to seek discrepancy minimum using nlm
 reducediscrepancy <- function(participant,maxtrials,popSize=50,maxiter=500,run=100,cores=4){
     obs <- observations(participant,maxtrials)
+    n <- length(obs)
     pdistr <- regularizedistr(participant,maxtrials)
 
-    optrobot <- ga(type='real-valued', fitness=function(x){-discrepancyfast(x,pdistr=pdistr,obs=obs)}, lower=c(log(1e-3),rep(-maxtrials*10,3)),upper=c(log(1e3),rep(maxtrials*10,3)),popSize = popSize, maxiter = maxiter, run = run,parallel=cores,optim=TRUE,optimArgs=list(gr=NULL,control=list(maxit=2500)))
+    optrobot <- ga(type='real-valued', fitness=function(x){-discrepancyfast(x,pdistr=pdistr,obs=obs)}, lower=c(log(1e-3),-28*n,-28,-28),upper=c(log(1e3),28*n,28,28),popSize = popSize, maxiter = maxiter, run = run,parallel=cores,optim=TRUE,optimArgs=list(gr=NULL,control=list(maxit=2500)))
     maxpars <- optrobot@solution
     maxval <- -optrobot@fitnessValue
     
-    list(par=maxpars,value=maxval,details=optrobot)}
+    list(par=maxpars,value=maxval,pdistr=pdistr,rdistr=robotdistribution(pdistr[1,],maxpars,obs),details=optrobot)}
+
+reducealldiscrepancies <- function(participants=(1:40),savedir,maxtrials=200,label='',popSize=100,maxiter=1000,run=100,cores=10){
+    slabel <- substring(label,1,1)
+    if(slabel!='' & slabel!='_'){label <- paste0('_',label)}
+    slabel <- substring(savedir,nchar(savedir))
+    if(slabel!='/'){savedir <- paste0(savedir,'/')}
+
+    fileConn<-file(paste0(savedir,"multimin.txt"))
+    
+    for(i in participants){
+        message('participant ',i)
+        optres <- reducediscrepancy(participant=i,maxtrials=maxtrials,popSize=popSize,maxiter=maxiter,run=run,cores=cores)
+        
+        saveRDS(optres,paste0(savedir,'results_p',i,label,'.rds'))
+        le <- length(optres$par)
+        if(le>4){writeLines(paste0(i," ",le/4), fileConn)}
+
+        message(' ')
+    }
+    close(fileConn)
+    message('finished.')
+}
+
 
 ## Function to plot the resulting h(s,m) from optimization
 plotminparams <- function(allparams,label='',maxtrials=200){
