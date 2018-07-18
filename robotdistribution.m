@@ -1,8 +1,8 @@
 (* robotdistribution from parameters, reset distribution, and observations *)
 
-h[v_,m_,pars_]:=LogisticSigmoid[pars.{1,(2*(m-1)-200)/200,(2*(v-1)-200)/200}];
+ho[v_,m_,pars_]:=LogisticSigmoid[pars.{1,(2*(m-1)-200)/200,(2*(v-1)-200)/200}];
 
-robotdistribution[pf_,apars_,obs_]:= Block[
+robotdistributiono[pf_,apars_,obs_]:= Block[
   {n=Length[obs],stub=Exp[apars[[1]]],pars=apars[[2;;]],cumf,a,a1,a2,b,b1,c},
 
   a=Table[Null,{n+1},{40}];
@@ -24,7 +24,7 @@ robotdistribution[pf_,apars_,obs_]:= Block[
     a1=a[[m-1,res]];
     b1=b[[;;,res]];
 
-    ht=Table[h[v,m,pars],{v,m-1}];
+    ht=Table[ho[v,m,pars],{v,m-1}];
     c=Prepend[(1-ht)*b1*c, (ht*b1).c]/a2;
     
     b= Table[(stub*pf + cumf[[m]]-cumf[[m-u]])/(stub+u) ,{u,0,m-1}];
