@@ -296,8 +296,10 @@ reducealldiscrepancies <- function(participants=(1:40),savedir,maxtrials=200,lab
         optres <- reducediscrepancy(participant=i,maxtrials=maxtrials,popSize=popSize,maxiter=maxiter,run=run,cores=cores)
         
         saveRDS(optres,paste0(savedir,'results_p',i,label,'.rds'))
+		write.table(optres$par,paste0(savedir,'params_p',i,'.csv'),sep=',',row.names=F,col.names=F,na='Infinity')
+		write.table(optres$rdistr,paste0(savedir,'rdistr_p',i,'.csv'),sep=',',row.names=F,col.names=F,na='Infinity')
         le <- length(optres$par)
-        if(le>4){writeLines(paste0(i," ",le/4), fileConn)}
+        if(le>4){writeLines(paste0(i," ",le/4,"\n"), fileConn)}
 
         message(' ')
     }
