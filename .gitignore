@@ -11,8 +11,10 @@
 *.pyc
 *.dvi
 *.out.ps
-*.Rhistory
+.Rhistory
+Rplots.pdf
 *~
+_*
 _region_.*
 prv_*
 _data*/

@@ -1,7 +1,7 @@
 \pdfoutput=1
 %% Author: PGL  Porta Mana, ALS Filipowicz
 %% Created: 2018-04-08T16:54:19+0200
-%% Last-Updated: 2018-07-16T23:12:50+0200
+%% Last-Updated: 2020-01-12T16:17:09+0100
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Report-no: ***
 \newif\ifarxiv
@@ -12,7 +12,7 @@
 \newif\iftypodisclaim % typographical disclaim on the side
 \typodisclaimtrue
 \newif\ifpublic
-\publicfalse % true = for publication, false = personal notes
+\publictrue % true = for publication, false = personal notes
 \newcommand*{\memfontfamily}{zplx}
 \newcommand*{\memfontpack}{newpxtext}
 \documentclass[\ifafour a4paper,12pt,\else a5paper,10pt,\fi%extrafontsizes,%
@@ -22,7 +22,7 @@ british%
 \newcommand*{\updated}{\today}
 \newcommand*{\firstdraft}{14 April 2018}
 \newcommand*{\firstpublished}{\today}
-\newcommand*{\propertitle}{Bayesian Plinko\\{\large Study notes}}
+\newcommand*{\propertitle}{Bayesian Plinko:\\ Bayesian models to mimic human inferences [draft]}
 \newcommand*{\pdftitle}{Bayesian Plinko}
 \newcommand*{\headtitle}{Bayesian Plinko}
 \newcommand*{\pdfauthor}{A. L. S. Filipowicz, P.G.L.  Porta Mana, Y. Roudi,
@@ -575,18 +575,18 @@ totalheight=\heightof{@}]{atblack.png}}\makeatother
 }
 \author{\ifpublic\hspace*{\stretch{1}}%
 %\begin{tabular}[t]{c}
-\parbox[t]{0.3\linewidth}{\protect\centering%
-Alex\\%
-{\footnotesize\epost{\email{alsfilip}{mail.med.penn.edu}}}}%
-%\end{tabular}&%
-\hspace*{\stretch{1}}%
-%\begin{tabular}[t]{c}
-\parbox[t]{0.3\linewidth}{\protect\centering%
-P.G.L. Porta\,Mana\\%
+\parbox[t]{0.49\linewidth}{\protect\centering%
+P.G.L. Porta\,Mana (Kavli Institute)\\%
 {\footnotesize%\ \href{https://orcid.org/0000-0002-6070-0784}{\protect\includegraphics[scale=0.16]{orcid_32x32.png}}}\\{\footnotesize
-\epost{\email{pgl}{portamana.org}}}%
+\epost{\email{piero.mana}{ntnu.no}}}%
 }% \\%
 % {\footnotesize\href{https://orcid.org/0000-0002-6070-0784}{\protect\includegraphics[scale=0.16]{orcid_32x32.png}\textsc{orcid}:0000-0002-6070-0784}}%
+\hspace*{\stretch{1}}%
+\parbox[t]{0.49\linewidth}{\protect\centering%
+A. Filipowicz (Uni. Pennsylvania)\\%
+{\footnotesize\epost{\email{alsfilip}{mail.med.penn.edu}}}}%
+%\end{tabular}&%
+%\begin{tabular}[t]{c}
 %\end{tabular}%
 \hspace*{\stretch{1}}%
 \else Alex, Luca, Yasser, Britt, James%
@@ -825,7 +825,7 @@ P.G.L. Porta\,Mana\\%
 \section{Remarks, comments, thoughts on the project}
 \label{sec:method_remarks}
 
-\subsection{[Luca] What goes on in a participant's head? Possible models}
+\subsection{What goes on in a participant's head? Possible models}
 
 The experimental setup is open to a huge number of analyses and
 interpretations on the participants' part, inspired by past experience. As
@@ -852,7 +852,7 @@ distribute the outcomes according to a predetermined, completely arbitrary
 distribution. From this point of view we could again decide to assign a
 uniform distribution.
 
-\subsection{[Luca] Paradigms for judgement and assessment}
+\subsection{Paradigms for judgement and assessment}
 
 The literature I've seen so far explains at length how the data presented
 to participants are generated, and is very succinct in explaining what was
